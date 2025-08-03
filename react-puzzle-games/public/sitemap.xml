@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+        
+    <!-- 메인 홈페이지 -->
+    <url>
+        <loc>https://norri.netlify.app/</loc>
+        <lastmod>2025-01-25</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    
+    <!-- 메인 홈페이지 (index.html) -->
+    <url>
+        <loc>https://norri.netlify.app/index.html</loc>
+        <lastmod>2025-01-25</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    
+    <!-- 키보드 두더지 게임 메인 -->
+    <url>
+        <loc>https://norri.netlify.app/keyboard/</loc>
+        <lastmod>2025-01-25</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <!-- 키보드 게임 입력방식 선택 -->
+    <url>
+        <loc>https://norri.netlify.app/keyboard/select-input.html</loc>
+        <lastmod>2025-01-25</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- 얼룩말 퍼즐 게임 -->
+    <url>
+        <loc>https://norri.netlify.app/zebra/</loc>
+        <lastmod>2025-01-25</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- 포도송이 수학 게임 -->
+    <url>
+        <loc>https://norri.netlify.app/grape/</loc>
+        <lastmod>2025-01-26</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- 포도송이 덧셈 게임 -->
+    <url>
+        <loc>https://norri.netlify.app/grape/game1</loc>
+        <lastmod>2025-01-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- 포도송이 게임 결과 -->
+    <url>
+        <loc>https://norri.netlify.app/grape/results</loc>
+        <lastmod>2025-01-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    
+    <!-- 에겐, 테토 성격 테스트 -->
+    <url>
+        <loc>https://norri.netlify.app/tetoegen/</loc>
+        <lastmod>2025-01-26</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- 에겐, 테토 테스트 결과 -->
+    <url>
+        <loc>https://norri.netlify.app/tetoegen/results</loc>
+        <lastmod>2025-01-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    
+    <!-- 7의 여자/남자 테스트 -->
+    <url>
+        <loc>https://norri.netlify.app/seven/</loc>
+        <lastmod>2025-01-26</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- 7의 여자/남자 테스트 진행 -->
+    <url>
+        <loc>https://norri.netlify.app/seven/test</loc>
+        <lastmod>2025-01-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- 타로카드 점보기 -->
+    <url>
+        <loc>https://norri.netlify.app/taro/</loc>
+        <lastmod>2025-01-26</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- 타로카드 리딩 -->
+    <url>
+        <loc>https://norri.netlify.app/taro/reading</loc>
+        <lastmod>2025-01-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- 손금 운세 보기 -->
+    <url>
+        <loc>https://norri.netlify.app/palm/</loc>
+        <lastmod>2025-01-26</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- 손금 분석하기 -->
+    <url>
+        <loc>https://norri.netlify.app/palm/reading</loc>
+        <lastmod>2025-01-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- 미스터리 추리 게임 -->
+    <url>
+        <loc>https://norri.netlify.app/mystery/</loc>
+        <lastmod>2025-01-27</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- 미스터리 케이스 1 -->
+    <url>
+        <loc>https://norri.netlify.app/mystery/case1</loc>
+        <lastmod>2025-01-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- 미스터리 케이스 2 -->
+    <url>
+        <loc>https://norri.netlify.app/mystery/case2</loc>
+        <lastmod>2025-01-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- 리듬 게임 메인 -->
+    <url>
+        <loc>https://norri.netlify.app/rhythm/</loc>
+        <lastmod>2025-01-27</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- 리듬 게임 플레이 -->
+    <url>
+        <loc>https://norri.netlify.app/rhythm/game</loc>
+        <lastmod>2025-01-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- 미스터리 케이스 3 - 도서관의 비밀 -->
+    <url>
+        <loc>https://norri.netlify.app/mystery/case3</loc>
+        <lastmod>2025-01-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- 미스터리 케이스 4 - 레스토랑 살인사건 -->
+    <url>
+        <loc>https://norri.netlify.app/mystery/case4</loc>
+        <lastmod>2025-01-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- 미스터리 케이스 5 - 사라진 연구자 -->
+    <url>
+        <loc>https://norri.netlify.app/mystery/case5</loc>
+        <lastmod>2025-01-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- 미스터리 케이스 6 - 유령선의 보물 -->
+    <url>
+        <loc>https://norri.netlify.app/mystery/case6</loc>
+        <lastmod>2025-01-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- 미스터리 케이스 7-20 (신규 추가 케이스들) -->
+    <url>
+        <loc>https://norri.netlify.app/mystery/case7</loc>
+        <lastmod>2025-01-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <url>
+        <loc>https://norri.netlify.app/mystery/case8</loc>
+        <lastmod>2025-01-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <url>
+        <loc>https://norri.netlify.app/mystery/case9</loc>
+        <lastmod>2025-01-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <url>
+        <loc>https://norri.netlify.app/mystery/case10</loc>
+        <lastmod>2025-01-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <url>
+        <loc>https://norri.netlify.app/mystery/case11</loc>
+        <lastmod>2025-01-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <url>
+        <loc>https://norri.netlify.app/mystery/case12</loc>
+        <lastmod>2025-01-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <url>
+        <loc>https://norri.netlify.app/mystery/case13</loc>
+        <lastmod>2025-01-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <url>
+        <loc>https://norri.netlify.app/mystery/case14</loc>
+        <lastmod>2025-01-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <url>
+        <loc>https://norri.netlify.app/mystery/case15</loc>
+        <lastmod>2025-01-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <url>
+        <loc>https://norri.netlify.app/mystery/case16</loc>
+        <lastmod>2025-01-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <url>
+        <loc>https://norri.netlify.app/mystery/case17</loc>
+        <lastmod>2025-01-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <url>
+        <loc>https://norri.netlify.app/mystery/case18</loc>
+        <lastmod>2025-01-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <url>
+        <loc>https://norri.netlify.app/mystery/case19</loc>
+        <lastmod>2025-01-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <url>
+        <loc>https://norri.netlify.app/mystery/case20</loc>
+        <lastmod>2025-01-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- 미스터리 케이스 선택 페이지 -->
+    <url>
+        <loc>https://norri.netlify.app/mystery/select</loc>
+        <lastmod>2025-01-28</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- Fragment of Mystery Game Main -->
+    <url>
+        <loc>https://norri.netlify.app/fragments/</loc>
+        <lastmod>2025-01-30</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <!-- Fragment of Mystery Case 1 - Mansion Mystery -->
+    <url>
+        <loc>https://norri.netlify.app/fragments/case1</loc>
+        <lastmod>2025-01-30</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- Fragment of Mystery Case 1 Game -->
+    <url>
+        <loc>https://norri.netlify.app/fragments/case1/game</loc>
+        <lastmod>2025-01-30</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- Fragment of Mystery Case 2 - Chronos Paradox -->
+    <url>
+        <loc>https://norri.netlify.app/fragments/case2</loc>
+        <lastmod>2025-01-30</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- Fragment of Mystery Case 2 Game -->
+    <url>
+        <loc>https://norri.netlify.app/fragments/case2/game</loc>
+        <lastmod>2025-01-30</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- CCTV 탐정 게임 메인 -->
+    <url>
+        <loc>https://norri.netlify.app/cctv_detective/</loc>
+        <lastmod>2025-01-30</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- CCTV 탐정 케이스 1 - 편의점 절도 사건 -->
+    <url>
+        <loc>https://norri.netlify.app/cctv_detective/case1</loc>
+        <lastmod>2025-01-30</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- 카드 조합 게임 메인 -->
+    <url>
+        <loc>https://norri.netlify.app/card/</loc>
+        <lastmod>2025-01-30</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- 카드 조합 게임 플레이 -->
+    <url>
+        <loc>https://norri.netlify.app/card/game</loc>
+        <lastmod>2025-01-30</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+</urlset>

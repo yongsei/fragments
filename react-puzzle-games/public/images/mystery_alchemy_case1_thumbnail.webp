@@ -1,0 +1,34 @@
+<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#16213e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="mansionGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2d2d2d;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1a1a;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="300" height="200" fill="url(#skyGrad)"/>
+  
+  <!-- Mansion silhouette -->
+  <polygon points="50,150 100,120 150,100 200,120 250,150 250,180 50,180" fill="url(#mansionGrad)"/>
+  
+  <!-- Windows with light -->
+  <rect x="80" y="140" width="15" height="20" fill="#ffd700" opacity="0.8"/>
+  <rect x="110" y="135" width="15" height="25" fill="#ffd700" opacity="0.6"/>
+  <rect x="180" y="140" width="15" height="20" fill="#ffd700" opacity="0.8"/>
+  <rect x="210" y="135" width="15" height="25" fill="#ffd700" opacity="0.4"/>
+  
+  <!-- Door -->
+  <rect x="140" y="155" width="20" height="25" fill="#8b4513"/>
+  
+  <!-- Moon -->
+  <circle cx="50" cy="40" r="20" fill="#f0f8ff" opacity="0.8"/>
+  
+  <!-- Title overlay -->
+  <rect x="0" y="160" width="300" height="40" fill="rgba(0,0,0,0.7)"/>
+  <text x="150" y="180" text-anchor="middle" fill="#ffd700" font-family="serif" font-size="16" font-weight="bold">저택의 미스터리</text>
+</svg>

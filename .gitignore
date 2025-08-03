@@ -1,8 +1,38 @@
+# 운영체제 관련
+.DS_Store
+Thumbs.db
+
+# IDE 관련
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 로그 파일
+*.log
+
+# 임시 파일
+*.tmp
+*.temp
+
+# Node.js (필요시)
+node_modules/
+npm-debug.log*
+
+# 브라우저 캐시
+.cache/
+
+# 백업 파일
+*.bak
+*.backup
+*.md
+react-puzzle-games/build/*
+
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
-/.pnp
+/fragments-main/node_modules
+/fragments-main/.pnp
 .pnp.js
 
 # testing
@@ -12,11 +42,11 @@
 /build
 
 # misc
-.DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+/fragments-main/.DS_Store
+/fragments-main/.env.local
+/fragments-main/.env.development.local
+/fragments-main/.env.test.local
+/fragments-main/.env.production.local
 
 npm-debug.log*
 yarn-debug.log*
@@ -25,17 +55,17 @@ yarn-error.log*
 # Android 키스토어 및 보안 파일 (절대 업로드 금지!)
 *.keystore
 *.jks
-keystore.properties
-android/keystore.properties
-fragment-mystery-key.keystore
+/fragments-main/keystore.properties
+/fragments-main/android/keystore.properties
+/fragments-main/fragment-mystery-key.keystore
 
 # Android 빌드 출력
-android/app/build/
-android/build/
-android/.gradle/
-android/local.properties
+/fragments-main/android/app/build/
+/fragments-main/android/build/
+/fragments-main/android/.gradle/
+/fragments-main/android/local.properties
 
 # iOS 빌드 출력  
-ios/App/build/
-ios/App/Pods/
-ios/App/*.xcworkspace/xcuserdata/
+/fragments-main/ios/App/build/
+/fragments-main/ios/App/Pods/
+/fragments-main/ios/App/*.xcworkspace/xcuserdata/

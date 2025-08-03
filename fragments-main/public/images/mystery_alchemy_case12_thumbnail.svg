@@ -1,0 +1,51 @@
+<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="violinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#7c2d12;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#991b1b;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="silentGlow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" style="stop-color:#dc2626;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#b91c1c;stop-opacity:0.1" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="300" height="200" fill="url(#violinGrad)"/>
+  
+  <!-- Concert hall backdrop -->
+  <rect x="40" y="40" width="220" height="100" fill="#1f2937" opacity="0.8"/>
+  
+  <!-- Broken violin (silent violin) -->
+  <ellipse cx="150" cy="100" rx="35" ry="12" fill="#8b4513"/>
+  <rect x="185" y="95" width="50" height="8" fill="#a16207"/>
+  <rect x="235" y="92" width="10" height="14" fill="#7c2d12"/>
+  
+  <!-- Broken strings -->
+  <line x1="150" y1="88" x2="240" y2="92" stroke="#ffffff" stroke-width="1" opacity="0.3"/>
+  <line x1="150" y1="94" x2="235" y2="97" stroke="#ffffff" stroke-width="1" opacity="0.5"/>
+  <line x1="150" y1="100" x2="240" y2="102" stroke="#dc2626" stroke-width="2" opacity="0.8"/>
+  <line x1="150" y1="106" x2="238" y2="107" stroke="#ffffff" stroke-width="1" opacity="0.4"/>
+  <line x1="150" y1="112" x2="236" y2="112" stroke="#ffffff" stroke-width="1" opacity="0.3"/>
+  
+  <!-- Silent aura -->
+  <circle cx="150" cy="100" r="50" fill="url(#silentGlow)"/>
+  
+  <!-- Three suspects' shadows -->
+  <ellipse cx="80" cy="140" rx="15" ry="25" fill="#000000" opacity="0.6"/>
+  <ellipse cx="150" cy="140" rx="15" ry="25" fill="#000000" opacity="0.7"/>
+  <ellipse cx="220" cy="140" rx="15" ry="25" fill="#000000" opacity="0.6"/>
+  
+  <!-- Broken musical notes -->
+  <text x="70" y="70" fill="#dc2626" font-size="18" opacity="0.5">♪</text>
+  <text x="230" y="80" fill="#b91c1c" font-size="16" opacity="0.4">♫</text>
+  <text x="100" y="50" fill="#991b1b" font-size="14" opacity="0.3">♬</text>
+  <text x="200" y="60" fill="#dc2626" font-size="12" opacity="0.5">♭</text>
+  
+  <!-- Spotlight -->
+  <circle cx="150" cy="60" r="25" fill="#fbbf24" opacity="0.3"/>
+  
+  <!-- Title overlay -->
+  <rect x="0" y="160" width="300" height="40" fill="rgba(0,0,0,0.7)"/>
+  <text x="150" y="180" text-anchor="middle" fill="#dc2626" font-family="serif" font-size="16" font-weight="bold">현의 비명</text>
+</svg>

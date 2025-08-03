@@ -1,0 +1,64 @@
+<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="cyberGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e293b;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="digitalTrace" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#0891b2;stop-opacity:0.2" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="300" height="200" fill="url(#cyberGrad)"/>
+  
+  <!-- Digital network grid -->
+  <circle cx="150" cy="100" r="60" fill="url(#digitalTrace)"/>
+  
+  <!-- Computer servers -->
+  <rect x="70" y="120" width="25" height="40" fill="#374151"/>
+  <rect x="105" y="115" width="25" height="45" fill="#374151"/>
+  <rect x="140" y="110" width="25" height="50" fill="#4b5563"/>
+  <rect x="175" y="115" width="25" height="45" fill="#374151"/>
+  <rect x="210" y="120" width="25" height="40" fill="#374151"/>
+  
+  <!-- Server indicator lights -->
+  <circle cx="82" cy="130" r="2" fill="#10b981"/>
+  <circle cx="117" cy="125" r="2" fill="#dc2626"/>
+  <circle cx="152" cy="120" r="2" fill="#06b6d4"/>
+  <circle cx="187" cy="125" r="2" fill="#10b981"/>
+  <circle cx="222" cy="130" r="2" fill="#f59e0b"/>
+  
+  <!-- Digital connection lines -->
+  <line x1="82" y1="110" x2="152" y2="100" stroke="#06b6d4" stroke-width="2" opacity="0.7"/>
+  <line x1="117" y1="105" x2="152" y2="100" stroke="#06b6d4" stroke-width="2" opacity="0.7"/>
+  <line x1="187" y1="105" x2="152" y2="100" stroke="#06b6d4" stroke-width="2" opacity="0.7"/>
+  <line x1="222" y1="110" x2="152" y2="100" stroke="#06b6d4" stroke-width="2" opacity="0.7"/>
+  
+  <!-- Digital fingerprints/traces -->
+  <circle cx="100" cy="70" r="8" fill="none" stroke="#06b6d4" stroke-width="2" opacity="0.6"/>
+  <circle cx="100" cy="70" r="5" fill="none" stroke="#06b6d4" stroke-width="1" opacity="0.8"/>
+  
+  <circle cx="200" cy="80" r="6" fill="none" stroke="#0891b2" stroke-width="2" opacity="0.5"/>
+  <circle cx="200" cy="80" r="3" fill="none" stroke="#0891b2" stroke-width="1" opacity="0.7"/>
+  
+  <!-- Project Chimera logo/symbol -->
+  <polygon points="150,80 160,90 150,100 140,90" fill="#dc2626" opacity="0.8"/>
+  <text x="146" y="96" fill="#ffffff" font-size="8" font-weight="bold">X</text>
+  
+  <!-- Digital code streams -->
+  <text x="50" y="50" fill="#06b6d4" font-size="8" opacity="0.6">010110</text>
+  <text x="230" y="60" fill="#0891b2" font-size="8" opacity="0.5">110001</text>
+  <text x="60" y="180" fill="#06b6d4" font-size="8" opacity="0.4">101011</text>
+  <text x="220" y="170" fill="#0891b2" font-size="8" opacity="0.6">011101</text>
+  
+  <!-- Cyber symbols -->
+  <text x="40" y="40" fill="#06b6d4" font-size="16" opacity="0.7">🔒</text>
+  <text x="250" y="50" fill="#0891b2" font-size="14" opacity="0.6">🖥️</text>
+  <text x="30" y="150" fill="#06b6d4" font-size="12" opacity="0.5">🔍</text>
+  
+  <!-- Title overlay -->
+  <rect x="0" y="160" width="300" height="40" fill="rgba(0,0,0,0.7)"/>
+  <text x="150" y="180" text-anchor="middle" fill="#06b6d4" font-family="serif" font-size="14" font-weight="bold">프로젝트 키메라의 그림자</text>
+</svg>

@@ -1,0 +1,56 @@
+<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="dreamGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#4c1d95;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#7c3aed;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2d1b69;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="dreamAura" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" style="stop-color:#a855f7;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.1" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Dream/Reality background -->
+  <rect width="300" height="200" fill="url(#dreamGrad)"/>
+  
+  <!-- Dreamy aura -->
+  <circle cx="150" cy="100" r="80" fill="url(#dreamAura)"/>
+  
+  <!-- Writer's desk -->
+  <rect x="80" y="120" width="140" height="30" fill="#8b4513"/>
+  <rect x="75" y="150" width="150" height="8" fill="#a16207"/>
+  
+  <!-- Manuscript papers scattered -->
+  <rect x="100" y="100" width="20" height="25" fill="#fef3c7" opacity="0.9"/>
+  <rect x="130" y="95" width="25" height="30" fill="#fef3c7" opacity="0.8"/>
+  <rect x="165" y="105" width="22" height="20" fill="#fef3c7" opacity="0.9"/>
+  
+  <!-- Text lines on papers -->
+  <rect x="105" y="110" width="12" height="1" fill="#374151" opacity="0.6"/>
+  <rect x="105" y="113" width="10" height="1" fill="#374151" opacity="0.6"/>
+  <rect x="105" y="116" width="14" height="1" fill="#374151" opacity="0.6"/>
+  
+  <!-- Quill pen -->
+  <rect x="180" y="110" width="25" height="2" fill="#7c2d12"/>
+  <ellipse cx="205" cy="111" rx="3" ry="8" fill="#dc2626" opacity="0.7"/>
+  
+  <!-- Dream vs Reality boundary (wavy line) -->
+  <path d="M 30 100 Q 80 80 130 100 T 230 100 Q 260 120 290 100" 
+        fill="none" stroke="#c084fc" stroke-width="3" opacity="0.8"/>
+  
+  <!-- Dream elements floating -->
+  <circle cx="70" cy="60" r="8" fill="#e879f9" opacity="0.5"/>
+  <circle cx="230" cy="70" r="6" fill="#c084fc" opacity="0.6"/>
+  <circle cx="100" cy="40" r="5" fill="#a855f7" opacity="0.4"/>
+  <circle cx="200" cy="50" r="7" fill="#e879f9" opacity="0.5"/>
+  
+  <!-- Story symbols -->
+  <text x="60" y="90" fill="#c084fc" font-size="16" opacity="0.7">📖</text>
+  <text x="240" y="80" fill="#a855f7" font-size="14" opacity="0.6">✍️</text>
+  <text x="50" y="140" fill="#8b5cf6" font-size="12" opacity="0.5">💭</text>
+  
+  <!-- Title overlay -->
+  <rect x="0" y="160" width="300" height="40" fill="rgba(0,0,0,0.7)"/>
+  <text x="150" y="180" text-anchor="middle" fill="#a855f7" font-family="serif" font-size="14" font-weight="bold">몽상가의 마지막 살인</text>
+</svg>

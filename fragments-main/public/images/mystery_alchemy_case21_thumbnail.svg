@@ -1,0 +1,41 @@
+<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="hanokGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#7c2d12;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a16207;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="moonGlow" cx="80%" cy="20%" r="40%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:0.3" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Night sky background -->
+  <rect width="300" height="200" fill="url(#hanokGrad)"/>
+  
+  <!-- Moon -->
+  <circle cx="240" cy="40" r="25" fill="#fbbf24" opacity="0.9"/>
+  <circle cx="240" cy="40" r="35" fill="url(#moonGlow)"/>
+  
+  <!-- Traditional Korean palace silhouette -->
+  <polygon points="50,120 100,110 150,100 200,110 250,120 250,160 50,160" fill="#8b4513"/>
+  <polygon points="60,130 90,125 120,120 150,115 180,120 210,125 240,130 240,150 60,150" fill="#a16207"/>
+  
+  <!-- Traditional roof curves -->
+  <path d="M 50 120 Q 75 115 100 110 Q 125 105 150 100 Q 175 105 200 110 Q 225 115 250 120" 
+        fill="none" stroke="#dc2626" stroke-width="3"/>
+  
+  <!-- Lanterns -->
+  <ellipse cx="100" cy="135" rx="8" ry="12" fill="#dc2626"/>
+  <rect x="96" y="130" width="8" height="10" fill="#fbbf24" opacity="0.8"/>
+  <ellipse cx="200" cy="135" rx="8" ry="12" fill="#dc2626"/>
+  <rect x="196" y="130" width="8" height="10" fill="#fbbf24" opacity="0.8"/>
+  
+  <!-- Palace windows -->
+  <rect x="130" y="140" width="12" height="15" fill="#fbbf24" opacity="0.6"/>
+  <rect x="158" y="140" width="12" height="15" fill="#fbbf24" opacity="0.6"/>
+  
+  <!-- Title overlay -->
+  <rect x="0" y="160" width="300" height="40" fill="rgba(0,0,0,0.7)"/>
+  <text x="150" y="180" text-anchor="middle" fill="#dc2626" font-family="serif" font-size="14" font-weight="bold">한양 달빛 아래의 의문</text>
+</svg>

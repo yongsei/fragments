@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="puzzle" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffd700;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ffed4e;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="rgba(0,0,0,0.3)"/>
+    </filter>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="200" cy="200" r="190" fill="url(#bg)" stroke="#fff" stroke-width="8" filter="url(#shadow)"/>
+  
+  <!-- Main puzzle piece -->
+  <g transform="translate(100, 100)">
+    <path d="M0 0 L60 0 Q80 -20 100 0 L200 0 L200 60 Q220 80 200 100 L200 200 L100 200 Q80 220 60 200 L0 200 L0 100 Q-20 80 0 60 Z" 
+          fill="url(#puzzle)" 
+          stroke="#fff" 
+          stroke-width="6"
+          filter="url(#shadow)"/>
+    
+    <!-- Inner puzzle details -->
+    <circle cx="50" cy="50" r="8" fill="#764ba2"/>
+    <circle cx="150" cy="150" r="8" fill="#764ba2"/>
+    <circle cx="100" cy="100" r="6" fill="#764ba2"/>
+    
+    <!-- Connecting lines -->
+    <path d="M30 100 Q50 80 70 100 Q90 120 110 100" stroke="#764ba2" stroke-width="4" fill="none"/>
+    <path d="M100 30 Q120 50 100 70 Q80 90 100 110" stroke="#764ba2" stroke-width="4" fill="none"/>
+  </g>
+  
+  <!-- Game controller icon -->
+  <g transform="translate(320, 320)" opacity="0.8">
+    <rect x="0" y="0" width="40" height="25" rx="12" fill="#ffd700"/>
+    <circle cx="10" cy="12" r="3" fill="#764ba2"/>
+    <circle cx="30" cy="12" r="3" fill="#764ba2"/>
+    <rect x="18" y="8" width="4" height="8" fill="#764ba2"/>
+  </g>
+  
+  <!-- Sparkle effects -->
+  <g opacity="0.6">
+    <polygon points="50,80 55,90 65,85 55,95 50,105 45,95 35,85 45,90" fill="#ffd700"/>
+    <polygon points="320,100 323,106 329,103 323,109 320,115 317,109 311,103 317,106" fill="#ffd700"/>
+    <polygon points="350,250 353,256 359,253 353,259 350,265 347,259 341,253 347,256" fill="#ffd700"/>
+  </g>
+</svg>

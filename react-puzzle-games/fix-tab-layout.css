@@ -1,0 +1,111 @@
+/* 탭 레이아웃 수정 CSS */
+
+/* 메인 컨테이너 높이 조정 */
+.tab-container {
+  display: flex;
+  gap: 4px;
+  flex-direction: column;
+  overflow: visible; /* auto hidden에서 visible로 변경 */
+  scroll-behavior: smooth;
+  flex: 1 1 0%;
+  height: auto; /* 100%에서 auto로 변경 */
+  min-height: 120px; /* 최소 높이 설정 */
+  padding-bottom: 20px; /* 10px에서 20px로 증가 */
+  scrollbar-width: none;
+}
+
+/* 첫 번째 탭 행 */
+.tab-row-primary {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  min-height: 40px; /* 36px에서 40px로 증가 */
+  margin-bottom: 8px; /* 간격 추가 */
+}
+
+/* 두 번째 탭 행 (문제의 부분) */
+.tab-row-secondary {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  min-height: 60px; /* 50px에서 60px로 증가 */
+  padding: 12px 1rem; /* 8px에서 12px로 증가 */
+  overflow-x: auto;
+  overflow-y: visible; /* hidden에서 visible로 변경 */
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  margin-bottom: 10px; /* 하단 여백 추가 */
+}
+
+/* 탭 버튼 스타일 개선 */
+.tab-button-primary {
+  background: linear-gradient(45deg, rgb(139, 92, 246), rgba(139, 92, 246, 0.867));
+  color: white;
+  border: 2px solid rgb(139, 92, 246);
+  border-radius: 20px;
+  padding: 10px 14px; /* 8px 12px에서 증가 */
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: fit-content;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.tab-button-secondary {
+  background: linear-gradient(45deg, rgb(139, 92, 246), rgba(139, 92, 246, 0.867));
+  color: white;
+  border: 2px solid rgb(139, 92, 246);
+  border-radius: 16px;
+  padding: 6px 10px; /* 4px 8px에서 증가 */
+  font-size: 0.75rem; /* 0.7rem에서 증가 */
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s;
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  min-width: fit-content;
+  white-space: nowrap;
+  flex-shrink: 0;
+  opacity: 1;
+  margin-bottom: 5px; /* 하단 여백 추가 */
+}
+
+/* 반응형 조정 */
+@media (max-width: 768px) {
+  .tab-container {
+    min-height: 140px;
+    padding-bottom: 30px;
+  }
+  
+  .tab-row-secondary {
+    min-height: 70px;
+    padding: 15px 1rem;
+  }
+}
+
+/* 스크롤바 스타일링 */
+.tab-row-secondary::-webkit-scrollbar {
+  height: 4px;
+}
+
+.tab-row-secondary::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+}
+
+.tab-row-secondary::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.5);
+  border-radius: 2px;
+}
+
+.tab-row-secondary::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.7);
+}

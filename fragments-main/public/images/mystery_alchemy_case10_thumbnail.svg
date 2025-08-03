@@ -1,0 +1,48 @@
+<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="magicStageGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e1b4b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c2d12;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="magicAura" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:0.2" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="300" height="200" fill="url(#magicStageGrad)"/>
+  
+  <!-- Magic stage -->
+  <polygon points="50,130 250,130 230,160 70,160" fill="#8b4513"/>
+  <rect x="60" y="160" width="180" height="8" fill="#a16207"/>
+  
+  <!-- Stage curtains -->
+  <rect x="20" y="40" width="20" height="100" fill="#7c2d12"/>
+  <rect x="260" y="40" width="20" height="100" fill="#7c2d12"/>
+  
+  <!-- Magic hat (where magician disappeared) -->
+  <ellipse cx="150" cy="115" rx="30" ry="8" fill="#1f2937"/>
+  <rect x="130" y="95" width="40" height="20" fill="#111827"/>
+  <ellipse cx="150" cy="95" rx="20" ry="6" fill="#1f2937"/>
+  
+  <!-- Magic sparkles -->
+  <circle cx="150" cy="100" r="40" fill="url(#magicAura)"/>
+  <text x="100" y="70" fill="#8b5cf6" font-size="20" opacity="0.8">✨</text>
+  <text x="200" y="80" fill="#a855f7" font-size="18" opacity="0.7">⭐</text>
+  <text x="80" y="110" fill="#c084fc" font-size="16" opacity="0.6">✦</text>
+  <text x="220" y="120" fill="#8b5cf6" font-size="14" opacity="0.5">✧</text>
+  <text x="120" y="50" fill="#e879f9" font-size="12" opacity="0.7">✨</text>
+  
+  <!-- Magic wand -->
+  <rect x="180" y="110" width="25" height="3" fill="#fbbf24"/>
+  <circle cx="205" cy="111" r="3" fill="#ffffff"/>
+  
+  <!-- Playing cards floating -->
+  <rect x="90" y="85" width="8" height="12" fill="#dc2626" opacity="0.8"/>
+  <rect x="210" y="90" width="8" height="12" fill="#1f2937" opacity="0.8"/>
+  
+  <!-- Title overlay -->
+  <rect x="0" y="160" width="300" height="40" fill="rgba(0,0,0,0.7)"/>
+  <text x="150" y="180" text-anchor="middle" fill="#8b5cf6" font-family="serif" font-size="14" font-weight="bold">마술사의 마지막 트릭</text>
+</svg>

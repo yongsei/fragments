@@ -1,0 +1,38 @@
+<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="tunnelGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1f2937;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#374151;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1f2937;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="timeGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#1e40af;stop-opacity:0.2" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Tunnel background -->
+  <rect width="300" height="200" fill="url(#tunnelGrad)"/>
+  
+  <!-- Tunnel perspective -->
+  <polygon points="50,50 250,50 220,150 80,150" fill="#111827" opacity="0.8"/>
+  
+  <!-- Railway tracks -->
+  <rect x="130" y="120" width="40" height="60" fill="#4b5563"/>
+  <rect x="120" y="130" width="8" height="40" fill="#6b7280"/>
+  <rect x="172" y="130" width="8" height="40" fill="#6b7280"/>
+  
+  <!-- Time distortion effect -->
+  <circle cx="150" cy="100" r="40" fill="url(#timeGlow)"/>
+  <circle cx="150" cy="100" r="30" fill="none" stroke="#60a5fa" stroke-width="2" opacity="0.7"/>
+  <circle cx="150" cy="100" r="20" fill="none" stroke="#3b82f6" stroke-width="2" opacity="0.9"/>
+  
+  <!-- Clock elements -->
+  <circle cx="150" cy="100" r="15" fill="none" stroke="#ffffff" stroke-width="2"/>
+  <line x1="150" y1="100" x2="150" y2="90" stroke="#ffffff" stroke-width="2"/>
+  <line x1="150" y1="100" x2="160" y2="100" stroke="#ffffff" stroke-width="1"/>
+  
+  <!-- Title overlay -->
+  <rect x="0" y="160" width="300" height="40" fill="rgba(0,0,0,0.7)"/>
+  <text x="150" y="180" text-anchor="middle" fill="#3b82f6" font-family="sans-serif" font-size="16" font-weight="bold">시간의 역설</text>
+</svg>

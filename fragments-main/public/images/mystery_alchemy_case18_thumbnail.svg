@@ -1,0 +1,67 @@
+<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="dinnerGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#7c2d12;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#991b1b;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="candleGlow" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:0.2" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="300" height="200" fill="url(#dinnerGrad)"/>
+  
+  <!-- Dining table -->
+  <ellipse cx="150" cy="130" rx="80" ry="25" fill="#8b4513"/>
+  <ellipse cx="150" cy="125" rx="75" ry="22" fill="#a16207"/>
+  
+  <!-- Candlelight atmosphere -->
+  <circle cx="150" cy="80" r="40" fill="url(#candleGlow)"/>
+  
+  <!-- Candles -->
+  <rect x="130" y="95" width="4" height="20" fill="#fbbf24"/>
+  <ellipse cx="132" cy="92" rx="3" ry="5" fill="#dc2626" opacity="0.8"/>
+  
+  <rect x="165" y="100" width="4" height="15" fill="#fbbf24"/>
+  <ellipse cx="167" cy="97" rx="3" ry="5" fill="#dc2626" opacity="0.8"/>
+  
+  <!-- Elegant dinner dishes -->
+  <circle cx="120" cy="125" r="12" fill="#6b7280"/>
+  <circle cx="120" cy="123" r="10" fill="#dc2626" opacity="0.7"/>
+  
+  <circle cx="180" cy="125" r="12" fill="#6b7280"/>
+  <circle cx="180" cy="123" r="10" fill="#059669" opacity="0.7"/>
+  
+  <circle cx="150" cy="135" r="15" fill="#6b7280"/>
+  <circle cx="150" cy="133" r="13" fill="#f59e0b" opacity="0.8"/>
+  
+  <!-- Wine glasses -->
+  <polygon points="100,115 105,115 107,125 98,125" fill="#dc2626" opacity="0.6"/>
+  <rect x="101" y="125" width="3" height="8" fill="#6b7280"/>
+  
+  <polygon points="195,115 200,115 202,125 193,125" fill="#dc2626" opacity="0.6"/>
+  <rect x="196" y="125" width="3" height="8" fill="#6b7280"/>
+  
+  <!-- Silverware -->
+  <rect x="110" y="130" width="8" height="1" fill="#9ca3af"/>
+  <rect x="110" y="120" width="8" height="1" fill="#9ca3af"/>
+  
+  <rect x="185" y="130" width="8" height="1" fill="#9ca3af"/>
+  <rect x="185" y="120" width="8" height="1" fill="#9ca3af"/>
+  
+  <!-- Mysterious poison elements -->
+  <circle cx="80" cy="80" r="3" fill="#22c55e" opacity="0.6"/>
+  <circle cx="220" cy="90" r="2" fill="#10b981" opacity="0.7"/>
+  <text x="70" y="70" fill="#22c55e" font-size="12" opacity="0.5">💀</text>
+  
+  <!-- Dining atmosphere symbols -->
+  <text x="60" y="50" fill="#fbbf24" font-size="14" opacity="0.7">🍽️</text>
+  <text x="230" y="60" fill="#f59e0b" font-size="12" opacity="0.6">🥂</text>
+  <text x="50" y="170" fill="#dc2626" font-size="10" opacity="0.5">🕯️</text>
+  
+  <!-- Title overlay -->
+  <rect x="0" y="160" width="300" height="40" fill="rgba(0,0,0,0.7)"/>
+  <text x="150" y="180" text-anchor="middle" fill="#dc2626" font-family="serif" font-size="16" font-weight="bold">마지막 만찬의 비밀</text>
+</svg>
