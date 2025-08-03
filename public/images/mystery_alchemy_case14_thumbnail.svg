@@ -1,0 +1,53 @@
+<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="aiGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a8a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#312e81;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="circuitGlow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:0.2" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="300" height="200" fill="url(#aiGrad)"/>
+  
+  <!-- AI/Computer main unit -->
+  <rect x="100" y="80" width="100" height="80" fill="#1f2937"/>
+  <rect x="110" y="90" width="80" height="60" fill="#374151"/>
+  
+  <!-- Central processing display -->
+  <rect x="120" y="100" width="60" height="40" fill="#3b82f6" opacity="0.8"/>
+  <rect x="125" y="105" width="50" height="30" fill="#1e3a8a"/>
+  
+  <!-- Circuit patterns -->
+  <circle cx="150" cy="120" r="40" fill="url(#circuitGlow)"/>
+  
+  <!-- Digital lines/circuits -->
+  <rect x="90" y="119" width="20" height="2" fill="#60a5fa"/>
+  <rect x="190" y="119" width="20" height="2" fill="#60a5fa"/>
+  <rect x="149" y="70" width="2" height="20" fill="#60a5fa"/>
+  <rect x="149" y="150" width="2" height="20" fill="#60a5fa"/>
+  
+  <!-- Circuit nodes -->
+  <circle cx="80" cy="120" r="3" fill="#3b82f6"/>
+  <circle cx="220" cy="120" r="3" fill="#3b82f6"/>
+  <circle cx="150" cy="60" r="3" fill="#3b82f6"/>
+  <circle cx="150" cy="180" r="3" fill="#3b82f6"/>
+  
+  <!-- Oracle/prediction symbols -->
+  <text x="60" y="70" fill="#60a5fa" font-size="18" opacity="0.7">🔮</text>
+  <text x="230" y="80" fill="#3b82f6" font-size="16" opacity="0.6">⚡</text>
+  <text x="70" y="160" fill="#1d4ed8" font-size="14" opacity="0.5">🤖</text>
+  <text x="240" y="150" fill="#60a5fa" font-size="12" opacity="0.6">💻</text>
+  
+  <!-- Digital data streams -->
+  <text x="130" y="110" fill="#60a5fa" font-size="8" opacity="0.8">01010</text>
+  <text x="155" y="125" fill="#3b82f6" font-size="8" opacity="0.7">11001</text>
+  <text x="135" y="135" fill="#1d4ed8" font-size="8" opacity="0.6">10110</text>
+  
+  <!-- Title overlay -->
+  <rect x="0" y="160" width="300" height="40" fill="rgba(0,0,0,0.7)"/>
+  <text x="150" y="180" text-anchor="middle" fill="#3b82f6" font-family="serif" font-size="16" font-weight="bold">신탁 기계의 역설</text>
+</svg>

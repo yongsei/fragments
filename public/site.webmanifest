@@ -1,0 +1,36 @@
+{
+  "short_name": "Norri Games",
+  "name": "Norri Puzzle Games - 퍼즐 게임 모음집",
+  "description": "다양한 퍼즐 게임을 무료로 즐기세요! 미스터리 추리, CCTV 탐정, 타로카드, 리듬 게임 등",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    },
+    {
+      "src": "/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "type": "image/png",
+      "sizes": "180x180"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#667eea",
+  "background_color": "#667eea",
+  "categories": ["games", "entertainment", "puzzle"],
+  "lang": "ko",
+  "scope": "/",
+  "prefer_related_applications": false
+}
