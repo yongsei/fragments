@@ -17,7 +17,7 @@ const MysteryAlchemy1CaseIntro: React.FC = () => {
         : "🏰 A murder case in an elegant mansion! Uncover the truth behind the poisoned mansion owner. Who is the real culprit among Mrs. Mary, the butler, and the doctor? Classic detective game solving cases through clue card combinations - Fragment of Mystery Case1 free trial!"
       }
       seoKeywords={originalLang === 'kr'
-        ? "저택 살인사건, 단서의 파편 케이스1, 추리게임, 미스터리게임, 독살사건, 클래식추리, 범인찾기, 저택미스터리, 살인사건게임, 추론게임, 탐정게임, 무료추리게임, 온라인미스터리"
+        ? "저택 살인사건, 단서의 파편 케이스1, 추리게임, 미스터리게임, 독살사건, 클래식추리, 범인찾기, 저택미스터리, 살인사건게임, 추론게임, 탐정게임, 온라인미스터리"
         : "mansion murder case, fragment of mystery case1, detective game, mystery game, poisoning case, classic detective, find culprit, mansion mystery, murder case game, reasoning game, detective game, free detective game, online mystery"
       }
       canonicalUrl="/fragments/case1"

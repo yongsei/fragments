@@ -5,6 +5,7 @@ import GameCard from './GameCard';
 import SwipeCardGrid from './SwipeCardGrid';
 import ToastMessage from './ToastMessage';
 // import { HintSystem } from '../components/HintSystem'; // 모바일에서는 사용하지 않음
+import AdModal from '../../../components/AdModal';
 import { useMysteryGame } from '../hooks/useMysteryGame';
 import { useLanguageState } from '../hooks/useLanguage';
 import type { GameScenario } from '../games/case1/scenario_kr';
@@ -57,6 +58,10 @@ interface UICustomization {
     type?: 'none' | 'dots' | 'grid' | 'waves';
     opacity?: number;
     color?: string;
+  };
+  systemUI?: {
+    topBarBackground?: string;  // 상단 바 배경색
+    bottomBarBackground?: string;  // 하단 바 배경색
   };
   typography?: {
     headingFont?: string;
@@ -135,6 +140,10 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
       opacity: uiCustomization.backgroundPattern?.opacity || 0.1,
       color: uiCustomization.backgroundPattern?.color || 'rgba(255, 255, 255, 0.05)'
     },
+    systemUI: {
+      topBarBackground: uiCustomization.systemUI?.topBarBackground || `linear-gradient(135deg, ${themeColors.primary} 0%, ${themeColors.secondary} 100%)`,
+      bottomBarBackground: uiCustomization.systemUI?.bottomBarBackground || `linear-gradient(135deg, ${themeColors.primary} 0%, ${themeColors.secondary} 100%)`
+    },
     typography: {
       headingFont: uiCustomization.typography?.headingFont || "'Noto Sans KR', sans-serif",
       bodyFont: uiCustomization.typography?.bodyFont || "'Noto Sans KR', sans-serif",
@@ -168,7 +177,8 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
     handleRequestHint,
     // handleAnswerHint, // 모바일에서는 사용하지 않음
     handleRestart,
-    handleToastClose
+    handleToastClose,
+    handleAdHintReward
     // setHighlightedCardId, // 모바일에서는 사용하지 않음
     // setToastMessage // 모바일에서는 사용하지 않음
   } = useMysteryGame({
@@ -184,8 +194,25 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
   // 팝업 상태 관리
   const [showCaseOverview, setShowCaseOverview] = useState(false);
   const [showConnectionHistory, setShowConnectionHistory] = useState(false);
+  const [showAdModal, setShowAdModal] = useState(false);
 
   // PC 버전과 동일한 힌트 시스템을 위한 핸들러는 hook에서 가져옴
+  
+  // 광고 관련 핸들러
+  const handleAdCompleted = () => {
+    console.log('광고 시청 완료! 추가 힌트 지급');
+    setShowAdModal(false);
+    handleAdHintReward();
+  };
+
+  const handleSkipAd = () => {
+    console.log('광고 건너뛰기');
+    setShowAdModal(false);
+  };
+
+  const handleCloseAdModal = () => {
+    setShowAdModal(false);
+  };
 
 
   // 새 카드 알림 상태 관리 (스와이프 UI에서는 전역 알림만 사용)
@@ -401,7 +428,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
         color: 'white',
         padding: '1rem', // 기본 패딩
         paddingTop: 'max(env(safe-area-inset-top, 0px), 65px)', // 새로운 헤더 높이(60px) + 여유(5px)
-        paddingBottom: 'max(env(safe-area-inset-bottom, 0px), 85px)', // 하단 고정 영역 + 여유
+        paddingBottom: 'max(env(safe-area-inset-bottom, 0px), 45px)', // 하단 고정 영역 + 여유
         fontFamily: ui.typography.bodyFont,
         position: 'relative'
       }}>
@@ -412,7 +439,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
           left: 0,
           right: 0,
           height: 'max(env(safe-area-inset-top, 0px), 0px)',
-          background: 'linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(22, 33, 62, 0.95) 100%)',
+          background: ui.systemUI.topBarBackground,
           zIndex: 999
         }} />
 
@@ -422,14 +449,14 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
           bottom: 0,
           left: 0,
           right: 0,
-          height: `calc(max(env(safe-area-inset-bottom, 0px), 0px) + 120px)`, // 하단 UI(120px) + 시스템 UI
-          background: `linear-gradient(135deg, ${themeColors.primary} 0%, ${themeColors.secondary} 100%)`,
+          height: `calc(max(env(safe-area-inset-bottom, 0px), 0px) + 80px)`, // 하단 UI(80px) + 시스템 UI
+          background: ui.systemUI.bottomBarBackground,
           zIndex: 99
         }} />
         <div style={{
           maxWidth: ui.layout.containerMaxWidth,
           margin: '0 auto',
-          paddingBottom: '120px'
+          paddingBottom: '20px' // 120px에서 20px로 축소
         }}>
           {/* 모바일에서는 사건 개요 제거 - 팝업으로 이동 */}
 
@@ -497,7 +524,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
             left: 0,
             right: 0,
             height: '60px', // 기존 140px에서 60px로 대폭 축소
-            background: 'linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(22, 33, 62, 0.95) 100%)',
+            background: ui.systemUI.topBarBackground,
             backdropFilter: 'blur(10px)',
             borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
             zIndex: 1000,
@@ -532,27 +559,30 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
             {/* 힌트 버튼 */}
             <button
               onClick={() => {
-                if (gameState.hintsUsed >= maxHints) return;
-                handleRequestHint();
+                if (gameState.hintsUsed < maxHints) {
+                  handleRequestHint();
+                } else {
+                  // 모든 힌트를 사용한 후에는 광고 모달 표시
+                  setShowAdModal(true);
+                }
               }}
-              disabled={gameState.hintsUsed >= maxHints}
               style={{
                 background: gameState.hintsUsed >= maxHints
-                  ? 'rgba(128, 128, 128, 0.3)'
+                  ? 'linear-gradient(45deg, #ff6b6b, #ee5a24)' // 광고 힌트 버튼 색상
                   : 'linear-gradient(45deg, #fbbf24, #f59e0b)',
-                color: gameState.hintsUsed >= maxHints ? 'rgba(255,255,255,0.5)' : 'white',
+                color: 'white',
                 border: gameState.hintsUsed >= maxHints
-                  ? '1px solid rgba(128, 128, 128, 0.5)'
+                  ? '1px solid rgba(255, 107, 107, 0.6)'
                   : '1px solid rgba(251, 191, 36, 0.6)',
                 borderRadius: '8px',
                 padding: '6px 10px',
                 fontSize: '0.8rem',
                 fontWeight: 600,
-                cursor: gameState.hintsUsed >= maxHints ? 'not-allowed' : 'pointer',
+                cursor: 'pointer',
                 transition: 'all 0.3s ease'
               }}
             >
-              💡 {gameState.hintsUsed}/{maxHints}
+              {gameState.hintsUsed >= maxHints ? '📺 광고 힌트' : '💡'} {gameState.hintsUsed}/{maxHints}
             </button>
           </div>
 
@@ -562,7 +592,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
             bottom: `max(env(safe-area-inset-bottom, 0px), 0px)`, // 시스템 UI 바로 위에 위치
             left: '0',
             right: '0',
-            background: `linear-gradient(135deg, ${themeColors.primary} 0%, ${themeColors.secondary} 100%)`,
+            background: ui.systemUI.bottomBarBackground,
             borderTop: '1px solid rgba(255, 255, 255, 0.2)',
             paddingTop: '12px',
             paddingBottom: '12px', // 고정 패딩으로 일관성 확보
@@ -733,7 +763,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
               padding: '2rem'
             }}>
               <div style={{
-                background: `linear-gradient(135deg, ${themeColors.primary} 0%, ${themeColors.secondary} 100%)`,
+                background: ui.systemUI.bottomBarBackground,
                 borderRadius: '20px',
                 padding: '2rem',
                 maxWidth: '90vw',
@@ -801,7 +831,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
               padding: '2rem'
             }}>
               <div style={{
-                background: `linear-gradient(135deg, ${themeColors.primary} 0%, ${themeColors.secondary} 100%)`,
+                background: ui.systemUI.bottomBarBackground,
                 borderRadius: '20px',
                 padding: '2rem',
                 maxWidth: '90vw',
@@ -897,6 +927,15 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
           )}
         </div>
       </div>
+
+      {/* AdMob 광고 모달 */}
+      <AdModal
+        isOpen={showAdModal}
+        onClose={handleCloseAdModal}
+        onAdCompleted={handleAdCompleted}
+        onSkip={handleSkipAd}
+        isHintReward={true}
+      />
     </>
   );
 };

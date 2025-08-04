@@ -20,6 +20,10 @@ interface UICustomization {
     opacity?: number;
     color?: string;
   };
+  systemUI?: {
+    topBarBackground?: string;  // 상단 바 배경색
+    bottomBarBackground?: string;  // 하단 바 배경색
+  };
   typography?: {
     headingFont?: string;
     bodyFont?: string;
@@ -49,6 +53,7 @@ interface MysteryGameLayoutProps {
   seoKeywords: string;
   canonicalUrl: string;
   backUrl: string;
+  nextChapterUrl?: string; // 다음 챕터 URL
   themeColors: {
     primary: string;
     secondary: string;

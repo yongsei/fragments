@@ -1,6 +1,6 @@
 import React from 'react';
-import MysteryIntroLayout from '../../components/MysteryIntroLayout';
-import { useFragmentsTranslation } from '../../hooks/useFragmentsTranslation';
+import MysteryIntroLayout from '../../../components/MysteryIntroLayout';
+import { useFragmentsTranslation } from '../../../hooks/useFragmentsTranslation';
 
 const MysteryAlchemy4CaseIntro: React.FC = () => {
   const { t, originalLang } = useFragmentsTranslation();

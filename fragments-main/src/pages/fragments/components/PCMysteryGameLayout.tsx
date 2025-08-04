@@ -55,6 +55,7 @@ interface PCMysteryGameLayoutProps {
   seoKeywords: string;
   canonicalUrl: string;
   backUrl: string;
+  nextChapterUrl?: string; // 다음 챕터 URL
   themeColors: {
     primary: string;
     secondary: string;
@@ -77,6 +78,7 @@ const PCMysteryGameLayout: React.FC<PCMysteryGameLayoutProps> = ({
   seoKeywords,
   canonicalUrl,
   backUrl,
+  nextChapterUrl,
   themeColors,
   cardIcon,
   caseId,
@@ -91,7 +93,7 @@ const PCMysteryGameLayout: React.FC<PCMysteryGameLayoutProps> = ({
     gameState, cards, isConnecting, showResult,
     highlightedCardId, toastMessage, cardFeedback,
     handleCardSelect, handleConnect, handleClearSelection,
-    handleRequestHint, handleRestart, handleToastClose
+    handleRequestHint, handleRestart, handleToastClose, handleAdHintReward
     // setHighlightedCardId, setToastMessage // PC에서는 사용하지 않음
   } = useMysteryGame({
     scenario, maxHints, initialCards: propInitialCards,
@@ -238,6 +240,28 @@ const PCMysteryGameLayout: React.FC<PCMysteryGameLayoutProps> = ({
               justifyContent: 'center',
               flexWrap: 'wrap'
             }}>
+              {/* 다음 챕터 버튼 (있는 경우에만 표시) */}
+              {nextChapterUrl && (
+                <Link
+                  to={nextChapterUrl}
+                  onClick={() => window.scrollTo(0, 0)}
+                  style={{
+                    background: `linear-gradient(45deg, #4caf50, #66bb6a)`,
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '25px',
+                    padding: '1rem 2rem',
+                    fontSize: '1rem',
+                    fontWeight: 600,
+                    textDecoration: 'none',
+                    display: 'inline-block',
+                    transition: 'all 0.3s ease'
+                  }}
+                >
+                  🚀 다음 챕터 계속하기
+                </Link>
+              )}
+              
               <button
                 onClick={handleRestart}
                 style={{
@@ -318,6 +342,7 @@ const PCMysteryGameLayout: React.FC<PCMysteryGameLayoutProps> = ({
               hintsUsed={gameState.hintsUsed}
               maxHints={maxHints}
               onRequestHint={handleRequestHint}
+              onAdHintReward={handleAdHintReward}
             />
           </div>
 

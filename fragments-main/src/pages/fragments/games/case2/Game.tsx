@@ -87,6 +87,10 @@ const ChronosParadoxGame: React.FC = () => {
           cardBackground: 'rgba(102, 126, 234, 0.1)', // 보라빛 투명
           cardHoverEffect: 'rgba(102, 126, 234, 0.2)'
         },
+        systemUI: {
+          topBarBackground: 'linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 100%)',
+          bottomBarBackground: 'linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 100%)'
+        },
         backgroundPattern: {
           type: 'grid',  // 미래적 패턴
           opacity: 0.05,

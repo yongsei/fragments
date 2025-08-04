@@ -14,7 +14,7 @@ interface LanguageContextType {
 const translations = {
   kr: {
     // 네비게이션
-    backButton: '← 돌아가기',
+    backButton: '돌아가기',
     hint: '힌트',
     caseSummary: '사건개요',
     
@@ -131,7 +131,7 @@ const translations = {
   },
   en: {
     // Navigation
-    backButton: '← Back',
+    backButton: 'Back',
     hint: 'Hint',
     caseSummary: 'Case Summary',
     

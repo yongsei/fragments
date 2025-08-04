@@ -10,7 +10,7 @@ export const useAdMob = () => {
       console.log('AdMob 초기화 시작...');
       await AdMob.initialize({
         testingDevices: [],
-        initializeForTesting: false,
+        initializeForTesting: true, // 테스트 모드 활성화
       });
       console.log('AdMob 초기화 완료');
     } catch (error: any) {
@@ -24,7 +24,7 @@ export const useAdMob = () => {
       console.log('리워드 광고 로드 시작...');
       
       const options: RewardAdOptions = {
-        adId: 'ca-app-pub-2644745250787584/1663143799',
+        adId: 'ca-app-pub-3940256099942544/5224354917', // Google 테스트 광고 ID
       };
 
       await AdMob.prepareRewardVideoAd(options);

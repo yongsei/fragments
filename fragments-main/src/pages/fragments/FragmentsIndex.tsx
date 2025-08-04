@@ -3,8 +3,6 @@ import { Link, Routes, Route, useLocation } from 'react-router-dom';
 import Case1Routes from './games/case1/Routes';
 import ChronosParadoxRoutes from './games/case2/Routes';
 import Case3Routes from './games/case3/Routes';
-import Case4Routes from './games/case4/Routes';
-import Case5Routes from './games/case5/Routes';
 import SEOHead from '../../components/SEOHead';
 import { LanguageContext, useLanguageState } from './hooks/useLanguage';
 import LanguageSelector from './components/LanguageSelector';
@@ -130,8 +128,6 @@ const FragmentsContent: React.FC = () => {
           <Route path="case1/*" element={<Case1Routes />} />
           <Route path="case2/*" element={<ChronosParadoxRoutes />} />
           <Route path="case3/*" element={<Case3Routes />} />
-          <Route path="case4/*" element={<Case4Routes />} />
-          <Route path="case5/*" element={<Case5Routes />} />
         </Routes>
       ) : (
         <div style={{
@@ -146,8 +142,8 @@ const FragmentsContent: React.FC = () => {
           {/* 언어 선택기 - 모바일/PC 반응형 배치 */}
           <div style={{
             position: 'absolute',
-            top: 'max(env(safe-area-inset-top, 0px), 0px)', // 언어 선택기를 최상단으로 위치
-            right: 'clamp(0.5rem, calc(50vw - 600px + 1rem), 1rem)', // 모바일: 화면기준, PC: 1200px컨테이너 기준
+            top: 'max(env(safe-area-inset-top, 0px), -5px)', // 언어 선택기를 더 위로 위치
+            right: 'clamp(1rem, calc(50vw - 600px + 1.5rem), 1.5rem)', // 모바일: 화면기준, PC: 1200px컨테이너 기준
             zIndex: 10
           }}>
             <LanguageSelector />
@@ -203,10 +199,12 @@ const FragmentsContent: React.FC = () => {
             }}>
               
               {/* 케이스 1: 저택의 미스터리 */}
-              <Link to="/fragments/case1" style={{
-                textDecoration: 'none',
-                color: 'inherit'
-              }}>
+              <Link to="/fragments/case1" 
+                onClick={() => window.scrollTo(0, 0)}
+                style={{
+                  textDecoration: 'none',
+                  color: 'inherit'
+                }}>
                 <div style={{
                   background: 'rgba(255, 255, 255, 0.1)',
                   borderRadius: '20px',
@@ -281,10 +279,12 @@ const FragmentsContent: React.FC = () => {
               </Link>
 
               {/* 케이스 2: 크로노스 패러독스 */}
-              <Link to="/fragments/case2" style={{
-                textDecoration: 'none',
-                color: 'inherit'
-              }}>
+              <Link to="/fragments/case2" 
+                onClick={() => window.scrollTo(0, 0)}
+                style={{
+                  textDecoration: 'none',
+                  color: 'inherit'
+                }}>
                 <div style={{
                   background: 'rgba(255, 255, 255, 0.1)',
                   borderRadius: '20px',
@@ -359,10 +359,12 @@ const FragmentsContent: React.FC = () => {
               </Link>
 
               {/* 케이스 3: 브래스헬름의 잿불 챕터1 */}
-              <Link to="/fragments/case3" style={{
-                textDecoration: 'none',
-                color: 'inherit'
-              }}>
+              <Link to="/fragments/case3" 
+                onClick={() => window.scrollTo(0, 0)}
+                style={{
+                  textDecoration: 'none',
+                  color: 'inherit'
+                }}>
                 <div style={{
                   background: 'rgba(255, 255, 255, 0.1)',
                   borderRadius: '20px',
@@ -431,162 +433,6 @@ const FragmentsContent: React.FC = () => {
                     }}>
                       <span>🎯 {t.difficulty}: ⭐⭐⭐⭐</span>
                       <span>⏱️ {t.estimatedTime}: 15-25{t.minutes}</span>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-
-              {/* 케이스 4: 브래스헬름의 잿불 챕터2 */}
-              <Link to="/fragments/case4" style={{
-                textDecoration: 'none',
-                color: 'inherit'
-              }}>
-                <div style={{
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  borderRadius: '20px',
-                  padding: 'clamp(1.5rem, 4vw, 2rem)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  transition: 'all 0.3s ease',
-                  cursor: 'pointer',
-                  position: 'relative',
-                  overflow: 'hidden'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-5px)';
-                  e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.2)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'none';
-                }}>
-                  
-                  {/* 동맹 배경 패턴 */}
-                  <div style={{
-                    position: 'absolute',
-                    top: '-50%',
-                    right: '-50%',
-                    width: '200%',
-                    height: '200%',
-                    background: 'linear-gradient(45deg, transparent 40%, rgba(240, 147, 251, 0.2) 50%, transparent 60%)',
-                    transform: 'rotate(10deg)',
-                    pointerEvents: 'none'
-                  }} />
-                  
-                  <div style={{ position: 'relative', zIndex: 1 }}>
-                    <div style={{
-                      fontSize: '3rem',
-                      marginBottom: '1rem',
-                      textAlign: 'center'
-                    }}>
-                      🤝
-                    </div>
-                    
-                    <h3 style={{
-                      fontSize: '1.5rem',
-                      margin: '0 0 1rem 0',
-                      fontWeight: 'bold',
-                      textAlign: 'center'
-                    }}>
-                      {t.caseTitle} 4: {originalLang === 'kr' ? '브래스헬름의 잿불 Ch.2' : 'Ashes of Brasshelm Ch.2'}
-                    </h3>
-                    
-                    <p style={{
-                      fontSize: '1rem',
-                      margin: '0 0 1.5rem 0',
-                      opacity: '0.9',
-                      lineHeight: '1.6',
-                      textAlign: 'center'
-                    }}>
-                      {originalLang === 'kr' ? '예상 밖의 동맹과 5인의 팀 결성' : 'Unexpected alliance and formation of a five-member team'}
-                    </p>
-                    
-                    <div style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      fontSize: '0.9rem',
-                      opacity: '0.8'
-                    }}>
-                      <span>🎯 {t.difficulty}: ⭐⭐⭐⭐</span>
-                      <span>⏱️ {t.estimatedTime}: 20-30{t.minutes}</span>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-
-              {/* 케이스 5: 브래스헬름의 잿불 챕터3 */}
-              <Link to="/fragments/case5" style={{
-                textDecoration: 'none',
-                color: 'inherit'
-              }}>
-                <div style={{
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  borderRadius: '20px',
-                  padding: 'clamp(1.5rem, 4vw, 2rem)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  transition: 'all 0.3s ease',
-                  cursor: 'pointer',
-                  position: 'relative',
-                  overflow: 'hidden'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-5px)';
-                  e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.2)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'none';
-                }}>
-                  
-                  {/* 최종 결전 배경 패턴 */}
-                  <div style={{
-                    position: 'absolute',
-                    top: '-50%',
-                    right: '-50%',
-                    width: '200%',
-                    height: '200%',
-                    background: 'linear-gradient(45deg, transparent 40%, rgba(254, 202, 87, 0.2) 50%, transparent 60%)',
-                    transform: 'rotate(-20deg)',
-                    pointerEvents: 'none'
-                  }} />
-                  
-                  <div style={{ position: 'relative', zIndex: 1 }}>
-                    <div style={{
-                      fontSize: '3rem',
-                      marginBottom: '1rem',
-                      textAlign: 'center'
-                    }}>
-                      ⚔️
-                    </div>
-                    
-                    <h3 style={{
-                      fontSize: '1.5rem',
-                      margin: '0 0 1rem 0',
-                      fontWeight: 'bold',
-                      textAlign: 'center'
-                    }}>
-                      {t.caseTitle} 5: {originalLang === 'kr' ? '브래스헬름의 잿불 Ch.3' : 'Ashes of Brasshelm Ch.3'}
-                    </h3>
-                    
-                    <p style={{
-                      fontSize: '1rem',
-                      margin: '0 0 1.5rem 0',
-                      opacity: '0.9',
-                      lineHeight: '1.6',
-                      textAlign: 'center'
-                    }}>
-                      {originalLang === 'kr' ? '최종 결전과 비극적인 희생' : 'Final battle and tragic sacrifice'}
-                    </p>
-                    
-                    <div style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      fontSize: '0.9rem',
-                      opacity: '0.8'
-                    }}>
-                      <span>🎯 {t.difficulty}: ⭐⭐⭐⭐⭐</span>
-                      <span>⏱️ {t.estimatedTime}: 25-35{t.minutes}</span>
                     </div>
                   </div>
                 </div>

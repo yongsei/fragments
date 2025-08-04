@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import SEOHead from '../../../components/SEOHead';
 import { hasGameProgress, loadGameProgress, clearGameProgress } from '../utils/gameProgress';
 import { useLanguage } from '../hooks/useLanguage';
+import AdModal from '../../../components/AdModal';
 
 interface PreviewCard {
   icon: string;
@@ -67,6 +68,7 @@ const MysteryIntroLayout: React.FC<MysteryIntroLayoutProps> = ({
   const navigate = useNavigate();
   const { t } = useLanguage();
   const [showResumePopup, setShowResumePopup] = useState(false);
+  const [showAdModal, setShowAdModal] = useState(false);
   const [savedGameInfo, setSavedGameInfo] = useState<{
     elapsedTime: number;
     discoveredCardsCount: number;
@@ -97,25 +99,43 @@ const MysteryIntroLayout: React.FC<MysteryIntroLayoutProps> = ({
         }
       }
       
-      // 저장된 데이터가 없으면 바로 게임 시작
-      navigate(gameUrl);
+      // 저장된 데이터가 없으면 광고 모달 표시
+      setShowAdModal(true);
     } catch (error) {
       console.error('저장된 게임 데이터 확인 실패:', error);
-      // 에러 발생 시 바로 게임 시작
-      navigate(gameUrl);
+      // 에러 발생 시 광고 모달 표시
+      setShowAdModal(true);
     }
   };
 
   const handleResumeGame = () => {
     setShowResumePopup(false);
-    navigate(gameUrl);
+    setShowAdModal(true);
   };
 
   const handleStartNewGame = () => {
     // 저장된 데이터 삭제 후 새 게임 시작
     clearGameProgress(caseId);
     setShowResumePopup(false);
+    setShowAdModal(true);
+  };
+
+  const handleAdCompleted = () => {
+    console.log('광고 시청 완료! 게임 시작');
+    setShowAdModal(false);
+    window.scrollTo(0, 0); // 화면을 최상단으로 스크롤
     navigate(gameUrl);
+  };
+
+  const handleSkipAd = () => {
+    console.log('광고 건너뛰기');
+    setShowAdModal(false);
+    window.scrollTo(0, 0); // 화면을 최상단으로 스크롤
+    navigate(gameUrl);
+  };
+
+  const handleCloseAdModal = () => {
+    setShowAdModal(false);
   };
 
   const formatTime = (seconds: number): string => {
@@ -442,6 +462,14 @@ const MysteryIntroLayout: React.FC<MysteryIntroLayoutProps> = ({
           </div>
         </div>
       )}
+
+      {/* AdMob 광고 모달 */}
+      <AdModal
+        isOpen={showAdModal}
+        onClose={handleCloseAdModal}
+        onAdCompleted={handleAdCompleted}
+        onSkip={handleSkipAd}
+      />
     </>
   );
 };

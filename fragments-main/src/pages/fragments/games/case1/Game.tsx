@@ -97,6 +97,10 @@ const MysteryAlchemy1CaseGame: React.FC = () => {
           cardBackground: 'rgba(255, 255, 255, 0.1)',
           cardHoverEffect: 'rgba(255, 215, 0, 0.2)'
         },
+        systemUI: {
+          topBarBackground: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
+          bottomBarBackground: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)'
+        },
         backgroundPattern: {
           type: 'none'
         },

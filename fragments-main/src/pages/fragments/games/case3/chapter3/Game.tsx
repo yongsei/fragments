@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import MysteryGameLayout from '../../components/MysteryGameLayout';
-import { useLanguage } from '../../hooks/useLanguage';
+import MysteryGameLayout from '../../../components/MysteryGameLayout';
+import { useLanguage } from '../../../hooks/useLanguage';
 import type { GameScenario } from './scenario_kr';
 import type { CaseFeedbackData } from './feedbackData_kr';
 // 정적 import로 변경
@@ -70,12 +70,12 @@ const MysteryAlchemy5CaseGame: React.FC = () => {
   return (
     <MysteryGameLayout
       scenario={scenario}
-      caseId="case5"
+      caseId="case3-ch3"
       seoTitle={seoContent.title}
       seoDescription={seoContent.description}
       seoKeywords={seoContent.keywords}
-      canonicalUrl="/fragments/case5"
-      backUrl="/fragments/case5"
+      canonicalUrl="/fragments/case3/chapter3"
+      backUrl="/fragments/case3"
       uiCustomization={{
         cardStyles: {
           suspectColor: '#dc2626',
@@ -85,6 +85,10 @@ const MysteryAlchemy5CaseGame: React.FC = () => {
           selectedBorderColor: '#22c55e',
           cardBackground: 'rgba(255, 255, 255, 0.1)',
           cardHoverEffect: 'rgba(254, 202, 87, 0.2)'
+        },
+        systemUI: {
+          topBarBackground: 'linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%)',
+          bottomBarBackground: 'linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%)'
         },
         backgroundPattern: {
           type: 'none'

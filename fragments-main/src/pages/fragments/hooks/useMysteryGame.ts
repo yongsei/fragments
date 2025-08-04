@@ -859,6 +859,41 @@ export const useMysteryGame = ({
     }
   }, [caseId, gameWon, showResult, gameState, cards]);
 
+  // 광고 시청 후 추가 힌트 제공 기능
+  const handleAdHintReward = useCallback(() => {
+    console.log('광고 시청 완료! 추가 힌트 제공');
+    
+    // 추가 힌트를 제공 (generateAdvancedHint 사용)
+    const bonusHint = generateAdvancedHint();
+    
+    // 토스트 메시지로 힌트 표시
+    setToastMessage({
+      message: `🎁 광고 보상 힌트: ${bonusHint}`,
+      type: 'hint',
+      isVisible: true
+    });
+    
+    // 연결 기록에 광고 힌트 추가
+    setGameState(prev => {
+      const newConnection = {
+        id: `ad-hint-${Date.now()}`,
+        cards: [],
+        result: bonusHint,
+        timestamp: Date.now(),
+        verified: true,
+        isHint: true,
+        hintMessage: bonusHint
+      };
+      
+      return {
+        ...prev,
+        connections: [...prev.connections, newConnection]
+      };
+    });
+    
+    console.log('광고 보상 힌트 제공:', bonusHint);
+  }, [generateAdvancedHint, setToastMessage]);
+
   return {
     // Game State
     gameState,
@@ -880,6 +915,7 @@ export const useMysteryGame = ({
     handleAnswerHint,
     handleRestart,
     handleToastClose,
+    handleAdHintReward, // 광고 시청 후 추가 힌트 제공
     
     // Setters for UI components
     setHighlightedCardId,
