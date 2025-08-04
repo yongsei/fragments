@@ -19,18 +19,18 @@ const MysteryAlchemy5CaseGame: React.FC = () => {
   useEffect(() => {
     console.log('[Case5 Game] 언어 변경됨:', language);
     setLoading(true);
-    
+
     try {
       // 언어에 따라 정적으로 불러온 데이터 선택
       const selectedScenario = language === 'en' ? scenarioEn : scenarioKr;
       const selectedFeedbackData = language === 'en' ? feedbackDataEn : feedbackDataKr;
-      
+
       console.log('[Case5 Game] 선택된 시나리오:', selectedScenario);
       console.log('[Case5 Game] 선택된 피드백 데이터:', selectedFeedbackData);
-      
+
       setScenario(selectedScenario);
       setFeedbackData(selectedFeedbackData);
-      
+
       console.log('[Case5 Game] 데이터 설정 완료');
     } catch (error) {
       console.error('[Case5 Game] 데이터 설정 실패:', error);
@@ -79,7 +79,7 @@ const MysteryAlchemy5CaseGame: React.FC = () => {
       uiCustomization={{
         cardStyles: {
           suspectColor: '#dc2626',
-          evidenceColor: '#2563eb', 
+          evidenceColor: '#2563eb',
           locationColor: '#059669',
           discoveredBorderColor: '#feca57',
           selectedBorderColor: '#22c55e',

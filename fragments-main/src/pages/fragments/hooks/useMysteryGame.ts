@@ -93,51 +93,18 @@ export const useMysteryGame = ({
       ...initialCards
     ];
 
-    // 저장된 진행 상태가 있는지 확인
-    let savedProgress: GameProgressData | null = null;
-    if (caseId) {
-      savedProgress = loadGameProgress(caseId);
-    }
-
-    // 저장된 진행 상태가 있고 게임이 완료되지 않았다면 복원
-    if (savedProgress && !savedProgress.isCompleted) {
-      console.log(t('loading'), savedProgress);
-      
-      return {
-        phase: 'playing' as const,
-        currentScenario: scenario,
-        gamePhase: 1 as const,
-        elapsedTime: savedProgress.elapsedTime,
-        selectedCards: [] as string[],
-        connections: savedProgress.connections.map((conn, index) => ({
-          id: `restored-${index}-${conn.timestamp}`,
-          cards: conn.cards,
-          result: conn.result,
-          timestamp: conn.timestamp,
-          verified: conn.isCorrect
-        })) as Connection[],
-        discoveredClues: [] as string[],
-        discoveredCardIds: savedProgress.discoveredCardIds,
-        newlyDiscoveredCards: [] as string[],
-        cardOrder: [] as string[],
-        consecutiveFailures: 0,
-        hintsUsed: savedProgress.hintsUsed,
-        playerProgress: savedProgress.playerProgress
-      };
-    }
-
-    // 새 게임 시작
-    return {
+    // 초기 상태 (저장된 진행 상태는 useEffect에서 로드)
+    const initialState = {
       phase: 'playing' as const,
       currentScenario: scenario,
       gamePhase: 1 as const,
       elapsedTime: 0,
-      selectedCards: [] as string[],
-      connections: [] as Connection[],
-      discoveredClues: [] as string[],
+      selectedCards: [],
+      connections: [],
+      discoveredClues: [],
       discoveredCardIds: initialDiscoveredCardIds,
-      newlyDiscoveredCards: [] as string[],
-      cardOrder: [] as string[],
+      newlyDiscoveredCards: [],
+      cardOrder: [],
       consecutiveFailures: 0,
       hintsUsed: 0,
       playerProgress: {
@@ -149,7 +116,43 @@ export const useMysteryGame = ({
         phase: 1
       }
     };
+
+    return initialState;
   });
+
+  // 저장된 진행 상태 로드 (useEffect에서 처리)
+  useEffect(() => {
+    const loadSavedProgress = async () => {
+      if (caseId) {
+        try {
+          const savedProgress = await loadGameProgress(caseId);
+          
+          if (savedProgress && !savedProgress.isCompleted) {
+            console.log('저장된 진행 상태 복원:', savedProgress);
+            
+            setGameState(prev => ({
+              ...prev,
+              elapsedTime: savedProgress.elapsedTime,
+              connections: savedProgress.connections.map((conn, index) => ({
+                id: `restored-${index}-${conn.timestamp}`,
+                cards: conn.cards,
+                result: conn.result,
+                timestamp: conn.timestamp,
+                verified: conn.isCorrect
+              })),
+              discoveredCardIds: savedProgress.discoveredCardIds,
+              hintsUsed: savedProgress.hintsUsed,
+              playerProgress: savedProgress.playerProgress
+            }));
+          }
+        } catch (error) {
+          console.error('저장된 진행 상태 로드 실패:', error);
+        }
+      }
+    };
+
+    loadSavedProgress();
+  }, [caseId]);
 
   const [cards, setCards] = useState<Card[]>([]);
   const [isConnecting, setIsConnecting] = useState(false);
@@ -808,7 +811,9 @@ export const useMysteryGame = ({
         isCompleted: gameWon || showResult
       };
 
-      saveGameProgress(progressData);
+      saveGameProgress(progressData).catch(error => {
+        console.error('게임 진행 상태 저장 실패:', error);
+      });
     }
   // 의도적으로 gameState.elapsedTime을 의존성에서 제외 (매초 저장 방지)
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -839,11 +844,17 @@ export const useMysteryGame = ({
         isCompleted: true
       };
 
-      saveGameProgress(progressData);
+      saveGameProgress(progressData).catch(error => {
+        console.error('게임 완료 상태 저장 실패:', error);
+      });
       
       // 3초 후 진행 상태 삭제 (결과 화면을 보여준 후)
-      setTimeout(() => {
-        clearGameProgress(caseId);
+      setTimeout(async () => {
+        try {
+          await clearGameProgress(caseId);
+        } catch (error) {
+          console.error('게임 진행 상태 삭제 실패:', error);
+        }
       }, 3000);
     }
   }, [caseId, gameWon, showResult, gameState, cards]);

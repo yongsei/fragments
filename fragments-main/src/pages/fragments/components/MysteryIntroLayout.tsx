@@ -82,22 +82,28 @@ const MysteryIntroLayout: React.FC<MysteryIntroLayoutProps> = ({
     gameButtonText: uiCustomization.gameButtonText || t('startGame')
   };
 
-  const handleGameStart = () => {
+  const handleGameStart = async () => {
     // 저장된 게임 데이터 확인
-    if (hasGameProgress(caseId)) {
-      const progress = loadGameProgress(caseId);
-      if (progress && !progress.isCompleted) {
-        setSavedGameInfo({
-          elapsedTime: progress.elapsedTime,
-          discoveredCardsCount: progress.totalDiscoveredCards || progress.discoveredCardIds.length // 새 필드 우선, 없으면 기존 방식
-        });
-        setShowResumePopup(true);
-        return;
+    try {
+      if (await hasGameProgress(caseId)) {
+        const progress = await loadGameProgress(caseId);
+        if (progress && !progress.isCompleted) {
+          setSavedGameInfo({
+            elapsedTime: progress.elapsedTime,
+            discoveredCardsCount: progress.totalDiscoveredCards || progress.discoveredCardIds.length // 새 필드 우선, 없으면 기존 방식
+          });
+          setShowResumePopup(true);
+          return;
+        }
       }
+      
+      // 저장된 데이터가 없으면 바로 게임 시작
+      navigate(gameUrl);
+    } catch (error) {
+      console.error('저장된 게임 데이터 확인 실패:', error);
+      // 에러 발생 시 바로 게임 시작
+      navigate(gameUrl);
     }
-    
-    // 저장된 데이터가 없으면 바로 게임 시작
-    navigate(gameUrl);
   };
 
   const handleResumeGame = () => {

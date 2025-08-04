@@ -1,4 +1,6 @@
 // 게임 진행 상태 저장 및 로드 유틸리티
+import { Capacitor } from '@capacitor/core';
+import { Preferences } from '@capacitor/preferences';
 
 export interface GameProgressData {
   caseId: string;
@@ -32,50 +34,81 @@ const getCookieName = (caseId: string): string => {
   return `fragments_progress_${caseId}`;
 };
 
-// 쿠키 저장
-export const saveGameProgress = (progressData: GameProgressData): void => {
+// 게임 진행 상태 저장 (Capacitor Storage 또는 localStorage 사용)
+export const saveGameProgress = async (progressData: GameProgressData): Promise<void> => {
   try {
-    const cookieName = getCookieName(progressData.caseId);
+    const key = getCookieName(progressData.caseId);
     const dataString = JSON.stringify(progressData);
     
-    // 만료 날짜 설정
-    const expiryDate = new Date();
-    expiryDate.setDate(expiryDate.getDate() + COOKIE_EXPIRY_DAYS);
-    
-    // 쿠키 저장
-    document.cookie = `${cookieName}=${encodeURIComponent(dataString)}; expires=${expiryDate.toUTCString()}; path=/fragments; SameSite=Lax`;
-    
-    console.log(`게임 진행 상태 저장됨 (케이스: ${progressData.caseId})`);
+    if (Capacitor.isNativePlatform()) {
+      // 네이티브 앱에서는 Capacitor Preferences 사용
+      await Preferences.set({
+        key: key,
+        value: dataString
+      });
+      console.log(`게임 진행 상태 저장됨 (네이티브 - 케이스: ${progressData.caseId})`);
+    } else {
+      // 웹에서는 기존 쿠키 방식 사용
+      const expiryDate = new Date();
+      expiryDate.setDate(expiryDate.getDate() + COOKIE_EXPIRY_DAYS);
+      
+      document.cookie = `${key}=${encodeURIComponent(dataString)}; expires=${expiryDate.toUTCString()}; path=/fragments; SameSite=Lax`;
+      
+      // localStorage 백업도 저장
+      localStorage.setItem(key, dataString);
+      console.log(`게임 진행 상태 저장됨 (웹 - 케이스: ${progressData.caseId})`);
+    }
   } catch (error) {
     console.error('게임 진행 상태 저장 실패:', error);
   }
 };
 
-// 쿠키 로드
-export const loadGameProgress = (caseId: string): GameProgressData | null => {
+// 게임 진행 상태 로드 (Capacitor Storage 또는 localStorage/쿠키 사용)
+export const loadGameProgress = async (caseId: string): Promise<GameProgressData | null> => {
   try {
-    const cookieName = getCookieName(caseId);
-    const cookies = document.cookie.split(';');
+    const key = getCookieName(caseId);
+    let dataString: string | null = null;
     
-    for (let cookie of cookies) {
-      const [name, value] = cookie.trim().split('=');
-      if (name === cookieName) {
-        const decodedValue = decodeURIComponent(value);
-        const progressData = JSON.parse(decodedValue) as GameProgressData;
-        
-        // 타임스탬프 검증 (7일이 지났으면 무시)
-        const now = Date.now();
-        const daysDiff = (now - progressData.timestamp) / (1000 * 60 * 60 * 24);
-        
-        if (daysDiff > COOKIE_EXPIRY_DAYS) {
-          console.log(`만료된 진행 상태 데이터 (케이스: ${caseId})`);
-          clearGameProgress(caseId);
-          return null;
+    if (Capacitor.isNativePlatform()) {
+      // 네이티브 앱에서는 Capacitor Preferences 사용
+      const result = await Preferences.get({ key });
+      dataString = result.value;
+      console.log(`게임 진행 상태 로드 시도 (네이티브 - 케이스: ${caseId})`);
+    } else {
+      // 웹에서는 쿠키 우선, localStorage 백업
+      const cookies = document.cookie.split(';');
+      
+      for (let cookie of cookies) {
+        const [name, value] = cookie.trim().split('=');
+        if (name === key) {
+          dataString = decodeURIComponent(value);
+          break;
         }
-        
-        console.log(`게임 진행 상태 로드됨 (케이스: ${caseId})`);
-        return progressData;
       }
+      
+      // 쿠키에 없으면 localStorage에서 시도
+      if (!dataString) {
+        dataString = localStorage.getItem(key);
+      }
+      
+      console.log(`게임 진행 상태 로드 시도 (웹 - 케이스: ${caseId})`);
+    }
+    
+    if (dataString) {
+      const progressData = JSON.parse(dataString) as GameProgressData;
+      
+      // 타임스탬프 검증 (7일이 지났으면 무시)
+      const now = Date.now();
+      const daysDiff = (now - progressData.timestamp) / (1000 * 60 * 60 * 24);
+      
+      if (daysDiff > COOKIE_EXPIRY_DAYS) {
+        console.log(`만료된 진행 상태 데이터 (케이스: ${caseId})`);
+        await clearGameProgress(caseId);
+        return null;
+      }
+      
+      console.log(`게임 진행 상태 로드됨 (케이스: ${caseId})`);
+      return progressData;
     }
     
     return null;
@@ -86,37 +119,67 @@ export const loadGameProgress = (caseId: string): GameProgressData | null => {
 };
 
 // 특정 케이스의 진행 상태 삭제
-export const clearGameProgress = (caseId: string): void => {
+export const clearGameProgress = async (caseId: string): Promise<void> => {
   try {
-    const cookieName = getCookieName(caseId);
-    document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/fragments;`;
-    console.log(`게임 진행 상태 삭제됨 (케이스: ${caseId})`);
+    const key = getCookieName(caseId);
+    
+    if (Capacitor.isNativePlatform()) {
+      // 네이티브 앱에서는 Capacitor Preferences에서 삭제
+      await Preferences.remove({ key });
+      console.log(`게임 진행 상태 삭제됨 (네이티브 - 케이스: ${caseId})`);
+    } else {
+      // 웹에서는 쿠키와 localStorage 모두 삭제
+      document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/fragments;`;
+      localStorage.removeItem(key);
+      console.log(`게임 진행 상태 삭제됨 (웹 - 케이스: ${caseId})`);
+    }
   } catch (error) {
     console.error('게임 진행 상태 삭제 실패:', error);
   }
 };
 
 // 모든 케이스의 진행 상태 삭제
-export const clearAllGameProgress = (): void => {
+export const clearAllGameProgress = async (): Promise<void> => {
   try {
-    const cookies = document.cookie.split(';');
-    
-    for (let cookie of cookies) {
-      const [name] = cookie.trim().split('=');
-      if (name.startsWith('fragments_progress_')) {
-        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/fragments;`;
+    if (Capacitor.isNativePlatform()) {
+      // 네이티브 앱에서는 Capacitor Preferences의 모든 키를 확인하고 삭제
+      const keys = await Preferences.keys();
+      const fragmentsKeys = keys.keys.filter(key => key.startsWith('fragments_progress_'));
+      
+      for (const key of fragmentsKeys) {
+        await Preferences.remove({ key });
       }
+      
+      console.log('모든 게임 진행 상태 삭제됨 (네이티브)');
+    } else {
+      // 웹에서는 쿠키와 localStorage 모두 삭제
+      const cookies = document.cookie.split(';');
+      
+      for (let cookie of cookies) {
+        const [name] = cookie.trim().split('=');
+        if (name.startsWith('fragments_progress_')) {
+          document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/fragments;`;
+        }
+      }
+      
+      // localStorage에서도 삭제
+      for (let i = localStorage.length - 1; i >= 0; i--) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith('fragments_progress_')) {
+          localStorage.removeItem(key);
+        }
+      }
+      
+      console.log('모든 게임 진행 상태 삭제됨 (웹)');
     }
-    
-    console.log('모든 게임 진행 상태 삭제됨');
   } catch (error) {
     console.error('모든 게임 진행 상태 삭제 실패:', error);
   }
 };
 
 // 진행 상태가 있는지 확인
-export const hasGameProgress = (caseId: string): boolean => {
-  const progress = loadGameProgress(caseId);
+export const hasGameProgress = async (caseId: string): Promise<boolean> => {
+  const progress = await loadGameProgress(caseId);
   return progress !== null && !progress.isCompleted;
 };
 
