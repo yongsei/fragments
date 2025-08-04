@@ -63,8 +63,8 @@ const MysteryAlchemy1CaseGame: React.FC = () => {
     keywords: "mansion murder case play, fragments of mystery game, mystery game play, mystery game online, poisoning case solve, find culprit game, classic mystery play, free mystery game"
   } : {
     title: "저택 살인사건 플레이 - 단서의 파편 케이스1 게임하기",
-    description: "🔍 지금 바로 플레이! 저택에서 일어난 독살 사건의 범인을 찾아보세요. 단서 카드를 조합하고 용의자들을 심문하여 진실을 밝혀내는 추리게임. 단서의 파편 케이스1 무료 게임 플레이!",
-    keywords: "저택 살인사건 플레이, 단서의 파편 게임하기, 추리게임 플레이, 미스터리게임 온라인, 독살사건 해결, 범인찾기 게임, 클래식 추리 플레이, 무료 추리게임"
+    description: "🔍 지금 바로 플레이! 저택에서 일어난 독살 사건의 범인을 찾아보세요. 단서 카드를 조합하고 용의자들을 심문하여 진실을 밝혀내는 추리게임. 단서의 파편 케이스1 게임 플레이!",
+    keywords: "저택 살인사건 플레이, 단서의 파편 게임하기, 추리게임 플레이, 미스터리게임 온라인, 독살사건 해결, 범인찾기 게임, 클래식 추리 플레이, 추리게임"
   };
 
   return (

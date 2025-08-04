@@ -22,7 +22,7 @@ export interface GameScenario {
   winCondition?: string;
 }
 
-export const mansionMurderScenario: GameScenario = {
+export const ashesOfBrasshelmCh2: GameScenario = {
   "id": "ashes_of_brasshelm_ch2_en",
   "title": "Chapter 2: The Unlikely Alliance",
   "story": "Searching for a defector scientist, Edwin and Cassian meet Dr. Isolde Marrow, who is tormented by guilt. After learning the terrible truth about the Spark, they recruit a vengeful fighter, Viktor, and a principled resistance mechanic, Lilia, to form an unlikely team of five.",

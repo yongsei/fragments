@@ -170,5 +170,5 @@ export const case4FeedbackData: CaseFeedbackData = {
   }
   
 
-// Case 1 전용 피드백 데이터 - 독립적으로 사용
+// Case 4 전용 피드백 데이터 - 독립적으로 사용
 export default case4FeedbackData;

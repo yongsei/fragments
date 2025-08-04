@@ -17,15 +17,15 @@ const FragmentsContent: React.FC = () => {
     <>
       <SEOHead
         title={originalLang === 'kr' 
-          ? "단서의 파편 (Fragment of Mystery) - 2케이스 무료 온라인 추리게임"
+          ? "단서의 파편 (Fragment of Mystery) - 2케이스 온라인 추리게임"
           : "Fragment of Mystery - 2 Cases Free Online Detective Game"
         }
         description={originalLang === 'kr'
-          ? "🧩 단서 카드를 조합하여 미스터리 사건을 해결하는 고급 추리게임! 저택 살인사건과 SF 시간여행 미스터리 2가지 케이스 무료 플레이. 논리적 사고와 추론 능력을 기르는 온라인 브라우저 게임."
+          ? "🧩 단서 카드를 조합하여 미스터리 사건을 해결하는 고급 추리게임! 저택 살인사건과 SF 시간여행 미스터리 2가지 케이스. 논리적 사고와 추론 능력을 기르는 온라인 브라우저 게임."
           : "🧩 Advanced detective game where you combine clue cards to solve mysterious cases! Play 2 free cases: mansion murder mystery and sci-fi time travel mystery. Online browser game that develops logical thinking and reasoning skills."
         }
         keywords={originalLang === 'kr'
-          ? "단서의 파편, Fragment of Mystery, 추리게임, 미스터리게임, 단서조합, 카드게임, 논리퍼즐, 무료게임, 온라인게임, 브라우저게임, 범인찾기, 사건해결, 저택살인사건, SF미스터리, 시간여행게임, 추론게임, 탐정게임, 두뇌게임, 퍼즐게임"
+          ? "단서의 파편, Fragment of Mystery, 추리게임, 미스터리게임, 단서조합, 카드게임, 논리퍼즐, 온라인게임, 브라우저게임, 범인찾기, 사건해결, 저택살인사건, SF미스터리, 시간여행게임, 추론게임, 탐정게임, 두뇌게임, 퍼즐게임"
           : "Fragment of Mystery, detective game, mystery game, clue combination, card game, logic puzzle, free game, online game, browser game, find culprit, solve case, mansion murder, sci-fi mystery, time travel game, reasoning game, detective game, brain game, puzzle game"
         }
         canonical="/fragments/"
@@ -104,8 +104,8 @@ const FragmentsContent: React.FC = () => {
           })}
         </script>
         
-        <meta property="og:title" content="단서의 파편 (Fragment of Mystery) - 무료 온라인 추리게임" />
-        <meta property="og:description" content="🧩 단서 카드를 조합하여 미스터리 사건을 해결하는 고급 추리게임! 저택 살인사건과 SF 시간여행 미스터리 2가지 케이스 무료 플레이." />
+        <meta property="og:title" content="단서의 파편 (Fragment of Mystery) - 온라인 추리게임" />
+        <meta property="og:description" content="🧩 단서 카드를 조합하여 미스터리 사건을 해결하는 고급 추리게임! 저택 살인사건과 SF 시간여행 미스터리 2가지 케이스." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://norri.netlify.app/fragments/" />
         <meta property="og:image" content="https://norri.netlify.app/images/fragments-preview.jpg" />
@@ -113,8 +113,8 @@ const FragmentsContent: React.FC = () => {
         <meta property="og:locale" content="ko_KR" />
         
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="단서의 파편 (Fragment of Mystery) - 무료 온라인 추리게임" />
-        <meta name="twitter:description" content="🧩 단서 카드를 조합하여 미스터리 사건을 해결하는 고급 추리게임! 저택 살인사건과 SF 시간여행 미스터리 2가지 케이스 무료 플레이." />
+        <meta name="twitter:title" content="단서의 파편 (Fragment of Mystery) - 온라인 추리게임" />
+        <meta name="twitter:description" content="🧩 단서 카드를 조합하여 미스터리 사건을 해결하는 고급 추리게임! 저택 살인사건과 SF 시간여행 미스터리 2가지 케이스." />
         <meta name="twitter:image" content="https://norri.netlify.app/images/fragments-preview.jpg" />
         
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />

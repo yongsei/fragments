@@ -3,6 +3,11 @@ import MysteryGameLayout from '../../components/MysteryGameLayout';
 import { useLanguage } from '../../hooks/useLanguage';
 import type { GameScenario } from './scenario_kr';
 import type { CaseFeedbackData } from './feedbackData_kr';
+// 정적 import로 변경
+import { mansionMurderScenario as scenarioKr } from './scenario_kr';
+import { mansionMurderScenario as scenarioEn } from './scenario_en';
+import feedbackDataKr from './feedbackData_kr';
+import feedbackDataEn from './feedbackData_en';
 
 const MysteryAlchemy1CaseGame: React.FC = () => {
   const { language, t } = useLanguage();
@@ -10,48 +15,54 @@ const MysteryAlchemy1CaseGame: React.FC = () => {
   const [feedbackData, setFeedbackData] = useState<CaseFeedbackData | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // 언어별 파일 동적 로딩
+  // 언어별 데이터 설정 (정적 import 사용)
   useEffect(() => {
-    const loadLanguageFiles = async () => {
-      setLoading(true);
-      try {
-        // 시나리오 파일 로딩
-        const scenarioModule = await import(`./scenario_${language}`);
-        const feedbackModule = await import(`./feedbackData_${language}`);
-        
-        setScenario(scenarioModule.mansionMurderScenario);
-        setFeedbackData(feedbackModule.default);
-      } catch (error) {
-        console.error('Failed to load language files:', error);
-        // 폴백: 한국어 파일 로딩
-        try {
-          const scenarioModule = await import('./scenario_kr');
-          const feedbackModule = await import('./feedbackData_kr');
-          setScenario(scenarioModule.mansionMurderScenario);
-          setFeedbackData(feedbackModule.default);
-        } catch (fallbackError) {
-          console.error('Failed to load fallback files:', fallbackError);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadLanguageFiles();
+    console.log('[Case1 Game] 언어 변경됨:', language);
+    setLoading(true);
+    
+    try {
+      // 언어에 따라 정적으로 불러온 데이터 선택
+      const selectedScenario = language === 'en' ? scenarioEn : scenarioKr;
+      const selectedFeedbackData = language === 'en' ? feedbackDataEn : feedbackDataKr;
+      
+      console.log('[Case1 Game] 선택된 시나리오:', selectedScenario);
+      console.log('[Case1 Game] 선택된 피드백 데이터:', selectedFeedbackData);
+      
+      setScenario(selectedScenario);
+      setFeedbackData(selectedFeedbackData);
+      
+      console.log('[Case1 Game] 데이터 설정 완료');
+    } catch (error) {
+      console.error('[Case1 Game] 데이터 설정 실패:', error);
+    } finally {
+      setLoading(false);
+      console.log('[Case1 Game] 로딩 완료');
+    }
   }, [language]);
 
   if (loading || !scenario || !feedbackData) {
+    console.log('[Case1 Game] 로딩 상태:', { loading, hasScenario: !!scenario, hasFeedbackData: !!feedbackData });
     return (
       <div style={{
         minHeight: '100vh',
         display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #ffd700 100%)',
         color: 'white',
-        fontSize: '1.2rem'
+        fontSize: '1.2rem',
+        padding: '20px',
+        boxSizing: 'border-box'
       }}>
-        {t('loading', 'Loading...')}
+        <div style={{ marginBottom: '20px' }}>
+          {t('loading', '로딩 중...')}
+        </div>
+        <div style={{ fontSize: '0.9rem', opacity: 0.7, textAlign: 'center' }}>
+          {loading && <div>• 언어 파일 로딩 중...</div>}
+          {!loading && !scenario && <div>• 시나리오 로딩 실패</div>}
+          {!loading && !feedbackData && <div>• 피드백 데이터 로딩 실패</div>}
+        </div>
       </div>
     );
   }
@@ -63,8 +74,8 @@ const MysteryAlchemy1CaseGame: React.FC = () => {
     keywords: "mansion murder case play, fragments of mystery game, mystery game play, mystery game online, poisoning case solve, find culprit game, classic mystery play, free mystery game"
   } : {
     title: "저택 살인사건 플레이 - 단서의 파편 케이스1 게임하기",
-    description: "🔍 지금 바로 플레이! 저택에서 일어난 독살 사건의 범인을 찾아보세요. 단서 카드를 조합하고 용의자들을 심문하여 진실을 밝혀내는 추리게임. 단서의 파편 케이스1 무료 게임 플레이!",
-    keywords: "저택 살인사건 플레이, 단서의 파편 게임하기, 추리게임 플레이, 미스터리게임 온라인, 독살사건 해결, 범인찾기 게임, 클래식 추리 플레이, 무료 추리게임"
+    description: "🔍 지금 바로 플레이! 저택에서 일어난 독살 사건의 범인을 찾아보세요. 단서 카드를 조합하고 용의자들을 심문하여 진실을 밝혀내는 추리게임. 단서의 파편 케이스1 게임 플레이!",
+    keywords: "저택 살인사건 플레이, 단서의 파편 게임하기, 추리게임 플레이, 미스터리게임 온라인, 독살사건 해결, 범인찾기 게임, 클래식 추리 플레이, 추리게임"
   };
 
   return (

@@ -17,7 +17,7 @@ export interface CaseFeedbackData {
 }
 
 // Case 1: 저택 살인 사건 피드백 데이터
-export const case3FeedbackData: CaseFeedbackData = {
+const case3FeedbackData: CaseFeedbackData = {
   "caseId": "ashes_of_brasshelm_ch1",
   "correctSuspect": "A-C05",
   "keyEvidence": [
@@ -205,5 +205,5 @@ export const case3FeedbackData: CaseFeedbackData = {
   ]
 };
 
-// Case 1 전용 피드백 데이터 - 독립적으로 사용
+// Case 3 전용 피드백 데이터 - 독립적으로 사용
 export default case3FeedbackData;

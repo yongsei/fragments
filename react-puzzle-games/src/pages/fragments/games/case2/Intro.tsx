@@ -61,9 +61,7 @@ const ChronosParadoxIntro: React.FC = () => {
       canonicalUrl="/fragments/case2"
       title={t.case2.title}
       subtitle={t.case2.subtitle}
-      previewCards={previewCards}
-      featureCards={featureCards}
-      storyTitle={t.case2.storyTitle}
+            storyTitle={t.case2.storyTitle}
       storyContent={t.case2.storyContent}
       gameUrl="game"
       backUrl="/fragments"

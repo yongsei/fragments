@@ -201,8 +201,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
     all: { icon: '🎯', label: t('all'), color: '#8b5cf6' },
     suspects: { icon: '👤', label: t('suspects'), color: '#dc2626' },
     evidence: { icon: '🔍', label: t('evidence'), color: '#2563eb' },
-    locations: { icon: '📍', label: t('locations'), color: '#059669' },
-    new: { icon: '✨', label: t('newDiscovered'), color: '#ffd700' }
+    locations: { icon: '📍', label: t('locations'), color: '#059669' }
   }), [t]);
 
   // 카드 데이터 추출 (의존성 배열 최적화용)
@@ -210,7 +209,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
   const suspectCards = useMemo(() => cards.filter(c => c.type === 'suspect' && c.discovered), [cards]);
   const evidenceCards = useMemo(() => cards.filter(c => c.type === 'evidence' && c.discovered), [cards]);
   const locationCards = useMemo(() => cards.filter(c => c.type === 'location' && c.discovered), [cards]);
-  const newCards = useMemo(() => cards.filter(c => c.isNew && c.discovered), [cards]);
+
 
   // 선택된 메인 카테고리의 하위 탭 생성 함수
   const createSubTabs = useCallback((mainCategory: string) => {
@@ -231,9 +230,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
       case 'locations':
         categoryCards = locationCards;
         break;
-      case 'new':
-        categoryCards = newCards;
-        break;
+
       default:
         categoryCards = [];
     }
@@ -315,7 +312,6 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
     suspectCards,
     evidenceCards,
     locationCards,
-    newCards,
     mainCategories
   ]);
 
@@ -407,6 +403,8 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
           background: `linear-gradient(135deg, ${themeColors.primary} 0%, ${themeColors.secondary} 50%, ${themeColors.accent} 100%)`,
           color: 'white',
           padding: '2rem',
+          paddingTop: 'max(env(safe-area-inset-top, 0px), 50px)', // 시스템 UI 회피
+          paddingBottom: 'max(env(safe-area-inset-bottom, 0px), 80px)', // 시스템 UI 회피
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center'
@@ -541,9 +539,33 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
         minHeight: '100vh',
         background: `linear-gradient(135deg, ${themeColors.primary} 0%, ${themeColors.secondary} 50%, ${themeColors.accent} 100%)`,
         color: 'white',
-        padding: '140px 1rem 1rem 1rem', // 모바일 상단 탭 여백
-        fontFamily: ui.typography.bodyFont
+        padding: '1rem', // 기본 패딩
+        paddingTop: 'max(env(safe-area-inset-top, 0px), 100px)', // 상단 고정 헤더(140px) - 단서카드 위치 적절히 조정
+        paddingBottom: 'max(env(safe-area-inset-bottom, 0px), 85px)', // 하단 고정 영역 + 여유
+        fontFamily: ui.typography.bodyFont,
+        position: 'relative'
       }}>
+        {/* 상단 시스템 UI 영역 배경 통일 */}
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 'max(env(safe-area-inset-top, 0px), 0px)',
+          background: 'linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(22, 33, 62, 0.95) 100%)',
+          zIndex: 999
+        }} />
+
+        {/* 하단 시스템 UI 영역 배경 통일 */}
+        <div style={{
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: `calc(max(env(safe-area-inset-bottom, 0px), 0px) + 120px)`, // 하단 UI(120px) + 시스템 UI
+          background: `linear-gradient(135deg, ${themeColors.primary} 0%, ${themeColors.secondary} 100%)`,
+          zIndex: 99
+        }} />
         <div style={{
           maxWidth: ui.layout.containerMaxWidth,
           margin: '0 auto',
@@ -573,7 +595,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
                   display: 'flex',
                   alignItems: 'center',
                   gap: '1rem',
-                  marginTop: '1rem' // 상단 고정 영역과 간격 추가
+                  marginTop: '0rem' // 상단 고정 영역과 간격 최소화
                 }}>
                   <h3 style={{
                     fontSize: '1.2rem',
@@ -590,7 +612,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
                 {/* 모바일 전용 헤더 - 개선된 구조 */}
                 <div style={{
                   position: 'fixed',
-                  top: 0,
+                  top: 'max(env(safe-area-inset-top, 0px), 0px)', // 시스템 UI 아래에 위치
                   left: 0,
                   right: 0,
                   height: '140px',
@@ -729,9 +751,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
                           case 'locations':
                             categoryCards = cards.filter(card => card.type === 'location' && card.discovered);
                             break;
-                          case 'new':
-                            categoryCards = cards.filter(card => card.isNew && card.discovered);
-                            break;
+
                         }
 
                         if (categoryCards.length === 0) return null;
@@ -973,13 +993,13 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
           {/* 모바일 하단 고정 연결 영역 */}
           <div style={{
             position: 'fixed',
-            bottom: '0',
+            bottom: `max(env(safe-area-inset-bottom, 0px), 0px)`, // 시스템 UI 바로 위에 위치
             left: '0',
             right: '0',
             background: `linear-gradient(135deg, ${themeColors.primary} 0%, ${themeColors.secondary} 100%)`,
             borderTop: '1px solid rgba(255, 255, 255, 0.2)',
             paddingTop: '12px',
-            paddingBottom: '16px',
+            paddingBottom: '12px', // 고정 패딩으로 일관성 확보
             paddingLeft: '20px',
             paddingRight: '20px',
             backdropFilter: 'blur(10px)',

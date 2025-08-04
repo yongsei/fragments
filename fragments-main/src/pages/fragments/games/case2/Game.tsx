@@ -3,6 +3,11 @@ import MysteryGameLayout from '../../components/MysteryGameLayout';
 import { useLanguage } from '../../hooks/useLanguage';
 import type { GameScenario } from './scenario_kr';
 import type { CaseFeedbackData } from './feedbackData_kr';
+// 정적 import로 변경
+import { chronosParadoxScenario as scenarioKr } from './scenario_kr';
+import { chronosParadoxScenario as scenarioEn } from './scenario_en';
+import feedbackDataKr from './feedbackData_kr';
+import feedbackDataEn from './feedbackData_en';
 
 const ChronosParadoxGame: React.FC = () => {
   const { language, t } = useLanguage();
@@ -10,33 +15,29 @@ const ChronosParadoxGame: React.FC = () => {
   const [feedbackData, setFeedbackData] = useState<CaseFeedbackData | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // 언어별 파일 동적 로딩
+  // 언어별 데이터 설정 (정적 import 사용)
   useEffect(() => {
-    const loadLanguageFiles = async () => {
-      setLoading(true);
-      try {
-        const scenarioModule = await import(`./scenario_${language}`);
-        const feedbackModule = await import(`./feedbackData_${language}`);
-        
-        setScenario(scenarioModule.chronosParadoxScenario);
-        setFeedbackData(feedbackModule.default);
-      } catch (error) {
-        console.error('Failed to load language files:', error);
-        // 폴백: 한국어 파일 로딩
-        try {
-          const scenarioModule = await import('./scenario_kr');
-          const feedbackModule = await import('./feedbackData_kr');
-          setScenario(scenarioModule.chronosParadoxScenario);
-          setFeedbackData(feedbackModule.default);
-        } catch (fallbackError) {
-          console.error('Failed to load fallback files:', fallbackError);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadLanguageFiles();
+    console.log('[Case2 Game] 언어 변경됨:', language);
+    setLoading(true);
+    
+    try {
+      // 언어에 따라 정적으로 불러온 데이터 선택
+      const selectedScenario = language === 'en' ? scenarioEn : scenarioKr;
+      const selectedFeedbackData = language === 'en' ? feedbackDataEn : feedbackDataKr;
+      
+      console.log('[Case2 Game] 선택된 시나리오:', selectedScenario);
+      console.log('[Case2 Game] 선택된 피드백 데이터:', selectedFeedbackData);
+      
+      setScenario(selectedScenario);
+      setFeedbackData(selectedFeedbackData);
+      
+      console.log('[Case2 Game] 데이터 설정 완료');
+    } catch (error) {
+      console.error('[Case2 Game] 데이터 설정 실패:', error);
+    } finally {
+      setLoading(false);
+      console.log('[Case2 Game] 로딩 완료');
+    }
   }, [language]);
 
   if (loading || !scenario || !feedbackData) {
@@ -62,7 +63,7 @@ const ChronosParadoxGame: React.FC = () => {
     keywords: "chronos paradox play, fragments of mystery case2 game, SF mystery play, time travel game online, quantum physics mystery, time paradox solve, SF mystery play"
   } : {
     title: "크로노스 패러독스 플레이 - 단서의 파편 케이스2 SF게임하기",
-    description: "🚀 지금 바로 플레이! 시간 연구소의 비밀을 파헤쳐보세요. 양자 파편과 시간 로그를 분석하여 크로노스 박사 실종 사건을 해결하는 SF 추리게임. 단서의 파편 케이스2 무료 게임!",
+    description: "🚀 지금 바로 플레이! 시간 연구소의 비밀을 파헤쳐보세요. 양자 파편과 시간 로그를 분석하여 크로노스 박사 실종 사건을 해결하는 SF 추리게임. 단서의 파편 케이스2 게임!",
     keywords: "크로노스 패러독스 플레이, 단서의 파편 케이스2 게임, SF 추리 플레이, 시간여행게임 온라인, 양자물리학 미스터리, 타임패러독스 해결, SF 미스터리 플레이"
   };
 

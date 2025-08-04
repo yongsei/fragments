@@ -22,7 +22,7 @@ export interface GameScenario {
   winCondition?: string;
 }
 
-export const mansionMurderScenario: GameScenario = {
+export const ashesOfBrasshelmCh3: GameScenario = {
   "id": "ashes_of_brasshelm_ch3_en",
   "title": "Chapter 3: The Ashes of Brasshelm",
   "story": "Finally infiltrating the Shadow's fortress, the team of five faces an enemy far stronger than they imagined and a monstrous beast born from the Spark. They must use all their skills to fight back, but victory requires a tragic sacrifice.",

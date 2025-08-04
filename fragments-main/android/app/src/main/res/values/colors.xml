@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Assets에서 가져온 미스터리 테마 색상 -->
+    <color name="colorPrimary">#4299e1</color>
+    <color name="colorPrimaryDark">#1a1a2e</color>
+    <color name="colorAccent">#667eea</color>
+    
+    <!-- 배경 그라데이션 색상 -->
+    <color name="background_start">#1a1a2e</color>
+    <color name="background_middle">#16213e</color>
+    <color name="background_end">#0f3460</color>
+    
+    <!-- 퍼즐 그라데이션 색상 -->
+    <color name="puzzle_start">#4299e1</color>
+    <color name="puzzle_middle">#667eea</color>
+    <color name="puzzle_end">#764ba2</color>
+    
+    <!-- 텍스트 색상 -->
+    <color name="text_primary">#f7fafc</color>
+    <color name="text_secondary">#cbd5e0</color>
+    <color name="text_tertiary">#a0aec0</color>
+    
+    <!-- 카드 색상 -->
+    <color name="card_background">#f7fafc</color>
+    <color name="card_border">#cbd5e0</color>
+    
+    <!-- 상태바 색상 -->
+    <color name="status_bar">#1a1a2e</color>
+</resources>

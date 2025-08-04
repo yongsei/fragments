@@ -1,7 +1,7 @@
 {
   "short_name": "Norri Games",
   "name": "Norri Puzzle Games - 퍼즐 게임 모음집",
-  "description": "다양한 퍼즐 게임을 무료로 즐기세요! 미스터리 추리, CCTV 탐정, 타로카드, 리듬 게임 등",
+  "description": "다양한 퍼즐 게임을 즐기세요! 미스터리 추리, CCTV 탐정, 타로카드, 리듬 게임 등",
   "icons": [
     {
       "src": "/favicon.svg",

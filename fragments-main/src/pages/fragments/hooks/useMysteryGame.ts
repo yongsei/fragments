@@ -90,8 +90,6 @@ export const useMysteryGame = ({
 
   const [gameState, setGameState] = useState<GameState>(() => {
     const initialDiscoveredCardIds = [
-      ...(scenario.suspects || []).map(s => s.id),
-      ...(scenario.locations || []).map(l => l.id),
       ...initialCards
     ];
 
@@ -279,32 +277,7 @@ export const useMysteryGame = ({
       return { message: hints[hintLevel], type: 'info', cardEffects };
     }
 
-    // 근접도가 없는 경우 (none) - 케이스별 맞춤 힌트 사용
-    if (consecutiveFailures >= 8) {
-      const urgentHints = caseFeedback?.urgentHints || [
-        "🚨 특별 힌트: 범인은 자신의 동기를 숨기려 했습니다. 동기와 관련된 증거를 찾아보세요.",
-        "🚨 특별 힌트: 시간대와 위치를 주의깊게 살펴보세요. 알리바이에 허점이 있을 수 있습니다.",
-        "🚨 특별 힌트: 물리적 증거와 증언 사이의 모순점이 진실을 가리키고 있습니다."
-      ];
-      return { 
-        message: urgentHints[Math.floor(Math.random() * urgentHints.length)], 
-        type: 'info',
-        cardEffects 
-      };
-    }
-    
-    if (consecutiveFailures >= 5) {
-      const contextualHints = caseFeedback?.contextualHints || [
-        "💡 힌트: 용의자의 알리바이와 물리적 증거 사이의 모순점을 찾아보세요.",
-        "💡 힌트: 사건 발생 시간과 관련된 단서들을 연결해보세요.",
-        "💡 힌트: 동기가 명확한 용의자부터 살펴보는 것이 좋겠습니다."
-      ];
-      return { 
-        message: contextualHints[Math.floor(Math.random() * contextualHints.length)], 
-        type: 'info',
-        cardEffects 
-      };
-    }
+
     
     if (attemptCount >= 3) {
       const encouragingMessages = [
@@ -530,61 +503,7 @@ export const useMysteryGame = ({
       const newWrongConnections = !isNewDiscovery ? prev.playerProgress.wrongConnections + 1 : prev.playerProgress.wrongConnections;
       const newConsecutiveFailures = isNewDiscovery ? 0 : prev.consecutiveFailures + 1; // 성공하면 0으로 초기화
       
-      if (newConsecutiveFailures === 5) {
-        // 5번 틀렸을 때 정답 조합 하나 자동 제공
-        setTimeout(() => {
-          const availableCards = cards.filter(card => card.discovered);
-          const connectionRules = scenario.connectionRules || [];
-          
-          // 이미 성공한 조합들 확인
-          const successfulConnections = prev.connections.filter(conn => conn.verified);
-          const usedCombinations = new Set(successfulConnections.map(conn => 
-            conn.cards.sort().join(',')
-          ));
-          
-          // 조합 가능한 규칙 찾기
-          for (const rule of connectionRules) {
-            if (!rule.cards || !rule.unlock) continue;
-            
-            const hasAllCards = rule.cards.every((cardId: string) => 
-              availableCards.some(card => card.id === cardId)
-            );
-            
-            const combinationKey = rule.cards.sort().join(',');
-            const notUsedYet = !usedCombinations.has(combinationKey);
-            
-            if (hasAllCards && notUsedYet) {
-              // 정답 조합을 자동으로 선택
-              setGameState(prev => ({
-                ...prev,
-                selectedCards: [...rule.cards]
-              }));
-              
-              // 카드들을 순차적으로 하이라이트
-              rule.cards.forEach((cardId: string, index: number) => {
-                setTimeout(() => {
-                  setHighlightedCardId(cardId);
-                  setTimeout(() => setHighlightedCardId(null), 1000);
-                }, index * 300);
-              });
-              
-              // 토스트 메시지 표시
-              const cardNames = rule.cards.map((cardId: string) => {
-                const card = availableCards.find(c => c.id === cardId);
-                return card ? card.name : cardId;
-              });
-              
-              setToastMessage({
-                message: t('autoHint5Failures').replace('{0}', cardNames.join('", "')),
-                type: 'info',
-                isVisible: true
-              });
-              
-              break;
-            }
-          }
-        }, 1000);
-      }
+
 
       let newDiscoveredClues = prev.discoveredClues;
       if (isNewDiscovery && rule.unlock) {

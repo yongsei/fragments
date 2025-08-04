@@ -169,5 +169,5 @@ export const case5FeedbackData: CaseFeedbackData = {
   ]
 }
 
-// Case 1 전용 피드백 데이터 - 독립적으로 사용
+// Case 5 전용 피드백 데이터 - 독립적으로 사용
 export default case5FeedbackData;

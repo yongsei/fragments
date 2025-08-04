@@ -17,7 +17,7 @@ export interface CaseFeedbackData {
 }
 
 // Case 1: Mansion Murder Case Feedback Data
-export const case5FeedbackData: CaseFeedbackData = {
+const case5FeedbackData: CaseFeedbackData = {
   "caseId": "ashes_of_brasshelm_ch3",
   "correctSuspect": "C-C03",
   "keyEvidence": [
@@ -169,5 +169,5 @@ export const case5FeedbackData: CaseFeedbackData = {
   ]
 }
 
-// Case 1 dedicated feedback data - for independent use
+// Case 5 dedicated feedback data - for independent use
 export default case5FeedbackData;

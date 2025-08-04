@@ -22,7 +22,7 @@ export interface GameScenario {
   winCondition?: string;
 }
 
-export const mansionMurderScenario: GameScenario = {
+export const ashesOfBrasshelmCh1: GameScenario = {
   "id": "ashes_of_brasshelm_ch1_en",
   "title": "Chapter 1: The Spark of Intrigue",
   "story": "Arriving in Brasshelm, Edwin encounters a mysterious murder and a strange cog. He delves into the city's dark side, joining forces with the information broker Cassian Holt. Their goal is to uncover the truth about the secret society behind the incident, the 'Shadow of Steam'.",

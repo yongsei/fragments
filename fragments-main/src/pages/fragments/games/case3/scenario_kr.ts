@@ -275,7 +275,7 @@ export const ashesOfBrasshelmCh1: GameScenario = {
   "winCondition": "A-X01",
   "initialCards": [
     "A-C01",
-    "A-C02",
+    "A-C02", 
     "A-L01",
     "A-L02",
     "A-E01",

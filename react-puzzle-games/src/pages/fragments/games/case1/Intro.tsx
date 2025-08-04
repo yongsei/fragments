@@ -47,11 +47,11 @@ const MysteryAlchemy1CaseIntro: React.FC = () => {
   return (
     <MysteryIntroLayout
       seoTitle={originalLang === 'kr' 
-        ? "저택 살인 사건 - 단서의 파편 케이스1 무료 플레이"
+        ? "저택 살인 사건 - 단서의 파편 케이스1"
         : "Mansion Murder Case - Fragment of Mystery Case1 Free Play"
       }
       seoDescription={originalLang === 'kr'
-        ? "🏰 고풍스러운 저택에서 벌어진 살인사건! 독살된 저택 주인의 진실을 밝혀내세요. 메리 부인, 집사, 의사 중 진짜 범인은? 단서 카드 조합으로 사건을 해결하는 클래식 추리게임 - 단서의 파편 케이스1 무료 체험!"
+        ? "🏰 고풍스러운 저택에서 벌어진 살인사건! 독살된 저택 주인의 진실을 밝혀내세요. 메리 부인, 집사, 의사 중 진짜 범인은? 단서 카드 조합으로 사건을 해결하는 클래식 추리게임 - 단서의 파편 케이스1 체험!"
         : "🏰 A murder case in an elegant mansion! Uncover the truth behind the poisoned mansion owner. Who is the real culprit among Mrs. Mary, the butler, and the doctor? Classic detective game solving cases through clue card combinations - Fragment of Mystery Case1 free trial!"
       }
       seoKeywords={originalLang === 'kr'
@@ -61,8 +61,6 @@ const MysteryAlchemy1CaseIntro: React.FC = () => {
       canonicalUrl="/fragments/case1"
       title={t.case1.title}
       subtitle={t.case1.subtitle}
-      previewCards={previewCards}
-      featureCards={featureCards}
       storyTitle={t.case1.storyTitle}
       storyContent={t.case1.storyContent}
       gameUrl="game"

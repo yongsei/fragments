@@ -292,7 +292,9 @@ const PCMysteryGameLayout: React.FC<PCMysteryGameLayoutProps> = ({
         minHeight: '100vh',
         background: `linear-gradient(135deg, ${themeColors.primary} 0%, ${themeColors.secondary} 50%, ${themeColors.accent} 100%)`,
         color: 'white',
-        padding: '1rem', // PC 기본 패딩
+        padding: '1rem', // 기본 패딩
+        paddingTop: 'max(env(safe-area-inset-top, 0px), 60px)', // 시스템 UI 회피
+        paddingBottom: 'max(env(safe-area-inset-bottom, 0px), 80px)', // 시스템 UI 회피
         fontFamily: ui.typography.bodyFont
       }}>
         <div style={{

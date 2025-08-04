@@ -38,8 +38,6 @@ interface MysteryIntroLayoutProps {
   // Content Props
   title: string;
   subtitle: string;
-  previewCards: PreviewCard[];
-  featureCards: FeatureCard[];
   storyTitle: string;
   storyContent: string;
   
@@ -59,8 +57,6 @@ const MysteryIntroLayout: React.FC<MysteryIntroLayoutProps> = ({
   canonicalUrl,
   title,
   subtitle,
-  previewCards,
-  featureCards,
   storyTitle,
   storyContent,
   gameUrl,
@@ -165,91 +161,6 @@ const MysteryIntroLayout: React.FC<MysteryIntroLayoutProps> = ({
             }}>
               {subtitle}
             </p>
-          </div>
-
-          {/* 게임 미리보기 카드 */}
-          <div style={{
-            background: 'rgba(255, 255, 255, 0.1)',
-            borderRadius: '20px',
-            padding: '2rem',
-            marginBottom: '2rem',
-            backdropFilter: 'blur(10px)',
-            border: '1px solid rgba(255, 255, 255, 0.2)'
-          }}>
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-              gap: '1.5rem',
-              marginBottom: '2rem'
-            }}>
-              {previewCards.map((card, index) => (
-                <div key={index} style={{
-                  background: `linear-gradient(145deg, ${card.gradientColors[0]}, ${card.gradientColors[1]})`,
-                  borderRadius: '15px',
-                  padding: '1.5rem',
-                  color: 'white',
-                  boxShadow: `0 8px 25px ${card.gradientColors[0]}50`,
-                  border: '2px solid rgba(255, 255, 255, 0.2)'
-                }}>
-                  <div style={{
-                    fontSize: '2rem',
-                    marginBottom: '0.5rem'
-                  }}>{card.icon}</div>
-                  <h3 style={{
-                    fontSize: '1.1rem',
-                    fontWeight: 600,
-                    marginBottom: '0.5rem'
-                  }}>{card.title}</h3>
-                  <p style={{
-                    fontSize: '0.9rem',
-                    opacity: 0.9
-                  }}>{card.description}</p>
-                </div>
-              ))}
-            </div>
-
-            <div style={{
-              fontSize: '1.1rem',
-              fontWeight: 500,
-              color: ui.accentColor,
-              marginBottom: '1rem'
-            }}>
-              {t('gamePreviewText')}
-            </div>
-          </div>
-
-          {/* 게임 특징 */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-            gap: '1.5rem',
-            marginBottom: '3rem'
-          }}>
-            {featureCards.map((feature, index) => (
-              <div key={index} style={{
-                background: 'rgba(255, 255, 255, 0.1)',
-                borderRadius: '15px',
-                padding: '1.5rem',
-                backdropFilter: 'blur(10px)'
-              }}>
-                <div style={{
-                  fontSize: '2rem',
-                  marginBottom: '1rem'
-                }}>{feature.icon}</div>
-                <h3 style={{
-                  fontSize: '1.2rem',
-                  fontWeight: 600,
-                  marginBottom: '0.5rem'
-                }}>{feature.title}</h3>
-                <p style={{
-                  fontSize: '0.9rem',
-                  opacity: 0.8,
-                  lineHeight: 1.5
-                }}>
-                  {feature.description}
-                </p>
-              </div>
-            ))}
           </div>
 
           {/* 사건 개요 */}

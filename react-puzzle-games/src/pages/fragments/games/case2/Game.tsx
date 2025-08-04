@@ -62,7 +62,7 @@ const ChronosParadoxGame: React.FC = () => {
     keywords: "chronos paradox play, fragments of mystery case2 game, SF mystery play, time travel game online, quantum physics mystery, time paradox solve, SF mystery play"
   } : {
     title: "크로노스 패러독스 플레이 - 단서의 파편 케이스2 SF게임하기",
-    description: "🚀 지금 바로 플레이! 시간 연구소의 비밀을 파헤쳐보세요. 양자 파편과 시간 로그를 분석하여 크로노스 박사 실종 사건을 해결하는 SF 추리게임. 단서의 파편 케이스2 무료 게임!",
+    description: "🚀 지금 바로 플레이! 시간 연구소의 비밀을 파헤쳐보세요. 양자 파편과 시간 로그를 분석하여 크로노스 박사 실종 사건을 해결하는 SF 추리게임. 단서의 파편 케이스2 게임!",
     keywords: "크로노스 패러독스 플레이, 단서의 파편 케이스2 게임, SF 추리 플레이, 시간여행게임 온라인, 양자물리학 미스터리, 타임패러독스 해결, SF 미스터리 플레이"
   };
 

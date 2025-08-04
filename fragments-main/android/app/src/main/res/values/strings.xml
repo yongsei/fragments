@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Fragment of Mystery</string>
-    <string name="title_activity_main">Fragment of Mystery</string>
+    <string name="app_name">단서의 파편</string>
+    <string name="title_activity_main">단서의 파편 - Fragment of Mystery</string>
     <string name="package_name">com.fragmentmystery.app</string>
     <string name="custom_url_scheme">com.fragmentmystery.app</string>
 </resources>
