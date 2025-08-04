@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import SEOHead from '../../../components/SEOHead';
 import GameCard from './GameCard';
+import SwipeCardGrid from './SwipeCardGrid';
 import ToastMessage from './ToastMessage';
 // import { HintSystem } from '../components/HintSystem'; // 모바일에서는 사용하지 않음
 import { useMysteryGame } from '../hooks/useMysteryGame';
@@ -187,151 +188,10 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
   // PC 버전과 동일한 힌트 시스템을 위한 핸들러는 hook에서 가져옴
 
 
-  // 2단계 탭 시스템 상태
-  const [activeMainCategory, setActiveMainCategory] = useState<string>('all');
-  const [activeSubCategory, setActiveSubCategory] = useState<string>('');
-
-  // 새 카드 알림 상태 관리
+  // 새 카드 알림 상태 관리 (스와이프 UI에서는 전역 알림만 사용)
   const [newCardNotification, setNewCardNotification] = useState<{ [key: string]: boolean }>({});
 
-  // NEW 태그는 다음 카드가 나올 때까지 유지 (타이머 제거)
-
-  // 기본 카테고리 정의
-  const mainCategories = useMemo(() => ({
-    all: { icon: '🎯', label: t('all'), color: '#8b5cf6' },
-    suspects: { icon: '👤', label: t('suspects'), color: '#dc2626' },
-    evidence: { icon: '🔍', label: t('evidence'), color: '#2563eb' },
-    locations: { icon: '📍', label: t('locations'), color: '#059669' }
-  }), [t]);
-
-  // 카드 데이터 추출 (의존성 배열 최적화용)
-  const discoveredCards = useMemo(() => cards.filter(c => c.discovered), [cards]);
-  const suspectCards = useMemo(() => cards.filter(c => c.type === 'suspect' && c.discovered), [cards]);
-  const evidenceCards = useMemo(() => cards.filter(c => c.type === 'evidence' && c.discovered), [cards]);
-  const locationCards = useMemo(() => cards.filter(c => c.type === 'location' && c.discovered), [cards]);
-
-
-  // 선택된 메인 카테고리의 하위 탭 생성 함수
-  const createSubTabs = useCallback((mainCategory: string) => {
-    let categoryCards: any[] = [];
-    const categoryInfo = mainCategories[mainCategory as keyof typeof mainCategories];
-
-    // 메인 카테고리별 카드 필터링
-    switch (mainCategory) {
-      case 'all':
-        categoryCards = discoveredCards;
-        break;
-      case 'suspects':
-        categoryCards = suspectCards;
-        break;
-      case 'evidence':
-        categoryCards = evidenceCards;
-        break;
-      case 'locations':
-        categoryCards = locationCards;
-        break;
-
-      default:
-        categoryCards = [];
-    }
-
-    const subTabs: { [key: string]: { icon: string; label: string; color: string; cards: any[] } } = {};
-
-    if (categoryCards.length === 0) {
-      return subTabs;
-    }
-
-    // 9개 이하면 단일 탭 (하위탭 표시하지 않음)
-    if (categoryCards.length <= 9) {
-      subTabs[mainCategory] = {
-        icon: categoryInfo.icon,
-        label: categoryInfo.label,
-        color: categoryInfo.color,
-        cards: categoryCards
-      };
-    } else {
-      // 9개 초과면 스마트 분류 시도
-      if (mainCategory === 'evidence') {
-        // 증거의 경우 location별로 스마트 분류
-        const evidenceByLocation: { [key: string]: any[] } = {};
-        categoryCards.forEach(card => {
-          const location = card.location || card.details?.match(/(?:연구소|부엌|서재|입구|지하|정원|방)/)?.[0] || 'other';
-          if (!evidenceByLocation[location]) {
-            evidenceByLocation[location] = [];
-          }
-          evidenceByLocation[location].push(card);
-        });
-
-        // location별로 9개씩 분할
-        Object.entries(evidenceByLocation).forEach(([location, locationCards]) => {
-          if (locationCards.length <= 9) {
-            subTabs[location] = {
-              icon: '🔍',
-              label: `${location}증거`,
-              color: categoryInfo.color,
-              cards: locationCards
-            };
-          } else {
-            // location 내에서도 9개 초과면 A,B,C 분할
-            const chunks = [];
-            for (let i = 0; i < locationCards.length; i += 9) {
-              chunks.push(locationCards.slice(i, i + 9));
-            }
-            chunks.forEach((chunk, index) => {
-              const letter = String.fromCharCode(65 + index);
-              subTabs[`${location}_${letter}`] = {
-                icon: '🔍',
-                label: `${location}증거${letter}`,
-                color: categoryInfo.color,
-                cards: chunk
-              };
-            });
-          }
-        });
-      } else {
-        // 기타 카테고리는 A,B,C 단순 분할
-        const chunks = [];
-        for (let i = 0; i < categoryCards.length; i += 9) {
-          chunks.push(categoryCards.slice(i, i + 9));
-        }
-        chunks.forEach((chunk, index) => {
-          const letter = String.fromCharCode(65 + index);
-          subTabs[`${mainCategory}_${letter}`] = {
-            icon: categoryInfo.icon,
-            label: `${categoryInfo.label}${letter}`,
-            color: categoryInfo.color,
-            cards: chunk
-          };
-        });
-      }
-    }
-
-    return subTabs;
-  }, [
-    discoveredCards,
-    suspectCards,
-    evidenceCards,
-    locationCards,
-    mainCategories
-  ]);
-
-  // 현재 활성 하위 탭들 가져오기 (메모이제이션으로 최적화)
-  const getCurrentSubTabs = useMemo(() => {
-    return createSubTabs(activeMainCategory);
-  }, [createSubTabs, activeMainCategory]);
-
-  // 카드 필터링 함수 (2단계 탭 지원)
-  const getFilteredCards = useCallback(() => {
-    const subTabs = getCurrentSubTabs;
-
-    // activeSubCategory가 현재 subTabs에 존재하는지 확인
-    if (activeSubCategory && subTabs[activeSubCategory]) {
-      return subTabs[activeSubCategory]?.cards || [];
-    }
-    // 하위 탭이 선택되지 않았거나 유효하지 않으면 첫 번째 하위 탭의 카드들 반환
-    const firstSubTabKey = Object.keys(subTabs)[0];
-    return subTabs[firstSubTabKey]?.cards || [];
-  }, [getCurrentSubTabs, activeSubCategory]);
+  // 새로운 스와이프 UI에서는 탭 시스템 불필요
 
 
 
@@ -540,7 +400,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
         background: `linear-gradient(135deg, ${themeColors.primary} 0%, ${themeColors.secondary} 50%, ${themeColors.accent} 100%)`,
         color: 'white',
         padding: '1rem', // 기본 패딩
-        paddingTop: 'max(env(safe-area-inset-top, 0px), 100px)', // 상단 고정 헤더(140px) - 단서카드 위치 적절히 조정
+        paddingTop: 'max(env(safe-area-inset-top, 0px), 65px)', // 새로운 헤더 높이(60px) + 여유(5px)
         paddingBottom: 'max(env(safe-area-inset-bottom, 0px), 85px)', // 하단 고정 영역 + 여유
         fontFamily: ui.typography.bodyFont,
         position: 'relative'
@@ -579,7 +439,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
             gridTemplateColumns: 'repeat(2, 1fr)',
             gap: '2rem'
           }}>
-            {/* 카드 영역 */}
+            {/* 새로운 스와이프 카드 영역 */}
             <div style={{
               gridColumn: 'span 2'
             }}>
@@ -595,7 +455,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
                   display: 'flex',
                   alignItems: 'center',
                   gap: '1rem',
-                  marginTop: '0rem' // 상단 고정 영역과 간격 최소화
+                  marginTop: '0rem'
                 }}>
                   <h3 style={{
                     fontSize: '1.2rem',
@@ -606,389 +466,95 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
                   }}>
                     {cardIcon} {t('clueCards')}
                   </h3>
-
                 </div>
 
-                {/* 모바일 전용 헤더 - 개선된 구조 */}
+                {/* 스와이프 안내 */}
                 <div style={{
-                  position: 'fixed',
-                  top: 'max(env(safe-area-inset-top, 0px), 0px)', // 시스템 UI 아래에 위치
-                  left: 0,
-                  right: 0,
-                  height: '140px',
-                  background: 'linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(22, 33, 62, 0.95) 100%)',
-                  backdropFilter: 'blur(10px)',
-                  borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-                  zIndex: 1000,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  padding: '10px 0.5rem'
+                  fontSize: '0.75rem',
+                  color: 'rgba(255,255,255,0.6)',
+                  textAlign: 'right'
                 }}>
-                  {/* 고정 네비게이션 바: 뒤로가기 | 진행시간/연결횟수 | 언어선택 | 정답힌트 */}
-                  <div style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    minHeight: '32px',
-                    paddingBottom: '8px',
-                    gap: '6px',
-                    flexShrink: 0 // 고정 크기 유지
-                  }}>
-                    <Link
-                      to={backUrl}
-                      style={{
-                        color: 'rgba(255,255,255,0.8)',
-                        textDecoration: 'none',
-                        fontSize: '0.8rem',
-                        transition: 'color 0.3s ease',
-                        flexShrink: 0,
-                        minWidth: 'fit-content'
-                      }}
-                    >
-                      {t('backButton')}
-                    </Link>
-
-                    {/* 가운데: 진행시간 / 연결횟수 */}
-                    <div style={{
-                      color: 'rgba(255,255,255,0.9)',
-                      fontSize: '0.75rem',
-                      fontWeight: 600,
-                      textAlign: 'center',
-                      flex: 1,
-                      minWidth: 0
-                    }}>
-                      {Math.floor(gameState.elapsedTime / 60)}:{String(gameState.elapsedTime % 60).padStart(2, '0')} / {gameState.connections.length}{t('times')}
-                    </div>
-
-                    {/* PC와 동일한 고급 힌트 로직을 바로 실행하는 모바일 버튼 */}
-                    <button
-                      onClick={() => {
-                        if (gameState.hintsUsed >= maxHints) return;
-                        handleRequestHint();
-                      }}
-                      onMouseDown={(e) => {
-                        if (gameState.hintsUsed < maxHints) {
-                          e.currentTarget.style.transform = 'translateY(1px)';
-                          e.currentTarget.style.boxShadow = '0 1px 3px rgba(251, 191, 36, 0.4), inset 0 1px 0 rgba(255,255,255,0.2)';
-                        }
-                      }}
-                      onMouseUp={(e) => {
-                        if (gameState.hintsUsed < maxHints) {
-                          e.currentTarget.style.transform = 'translateY(0)';
-                          e.currentTarget.style.boxShadow = '0 2px 6px rgba(251, 191, 36, 0.4), inset 0 1px 0 rgba(255,255,255,0.2)';
-                        }
-                      }}
-                      onMouseLeave={(e) => {
-                        if (gameState.hintsUsed < maxHints) {
-                          e.currentTarget.style.transform = 'translateY(0)';
-                          e.currentTarget.style.boxShadow = '0 2px 6px rgba(251, 191, 36, 0.4), inset 0 1px 0 rgba(255,255,255,0.2)';
-                        }
-                      }}
-                      disabled={gameState.hintsUsed >= maxHints}
-                      style={{
-                        background: gameState.hintsUsed >= maxHints
-                          ? 'rgba(128, 128, 128, 0.3)'
-                          : 'linear-gradient(45deg, #fbbf24, #f59e0b)',
-                        color: gameState.hintsUsed >= maxHints ? 'rgba(255,255,255,0.5)' : 'white',
-                        border: gameState.hintsUsed >= maxHints
-                          ? '1px solid rgba(128, 128, 128, 0.5)'
-                          : '1px solid rgba(251, 191, 36, 0.6)',
-                        borderRadius: '6px',
-                        padding: '3px 6px',
-                        fontSize: '0.75rem',
-                        fontWeight: 600,
-                        cursor: gameState.hintsUsed >= maxHints ? 'not-allowed' : 'pointer',
-                        transition: 'all 0.3s ease',
-                        boxShadow: gameState.hintsUsed >= maxHints
-                          ? 'inset 0 1px 2px rgba(0,0,0,0.1)'
-                          : '0 2px 6px rgba(251, 191, 36, 0.4), inset 0 1px 0 rgba(255,255,255,0.2)',
-                        flexShrink: 0,
-                        minWidth: 'fit-content',
-                        whiteSpace: 'nowrap',
-                        marginRight: '2px',
-                        transform: 'translateY(0)'
-                      }}
-                    >
-                      💡({gameState.hintsUsed}/{maxHints})
-                    </button>
-                  </div>
-
-                  {/* 스크롤 가능한 탭 영역 */}
-                  <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '6px',
-                    flex: 1,
-                    overflowY: 'hidden',
-                    paddingBottom: '8px'
-                  }}>
-                    {/* 1단계: 메인 카테고리 탭 행 */}
-                    <div style={{
-                      display: 'flex',
-                      gap: '0.3rem',
-                      alignItems: 'center',
-                      minHeight: '40px',
-                      overflowX: 'auto',
-                      overflowY: 'hidden',
-                      scrollBehavior: 'smooth',
-                      scrollbarWidth: 'none',
-                      msOverflowStyle: 'none',
-                      WebkitOverflowScrolling: 'touch'
-                    } as React.CSSProperties}>
-                      {Object.entries(mainCategories).map(([key, category]) => {
-                        // 해당 카테고리에 카드가 있는지 확인
-                        let categoryCards: any[] = [];
-                        switch (key) {
-                          case 'all':
-                            categoryCards = cards.filter(card => card.discovered);
-                            break;
-                          case 'suspects':
-                            categoryCards = cards.filter(card => card.type === 'suspect' && card.discovered);
-                            break;
-                          case 'evidence':
-                            categoryCards = cards.filter(card => card.type === 'evidence' && card.discovered);
-                            break;
-                          case 'locations':
-                            categoryCards = cards.filter(card => card.type === 'location' && card.discovered);
-                            break;
-
-                        }
-
-                        if (categoryCards.length === 0) return null;
-
-                        const isActive = activeMainCategory === key;
-
-                        return (
-                          <button
-                            key={key}
-                            onClick={() => {
-                              setActiveMainCategory(key);
-                              // 메인 카테고리 변경 시 첫 번째 하위 탭으로 설정
-                              const newSubTabs = createSubTabs(key);
-                              const firstSubTabKey = Object.keys(newSubTabs)[0];
-                              if (firstSubTabKey) {
-                                setActiveSubCategory(firstSubTabKey);
-                              }
-                              // 탭 클릭 시 해당 탭의 알림 제거
-                              setNewCardNotification(prev => {
-                                const updated = { ...prev };
-                                delete updated[key];
-                                return updated;
-                              });
-                            }}
-                            style={{
-                              background: isActive
-                                ? `linear-gradient(45deg, ${category.color}, ${category.color}dd)`
-                                : 'rgba(255, 255, 255, 0.1)',
-                              color: isActive ? 'white' : 'rgba(255, 255, 255, 0.7)',
-                              border: isActive ? `2px solid ${category.color}` : '2px solid rgba(255, 255, 255, 0.2)',
-                              borderRadius: '20px',
-                              padding: '6px 10px',
-                              fontSize: '0.8rem',
-                              fontWeight: 600,
-                              cursor: 'pointer',
-                              transition: 'all 0.3s ease',
-                              backdropFilter: 'blur(10px)',
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: '2px',
-                              minWidth: 'fit-content',
-                              whiteSpace: 'nowrap',
-                              flexShrink: 0,
-                              position: 'relative'
-                            }}
-                          >
-                            <span style={{ fontSize: '0.9rem' }}>{category.icon}</span>
-                            <span>{category.label}</span>
-                            {newCardNotification[key] && (
-                              <div style={{
-                                position: 'absolute',
-                                top: '-5px',
-                                right: '-5px',
-                                background: '#ff4444',
-                                color: 'white',
-                                borderRadius: '50%',
-                                width: '16px',
-                                height: '16px',
-                                fontSize: '10px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                fontWeight: 'bold',
-                                animation: 'pulse 1.5s infinite',
-                                boxShadow: '0 2px 8px rgba(255, 68, 68, 0.4)'
-                              }}>
-                                !
-                              </div>
-                            )}
-                            <span style={{
-                              background: 'rgba(255, 255, 255, 0.2)',
-                              borderRadius: '8px',
-                              padding: '1px 4px',
-                              fontSize: '0.65rem',
-                              fontWeight: 700,
-                              minWidth: '16px',
-                              textAlign: 'center'
-                            }}>
-                              {categoryCards.length}
-                            </span>
-                          </button>
-                        );
-                      })}
-                    </div>
-
-                    {/* 2단계: 하위 카테고리 탭 행 */}
-                    {Object.keys(getCurrentSubTabs).length > 0 && (
-                      <div style={{
-                        display: 'flex',
-                        gap: '0.3rem',
-                        alignItems: 'center',
-                        minHeight: '48px',
-                        paddingTop: '8px',
-                        paddingBottom: '8px',
-                        paddingLeft: '1rem',
-                        overflowX: 'auto',
-                        overflowY: 'hidden',
-                        scrollBehavior: 'smooth',
-                        scrollbarWidth: 'thin',
-                        WebkitOverflowScrolling: 'touch'
-                      } as React.CSSProperties}>
-                        {Object.entries(getCurrentSubTabs).map(([key, subTab]) => {
-                          const isActive = activeSubCategory === key;
-
-                          return (
-                            <button
-                              key={`sub_${key}`}
-                              onClick={() => {
-                                setActiveSubCategory(key);
-                                // 서브탭 클릭 시 해당 탭의 알림 제거
-                                setNewCardNotification(prev => {
-                                  const updated = { ...prev };
-                                  delete updated[key];
-                                  return updated;
-                                });
-                              }}
-                              style={{
-                                background: isActive
-                                  ? `linear-gradient(45deg, ${subTab.color}, ${subTab.color}dd)`
-                                  : 'rgba(255, 255, 255, 0.05)',
-                                color: isActive ? 'white' : 'rgba(255, 255, 255, 0.6)',
-                                border: isActive ? `2px solid ${subTab.color}` : '2px solid rgba(255, 255, 255, 0.1)',
-                                borderRadius: '16px',
-                                padding: '4px 8px',
-                                fontSize: '0.7rem',
-                                fontWeight: 500,
-                                cursor: 'pointer',
-                                transition: 'all 0.3s ease',
-                                backdropFilter: 'blur(10px)',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '3px',
-                                minWidth: 'fit-content',
-                                whiteSpace: 'nowrap',
-                                flexShrink: 0,
-                                opacity: isActive ? 1 : 0.8,
-                                position: 'relative'
-                              }}
-                            >
-                              <span style={{ fontSize: '0.75rem' }}>{subTab.icon}</span>
-                              <span>{subTab.label}</span>
-                              {newCardNotification[key] && (
-                                <div style={{
-                                  position: 'absolute',
-                                  top: '-3px',
-                                  right: '-3px',
-                                  background: '#ff4444',
-                                  color: 'white',
-                                  borderRadius: '50%',
-                                  width: '12px',
-                                  height: '12px',
-                                  fontSize: '8px',
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  justifyContent: 'center',
-                                  fontWeight: 'bold',
-                                  animation: 'pulse 1.5s infinite',
-                                  boxShadow: '0 1px 4px rgba(255, 68, 68, 0.4)'
-                                }}>
-                                  !
-                                </div>
-                              )}
-                              <span style={{
-                                background: 'rgba(255, 255, 255, 0.2)',
-                                borderRadius: '6px',
-                                padding: '1px 3px',
-                                fontSize: '0.55rem',
-                                fontWeight: 700,
-                                minWidth: '12px',
-                                textAlign: 'center'
-                              }}>
-                                {subTab.cards.length}
-                              </span>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
+                  ← → 좌우 스와이프로 카드 탐색
                 </div>
               </div>
 
-              {/* 카드 그리드 - 반응형 */}
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))',
-                gap: 'clamp(0.5rem, 1vw, 1rem)',
-                minHeight: '200px'
-              }}>
-                {getFilteredCards().map(card => {
-                  const feedback = cardFeedback.find(f => f.cardId === card.id);
-                  return (
-                    <GameCard
-                      key={card.id}
-                      card={card}
-                      isSelected={gameState.selectedCards.includes(card.id)}
-                      isDiscovered={card.discovered}
-                      isHighlighted={highlightedCardId === card.id}
-                      onClick={() => handleCardSelect(card.id)}
-                      disabled={isConnecting}
-                      feedbackEffect={feedback?.effect}
-                      uiCustomization={{
-                        ...ui.cardStyles,
-                        cardBorderRadius: ui.layout.cardBorderRadius,
-                        cardHoverScale: ui.animations.cardHoverScale
-                      }}
-                    />
-                  );
-                })}
-              </div>
-
-              {/* 카테고리별 빈 상태 메시지 */}
-              {getFilteredCards().length === 0 && (
-                <div style={{
-                  textAlign: 'center',
-                  padding: '3rem 1rem',
-                  color: 'rgba(255, 255, 255, 0.6)',
-                  fontSize: '1rem'
-                }}>
-                  {activeMainCategory === 'new' ? (
-                    <>
-                      <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>✨</div>
-                      <p>{t('noNewCluesFound')}</p>
-                      <p style={{ fontSize: '0.85rem', opacity: 0.8 }}>{t('tryCombinantion')}</p>
-                    </>
-                  ) : (
-                    <>
-                      <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>🔍</div>
-                      <p>{t('noCategoryClues')}</p>
-                    </>
-                  )}
-                </div>
-              )}
+              {/* 새로운 스와이프 카드 그리드 */}
+              <SwipeCardGrid
+                cards={cards.filter(card => card.discovered)}
+                selectedCards={gameState.selectedCards}
+                onCardClick={handleCardSelect}
+                cardStyles={ui.cardStyles}
+                ui={ui}
+              />
             </div>
 
           </div>
 
+          {/* 모바일 전용 헤더 - 간소화된 구조 */}
+          <div style={{
+            position: 'fixed',
+            top: 'max(env(safe-area-inset-top, 0px), 0px)',
+            left: 0,
+            right: 0,
+            height: '60px', // 기존 140px에서 60px로 대폭 축소
+            background: 'linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(22, 33, 62, 0.95) 100%)',
+            backdropFilter: 'blur(10px)',
+            borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+            zIndex: 1000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '0 1rem'
+          }}>
+            {/* 뒤로가기 */}
+            <Link
+              to={backUrl}
+              style={{
+                color: 'rgba(255,255,255,0.8)',
+                textDecoration: 'none',
+                fontSize: '0.9rem',
+                transition: 'color 0.3s ease'
+              }}
+            >
+              ← {t('backButton')}
+            </Link>
+
+            {/* 가운데: 진행시간 / 연결횟수 */}
+            <div style={{
+              color: 'rgba(255,255,255,0.9)',
+              fontSize: '0.85rem',
+              fontWeight: 600,
+              textAlign: 'center'
+            }}>
+              {Math.floor(gameState.elapsedTime / 60)}:{String(gameState.elapsedTime % 60).padStart(2, '0')} | {gameState.connections.length}{t('times')}
+            </div>
+
+            {/* 힌트 버튼 */}
+            <button
+              onClick={() => {
+                if (gameState.hintsUsed >= maxHints) return;
+                handleRequestHint();
+              }}
+              disabled={gameState.hintsUsed >= maxHints}
+              style={{
+                background: gameState.hintsUsed >= maxHints
+                  ? 'rgba(128, 128, 128, 0.3)'
+                  : 'linear-gradient(45deg, #fbbf24, #f59e0b)',
+                color: gameState.hintsUsed >= maxHints ? 'rgba(255,255,255,0.5)' : 'white',
+                border: gameState.hintsUsed >= maxHints
+                  ? '1px solid rgba(128, 128, 128, 0.5)'
+                  : '1px solid rgba(251, 191, 36, 0.6)',
+                borderRadius: '8px',
+                padding: '6px 10px',
+                fontSize: '0.8rem',
+                fontWeight: 600,
+                cursor: gameState.hintsUsed >= maxHints ? 'not-allowed' : 'pointer',
+                transition: 'all 0.3s ease'
+              }}
+            >
+              💡 {gameState.hintsUsed}/{maxHints}
+            </button>
+          </div>
 
           {/* 모바일 하단 고정 연결 영역 */}
           <div style={{

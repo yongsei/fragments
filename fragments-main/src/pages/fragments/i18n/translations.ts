@@ -74,6 +74,7 @@ export interface FragmentsTranslations {
   
   // 네비게이션
   backToSelection: string;
+  backButton: string;
   gameStart: string;
 }
 
@@ -145,6 +146,7 @@ export const ko: FragmentsTranslations = {
   },
   
   backToSelection: "← 사건 선택으로 돌아가기",
+  backButton: "돌아가기",
   gameStart: "🚀 게임 시작하기"
 };
 
@@ -216,6 +218,7 @@ export const en: FragmentsTranslations = {
   },
   
   backToSelection: "← Back to Case Selection",
+  backButton: "Back",
   gameStart: "🚀 Start Game"
 };
 
