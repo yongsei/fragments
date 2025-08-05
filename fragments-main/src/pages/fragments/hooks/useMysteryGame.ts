@@ -120,39 +120,40 @@ export const useMysteryGame = ({
     return initialState;
   });
 
-  // 저장된 진행 상태 로드 (useEffect에서 처리)
+  // 저장된 게임 진행 상태 로드
   useEffect(() => {
     const loadSavedProgress = async () => {
-      if (caseId) {
-        try {
-          const savedProgress = await loadGameProgress(caseId);
+      if (!caseId) return;
+      
+      try {
+        const savedProgress = await loadGameProgress(caseId);
+        
+        if (savedProgress && !savedProgress.isCompleted) {
+          console.log('저장된 게임 진행 상태를 복원합니다:', savedProgress);
           
-          if (savedProgress && !savedProgress.isCompleted) {
-            console.log('저장된 진행 상태 복원:', savedProgress);
-            
-            setGameState(prev => ({
-              ...prev,
-              elapsedTime: savedProgress.elapsedTime,
-              connections: savedProgress.connections.map((conn, index) => ({
-                id: `restored-${index}-${conn.timestamp}`,
-                cards: conn.cards,
-                result: conn.result,
-                timestamp: conn.timestamp,
-                verified: conn.isCorrect
-              })),
-              discoveredCardIds: savedProgress.discoveredCardIds,
-              hintsUsed: savedProgress.hintsUsed,
-              playerProgress: savedProgress.playerProgress
-            }));
-          }
-        } catch (error) {
-          console.error('저장된 진행 상태 로드 실패:', error);
+          setGameState(prevState => ({
+            ...prevState,
+            elapsedTime: savedProgress.elapsedTime,
+            connections: savedProgress.connections.map((conn, index) => ({
+              id: `restored-${index}-${conn.timestamp}`,
+              cards: conn.cards,
+              result: conn.result,
+              timestamp: conn.timestamp,
+              verified: conn.isCorrect
+            })),
+            discoveredCardIds: savedProgress.discoveredCardIds,
+            hintsUsed: savedProgress.hintsUsed,
+            playerProgress: savedProgress.playerProgress
+          }));
         }
+      } catch (error) {
+        console.error('저장된 진행 상태 로드 실패:', error);
       }
     };
 
     loadSavedProgress();
   }, [caseId]);
+
 
   const [cards, setCards] = useState<Card[]>([]);
   const [isConnecting, setIsConnecting] = useState(false);
