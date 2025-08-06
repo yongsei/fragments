@@ -24,7 +24,8 @@ npm-debug.log*
 
 # 백업 파일
 *.bak
-*.backup
+*.build
+
 *.md
 react-puzzle-games/build/*
 
@@ -43,6 +44,7 @@ react-puzzle-games/build/*
 
 # misc
 /fragments-main/.DS_Store
+/fragments-main/build/*
 /fragments-main/.env.local
 /fragments-main/.env.development.local
 /fragments-main/.env.test.local
