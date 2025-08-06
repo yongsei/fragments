@@ -26,6 +26,14 @@ export interface GameProgressData {
   isCompleted: boolean;
 }
 
+// 챕터 완료 상태 인터페이스
+export interface ChapterCompletionData {
+  caseId: string;
+  chapter: number;
+  isCompleted: boolean;
+  completedAt: number;
+}
+
 // 쿠키 만료 시간 (7일)
 const COOKIE_EXPIRY_DAYS = 7;
 
@@ -218,5 +226,138 @@ export const loadGameProgressFromLocalStorage = (caseId: string): GameProgressDa
   } catch (error) {
     console.error('localStorage 로드 실패:', error);
     return null;
+  }
+};
+
+// 챕터 완료 상태 저장
+export const saveChapterCompletion = async (caseId: string, chapter: number): Promise<void> => {
+  try {
+    const key = `fragments_chapter_${caseId}_${chapter}`;
+    const completionData: ChapterCompletionData = {
+      caseId,
+      chapter,
+      isCompleted: true,
+      completedAt: Date.now()
+    };
+    
+    const dataString = JSON.stringify(completionData);
+    
+    if (Capacitor.isNativePlatform()) {
+      await Preferences.set({
+        key: key,
+        value: dataString
+      });
+      console.log(`챕터 완료 상태 저장됨 (네이티브 - 케이스: ${caseId}, 챕터: ${chapter})`);
+    } else {
+      const expiryDate = new Date();
+      expiryDate.setFullYear(expiryDate.getFullYear() + 1); // 1년 저장
+      
+      document.cookie = `${key}=${encodeURIComponent(dataString)}; expires=${expiryDate.toUTCString()}; path=/fragments; SameSite=Lax`;
+      localStorage.setItem(key, dataString);
+      console.log(`챕터 완료 상태 저장됨 (웹 - 케이스: ${caseId}, 챕터: ${chapter})`);
+    }
+  } catch (error) {
+    console.error('챕터 완료 상태 저장 실패:', error);
+  }
+};
+
+// 챕터 완료 상태 확인
+export const isChapterCompleted = async (caseId: string, chapter: number): Promise<boolean> => {
+  try {
+    const key = `fragments_chapter_${caseId}_${chapter}`;
+    let dataString: string | null = null;
+    
+    if (Capacitor.isNativePlatform()) {
+      const result = await Preferences.get({ key });
+      dataString = result.value;
+    } else {
+      // 쿠키에서 확인
+      const cookies = document.cookie.split(';');
+      
+      for (let cookie of cookies) {
+        const [name, value] = cookie.trim().split('=');
+        if (name === key) {
+          dataString = decodeURIComponent(value);
+          break;
+        }
+      }
+      
+      // 쿠키에 없으면 localStorage에서 확인
+      if (!dataString) {
+        dataString = localStorage.getItem(key);
+      }
+    }
+    
+    if (dataString) {
+      const completionData = JSON.parse(dataString) as ChapterCompletionData;
+      return completionData.isCompleted;
+    }
+    
+    return false;
+  } catch (error) {
+    console.error('챕터 완료 상태 확인 실패:', error);
+    return false;
+  }
+};
+
+// 특정 케이스의 완료된 챕터 목록 조회
+export const getCompletedChapters = async (caseId: string): Promise<number[]> => {
+  try {
+    const completedChapters: number[] = [];
+    
+    if (Capacitor.isNativePlatform()) {
+      const keys = await Preferences.keys();
+      const chapterKeys = keys.keys.filter(key => key.startsWith(`fragments_chapter_${caseId}_`));
+      
+      for (const key of chapterKeys) {
+        const result = await Preferences.get({ key });
+        if (result.value) {
+          const completionData = JSON.parse(result.value) as ChapterCompletionData;
+          if (completionData.isCompleted) {
+            completedChapters.push(completionData.chapter);
+          }
+        }
+      }
+    } else {
+      // 쿠키에서 확인
+      const cookies = document.cookie.split(';');
+      
+      for (let cookie of cookies) {
+        const [name, value] = cookie.trim().split('=');
+        if (name.startsWith(`fragments_chapter_${caseId}_`)) {
+          try {
+            const completionData = JSON.parse(decodeURIComponent(value)) as ChapterCompletionData;
+            if (completionData.isCompleted) {
+              completedChapters.push(completionData.chapter);
+            }
+          } catch (e) {
+            // 잘못된 데이터는 무시
+          }
+        }
+      }
+      
+      // localStorage에서도 확인 (추가 보장)
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith(`fragments_chapter_${caseId}_`)) {
+          try {
+            const data = localStorage.getItem(key);
+            if (data) {
+              const completionData = JSON.parse(data) as ChapterCompletionData;
+              if (completionData.isCompleted && !completedChapters.includes(completionData.chapter)) {
+                completedChapters.push(completionData.chapter);
+              }
+            }
+          } catch (e) {
+            // 잘못된 데이터는 무시
+          }
+        }
+      }
+    }
+    
+    return completedChapters.sort((a, b) => a - b);
+  } catch (error) {
+    console.error('완료된 챕터 목록 조회 실패:', error);
+    return [];
   }
 };

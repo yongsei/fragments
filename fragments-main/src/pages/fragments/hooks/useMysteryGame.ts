@@ -1,11 +1,12 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import type { GameScenario } from '../games/case1/scenario_kr';
+import type { GameScenario } from '../games/case5/chapter1/scenario_kr';
 import { Card, Connection } from '../types';
-import type { CaseFeedbackData } from '../games/case1/feedbackData_kr';
+import type { CaseFeedbackData } from '../games/case5/chapter1/feedbackData_kr';
 import { 
   saveGameProgress, 
   loadGameProgress, 
   clearGameProgress, 
+  saveChapterCompletion,
   type GameProgressData 
 } from '../utils/gameProgress';
 import { useLanguage } from './useLanguage';
@@ -848,6 +849,19 @@ export const useMysteryGame = ({
       saveGameProgress(progressData).catch(error => {
         console.error('게임 완료 상태 저장 실패:', error);
       });
+
+      // 챕터 완료 상태 저장 (caseId에서 챕터 정보 추출)
+      const chapterMatch = caseId.match(/^(.+)-ch(\d+)$/);
+      if (chapterMatch) {
+        const baseCaseId = chapterMatch[1];
+        const chapterNumber = parseInt(chapterMatch[2]);
+        
+        saveChapterCompletion(baseCaseId, chapterNumber).catch(error => {
+          console.error('챕터 완료 상태 저장 실패:', error);
+        });
+        
+        console.log(`챕터 ${chapterNumber} 완료! 케이스: ${baseCaseId}`);
+      }
       
       // 3초 후 진행 상태 삭제 (결과 화면을 보여준 후)
       setTimeout(async () => {

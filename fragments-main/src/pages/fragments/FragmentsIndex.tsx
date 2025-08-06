@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link, Routes, Route, useLocation } from 'react-router-dom';
-import Case1Routes from './games/case1/Routes';
-import ChronosParadoxRoutes from './games/case2/Routes';
-import Case3Routes from './games/case3/Routes';
+import UnifiedFragmentsRouter from './components/UnifiedFragmentsRouter';
 import SEOHead from '../../components/SEOHead';
 import { LanguageContext, useLanguageState } from './hooks/useLanguage';
 import LanguageSelector from './components/LanguageSelector';
@@ -124,11 +122,7 @@ const FragmentsContent: React.FC = () => {
       </SEOHead>
 
       {isInCasePage ? (
-        <Routes>
-          <Route path="case1/*" element={<Case1Routes />} />
-          <Route path="case2/*" element={<ChronosParadoxRoutes />} />
-          <Route path="case3/*" element={<Case3Routes />} />
-        </Routes>
+        <UnifiedFragmentsRouter />
       ) : (
         <div style={{
           minHeight: '100vh',
@@ -198,7 +192,7 @@ const FragmentsContent: React.FC = () => {
               padding: '0 clamp(0.5rem, 2vw, 1rem)' // 좌우 여백 추가
             }}>
               
-              {/* 케이스 1: 저택의 미스터리 */}
+              {/* 케이스 1: 어둠의 대성당 */}
               <Link to="/fragments/case1" 
                 onClick={() => window.scrollTo(0, 0)}
                 style={{
@@ -225,14 +219,14 @@ const FragmentsContent: React.FC = () => {
                   e.currentTarget.style.boxShadow = 'none';
                 }}>
                   
-                  {/* 배경 패턴 */}
+                  {/* 다크 퍼플 배경 패턴 */}
                   <div style={{
                     position: 'absolute',
                     top: '-50%',
                     right: '-50%',
                     width: '200%',
                     height: '200%',
-                    background: 'linear-gradient(45deg, transparent 40%, rgba(139, 69, 19, 0.1) 50%, transparent 60%)',
+                    background: 'linear-gradient(45deg, transparent 40%, rgba(157, 78, 221, 0.2) 50%, transparent 60%)',
                     transform: 'rotate(-15deg)',
                     pointerEvents: 'none'
                   }} />
@@ -243,7 +237,7 @@ const FragmentsContent: React.FC = () => {
                       marginBottom: '1rem',
                       textAlign: 'center'
                     }}>
-                      🏚️
+                      ⛪
                     </div>
                     
                     <h3 style={{
@@ -252,7 +246,7 @@ const FragmentsContent: React.FC = () => {
                       fontWeight: 'bold',
                       textAlign: 'center'
                     }}>
-                      {t.caseTitle} 1: {t.case1.title}
+                      케이스 1: 어둠의 대성당
                     </h3>
                     
                     <p style={{
@@ -262,7 +256,7 @@ const FragmentsContent: React.FC = () => {
                       lineHeight: '1.6',
                       textAlign: 'center'
                     }}>
-                      {t.case1.description}
+                      고딕 대성당에서 벌어진 다크 판타지 미스터리
                     </p>
                     
                     <div style={{
@@ -271,14 +265,14 @@ const FragmentsContent: React.FC = () => {
                       fontSize: '0.9rem',
                       opacity: '0.8'
                     }}>
-                      <span>🎯 {t.difficulty}: ⭐⭐⭐</span>
-                      <span>⏱️ {t.estimatedTime}: 10-15{t.minutes}</span>
+                      <span>🎯 난이도: ⭐⭐⭐</span>
+                      <span>⏱️ 예상시간: 15-20분</span>
                     </div>
                   </div>
                 </div>
               </Link>
 
-              {/* 케이스 2: 크로노스 패러독스 */}
+              {/* 케이스 2: 우주선 오디세이 */}
               <Link to="/fragments/case2" 
                 onClick={() => window.scrollTo(0, 0)}
                 style={{
@@ -305,14 +299,14 @@ const FragmentsContent: React.FC = () => {
                   e.currentTarget.style.boxShadow = 'none';
                 }}>
                   
-                  {/* SF 배경 패턴 */}
+                  {/* SF 우주 배경 패턴 */}
                   <div style={{
                     position: 'absolute',
                     top: '-50%',
                     right: '-50%',
                     width: '200%',
                     height: '200%',
-                    background: 'linear-gradient(45deg, transparent 40%, rgba(102, 126, 234, 0.2) 50%, transparent 60%)',
+                    background: 'linear-gradient(45deg, transparent 40%, rgba(61, 42, 71, 0.3) 50%, transparent 60%)',
                     transform: 'rotate(15deg)',
                     pointerEvents: 'none'
                   }} />
@@ -323,7 +317,7 @@ const FragmentsContent: React.FC = () => {
                       marginBottom: '1rem',
                       textAlign: 'center'
                     }}>
-                      ⚛️
+                      🚀
                     </div>
                     
                     <h3 style={{
@@ -332,7 +326,7 @@ const FragmentsContent: React.FC = () => {
                       fontWeight: 'bold',
                       textAlign: 'center'
                     }}>
-                      {t.caseTitle} 2: {t.case2.title}
+                      케이스 2: 우주선 오디세이
                     </h3>
                     
                     <p style={{
@@ -342,7 +336,7 @@ const FragmentsContent: React.FC = () => {
                       lineHeight: '1.6',
                       textAlign: 'center'
                     }}>
-                      {t.case2.description}
+                      우주선에 갇힌 탐사팀과 AI 가이아의 치명적 비밀
                     </p>
                     
                     <div style={{
@@ -351,14 +345,14 @@ const FragmentsContent: React.FC = () => {
                       fontSize: '0.9rem',
                       opacity: '0.8'
                     }}>
-                      <span>🎯 {t.difficulty}: ⭐⭐⭐⭐⭐</span>
-                      <span>⏱️ {t.estimatedTime}: 20-30{t.minutes}</span>
+                      <span>🎯 난이도: ⭐⭐⭐⭐</span>
+                      <span>⏱️ 예상시간: 25-35분</span>
                     </div>
                   </div>
                 </div>
               </Link>
 
-              {/* 케이스 3: 브래스헬름의 잿불 챕터1 */}
+              {/* 케이스 3: 브래스헬름의 잿불 */}
               <Link to="/fragments/case3" 
                 onClick={() => window.scrollTo(0, 0)}
                 style={{
@@ -385,14 +379,14 @@ const FragmentsContent: React.FC = () => {
                   e.currentTarget.style.boxShadow = 'none';
                 }}>
                   
-                  {/* 스팀펑크 배경 패턴 */}
+                  {/* 클래식 열차 배경 패턴 */}
                   <div style={{
                     position: 'absolute',
                     top: '-50%',
                     right: '-50%',
                     width: '200%',
                     height: '200%',
-                    background: 'linear-gradient(45deg, transparent 40%, rgba(56, 239, 125, 0.2) 50%, transparent 60%)',
+                    background: 'linear-gradient(45deg, transparent 40%, rgba(139, 69, 19, 0.2) 50%, transparent 60%)',
                     transform: 'rotate(-10deg)',
                     pointerEvents: 'none'
                   }} />
@@ -403,7 +397,7 @@ const FragmentsContent: React.FC = () => {
                       marginBottom: '1rem',
                       textAlign: 'center'
                     }}>
-                      🔥
+                      🚂
                     </div>
                     
                     <h3 style={{
@@ -412,7 +406,7 @@ const FragmentsContent: React.FC = () => {
                       fontWeight: 'bold',
                       textAlign: 'center'
                     }}>
-                      {t.caseTitle} 3: {originalLang === 'kr' ? '브래스헬름의 잿불 Ch.1' : 'Ashes of Brasshelm Ch.1'}
+                      케이스 3: 오리엔트 특급 열차
                     </h3>
                     
                     <p style={{
@@ -422,7 +416,7 @@ const FragmentsContent: React.FC = () => {
                       lineHeight: '1.6',
                       textAlign: 'center'
                     }}>
-                      {originalLang === 'kr' ? '스팀펑크 도시에서 벌어진 의문의 살인사건' : 'Mysterious murder case in a steampunk city'}
+                      눈보라 속 고립된 열차에서 벌어진 완벽한 밀실 살인
                     </p>
                     
                     <div style={{
@@ -431,8 +425,168 @@ const FragmentsContent: React.FC = () => {
                       fontSize: '0.9rem',
                       opacity: '0.8'
                     }}>
-                      <span>🎯 {t.difficulty}: ⭐⭐⭐⭐</span>
-                      <span>⏱️ {t.estimatedTime}: 15-25{t.minutes}</span>
+                      <span>🎯 난이도: ⭐⭐⭐⭐</span>
+                      <span>⏱️ 예상시간: 30-40분</span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+
+              {/* 케이스 4: 브래스헬름의 잿불 Ch.2 */}
+              <Link to="/fragments/case4" 
+                onClick={() => window.scrollTo(0, 0)}
+                style={{
+                  textDecoration: 'none',
+                  color: 'inherit'
+                }}>
+                <div style={{
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  borderRadius: '20px',
+                  padding: 'clamp(1.5rem, 4vw, 2rem)',
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  transition: 'all 0.3s ease',
+                  cursor: 'pointer',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-5px)';
+                  e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.2)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}>
+                  
+                  {/* 마법공학 배경 패턴 */}
+                  <div style={{
+                    position: 'absolute',
+                    top: '-50%',
+                    right: '-50%',
+                    width: '200%',
+                    height: '200%',
+                    background: 'linear-gradient(45deg, transparent 40%, rgba(138, 43, 226, 0.3) 50%, transparent 60%)',
+                    transform: 'rotate(10deg)',
+                    pointerEvents: 'none'
+                  }} />
+                  
+                  <div style={{ position: 'relative', zIndex: 1 }}>
+                    <div style={{
+                      fontSize: '3rem',
+                      marginBottom: '1rem',
+                      textAlign: 'center'
+                    }}>
+                      🔮
+                    </div>
+                    
+                    <h3 style={{
+                      fontSize: '1.5rem',
+                      margin: '0 0 1rem 0',
+                      fontWeight: 'bold',
+                      textAlign: 'center'
+                    }}>
+                      케이스 4: 아르카눔 그림자
+                    </h3>
+                    
+                    <p style={{
+                      fontSize: '1rem',
+                      margin: '0 0 1.5rem 0',
+                      opacity: '0.9',
+                      lineHeight: '1.6',
+                      textAlign: 'center'
+                    }}>
+                      마법과 기술이 공존하는 도시의 마법공학자 살인사건
+                    </p>
+                    
+                    <div style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      fontSize: '0.9rem',
+                      opacity: '0.8'
+                    }}>
+                      <span>🎯 난이도: ⭐⭐⭐⭐⭐</span>
+                      <span>⏱️ 예상시간: 35-45분</span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+
+              {/* 케이스 5: 크로노스의 시간여행 미스터리 */}
+              <Link to="/fragments/case5" 
+                onClick={() => window.scrollTo(0, 0)}
+                style={{
+                  textDecoration: 'none',
+                  color: 'inherit'
+                }}>
+                <div style={{
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  borderRadius: '20px',
+                  padding: 'clamp(1.5rem, 4vw, 2rem)',
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  transition: 'all 0.3s ease',
+                  cursor: 'pointer',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-5px)';
+                  e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.2)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}>
+                  
+                  {/* SF 시간여행 배경 패턴 */}
+                  <div style={{
+                    position: 'absolute',
+                    top: '-50%',
+                    right: '-50%',
+                    width: '200%',
+                    height: '200%',
+                    background: 'linear-gradient(45deg, transparent 40%, rgba(0, 123, 255, 0.3) 50%, transparent 60%)',
+                    transform: 'rotate(-20deg)',
+                    pointerEvents: 'none'
+                  }} />
+                  
+                  <div style={{ position: 'relative', zIndex: 1 }}>
+                    <div style={{
+                      fontSize: '3rem',
+                      marginBottom: '1rem',
+                      textAlign: 'center'
+                    }}>
+                      ⏰
+                    </div>
+                    
+                    <h3 style={{
+                      fontSize: '1.5rem',
+                      margin: '0 0 1rem 0',
+                      fontWeight: 'bold',
+                      textAlign: 'center'
+                    }}>
+                      케이스 5: 크로노스의 시간여행
+                    </h3>
+                    
+                    <p style={{
+                      fontSize: '1rem',
+                      margin: '0 0 1.5rem 0',
+                      opacity: '0.9',
+                      lineHeight: '1.6',
+                      textAlign: 'center'
+                    }}>
+                      과거와 미래를 오가는 시간여행 살인 미스터리
+                    </p>
+                    
+                    <div style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      fontSize: '0.9rem',
+                      opacity: '0.8'
+                    }}>
+                      <span>🎯 난이도: ⭐⭐⭐⭐⭐</span>
+                      <span>⏱️ 예상시간: 40-60분</span>
                     </div>
                   </div>
                 </div>

@@ -76,6 +76,12 @@ export interface FragmentsTranslations {
   backToSelection: string;
   backButton: string;
   gameStart: string;
+  backToHome: string;
+  progress: string;
+  completed: string;
+  startChapter: string;
+  playAgain: string;
+  chapterCompleted: string;
 }
 
 // 한국어 번역
@@ -147,7 +153,13 @@ export const ko: FragmentsTranslations = {
   
   backToSelection: "← 사건 선택으로 돌아가기",
   backButton: "돌아가기",
-  gameStart: "🚀 게임 시작하기"
+  gameStart: "🚀 게임 시작하기",
+  backToHome: "← 케이스 선택으로 돌아가기",
+  progress: "진행률",
+  completed: "완료",
+  startChapter: "챕터 시작",
+  playAgain: "다시 플레이",
+  chapterCompleted: "챕터 완료"
 };
 
 // 영어 번역
@@ -219,7 +231,13 @@ export const en: FragmentsTranslations = {
   
   backToSelection: "← Back to Case Selection",
   backButton: "Back",
-  gameStart: "🚀 Start Game"
+  gameStart: "🚀 Start Game",
+  backToHome: "← Back to Case Selection",
+  progress: "Progress",
+  completed: "Completed",
+  startChapter: "Start Chapter",
+  playAgain: "Play Again",
+  chapterCompleted: "Chapter Completed"
 };
 
 // 기본 번역 객체

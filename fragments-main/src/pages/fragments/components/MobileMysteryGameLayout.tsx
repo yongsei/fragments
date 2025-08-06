@@ -8,8 +8,8 @@ import ToastMessage from './ToastMessage';
 import AdModal from '../../../components/AdModal';
 import { useMysteryGame } from '../hooks/useMysteryGame';
 import { useLanguageState } from '../hooks/useLanguage';
-import type { GameScenario } from '../games/case1/scenario_kr';
-import type { CaseFeedbackData } from '../games/case1/feedbackData_kr';
+import type { GameScenario } from '../games/case5/chapter1/scenario_kr';
+import type { CaseFeedbackData } from '../games/case5/chapter1/feedbackData_kr';
 
 // CSS 애니메이션 추가
 const pulseKeyframes = `

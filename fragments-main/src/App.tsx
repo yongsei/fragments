@@ -6,10 +6,10 @@ import './App.css';
 // 케이스별 테마 파일 import (각 케이스 폴더에서)
 import { case1Theme } from './pages/fragments/games/case1/case1-theme';
 import { case2Theme } from './pages/fragments/games/case2/case2-theme';
-import { case3Theme } from './pages/fragments/games/case3/case3-theme';
-import { chapter1Theme } from './pages/fragments/games/case3/chapter1/chapter1-theme';
-import { chapter2Theme } from './pages/fragments/games/case3/chapter2/chapter2-theme';
-import { chapter3Theme } from './pages/fragments/games/case3/chapter3/chapter3-theme';
+// import { case3Theme } from './pages/fragments/games/case3/case3-theme';
+// import { chapter1Theme } from './pages/fragments/games/case3/chapter1/chapter1-theme';
+// import { chapter2Theme } from './pages/fragments/games/case3/chapter2/chapter2-theme';
+// import { chapter3Theme } from './pages/fragments/games/case3/chapter3/chapter3-theme';
 
 // 경로별 테마 색상 정의 (테마 파일 참조)
 const getThemeColors = (pathname: string) => {
@@ -17,14 +17,12 @@ const getThemeColors = (pathname: string) => {
     return case1Theme.main;
   } else if (pathname.includes('/case2')) {
     return case2Theme.main;
-  } else if (pathname.includes('/case3/chapter1')) {
-    return chapter1Theme.main;
-  } else if (pathname.includes('/case3/chapter2')) {
-    return chapter2Theme.main;
-  } else if (pathname.includes('/case3/chapter3')) {
-    return chapter3Theme.main;
   } else if (pathname.includes('/case3')) {
-    return case3Theme.main; // 분홍색 계열로 변경됨!
+    // case3 기본 테마 색상 (임시)
+    return 'linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%)';
+  } else if (pathname.includes('/case5')) {
+    // case5 다크 테마 색상
+    return 'linear-gradient(135deg, #0f0f23 0%, #16213e 50%, #1a1a2e 100%)';
   }
   // 기본 색상 (메인 페이지)
   return case1Theme.main;

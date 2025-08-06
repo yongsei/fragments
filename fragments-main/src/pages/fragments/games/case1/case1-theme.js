@@ -1,13 +1,7 @@
-// Case1: 저택의 비밀 - 다크 블루 계열 테마
+// Case1: 어둠의 대성당 테마 (다크 퍼플)
 export const case1Theme = {
-  // 메인 case1 테마
-  main: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
-  
-  // 추가 색상 정의
-  colors: {
-    primary: '#0f3460',      // 다크블루
-    secondary: '#16213e',     // 미드나이트블루
-    accent: '#1a1a2e',       // 다크네이비
-    text: '#ffffff'          // 화이트
-  }
+  main: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f0f23 70%, #1e1e2e 100%)',
+  primary: '#9d4edd',
+  secondary: '#7209b7',
+  accent: '#c77dff'
 };
