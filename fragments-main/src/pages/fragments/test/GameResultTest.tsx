@@ -64,7 +64,7 @@ const GameResultTest: React.FC = () => {
         bottom: 0,
         background: `linear-gradient(135deg, ${testThemeColors.primary} 0%, ${testThemeColors.secondary} 50%, ${testThemeColors.accent} 100%)`,
         color: 'white',
-        padding: '0.5rem',
+        padding: '1.5rem',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -113,7 +113,7 @@ const GameResultTest: React.FC = () => {
               display: 'grid',
               gridTemplateColumns: '1fr 1fr',
               gap: '0.6rem',
-              textAlign: 'left'
+              textAlign: 'center'
             }}>
               <div>
                 <div style={{ opacity: 0.8, fontSize: '0.8rem' }}>🔗 {t.totalConnections}</div>

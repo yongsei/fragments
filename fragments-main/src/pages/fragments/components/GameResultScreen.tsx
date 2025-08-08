@@ -110,7 +110,7 @@ const GameResultScreen: React.FC<GameResultScreenProps> = ({
               display: 'grid',
               gridTemplateColumns: '1fr 1fr',
               gap: '0.6rem',
-              textAlign: 'left'
+              textAlign: 'center'
             }}>
               <div>
                 <div style={{ opacity: 0.8, fontSize: '0.8rem' }}>🔗 {t('totalConnections')}</div>

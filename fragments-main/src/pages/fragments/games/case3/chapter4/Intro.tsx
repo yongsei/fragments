@@ -33,7 +33,7 @@ const Chapter4Intro: React.FC = () => {
               fontWeight: 'bold',
               transition: 'color 0.3s ease'
             }}>
-            ← {t('backToCase') || '케이스로 돌아가기'}
+            ←
           </Link>
           <div>
             <h1 style={{ 

@@ -17,7 +17,7 @@ body {
   /* background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); */
   /* 시스템 UI 영역 확실히 피하기 - 안전 마진 추가 */
   padding-top: max(env(safe-area-inset-top), 20px);
-  padding-bottom: max(env(safe-area-inset-bottom), 80px);
+  padding-bottom: max(env(safe-area-inset-bottom), 40px);
   padding-left: env(safe-area-inset-left);
   padding-right: env(safe-area-inset-right);
 }
@@ -106,7 +106,6 @@ body {
   body {
     /* 모바일에서 더 큰 안전 마진 */
     padding-top: max(env(safe-area-inset-top), 50px) !important;
-    padding-bottom: max(env(safe-area-inset-bottom), 100px) !important;
   }
   
   .App {

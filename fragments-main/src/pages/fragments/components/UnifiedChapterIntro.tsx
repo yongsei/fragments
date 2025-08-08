@@ -137,7 +137,7 @@ const UnifiedChapterIntro: React.FC<UnifiedChapterIntroProps> = ({ data }) => {
       background: data.theme.primaryGradient,
       color: data.theme.textPrimary,
       fontFamily: "'Noto Sans KR', sans-serif",
-      paddingTop: 'max(env(safe-area-inset-top, 0px), 80px)' // 시스템 UI 영역 + 헤더 공간 확보
+      paddingTop: 'max(env(safe-area-inset-top, 0px), 20px)' // 시스템 UI 영역 + 헤더 공간 축소
     }}>
       {/* 상단 고정 헤더 - 시스템 UI 영역까지 커버 */}
       <div style={{
@@ -147,9 +147,7 @@ const UnifiedChapterIntro: React.FC<UnifiedChapterIntroProps> = ({ data }) => {
         right: 0,
         width: '100%',
         height: 'max(env(safe-area-inset-top, 0px), 60px)',
-        background: `${data.theme.navigationBg}ff`,
-        backdropFilter: 'blur(15px)',
-        WebkitBackdropFilter: 'blur(15px)',
+        background: '#2d1b69',
         borderBottom: `1px solid ${data.theme.cardBorder}`,
         zIndex: 9999,
         display: 'flex',
@@ -174,17 +172,18 @@ const UnifiedChapterIntro: React.FC<UnifiedChapterIntroProps> = ({ data }) => {
           onMouseLeave={(e) => {
             e.currentTarget.style.color = 'rgba(255,255,255,0.8)';
           }}>
-          {originalLang === 'kr' ? '← 케이스로 돌아가기' : '← Back to Case'}
+          ←
         </Link>
         
-        {/* 챕터 타이틀 */}
+        {/* 챕터 타이틀 - 절대 중앙 정렬 */}
         <div style={{
+          position: 'absolute',
+          left: '50%',
+          transform: 'translateX(-50%)',
           color: 'rgba(255,255,255,0.9)',
           fontSize: '1rem',
           fontWeight: 600,
-          textAlign: 'center',
-          flex: 1,
-          marginLeft: '1rem'
+          textAlign: 'center'
         }}>
           {data.title[currentLang]}
         </div>
@@ -536,6 +535,35 @@ const UnifiedChapterIntro: React.FC<UnifiedChapterIntroProps> = ({ data }) => {
         onAdCompleted={handleAdCompleted}
         onSkip={handleSkipAd}
       />
+
+      {/* 하단 푸터 - 게임화면과 동일한 스타일 */}
+      <div style={{
+        position: 'fixed',
+        bottom: `max(env(safe-area-inset-bottom, 0px), 0px)`,
+        left: '0',
+        right: '0',
+        background: '#1a1a2eff',
+        borderTop: '1px solid rgba(255, 255, 255, 0.2)',
+        paddingTop: '12px',
+        paddingBottom: '12px',
+        paddingLeft: '20px',
+        paddingRight: '20px',
+        zIndex: 100
+      }}>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+          <div style={{
+            color: 'rgba(255, 255, 255, 0.8)',
+            fontSize: '0.85rem',
+            textAlign: 'center'
+          }}>
+            🎮 {originalLang === 'kr' ? '수사 시작 버튼을 눌러 게임을 플레이하세요' : 'Press Start Investigation to play'}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

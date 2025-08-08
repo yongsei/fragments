@@ -92,8 +92,9 @@ const UnifiedCaseIntro: React.FC<UnifiedCaseIntroProps> = ({ data }) => {
         minHeight: '100vh',
         background: data.theme.background,
         color: 'white',
-        padding: '2rem',
-        paddingTop: 'max(env(safe-area-inset-top, 0px), 80px)', // 상단 헤더 공간 확보
+        paddingLeft: '2rem',
+        paddingRight: '2rem',
+        paddingTop: 'max(env(safe-area-inset-top, 0px), 40px)', // 상단 헤더 공간 축소
         fontFamily: "'Noto Sans KR', sans-serif",
         position: 'relative'
       }}>
@@ -104,9 +105,7 @@ const UnifiedCaseIntro: React.FC<UnifiedCaseIntroProps> = ({ data }) => {
           left: 0,
           right: 0,
           height: '60px',
-          background: `${data.theme.primary}dd`,
-          backdropFilter: 'blur(10px)',
-          WebkitBackdropFilter: 'blur(10px)',
+          background: data.theme.primary,
           borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
           zIndex: 1001,
           display: 'flex',
@@ -131,17 +130,18 @@ const UnifiedCaseIntro: React.FC<UnifiedCaseIntroProps> = ({ data }) => {
               e.currentTarget.style.color = 'rgba(255,255,255,0.8)';
             }}
           >
-            {t.backToHome}
+            ←
           </Link>
           
-          {/* 케이스 타이틀 */}
+          {/* 케이스 타이틀 - 절대 중앙 정렬 */}
           <div style={{
+            position: 'absolute',
+            left: '50%',
+            transform: 'translateX(-50%)',
             color: 'rgba(255,255,255,0.9)',
             fontSize: '1rem',
             fontWeight: 600,
-            textAlign: 'center',
-            flex: 1,
-            marginLeft: '1rem'
+            textAlign: 'center'
           }}>
             {data.title[currentLang]}
           </div>
@@ -336,6 +336,35 @@ const UnifiedCaseIntro: React.FC<UnifiedCaseIntroProps> = ({ data }) => {
             })}
           </div>
 
+        </div>
+
+        {/* 하단 푸터 - 게임화면과 동일한 스타일 */}
+        <div style={{
+          position: 'fixed',
+          bottom: `max(env(safe-area-inset-bottom, 0px), 0px)`,
+          left: '0',
+          right: '0',
+          background: '#1a1a2eff',
+          borderTop: '1px solid rgba(255, 255, 255, 0.2)',
+          paddingTop: '12px',
+          paddingBottom: '12px',
+          paddingLeft: '20px',
+          paddingRight: '20px',
+          zIndex: 100
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}>
+            <div style={{
+              color: 'rgba(255, 255, 255, 0.8)',
+              fontSize: '0.85rem',
+              textAlign: 'center'
+            }}>
+              {originalLang === 'kr' ? '챕터를 선택하여 수사를 시작하세요' : 'Select a chapter to start investigation'}
+            </div>
+          </div>
         </div>
       </div>
     </>

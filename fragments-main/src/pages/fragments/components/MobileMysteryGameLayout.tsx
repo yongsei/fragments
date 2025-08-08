@@ -407,8 +407,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
         background: `linear-gradient(135deg, ${themeColors.primary} 0%, ${themeColors.secondary} 50%, ${themeColors.accent} 100%)`,
         color: 'white',
         padding: '1rem', // 기본 패딩
-        paddingTop: 'max(env(safe-area-inset-top, 0px), 65px)', // 새로운 헤더 높이(60px) + 여유(5px)
-        paddingBottom: 'max(env(safe-area-inset-bottom, 0px), 120px)', // 하단 고정 영역 + 여유 (확대)
+        paddingTop: 'max(env(safe-area-inset-top, 0px), 30px)', // 상단 패딩 축소
         fontFamily: ui.typography.bodyFont,
         position: 'relative'
       }}>
@@ -507,9 +506,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
             left: 0,
             right: 0,
             height: '60px', // 기존 140px에서 60px로 대폭 축소
-            background: `${ui.systemUI.topBarBackground}dd`,
-            backdropFilter: 'blur(10px)',
-            WebkitBackdropFilter: 'blur(10px)',
+            background: '#1a1a2eff',
             borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
             zIndex: 1001,
             display: 'flex',
@@ -527,11 +524,14 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
                 transition: 'color 0.3s ease'
               }}
             >
-              ← {t('backButton')}
+              ←
             </Link>
 
-            {/* 가운데: 진행시간 / 연결횟수 */}
+            {/* 가운데: 진행시간 / 연결횟수 - 절대 중앙 정렬 */}
             <div style={{
+              position: 'absolute',
+              left: '50%',
+              transform: 'translateX(-50%)',
               color: 'rgba(255,255,255,0.9)',
               fontSize: '0.85rem',
               fontWeight: 600,
@@ -576,14 +576,12 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
             bottom: `max(env(safe-area-inset-bottom, 0px), 0px)`, // 시스템 UI 바로 위에 위치
             left: '0',
             right: '0',
-            background: `${ui.systemUI.bottomBarBackground}dd`,
+            background: '#1a1a2eff',
             borderTop: '1px solid rgba(255, 255, 255, 0.2)',
             paddingTop: '12px',
             paddingBottom: '12px', // 고정 패딩으로 일관성 확보
             paddingLeft: '20px',
             paddingRight: '20px',
-            backdropFilter: 'blur(10px)',
-            WebkitBackdropFilter: 'blur(10px)',
             zIndex: 100
           }}>
             {/* 통합된 줄: 사건개요 + 선택된 카드/안내 텍스트 + 연결기록 */}

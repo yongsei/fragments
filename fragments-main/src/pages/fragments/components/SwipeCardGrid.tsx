@@ -41,7 +41,7 @@ const SwipeCardGrid: React.FC<SwipeCardGridProps> = ({
   // 화면 크기에 따른 동적 카드 크기 계산
   const screenWidth = window.innerWidth;
   const spaceBetween = screenWidth < 360 ? 12 : 16;
-  const slidesPerView = screenWidth < 360 ? 2.5 : 3;
+  const slidesPerView = screenWidth < 360 ? 2.3 : 2.8;
 
   // 카테고리별 카드 분류
   const suspectCards = cards.filter(card => card.type === 'suspect');
@@ -114,7 +114,7 @@ const SwipeCardGrid: React.FC<SwipeCardGridProps> = ({
             style={{
               paddingLeft: '0px',
               paddingRight: '20px',
-              height: '220px', // Swiper 자체 높이 설정 (여백 고려해서 축소)
+              height: '180px', // Swiper 자체 높이 설정 (여백 고려해서 축소)
               display: 'flex',
               alignItems: 'flex-start', // 상단 정렬
               overflow: 'visible'
