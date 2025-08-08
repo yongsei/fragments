@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import SEOHead from '../../../components/SEOHead';
-import GameCard from './GameCard';
 import SwipeCardGrid from './SwipeCardGrid';
 import ToastMessage from './ToastMessage';
+// import CardIntroSlideshow from './CardIntroSlideshow'; // CardDetailModal로 통합됨
+import CardDetailModal from './CardDetailModal';
+import GameResultScreen from './GameResultScreen';
 // import { HintSystem } from '../components/HintSystem'; // 모바일에서는 사용하지 않음
 import AdModal from '../../../components/AdModal';
 import { useMysteryGame } from '../hooks/useMysteryGame';
@@ -92,6 +94,7 @@ interface MobileMysteryGameLayoutProps {
   seoKeywords: string;
   canonicalUrl: string;
   backUrl: string;
+  nextChapterUrl?: string; // 다음 챕터 URL
   themeColors: {
     primary: string;
     secondary: string;
@@ -114,6 +117,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
   seoKeywords,
   canonicalUrl,
   backUrl,
+  nextChapterUrl,
   themeColors,
   cardIcon,
   caseId,
@@ -168,9 +172,9 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
     cards,
     isConnecting,
     showResult,
-    highlightedCardId,
     toastMessage,
-    cardFeedback,
+    winConditionCardDiscovered,
+    hasSavedProgress,
     handleCardSelect,
     handleConnect,
     handleClearSelection,
@@ -195,6 +199,53 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
   const [showCaseOverview, setShowCaseOverview] = useState(false);
   const [showConnectionHistory, setShowConnectionHistory] = useState(false);
   const [showAdModal, setShowAdModal] = useState(false);
+  
+  // 초기 카드 슬라이드쇼 상태 관리
+  const [showCardIntro, setShowCardIntro] = useState(!hasSavedProgress);
+  const [hasCheckedGameState, setHasCheckedGameState] = useState(false);
+  
+  // CardDetailModal 상태 관리
+  const [showCardDetail, setShowCardDetail] = useState(false);
+  const [cardDetailMode, setCardDetailMode] = useState<'slideshow' | 'single'>('single');
+  const [cardDetailIds, setCardDetailIds] = useState<string | string[]>('');
+
+  // hasSavedProgress 상태에 따라 인트로 표시 여부 결정
+  useEffect(() => {
+    if (hasSavedProgress) {
+      console.log('저장된 진행 상태가 있어 인트로를 건너뜁니다.');
+      setShowCardIntro(false);
+    }
+  }, [hasSavedProgress]);
+
+  // 게임 상태를 한 번만 확인해서 슬라이드쇼 표시 여부 결정
+  useEffect(() => {
+    if (!hasCheckedGameState && gameState.phase === 'playing') {
+      console.log('Initial game state check for slideshow:', {
+        phase: gameState.phase,
+        elapsedTime: gameState.elapsedTime,
+        connections: gameState.connections.length,
+        discoveredCards: gameState.discoveredCardIds.length
+      });
+      
+      // 저장된 게임이 있으면 슬라이드쇼 건너뛰기
+      if (gameState.elapsedTime > 5 || gameState.connections.length > 0 || gameState.discoveredCardIds.length > 3) {
+        console.log('Found existing game progress, skipping slideshow');
+        setShowCardIntro(false);
+      } else {
+        console.log('New game detected, showing slideshow');
+        setShowCardIntro(true);
+      }
+      
+      setHasCheckedGameState(true);
+    }
+  }, [gameState.phase, gameState.elapsedTime, gameState.connections.length, gameState.discoveredCardIds.length, hasCheckedGameState]);
+
+  // 모든 카드 (suspects, evidence, locations) 합치기 - 메모이제이션
+  const allCards = useMemo(() => [
+    ...(scenario.suspects || []),
+    ...(scenario.evidence || []),
+    ...(scenario.locations || [])
+  ], [scenario.suspects, scenario.evidence, scenario.locations]);
 
   // PC 버전과 동일한 힌트 시스템을 위한 핸들러는 hook에서 가져옴
   
@@ -214,6 +265,21 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
     setShowAdModal(false);
   };
 
+  // 롱프레스 핸들러 - 단일 카드 모달 표시
+  const handleCardLongPress = (cardId: string) => {
+    console.log('🔗 Card long press triggered:', cardId);
+    setCardDetailIds(cardId);
+    setCardDetailMode('single');
+    setShowCardDetail(true);
+  };
+
+  // CardDetailModal 완료 핸들러
+  const handleCardDetailComplete = () => {
+    console.log('🎯 CardDetailModal completed');
+    setShowCardDetail(false);
+    setCardDetailIds('');
+  };
+
 
   // 새 카드 알림 상태 관리 (스와이프 UI에서는 전역 알림만 사용)
   const [newCardNotification, setNewCardNotification] = useState<{ [key: string]: boolean }>({});
@@ -224,9 +290,11 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
 
 
 
-  // 새로 발견된 카드 감지 및 알림 설정
+  // 새로 발견된 카드 감지 및 알림 설정 + 자동 모달 표시
   useEffect(() => {
     if (gameState.newlyDiscoveredCards && gameState.newlyDiscoveredCards.length > 0) {
+      console.log('🎉 New cards discovered:', gameState.newlyDiscoveredCards);
+      
       const notifications: { [key: string]: boolean } = {};
 
       gameState.newlyDiscoveredCards.forEach(cardId => {
@@ -257,6 +325,19 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
 
       setNewCardNotification(prev => ({ ...prev, ...notifications }));
 
+      // 새 카드가 여러 개면 slideshow 모드, 1개면 single 모드로 자동 표시
+      if (gameState.newlyDiscoveredCards.length > 1) {
+        console.log('🎬 Showing slideshow for multiple new cards:', gameState.newlyDiscoveredCards);
+        setCardDetailIds(gameState.newlyDiscoveredCards);
+        setCardDetailMode('slideshow');
+        setShowCardDetail(true);
+      } else if (gameState.newlyDiscoveredCards.length === 1) {
+        console.log('🎯 Showing single card modal for:', gameState.newlyDiscoveredCards[0]);
+        setCardDetailIds(gameState.newlyDiscoveredCards[0]);
+        setCardDetailMode('single');
+        setShowCardDetail(true);
+      }
+
       // 5초 후 알림 제거
       setTimeout(() => {
         setNewCardNotification(prev => {
@@ -277,139 +358,17 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
 
   if (showResult) {
     return (
-      <>
-        <SEOHead
-          title={`${seoTitle} - ${t('gameResult')}`}
-          description={`${seoDescription} ${t('gameResult')}`}
-          keywords={`${seoKeywords}, ${t('gameResult')}`}
-          canonical={canonicalUrl}
-        />
-
-        <div style={{
-          minHeight: '100vh',
-          background: `linear-gradient(135deg, ${themeColors.primary} 0%, ${themeColors.secondary} 50%, ${themeColors.accent} 100%)`,
-          color: 'white',
-          padding: '2rem',
-          paddingTop: 'max(env(safe-area-inset-top, 0px), 50px)', // 시스템 UI 회피
-          paddingBottom: 'max(env(safe-area-inset-bottom, 0px), 80px)', // 시스템 UI 회피
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}>
-          <div style={{
-            maxWidth: '600px',
-            textAlign: 'center',
-            background: 'rgba(255, 255, 255, 0.1)',
-            borderRadius: '20px',
-            padding: '3rem',
-            backdropFilter: 'blur(10px)'
-          }}>
-            <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>
-              🎉
-            </div>
-
-            <h1 style={{
-              fontSize: '2rem',
-              fontWeight: 700,
-              marginBottom: '1rem',
-              color: themeColors.accent
-            }}>
-              {t('caseResolved')}
-            </h1>
-
-            <p style={{
-              fontSize: '1.1rem',
-              lineHeight: 1.6,
-              marginBottom: '2rem',
-              opacity: 0.9
-            }}>
-              {t('gameCompleted')} {scenario.title}{t('truthRevealed')}
-            </p>
-
-            <div style={{
-              background: 'rgba(0, 0, 0, 0.2)',
-              borderRadius: '15px',
-              padding: '1.5rem',
-              marginBottom: '2rem'
-            }}>
-              <h3 style={{ marginBottom: '1rem', color: themeColors.accent }}>{t('gameStatisticsTitle')}</h3>
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
-                gap: '1rem',
-                textAlign: 'left'
-              }}>
-                <div>
-                  <div style={{ opacity: 0.8 }}>🔗 {t('totalConnections')}</div>
-                  <div style={{ fontSize: '1.5rem', fontWeight: 600, color: themeColors.accent }}>
-                    {gameState.playerProgress.correctConnections}{t('connectionsCount')}
-                  </div>
-                </div>
-                <div>
-                  <div style={{ opacity: 0.8 }}>{t('attempts')}</div>
-                  <div style={{ fontSize: '1.5rem', fontWeight: 600 }}>
-                    {gameState.playerProgress.totalConnections}{t('times')}
-                  </div>
-                </div>
-                <div>
-                  <div style={{ opacity: 0.8 }}>{t('hintsUsed')}</div>
-                  <div style={{ fontSize: '1.5rem', fontWeight: 600, color: '#fbbf24' }}>
-                    {gameState.playerProgress.hintsUsed}{t('cardsUnit')}
-                  </div>
-                </div>
-                <div>
-                  <div style={{ opacity: 0.8 }}>{t('timeSpent')}</div>
-                  <div style={{ fontSize: '1.5rem', fontWeight: 600 }}>
-                    {Math.floor(gameState.elapsedTime / 60)}{t('minutes')} {gameState.elapsedTime % 60}{t('seconds')}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div style={{
-              display: 'flex',
-              gap: '1rem',
-              justifyContent: 'center',
-              flexWrap: 'wrap'
-            }}>
-              <button
-                onClick={handleRestart}
-                style={{
-                  background: `linear-gradient(45deg, ${themeColors.accent}, ${themeColors.secondary})`,
-                  color: themeColors.primary,
-                  border: 'none',
-                  borderRadius: '25px',
-                  padding: '1rem 2rem',
-                  fontSize: '1rem',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease'
-                }}
-              >
-                {t('restartGame')}
-              </button>
-
-              <Link
-                to={backUrl}
-                style={{
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  color: 'white',
-                  border: '2px solid rgba(255, 255, 255, 0.3)',
-                  borderRadius: '25px',
-                  padding: '1rem 2rem',
-                  fontSize: '1rem',
-                  fontWeight: 600,
-                  textDecoration: 'none',
-                  display: 'inline-block',
-                  transition: 'all 0.3s ease'
-                }}
-              >
-                {t('returnToMenu')}
-              </Link>
-            </div>
-          </div>
-        </div>
-      </>
+      <GameResultScreen
+        gameState={gameState}
+        themeColors={themeColors}
+        seoTitle={seoTitle}
+        seoDescription={seoDescription}
+        seoKeywords={seoKeywords}
+        canonicalUrl={canonicalUrl}
+        backUrl={backUrl}
+        nextChapterUrl={nextChapterUrl}
+        onRestart={handleRestart}
+      />
     );
   }
 
@@ -422,13 +381,34 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
         canonical={canonicalUrl}
       />
 
+      {/* 초기 카드 소개 슬라이드쇼 - CardDetailModal intro 모드 사용 */}
+      {showCardIntro && scenario.initialCards && scenario.initialCards.length > 0 && (
+        <CardDetailModal
+          mode="intro"
+          caseId={caseId || 'case1-ch1'}
+          cardIds={scenario.initialCards}
+          cards={allCards}
+          showCountdown={true}
+          onComplete={() => {
+            console.log('CardDetailModal intro completed!');
+            setShowCardIntro(false);
+          }}
+          theme={{
+            primaryGradient: `linear-gradient(135deg, ${themeColors.primary} 0%, ${themeColors.secondary} 50%, ${themeColors.accent} 100%)`,
+              accentColor: themeColors.accent,
+              textColor: 'white',
+              skipButtonColor: '#ff6b6b'
+            }}
+          />
+      )}
+
       <div style={{
         minHeight: '100vh',
         background: `linear-gradient(135deg, ${themeColors.primary} 0%, ${themeColors.secondary} 50%, ${themeColors.accent} 100%)`,
         color: 'white',
         padding: '1rem', // 기본 패딩
         paddingTop: 'max(env(safe-area-inset-top, 0px), 65px)', // 새로운 헤더 높이(60px) + 여유(5px)
-        paddingBottom: 'max(env(safe-area-inset-bottom, 0px), 45px)', // 하단 고정 영역 + 여유
+        paddingBottom: 'max(env(safe-area-inset-bottom, 0px), 120px)', // 하단 고정 영역 + 여유 (확대)
         fontFamily: ui.typography.bodyFont,
         position: 'relative'
       }}>
@@ -439,7 +419,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
           left: 0,
           right: 0,
           height: 'max(env(safe-area-inset-top, 0px), 0px)',
-          background: ui.systemUI.topBarBackground,
+          background: `${ui.systemUI.topBarBackground}dd`,
           zIndex: 999
         }} />
 
@@ -449,8 +429,8 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
           bottom: 0,
           left: 0,
           right: 0,
-          height: `calc(max(env(safe-area-inset-bottom, 0px), 0px) + 80px)`, // 하단 UI(80px) + 시스템 UI
-          background: ui.systemUI.bottomBarBackground,
+          height: `calc(max(env(safe-area-inset-bottom, 0px), 0px) + 140px)`, // 하단 UI(140px) + 시스템 UI
+          background: `${ui.systemUI.bottomBarBackground}dd`,
           zIndex: 99
         }} />
         <div style={{
@@ -510,8 +490,11 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
                 cards={cards.filter(card => card.discovered)}
                 selectedCards={gameState.selectedCards}
                 onCardClick={handleCardSelect}
+                onCardLongPress={handleCardLongPress}
                 cardStyles={ui.cardStyles}
                 ui={ui}
+                caseId={caseId}
+                winConditionCardDiscovered={winConditionCardDiscovered}
               />
             </div>
 
@@ -524,10 +507,11 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
             left: 0,
             right: 0,
             height: '60px', // 기존 140px에서 60px로 대폭 축소
-            background: ui.systemUI.topBarBackground,
+            background: `${ui.systemUI.topBarBackground}dd`,
             backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)',
             borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-            zIndex: 1000,
+            zIndex: 1001,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -592,13 +576,14 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
             bottom: `max(env(safe-area-inset-bottom, 0px), 0px)`, // 시스템 UI 바로 위에 위치
             left: '0',
             right: '0',
-            background: ui.systemUI.bottomBarBackground,
+            background: `${ui.systemUI.bottomBarBackground}dd`,
             borderTop: '1px solid rgba(255, 255, 255, 0.2)',
             paddingTop: '12px',
             paddingBottom: '12px', // 고정 패딩으로 일관성 확보
             paddingLeft: '20px',
             paddingRight: '20px',
             backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)',
             zIndex: 100
           }}>
             {/* 통합된 줄: 사건개요 + 선택된 카드/안내 텍스트 + 연결기록 */}
@@ -927,6 +912,23 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
           )}
         </div>
       </div>
+
+      {/* CardDetailModal - 롱프레스 및 새 카드 상세보기 */}
+      {showCardDetail && (
+        <CardDetailModal
+          mode={cardDetailMode}
+          caseId={caseId || ''}
+          cardIds={cardDetailIds}
+          cards={allCards}
+          onComplete={handleCardDetailComplete}
+          theme={{
+            primaryGradient: `linear-gradient(135deg, ${themeColors.primary} 0%, ${themeColors.secondary} 100%)`,
+            accentColor: themeColors.accent,
+            textColor: '#ffffff',
+            skipButtonColor: '#ff6b6b'
+          }}
+        />
+      )}
 
       {/* AdMob 광고 모달 */}
       <AdModal

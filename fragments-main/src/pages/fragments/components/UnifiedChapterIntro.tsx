@@ -1,6 +1,8 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useFragmentsTranslation } from '../hooks/useFragmentsTranslation';
+import { hasGameProgress, loadGameProgress, clearGameProgress } from '../utils/gameProgress';
+import AdModal from '../../../components/AdModal';
 
 export interface ChapterIntroData {
   caseId: string;
@@ -57,46 +59,134 @@ interface UnifiedChapterIntroProps {
 const UnifiedChapterIntro: React.FC<UnifiedChapterIntroProps> = ({ data }) => {
   const { originalLang } = useFragmentsTranslation();
   const currentLang = originalLang === 'kr' ? 'kr' : 'en';
+  const navigate = useNavigate();
+  
+  const [showResumePopup, setShowResumePopup] = useState(false);
+  const [showAdModal, setShowAdModal] = useState(false);
+  const [savedGameInfo, setSavedGameInfo] = useState<{
+    elapsedTime: number;
+    discoveredCardsCount: number;
+  } | null>(null);
+
+  // 챕터별 caseId 생성 (case1-ch1 형식)
+  const chapterCaseId = `${data.caseId}-ch${data.chapterNumber}`;
+
+  const handleGameStart = async () => {
+    // 저장된 게임 데이터 확인
+    try {
+      if (await hasGameProgress(chapterCaseId)) {
+        const progress = await loadGameProgress(chapterCaseId);
+        if (progress && !progress.isCompleted) {
+          setSavedGameInfo({
+            elapsedTime: progress.elapsedTime,
+            discoveredCardsCount: progress.totalDiscoveredCards || progress.discoveredCardIds.length
+          });
+          setShowResumePopup(true);
+          return;
+        }
+      }
+      
+      // 저장된 데이터가 없으면 광고 모달 표시
+      setShowAdModal(true);
+    } catch (error) {
+      console.error('저장된 게임 데이터 확인 실패:', error);
+      // 에러 발생 시 광고 모달 표시
+      setShowAdModal(true);
+    }
+  };
+
+  const handleResumeGame = () => {
+    setShowResumePopup(false);
+    setShowAdModal(true);
+  };
+
+  const handleStartNewGame = async () => {
+    // 저장된 데이터 삭제 후 새 게임 시작
+    await clearGameProgress(chapterCaseId);
+    setShowResumePopup(false);
+    setShowAdModal(true);
+  };
+
+  const handleAdCompleted = () => {
+    console.log('광고 시청 완료! 게임 시작');
+    setShowAdModal(false);
+    window.scrollTo(0, 0);
+    navigate(data.gameLink);
+  };
+
+  const handleSkipAd = () => {
+    console.log('광고 건너뛰기');
+    setShowAdModal(false);
+    window.scrollTo(0, 0);
+    navigate(data.gameLink);
+  };
+
+  const handleCloseAdModal = () => {
+    setShowAdModal(false);
+  };
+
+  const formatTime = (seconds: number): string => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}분 ${remainingSeconds}초`;
+  };
 
   return (
     <div style={{
       minHeight: '100vh',
       background: data.theme.primaryGradient,
       color: data.theme.textPrimary,
-      fontFamily: "'Noto Sans KR', sans-serif"
+      fontFamily: "'Noto Sans KR', sans-serif",
+      paddingTop: 'max(env(safe-area-inset-top, 0px), 80px)' // 시스템 UI 영역 + 헤더 공간 확보
     }}>
-      {/* Navigation */}
+      {/* 상단 고정 헤더 - 시스템 UI 영역까지 커버 */}
       <div style={{
-        background: data.theme.navigationBg,
-        backdropFilter: 'blur(10px)',
-        padding: '16px 24px',
-        borderBottom: `1px solid ${data.theme.cardBorder}`,
-        position: 'sticky',
+        position: 'fixed',
         top: 0,
-        zIndex: 100
+        left: 0,
+        right: 0,
+        width: '100%',
+        height: 'max(env(safe-area-inset-top, 0px), 60px)',
+        background: `${data.theme.navigationBg}ff`,
+        backdropFilter: 'blur(15px)',
+        WebkitBackdropFilter: 'blur(15px)',
+        borderBottom: `1px solid ${data.theme.cardBorder}`,
+        zIndex: 9999,
+        display: 'flex',
+        alignItems: 'flex-end',
+        justifyContent: 'space-between',
+        padding: '0 1rem',
+        paddingBottom: '10px',
+        boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)'
       }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', alignItems: 'center', gap: '20px' }}>
-          <Link 
-            to={`/fragments/${data.caseId}`}
-            style={{
-              color: data.theme.accentPrimary,
-              textDecoration: 'none',
-              fontSize: '18px',
-              fontWeight: 'bold',
-              transition: 'color 0.3s ease'
-            }}>
-            ← {originalLang === 'kr' ? '케이스로 돌아가기' : 'Back to Case'}
-          </Link>
-          <div>
-            <h1 style={{ 
-              margin: 0, 
-              fontSize: '28px',
-              color: data.theme.accentPrimary,
-              fontWeight: 'bold'
-            }}>
-              {data.title[currentLang]}
-            </h1>
-          </div>
+        {/* 뒤로가기 버튼 - 게임과 동일한 위치 */}
+        <Link 
+          to={`/fragments/${data.caseId}`}
+          style={{
+            color: 'rgba(255,255,255,0.8)',
+            textDecoration: 'none',
+            fontSize: '0.9rem',
+            transition: 'color 0.3s ease'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.color = 'white';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.color = 'rgba(255,255,255,0.8)';
+          }}>
+          {originalLang === 'kr' ? '← 케이스로 돌아가기' : '← Back to Case'}
+        </Link>
+        
+        {/* 챕터 타이틀 */}
+        <div style={{
+          color: 'rgba(255,255,255,0.9)',
+          fontSize: '1rem',
+          fontWeight: 600,
+          textAlign: 'center',
+          flex: 1,
+          marginLeft: '1rem'
+        }}>
+          {data.title[currentLang]}
         </div>
       </div>
 
@@ -158,7 +248,7 @@ const UnifiedChapterIntro: React.FC<UnifiedChapterIntroProps> = ({ data }) => {
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+            gridTemplateColumns: window.innerWidth < 600 ? '1fr' : 'repeat(auto-fit, minmax(250px, 1fr))',
             gap: '20px',
             marginBottom: '32px'
           }}>
@@ -245,21 +335,21 @@ const UnifiedChapterIntro: React.FC<UnifiedChapterIntroProps> = ({ data }) => {
 
         {/* Start Game Button */}
         <div style={{ textAlign: 'center' }}>
-          <Link
-            to={data.gameLink}
+          <button
+            onClick={handleGameStart}
             style={{
               display: 'inline-block',
               background: data.theme.buttonPrimary,
               color: 'white',
               padding: '16px 32px',
               borderRadius: '12px',
-              textDecoration: 'none',
               fontSize: '20px',
               fontWeight: 'bold',
               boxShadow: data.theme.cardShadow,
               transition: 'all 0.3s ease',
               border: 'none',
-              textShadow: data.theme.textShadow
+              textShadow: data.theme.textShadow,
+              cursor: 'pointer'
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-2px)';
@@ -271,9 +361,181 @@ const UnifiedChapterIntro: React.FC<UnifiedChapterIntroProps> = ({ data }) => {
             }}
           >
             🎮 {originalLang === 'kr' ? '수사 시작' : 'Start Investigation'}
-          </Link>
+          </button>
         </div>
       </div>
+
+      {/* 저장된 게임 확인 팝업 */}
+      {showResumePopup && savedGameInfo && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          backdropFilter: 'blur(5px)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000,
+          padding: '1rem'
+        }}>
+          <div style={{
+            background: data.theme.primaryGradient,
+            borderRadius: '20px',
+            padding: '2rem',
+            maxWidth: '500px',
+            width: '100%',
+            boxShadow: '0 20px 60px rgba(0, 0, 0, 0.4)',
+            border: `2px solid ${data.theme.accentPrimary}66`,
+            color: 'white',
+            textAlign: 'center',
+            position: 'relative'
+          }}>
+            {/* X 버튼 */}
+            <button
+              onClick={() => setShowResumePopup(false)}
+              style={{
+                position: 'absolute',
+                top: '1rem',
+                right: '1rem',
+                background: 'rgba(255, 255, 255, 0.1)',
+                border: '2px solid rgba(255, 255, 255, 0.3)',
+                borderRadius: '50%',
+                width: '40px',
+                height: '40px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                fontSize: '1.2rem',
+                color: 'white',
+                transition: 'all 0.2s ease'
+              }}
+            >
+              ✕
+            </button>
+
+            {/* 아이콘 */}
+            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>💾</div>
+
+            {/* 제목 */}
+            <h2 style={{
+              fontSize: '1.5rem',
+              fontWeight: 'bold',
+              margin: '0 0 1rem 0',
+              color: data.theme.accentPrimary
+            }}>
+              {originalLang === 'kr' ? '저장된 게임이 있습니다' : 'Saved Game Found'}
+            </h2>
+
+            {/* 게임 정보 */}
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.1)',
+              borderRadius: '12px',
+              padding: '1.5rem',
+              margin: '1.5rem 0',
+              border: '1px solid rgba(255, 255, 255, 0.2)'
+            }}>
+              <div style={{
+                fontSize: '0.9rem',
+                opacity: 0.9,
+                display: 'flex',
+                justifyContent: 'space-around',
+                gap: '1rem'
+              }}>
+                <div>
+                  <div style={{ marginBottom: '0.25rem' }}>
+                    {originalLang === 'kr' ? '플레이 시간' : 'Play Time'}
+                  </div>
+                  <div style={{ fontWeight: 'bold', color: data.theme.accentPrimary }}>
+                    {formatTime(savedGameInfo.elapsedTime)}
+                  </div>
+                </div>
+                <div>
+                  <div style={{ marginBottom: '0.25rem' }}>
+                    {originalLang === 'kr' ? '발견한 카드' : 'Discovered Cards'}
+                  </div>
+                  <div style={{ fontWeight: 'bold', color: data.theme.accentPrimary }}>
+                    {savedGameInfo.discoveredCardsCount}{originalLang === 'kr' ? '장' : ' cards'}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 안내 문구 */}
+            <p style={{
+              fontSize: '1rem',
+              margin: '0 0 1rem 0',
+              opacity: 0.9,
+              lineHeight: '1.5'
+            }}>
+              {originalLang === 'kr' ? '이어서 플레이하시겠습니까?' : 'Would you like to continue playing?'}
+            </p>
+
+            <p style={{
+              fontSize: '0.9rem',
+              margin: '0 0 2rem 0',
+              opacity: 0.7,
+              lineHeight: '1.4',
+              color: '#ff6b6b'
+            }}>
+              {originalLang === 'kr' ? '아니오를 선택하시면 진행상황이 삭제됩니다.' : 'Selecting No will delete your progress.'}
+            </p>
+
+            {/* 버튼들 */}
+            <div style={{
+              display: 'flex',
+              gap: '1rem',
+              justifyContent: 'center'
+            }}>
+              <button
+                onClick={handleResumeGame}
+                style={{
+                  background: data.theme.buttonPrimary,
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '12px',
+                  padding: '0.75rem 1.5rem',
+                  fontSize: '1rem',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  boxShadow: `0 4px 12px ${data.theme.accentPrimary}66`
+                }}
+              >
+                {originalLang === 'kr' ? '예' : 'Yes'}
+              </button>
+
+              <button
+                onClick={handleStartNewGame}
+                style={{
+                  background: 'rgba(255, 107, 107, 0.2)',
+                  color: 'white',
+                  border: '2px solid #ff6b6b',
+                  borderRadius: '12px',
+                  padding: '0.75rem 1.5rem',
+                  fontSize: '1rem',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                {originalLang === 'kr' ? '아니오' : 'No'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* AdMob 광고 모달 */}
+      <AdModal
+        isOpen={showAdModal}
+        onClose={handleCloseAdModal}
+        onAdCompleted={handleAdCompleted}
+        onSkip={handleSkipAd}
+      />
     </div>
   );
 };

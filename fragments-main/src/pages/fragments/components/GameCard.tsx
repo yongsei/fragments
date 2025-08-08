@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card } from '../types';
+import { importCardImage } from '../utils/imageUtils';
 
 interface CardUICustomization {
   suspectColor?: string;
@@ -22,6 +23,9 @@ interface GameCardProps {
   disabled?: boolean;
   feedbackEffect?: 'warm' | 'cold' | 'neutral';
   uiCustomization?: CardUICustomization;
+  caseId?: string; // 케이스 ID 추가
+  onLongPress?: (cardId: string) => void; // 롱프레스 콜백 추가
+  isWinConditionCard?: boolean; // 승리조건 카드 여부 추가
 }
 
 const GameCard: React.FC<GameCardProps> = ({ 
@@ -32,8 +36,74 @@ const GameCard: React.FC<GameCardProps> = ({
   onClick, 
   disabled = false,
   feedbackEffect,
-  uiCustomization = {}
+  uiCustomization = {},
+  caseId,
+  onLongPress,
+  isWinConditionCard = false
 }) => {
+  // 이미지 상태 관리
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [imageLoading, setImageLoading] = useState<boolean>(true);
+  const [imageError, setImageError] = useState<boolean>(false);
+  
+  // 롱프레스 상태 관리
+  const [pressTimer, setPressTimer] = useState<NodeJS.Timeout | null>(null);
+  const [isLongPressing, setIsLongPressing] = useState<boolean>(false);
+
+  // 이미지 로딩
+  useEffect(() => {
+    const loadImage = async () => {
+      if (!caseId || !card.id) {
+        setImageLoading(false);
+        return;
+      }
+
+      try {
+        setImageLoading(true);
+        setImageError(false);
+        const url = await importCardImage(caseId, card.id);
+        setImageUrl(url);
+      } catch (error) {
+        console.log(`Failed to load image for card ${card.id}:`, error);
+        setImageError(true);
+      } finally {
+        setImageLoading(false);
+      }
+    };
+
+    loadImage();
+  }, [caseId, card.id]);
+  
+  // 롱프레스 시작
+  const handlePressStart = () => {
+    if (!disabled && isDiscovered && onLongPress) {
+      setIsLongPressing(true);
+      const timer = setTimeout(() => {
+        console.log('🔗 Long press detected on card:', card.id);
+        onLongPress(card.id);
+        setIsLongPressing(false);
+      }, 3000); // 3초
+      setPressTimer(timer);
+    }
+  };
+
+  // 롱프레스 취소
+  const handlePressEnd = () => {
+    if (pressTimer) {
+      clearTimeout(pressTimer);
+      setPressTimer(null);
+    }
+    setIsLongPressing(false);
+  };
+
+  // 컴포넌트 언마운트 시 타이머 정리
+  useEffect(() => {
+    return () => {
+      if (pressTimer) {
+        clearTimeout(pressTimer);
+      }
+    };
+  }, [pressTimer]);
   // 애니메이션을 위한 스타일 추가
   React.useEffect(() => {
     const style = document.createElement('style');
@@ -50,6 +120,18 @@ const GameCard: React.FC<GameCardProps> = ({
         50% { 
           box-shadow: 0 0 35px #fbbf24, 0 0 70px rgba(251, 191, 36, 0.8);
           transform: scale(1.05);
+        }
+      }
+      @keyframes longPressPulse {
+        0%, 100% { 
+          box-shadow: 0 0 25px #9d4edd, 0 0 50px rgba(157, 78, 221, 0.6);
+          border-color: #9d4edd;
+          transform: scale(1.02);
+        }
+        50% { 
+          box-shadow: 0 0 35px #9d4edd, 0 0 70px rgba(157, 78, 221, 0.8);
+          border-color: #c084fc;
+          transform: scale(1.04);
         }
       }
       @keyframes warmPulse {
@@ -72,6 +154,18 @@ const GameCard: React.FC<GameCardProps> = ({
           border-color: #60a5fa;
         }
       }
+      @keyframes winConditionPulse {
+        0%, 100% { 
+          box-shadow: 0 0 30px #ffd700, 0 0 60px rgba(255, 215, 0, 0.6);
+          border-color: #ffd700;
+          transform: scale(1.05);
+        }
+        50% { 
+          box-shadow: 0 0 40px #ffd700, 0 0 80px rgba(255, 215, 0, 0.8);
+          border-color: #ffed4a;
+          transform: scale(1.08);
+        }
+      }
     `;
     document.head.appendChild(style);
     
@@ -91,7 +185,7 @@ const GameCard: React.FC<GameCardProps> = ({
       backdropFilter: 'blur(10px)',
       position: 'relative' as const,
       overflow: 'hidden' as const,
-      minHeight: '120px',
+      minHeight: '160px',
       display: 'flex',
       flexDirection: 'column' as const,
       justifyContent: 'center',
@@ -126,7 +220,11 @@ const GameCard: React.FC<GameCardProps> = ({
 
     // 피드백 효과에 따른 애니메이션 결정
     let animation = 'none';
-    if (isHighlighted) {
+    if (isLongPressing) {
+      animation = 'longPressPulse 1s infinite';
+    } else if (isWinConditionCard && isDiscovered) {
+      animation = 'winConditionPulse 2.5s infinite';
+    } else if (isHighlighted) {
       animation = 'hintPulse 2s infinite';
     } else if (feedbackEffect === 'warm') {
       animation = 'warmPulse 1.5s infinite';
@@ -199,20 +297,68 @@ const GameCard: React.FC<GameCardProps> = ({
     <div
       style={getCardStyle()}
       onClick={!disabled ? onClick : undefined}
+      onMouseDown={handlePressStart}
+      onMouseUp={handlePressEnd}
+      onTouchStart={handlePressStart}
+      onTouchEnd={handlePressEnd}
+      onTouchCancel={handlePressEnd}
       onMouseEnter={(e) => {
-        if (!disabled && isDiscovered) {
+        if (!disabled && isDiscovered && !isLongPressing) {
           const hoverScale = uiCustomization.cardHoverScale || 1.03;
           e.currentTarget.style.transform = isSelected ? `scale(${hoverScale + 0.02})` : `scale(${hoverScale})`;
         }
       }}
       onMouseLeave={(e) => {
-        if (!disabled) {
+        // 롱프레스 취소
+        handlePressEnd();
+        // 호버 효과 제거
+        if (!disabled && !isLongPressing) {
           e.currentTarget.style.transform = isSelected ? 'scale(1.05)' : 'scale(1)';
         }
       }}
     >
+      {/* 롱프레스 진행 표시 */}
+      {isLongPressing && (
+        <div style={{
+          position: 'absolute',
+          top: '8px',
+          right: '8px',
+          background: 'linear-gradient(45deg, #9d4edd, #c084fc)',
+          color: 'white',
+          fontSize: '0.6rem',
+          fontWeight: 700,
+          padding: '4px 8px',
+          borderRadius: '6px',
+          boxShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+          zIndex: 15,
+          animation: 'newTagPulse 1s infinite'
+        }}>
+          💜 HOLD
+        </div>
+      )}
+
+      {/* WIN CONDITION 태그 */}
+      {isWinConditionCard && isDiscovered && !isLongPressing && (
+        <div style={{
+          position: 'absolute',
+          top: '8px',
+          right: '8px',
+          background: 'linear-gradient(45deg, #ffd700, #ffed4a)',
+          color: '#1a1a1a',
+          fontSize: '0.6rem',
+          fontWeight: 700,
+          padding: '2px 6px',
+          borderRadius: '4px',
+          boxShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+          zIndex: 10,
+          animation: 'newTagPulse 2s infinite'
+        }}>
+          🎯 CLICK
+        </div>
+      )}
+
       {/* NEW 태그 */}
-      {card.isNew && isDiscovered && (
+      {card.isNew && isDiscovered && !isLongPressing && !isWinConditionCard && (
         <div style={{
           position: 'absolute',
           top: '8px',
@@ -269,47 +415,87 @@ const GameCard: React.FC<GameCardProps> = ({
         </div>
       )}
 
-      {/* 카드 아이콘 */}
-      <div style={{
-        fontSize: '2rem',
-        marginBottom: '0.5rem',
-        filter: isDiscovered ? 'none' : 'blur(1px)'
-      }}>
-        {getCardIcon()}
-      </div>
-
-      {/* 카드 이름 */}
-      <h3 style={{
-        color: 'white',
-        fontSize: '0.9rem',
-        fontWeight: 600,
-        marginBottom: '0.3rem',
-        textShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
-      }}>
-        {isDiscovered ? card.name : '???'}
-      </h3>
-
-      {/* 카드 설명 */}
-      {isDiscovered && (
-        <>
-          <p style={{
-            color: 'rgba(255, 255, 255, 0.9)',
-            fontSize: '0.7rem',
-            lineHeight: 1.3,
-            opacity: 0.8
+      {/* 카드 콘텐츠 - 이미지가 있으면 이미지, 없으면 기존 UI */}
+      {imageUrl && isDiscovered && !imageLoading ? (
+        /* 이미지가 있는 경우 */
+        <div style={{ 
+          width: '100%', 
+          height: '100%', 
+          display: 'flex', 
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <img 
+            src={imageUrl} 
+            alt={card.name}
+            style={{
+              width: '100%',
+              height: '120px',
+              objectFit: 'cover',
+              borderRadius: '8px',
+              marginBottom: '0.5rem',
+              filter: isDiscovered ? 'none' : 'blur(2px) grayscale(0.7)'
+            }}
+            onError={() => setImageError(true)}
+          />
+          <h3 style={{
+            color: 'white',
+            fontSize: '0.8rem',
+            fontWeight: 600,
+            textAlign: 'center',
+            textShadow: '0 1px 3px rgba(0, 0, 0, 0.5)',
+            lineHeight: 1.2
           }}>
-            {card.description}
-          </p>
-          {card.details && (
-            <p style={{
-              color: 'rgba(255, 255, 255, 0.7)',
-              fontSize: '0.6rem',
-              lineHeight: 1.2,
-              marginTop: '0.3rem',
-              fontStyle: 'italic'
-            }}>
-              {card.details}
-            </p>
+            {isDiscovered ? card.name : '???'}
+          </h3>
+        </div>
+      ) : (
+        /* 이미지가 없거나 로딩 중인 경우 - 기존 UI */
+        <>
+          {/* 카드 아이콘 */}
+          <div style={{
+            fontSize: '2rem',
+            marginBottom: '0.5rem',
+            filter: isDiscovered ? 'none' : 'blur(1px)'
+          }}>
+            {imageLoading ? '⏳' : getCardIcon()}
+          </div>
+
+          {/* 카드 이름 */}
+          <h3 style={{
+            color: 'white',
+            fontSize: '0.9rem',
+            fontWeight: 600,
+            marginBottom: '0.3rem',
+            textShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
+          }}>
+            {imageLoading ? '로딩 중...' : (isDiscovered ? card.name : '???')}
+          </h3>
+
+          {/* 카드 설명 */}
+          {isDiscovered && !imageLoading && (
+            <>
+              <p style={{
+                color: 'rgba(255, 255, 255, 0.9)',
+                fontSize: '0.7rem',
+                lineHeight: 1.3,
+                opacity: 0.8
+              }}>
+                {card.description}
+              </p>
+              {card.details && (
+                <p style={{
+                  color: 'rgba(255, 255, 255, 0.7)',
+                  fontSize: '0.6rem',
+                  lineHeight: 1.2,
+                  marginTop: '0.3rem',
+                  fontStyle: 'italic'
+                }}>
+                  {card.details}
+                </p>
+              )}
+            </>
           )}
         </>
       )}

@@ -70,6 +70,19 @@ export const case1IntroData: CaseIntroData = {
         en: 'Infiltrate the \'Ash Orphanage\' pointed out by the informant and confirm part of the shocking truth.'
       },
       link: 'chapter3'
+    },
+    {
+      number: 4,
+      icon: '⚔️',
+      title: {
+        kr: 'Chapter 4: 최후의 대결',
+        en: 'Chapter 4: Final Confrontation'
+      },
+      description: {
+        kr: '막달레나와의 최후 대결이 대성당에서 벌어집니다. 어둠의 의식을 막고 대성당과 도시를 구하세요.',
+        en: 'The final battle against Magdalena takes place in the cathedral. Stop the dark ritual and save the cathedral and the city.'
+      },
+      link: 'chapter4'
     }
   ]
 };

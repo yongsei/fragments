@@ -70,6 +70,19 @@ export const case3IntroData: CaseIntroData = {
         en: 'The final moment when all mysteries are solved. The truth of the Orient Express murder case is revealed.'
       },
       link: 'chapter3'
+    },
+    {
+      number: 4,
+      icon: '⚖️',
+      title: {
+        kr: 'Chapter 4: 복수의 오케스트라와 최후의 심판',
+        en: 'Chapter 4: Orchestra of Revenge and Final Judgment'
+      },
+      description: {
+        kr: '모든 진실을 밝히고, 용의자들에게 최후의 심판을 내립니다. 복수의 오케스트라가 완성되는 마지막 순간입니다.',
+        en: 'Reveal all truths and deliver final judgment to the suspects. This is the final moment when the orchestra of revenge is completed.'
+      },
+      link: 'chapter4'
     }
   ]
 };

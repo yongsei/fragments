@@ -93,8 +93,60 @@ const UnifiedCaseIntro: React.FC<UnifiedCaseIntroProps> = ({ data }) => {
         background: data.theme.background,
         color: 'white',
         padding: '2rem',
-        fontFamily: "'Noto Sans KR', sans-serif"
+        paddingTop: 'max(env(safe-area-inset-top, 0px), 80px)', // 상단 헤더 공간 확보
+        fontFamily: "'Noto Sans KR', sans-serif",
+        position: 'relative'
       }}>
+        {/* 상단 고정 헤더 - 게임 화면과 동일한 스타일 */}
+        <div style={{
+          position: 'fixed',
+          top: 'max(env(safe-area-inset-top, 0px), 0px)',
+          left: 0,
+          right: 0,
+          height: '60px',
+          background: `${data.theme.primary}dd`,
+          backdropFilter: 'blur(10px)',
+          WebkitBackdropFilter: 'blur(10px)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+          zIndex: 1001,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '0 1rem'
+        }}>
+          {/* 뒤로가기 버튼 - 게임과 동일한 위치 */}
+          <Link
+            to="/fragments"
+            onClick={() => window.scrollTo(0, 0)}
+            style={{
+              color: 'rgba(255,255,255,0.8)',
+              textDecoration: 'none',
+              fontSize: '0.9rem',
+              transition: 'color 0.3s ease'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = 'white';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = 'rgba(255,255,255,0.8)';
+            }}
+          >
+            {t.backToHome}
+          </Link>
+          
+          {/* 케이스 타이틀 */}
+          <div style={{
+            color: 'rgba(255,255,255,0.9)',
+            fontSize: '1rem',
+            fontWeight: 600,
+            textAlign: 'center',
+            flex: 1,
+            marginLeft: '1rem'
+          }}>
+            {data.title[currentLang]}
+          </div>
+        </div>
+
         <div style={{
           maxWidth: '1000px',
           margin: '0 auto',
@@ -284,27 +336,6 @@ const UnifiedCaseIntro: React.FC<UnifiedCaseIntroProps> = ({ data }) => {
             })}
           </div>
 
-          {/* 돌아가기 버튼 */}
-          <div style={{ textAlign: 'center' }}>
-            <Link
-              to="/fragments"
-              onClick={() => window.scrollTo(0, 0)}
-              style={{
-                color: 'rgba(255, 255, 255, 0.7)',
-                textDecoration: 'none',
-                fontSize: '1rem',
-                transition: 'color 0.3s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = 'white';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)';
-              }}
-            >
-              {t.backToHome}
-            </Link>
-          </div>
         </div>
       </div>
     </>

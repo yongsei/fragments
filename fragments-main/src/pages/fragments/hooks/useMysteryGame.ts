@@ -121,6 +121,25 @@ export const useMysteryGame = ({
     return initialState;
   });
 
+  // initialCards 변경 시 discoveredCardIds 업데이트
+  useEffect(() => {
+    if (initialCards.length > 0) {
+      setGameState(prevState => ({
+        ...prevState,
+        discoveredCardIds: Array.from(new Set([...prevState.discoveredCardIds, ...initialCards]))
+      }));
+    }
+  }, [initialCards]);
+
+  // 임시: 테스트를 위해 저장된 진행 상태를 지우는 함수 (개발용)
+  useEffect(() => {
+    if (caseId && typeof window !== 'undefined') {
+      // 개발 시 저장된 상태를 지우려면 주석 해제
+      // clearGameProgress(caseId);
+      console.log('현재 caseId:', caseId, 'initialCards:', initialCards);
+    }
+  }, [caseId, initialCards]);
+
   // 저장된 게임 진행 상태 로드
   useEffect(() => {
     const loadSavedProgress = async () => {
@@ -131,6 +150,7 @@ export const useMysteryGame = ({
         
         if (savedProgress && !savedProgress.isCompleted) {
           console.log('저장된 게임 진행 상태를 복원합니다:', savedProgress);
+          setHasSavedProgress(true);
           
           setGameState(prevState => ({
             ...prevState,
@@ -142,10 +162,12 @@ export const useMysteryGame = ({
               timestamp: conn.timestamp,
               verified: conn.isCorrect
             })),
-            discoveredCardIds: savedProgress.discoveredCardIds,
+            discoveredCardIds: Array.from(new Set([...initialCards, ...savedProgress.discoveredCardIds])),
             hintsUsed: savedProgress.hintsUsed,
             playerProgress: savedProgress.playerProgress
           }));
+        } else {
+          setHasSavedProgress(false);
         }
       } catch (error) {
         console.error('저장된 진행 상태 로드 실패:', error);
@@ -160,7 +182,9 @@ export const useMysteryGame = ({
   const [isConnecting, setIsConnecting] = useState(false);
   const [gameWon, setGameWon] = useState(false);
   const [showResult, setShowResult] = useState(false);
+  const [winConditionCardDiscovered, setWinConditionCardDiscovered] = useState<string | null>(null);
   const [highlightedCardId, setHighlightedCardId] = useState<string | null>(null);
+  const [hasSavedProgress, setHasSavedProgress] = useState(false);
   const [toastMessage, setToastMessage] = useState<{
     message: string;
     type: 'success' | 'error' | 'info' | 'hint';
@@ -411,6 +435,15 @@ export const useMysteryGame = ({
     const card = cards.find(c => c.id === cardId);
     if (!card?.discovered) return;
 
+    // 승리조건 카드를 클릭한 경우 게임 완료
+    if (winConditionCardDiscovered && cardId === winConditionCardDiscovered) {
+      setTimeout(() => {
+        setGameWon(true);
+        setShowResult(true);
+      }, 500);
+      return;
+    }
+
     setGameState(prev => {
       const isSelected = prev.selectedCards.includes(cardId);
       let newSelectedCards: string[];
@@ -563,12 +596,15 @@ export const useMysteryGame = ({
         }
       }
 
-      // 승리 조건 체크
+      // 승리 조건 카드 발견 체크 (자동 완료 대신 카드 클릭 대기)
       if (isNewDiscovery && rule.unlock === winCondition) {
-        setTimeout(() => {
-          setGameWon(true);
-          setShowResult(true);
-        }, 1500);
+        setWinConditionCardDiscovered(rule.unlock);
+        // 토스트 메시지로 알림
+        setToastMessage({
+          message: t('winConditionCardFound') || '🎯 최종 단서를 발견했습니다! 카드를 클릭하여 수사를 완료하세요.',
+          type: 'success',
+          isVisible: true
+        });
       }
 
       return {
@@ -921,6 +957,8 @@ export const useMysteryGame = ({
     cardFeedback,
     maxHints,
     winCondition,
+    winConditionCardDiscovered,
+    hasSavedProgress,
     
     // Game Actions
     handleCardSelect,

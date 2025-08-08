@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { FragmentsIndex } from './pages/fragments/FragmentsIndex';
+import GameResultTest from './pages/fragments/test/GameResultTest';
 import './App.css';
 
 // 케이스별 테마 파일 import (각 케이스 폴더에서)
@@ -48,6 +49,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/fragments" replace />} />
         <Route path="/fragments/*" element={<FragmentsIndex />} />
+        <Route path="/test-result" element={<GameResultTest />} />
       </Routes>
     </div>
   );

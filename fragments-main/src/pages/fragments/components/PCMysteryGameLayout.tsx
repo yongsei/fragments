@@ -5,6 +5,7 @@ import GameCard from './GameCard';
 import GameTimer from './GameTimer';
 import { HintSystem } from './HintSystem';
 import ToastMessage from './ToastMessage';
+import GameResultScreen from './GameResultScreen';
 import { useMysteryGame } from '../hooks/useMysteryGame';
 import { useLanguage } from '../hooks/useLanguage';
 import type { GameScenario } from '../games/case5/chapter1/scenario_kr';
@@ -92,6 +93,7 @@ const PCMysteryGameLayout: React.FC<PCMysteryGameLayoutProps> = ({
   const {
     gameState, cards, isConnecting, showResult,
     highlightedCardId, toastMessage, cardFeedback,
+    winConditionCardDiscovered,
     handleCardSelect, handleConnect, handleClearSelection,
     handleRequestHint, handleRestart, handleToastClose, handleAdHintReward
     // setHighlightedCardId, setToastMessage // PC에서는 사용하지 않음
@@ -147,159 +149,17 @@ const PCMysteryGameLayout: React.FC<PCMysteryGameLayoutProps> = ({
 
   if (showResult) {
     return (
-      <>
-        <SEOHead
-          title={`${seoTitle} - ${t('gameResult')}`}
-          description={`${seoDescription} ${t('gameResult')}`}
-          keywords={`${seoKeywords}, ${t('gameResult')}`}
-          canonical={canonicalUrl}
-        />
-        
-        <div style={{
-          minHeight: '100vh',
-          background: `linear-gradient(135deg, ${themeColors.primary} 0%, ${themeColors.secondary} 50%, ${themeColors.accent} 100%)`,
-          color: 'white',
-          padding: '2rem',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}>
-          <div style={{
-            maxWidth: '600px',
-            textAlign: 'center',
-            background: 'rgba(255, 255, 255, 0.1)',
-            borderRadius: '20px',
-            padding: '3rem',
-            backdropFilter: 'blur(10px)'
-          }}>
-            <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>
-              🎉
-            </div>
-            
-            <h1 style={{
-              fontSize: '2rem',
-              fontWeight: 700,
-              marginBottom: '1rem',
-              color: themeColors.accent
-            }}>
-              {t('caseResolved')}
-            </h1>
-            
-            <p style={{
-              fontSize: '1.1rem',
-              lineHeight: 1.6,
-              marginBottom: '2rem',
-              opacity: 0.9
-            }}>
-              {t('congratulationsLong').replace('{0}', gameState.currentScenario?.title || '')}
-            </p>
-            
-            <div style={{
-              background: 'rgba(0, 0, 0, 0.2)',
-              borderRadius: '15px',
-              padding: '1.5rem',
-              marginBottom: '2rem'
-            }}>
-              <h3 style={{ marginBottom: '1rem', color: themeColors.accent }}>{t('gameStatisticsTitle')}</h3>
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
-                gap: '1rem',
-                textAlign: 'left'
-              }}>
-                <div>
-                  <div style={{ opacity: 0.8 }}>🔗 {t('totalConnections')}</div>
-                  <div style={{ fontSize: '1.5rem', fontWeight: 600, color: themeColors.accent }}>
-                    {gameState.playerProgress.correctConnections}{t('connections')}
-                  </div>
-                </div>
-                <div>
-                  <div style={{ opacity: 0.8 }}>{t('attempts')}</div>
-                  <div style={{ fontSize: '1.5rem', fontWeight: 600 }}>
-                 {gameState.playerProgress.totalConnections}{t('times')}
-                  </div>
-                </div>
-                <div>
-                  <div style={{ opacity: 0.8 }}>{t('hintsUsed')}</div>
-                  <div style={{ fontSize: '1.5rem', fontWeight: 600, color: '#fbbf24' }}>
-                    {gameState.playerProgress.hintsUsed}{t('cardsUnit')}
-                  </div>
-                </div>
-                <div>
-                  <div style={{ opacity: 0.8 }}>{t('timeSpent')}</div>
-                  <div style={{ fontSize: '1.5rem', fontWeight: 600 }}>
-                    {Math.floor(gameState.elapsedTime / 60)}{t('minutes')} {gameState.elapsedTime % 60}{t('seconds')}
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div style={{
-              display: 'flex',
-              gap: '1rem',
-              justifyContent: 'center',
-              flexWrap: 'wrap'
-            }}>
-              {/* 다음 챕터 버튼 (있는 경우에만 표시) */}
-              {nextChapterUrl && (
-                <Link
-                  to={nextChapterUrl}
-                  onClick={() => window.scrollTo(0, 0)}
-                  style={{
-                    background: `linear-gradient(45deg, #4caf50, #66bb6a)`,
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '25px',
-                    padding: '1rem 2rem',
-                    fontSize: '1rem',
-                    fontWeight: 600,
-                    textDecoration: 'none',
-                    display: 'inline-block',
-                    transition: 'all 0.3s ease'
-                  }}
-                >
-                  🚀 다음 챕터 계속하기
-                </Link>
-              )}
-              
-              <button
-                onClick={handleRestart}
-                style={{
-                  background: `linear-gradient(45deg, ${themeColors.accent}, ${themeColors.secondary})`,
-                  color: themeColors.primary,
-                  border: 'none',
-                  borderRadius: '25px',
-                  padding: '1rem 2rem',
-                  fontSize: '1rem',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease'
-                }}
-              >
-                {t('restartGame')}
-              </button>
-              
-              <Link
-                to={backUrl}
-                style={{
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  color: 'white',
-                  border: '2px solid rgba(255, 255, 255, 0.3)',
-                  borderRadius: '25px',
-                  padding: '1rem 2rem',
-                  fontSize: '1rem',
-                  fontWeight: 600,
-                  textDecoration: 'none',
-                  display: 'inline-block',
-                  transition: 'all 0.3s ease'
-                }}
-              >
-                {t('returnToMenu')}
-              </Link>
-            </div>
-          </div>
-        </div>
-      </>
+      <GameResultScreen
+        gameState={gameState}
+        themeColors={themeColors}
+        seoTitle={seoTitle}
+        seoDescription={seoDescription}
+        seoKeywords={seoKeywords}
+        canonicalUrl={canonicalUrl}
+        backUrl={backUrl}
+        nextChapterUrl={nextChapterUrl}
+        onRestart={handleRestart}
+      />
     );
   }
 
@@ -428,6 +288,7 @@ const PCMysteryGameLayout: React.FC<PCMysteryGameLayoutProps> = ({
                       onClick={() => handleCardSelect(card.id)}
                       disabled={isConnecting}
                       feedbackEffect={feedback?.effect}
+                      isWinConditionCard={winConditionCardDiscovered === card.id}
                       uiCustomization={{
                         ...ui.cardStyles,
                         cardBorderRadius: ui.layout.cardBorderRadius,

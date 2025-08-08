@@ -23,6 +23,9 @@ interface SwipeCardGridProps {
       cardSpacing: string;
     };
   };
+  caseId?: string; // 케이스 ID 추가
+  onCardLongPress?: (cardId: string) => void; // 롱프레스 콜백 추가
+  winConditionCardDiscovered?: string | null; // 승리조건 카드 발견 상태 추가
 }
 
 const SwipeCardGrid: React.FC<SwipeCardGridProps> = ({
@@ -30,11 +33,13 @@ const SwipeCardGrid: React.FC<SwipeCardGridProps> = ({
   selectedCards,
   onCardClick,
   cardStyles,
-  ui
+  ui,
+  caseId,
+  onCardLongPress,
+  winConditionCardDiscovered
 }) => {
   // 화면 크기에 따른 동적 카드 크기 계산
   const screenWidth = window.innerWidth;
-  const cardWidth = screenWidth < 360 ? 90 : 100;
   const spaceBetween = screenWidth < 360 ? 12 : 16;
   const slidesPerView = screenWidth < 360 ? 2.5 : 3;
 
@@ -93,7 +98,13 @@ const SwipeCardGrid: React.FC<SwipeCardGridProps> = ({
         </div>
 
         {/* Swiper 컨테이너 */}
-        <div style={{ minHeight: '120px' }}>
+        <div style={{ 
+          minHeight: '180px',
+          marginTop: '20px', // 상단 여백 추가
+          marginBottom: '20px', // 하단 여백도 추가
+          overflow: 'visible', // overflow 처리
+          position: 'relative' // 위치 기준점 설정
+        }}>
           <Swiper
             slidesPerView={slidesPerView}
             spaceBetween={spaceBetween}
@@ -102,20 +113,27 @@ const SwipeCardGrid: React.FC<SwipeCardGridProps> = ({
             grabCursor={true}
             style={{
               paddingLeft: '0px',
-              paddingRight: '20px'
+              paddingRight: '20px',
+              height: '220px', // Swiper 자체 높이 설정 (여백 고려해서 축소)
+              display: 'flex',
+              alignItems: 'flex-start', // 상단 정렬
+              overflow: 'visible'
             }}
           >
             {categoryCards.map((card) => (
-              <SwiperSlide key={card.id}>
+              <SwiperSlide key={card.id} style={{ height: '180px' }}>
                 <div style={{
                   width: '100%',
-                  height: '100%'
+                  height: '180px'
                 }}>
                   <GameCard
                     card={card}
                     isSelected={selectedCards.includes(card.id)}
                     isDiscovered={card.discovered}
                     onClick={() => onCardClick(card.id)}
+                    onLongPress={onCardLongPress}
+                    caseId={caseId}
+                    isWinConditionCard={winConditionCardDiscovered === card.id}
                     uiCustomization={{
                       suspectColor: cardStyles.suspectColor,
                       evidenceColor: cardStyles.evidenceColor,

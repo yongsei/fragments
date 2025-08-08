@@ -82,6 +82,7 @@ export interface FragmentsTranslations {
   startChapter: string;
   playAgain: string;
   chapterCompleted: string;
+  winConditionCardFound: string;
 }
 
 // 한국어 번역
@@ -159,7 +160,8 @@ export const ko: FragmentsTranslations = {
   completed: "완료",
   startChapter: "챕터 시작",
   playAgain: "다시 플레이",
-  chapterCompleted: "챕터 완료"
+  chapterCompleted: "챕터 완료",
+  winConditionCardFound: "🎯 최종 단서를 발견했습니다! 카드를 클릭하여 수사를 완료하세요."
 };
 
 // 영어 번역
@@ -237,7 +239,8 @@ export const en: FragmentsTranslations = {
   completed: "Completed",
   startChapter: "Start Chapter",
   playAgain: "Play Again",
-  chapterCompleted: "Chapter Completed"
+  chapterCompleted: "Chapter Completed",
+  winConditionCardFound: "🎯 Final clue discovered! Click the card to complete the investigation."
 };
 
 // 기본 번역 객체
