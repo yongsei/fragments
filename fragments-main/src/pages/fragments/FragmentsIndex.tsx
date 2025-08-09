@@ -1,5 +1,10 @@
 import React from 'react';
 import { Link, Routes, Route, useLocation } from 'react-router-dom';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, EffectCoverflow } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-coverflow';
 import UnifiedFragmentsRouter from './components/UnifiedFragmentsRouter';
 import SEOHead from '../../components/SEOHead';
 import { LanguageContext, useLanguageState } from './hooks/useLanguage';
@@ -130,16 +135,26 @@ const FragmentsContent: React.FC = () => {
           padding: 'clamp(1rem, 4vw, 2rem) clamp(0.5rem, 2vw, 1rem)',
           color: 'white',
           // 시스템 UI 회피 - 최소한으로 조정
-          paddingTop: 'max(env(safe-area-inset-top, 0px), 10px)',
+          paddingTop: 'max(env(safe-area-inset-top, 0px), 10px)', // 띠배너 높이만큼 패딩 추가
           paddingBottom: 'max(env(safe-area-inset-bottom, 0px), 30px)'
         }}>
-          {/* 언어 선택기 - 모바일/PC 반응형 배치 */}
+          {/* 상단 고정 띠배너 - 언어 선택기만 */}
           <div style={{
-            position: 'absolute',
-            top: 'max(env(safe-area-inset-top, 0px), -5px)', // 언어 선택기를 더 위로 위치
-            right: 'clamp(1rem, calc(50vw - 600px + 1.5rem), 1.5rem)', // 모바일: 화면기준, PC: 1200px컨테이너 기준
-            zIndex: 10
+            position: 'fixed',
+            top: 'max(env(safe-area-inset-top, 0px), 0px)',
+            left: 0,
+            right: 0,
+            height: '60px',
+            background: 'rgba(26, 26, 46, 0.95)', // 배경을 투명하게
+            backdropFilter: 'blur(10px)', // 블러 효과 추가
+            borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+            zIndex: 1001,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end', // 우측 정렬
+            padding: '0 1rem'
           }}>
+            {/* 언어 선택기만 우측에 배치 */}
             <LanguageSelector />
           </div>
 
@@ -148,11 +163,11 @@ const FragmentsContent: React.FC = () => {
             margin: '0 auto'
           }}>
 
-            {/* 헤더 */}
+            {/* 헤더 - 메인 타이틀 복원 */}
             <div style={{
               textAlign: 'center',
               marginBottom: '3rem',
-              marginTop: 'clamp(2rem, 4vw, 1.5rem)' // 단서의 파편 제목을 아래로 내림
+              marginTop: '1rem' // 띠배너 아래 여백 축소
             }}>
               <h1 style={{
                 fontSize: 'clamp(2rem, 6vw, 4rem)',
@@ -162,16 +177,6 @@ const FragmentsContent: React.FC = () => {
               }}>
                 🧩 {t.mainTitle}
               </h1>
-              <div style={{
-                fontSize: 'clamp(1rem, 2.5vw, 1.5rem)',
-                margin: '0 0 1rem 0',
-                opacity: 0.8,
-                fontWeight: 400,
-                textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
-              }}>
-                {originalLang === 'kr' ? '[단서의 파편]' : '[Fragment of Mystery]'}
-              </div>
-              
               <p style={{
                 fontSize: 'clamp(1rem, 3vw, 1.3rem)',
                 margin: '0 auto',
@@ -182,34 +187,68 @@ const FragmentsContent: React.FC = () => {
               </p>
             </div>
 
-            {/* 케이스 그리드 */}
+            {/* 케이스 스와이프 컨테이너 - Swiper 적용 */}
             <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(min(350px, 100%), 1fr))',
-              gap: 'clamp(1rem, 4vw, 2rem)',
-              maxWidth: '900px',
-              margin: '0 auto',
-              padding: '0 clamp(0.5rem, 2vw, 1rem)' // 좌우 여백 추가
+              width: '100%',
+              paddingBottom: '3rem' // pagination 공간 확보
             }}>
+              <Swiper
+                modules={[Pagination, EffectCoverflow]}
+                spaceBetween={30}
+                slidesPerView={1}
+                centeredSlides={true}
+                effect="coverflow"
+                coverflowEffect={{
+                  rotate: 50,
+                  stretch: 0,
+                  depth: 100,
+                  modifier: 1,
+                  slideShadows: true,
+                }}
+                pagination={{
+                  clickable: true,
+                  dynamicBullets: true
+                }}
+                breakpoints={{
+                  768: {
+                    slidesPerView: 1.5,
+                    spaceBetween: 40,
+                  },
+                  1024: {
+                    slidesPerView: 2,
+                    spaceBetween: 50,
+                  }
+                }}
+                style={{
+                  padding: '2rem clamp(1rem, 4vw, 2rem)',
+                }}
+              >
               
               {/* 케이스 1: 어둠의 대성당 */}
-              <Link to="/fragments/case1" 
-                onClick={() => window.scrollTo(0, 0)}
-                style={{
-                  textDecoration: 'none',
-                  color: 'inherit'
-                }}>
-                <div style={{
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  borderRadius: '20px',
-                  padding: 'clamp(1.5rem, 4vw, 2rem)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  transition: 'all 0.3s ease',
-                  cursor: 'pointer',
-                  position: 'relative',
-                  overflow: 'hidden'
-                }}
+              <SwiperSlide>
+                <Link to="/fragments/case1" 
+                  onClick={() => window.scrollTo(0, 0)}
+                  style={{
+                    textDecoration: 'none',
+                    color: 'inherit',
+                    display: 'block',
+                    height: '100%'
+                  }}>
+                  <div style={{
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    borderRadius: '20px',
+                    padding: '1.5rem',
+                    backdropFilter: 'blur(10px)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    height: '400px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between'
+                  }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-5px)';
                   e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.2)';
@@ -270,26 +309,34 @@ const FragmentsContent: React.FC = () => {
                     </div>
                   </div>
                 </div>
-              </Link>
+                </Link>
+              </SwiperSlide>
 
               {/* 케이스 2: 우주선 오디세이 */}
-              <Link to="/fragments/case2" 
-                onClick={() => window.scrollTo(0, 0)}
-                style={{
-                  textDecoration: 'none',
-                  color: 'inherit'
-                }}>
-                <div style={{
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  borderRadius: '20px',
-                  padding: 'clamp(1.5rem, 4vw, 2rem)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  transition: 'all 0.3s ease',
-                  cursor: 'pointer',
-                  position: 'relative',
-                  overflow: 'hidden'
-                }}
+              <SwiperSlide>
+                <Link to="/fragments/case2" 
+                  onClick={() => window.scrollTo(0, 0)}
+                  style={{
+                    textDecoration: 'none',
+                    color: 'inherit',
+                    display: 'block',
+                    height: '100%'
+                  }}>
+                  <div style={{
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    borderRadius: '20px',
+                    padding: '1.5rem',
+                    backdropFilter: 'blur(10px)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    height: '400px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between'
+                  }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-5px)';
                   e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.2)';
@@ -350,26 +397,34 @@ const FragmentsContent: React.FC = () => {
                     </div>
                   </div>
                 </div>
-              </Link>
+                </Link>
+              </SwiperSlide>
 
               {/* 케이스 3: 브래스헬름의 잿불 */}
-              <Link to="/fragments/case3" 
-                onClick={() => window.scrollTo(0, 0)}
-                style={{
-                  textDecoration: 'none',
-                  color: 'inherit'
-                }}>
-                <div style={{
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  borderRadius: '20px',
-                  padding: 'clamp(1.5rem, 4vw, 2rem)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  transition: 'all 0.3s ease',
-                  cursor: 'pointer',
-                  position: 'relative',
-                  overflow: 'hidden'
-                }}
+              <SwiperSlide>
+                <Link to="/fragments/case3" 
+                  onClick={() => window.scrollTo(0, 0)}
+                  style={{
+                    textDecoration: 'none',
+                    color: 'inherit',
+                    display: 'block',
+                    height: '100%'
+                  }}>
+                  <div style={{
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    borderRadius: '20px',
+                    padding: '1.5rem',
+                    backdropFilter: 'blur(10px)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    height: '400px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between'
+                  }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-5px)';
                   e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.2)';
@@ -430,36 +485,44 @@ const FragmentsContent: React.FC = () => {
                     </div>
                   </div>
                 </div>
-              </Link>
+                </Link>
+              </SwiperSlide>
 
               {/* 케이스 4: 브래스헬름의 잿불 Ch.2 */}
-              <Link to="/fragments/case4" 
-                onClick={() => window.scrollTo(0, 0)}
-                style={{
-                  textDecoration: 'none',
-                  color: 'inherit'
-                }}>
-                <div style={{
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  borderRadius: '20px',
-                  padding: 'clamp(1.5rem, 4vw, 2rem)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  transition: 'all 0.3s ease',
-                  cursor: 'pointer',
-                  position: 'relative',
-                  overflow: 'hidden'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-5px)';
-                  e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.2)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'none';
-                }}>
-                  
-                  {/* 마법공학 배경 패턴 */}
+              <SwiperSlide>
+                <Link to="/fragments/case4" 
+                  onClick={() => window.scrollTo(0, 0)}
+                  style={{
+                    textDecoration: 'none',
+                    color: 'inherit',
+                    display: 'block',
+                    height: '100%'
+                  }}>
+                  <div style={{
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    borderRadius: '20px',
+                    padding: '1.5rem',
+                    backdropFilter: 'blur(10px)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    height: '400px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-5px)';
+                    e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.2)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}>
+                    
+                    {/* 마법공학 배경 패턴 */}
                   <div style={{
                     position: 'absolute',
                     top: '-50%',
@@ -510,26 +573,34 @@ const FragmentsContent: React.FC = () => {
                     </div>
                   </div>
                 </div>
-              </Link>
+                </Link>
+              </SwiperSlide>
 
               {/* 케이스 5: 크로노스의 시간여행 미스터리 */}
-              <Link to="/fragments/case5" 
-                onClick={() => window.scrollTo(0, 0)}
-                style={{
-                  textDecoration: 'none',
-                  color: 'inherit'
-                }}>
-                <div style={{
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  borderRadius: '20px',
-                  padding: 'clamp(1.5rem, 4vw, 2rem)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  transition: 'all 0.3s ease',
-                  cursor: 'pointer',
-                  position: 'relative',
-                  overflow: 'hidden'
-                }}
+              <SwiperSlide>
+                <Link to="/fragments/case5" 
+                  onClick={() => window.scrollTo(0, 0)}
+                  style={{
+                    textDecoration: 'none',
+                    color: 'inherit',
+                    display: 'block',
+                    height: '100%'
+                  }}>
+                  <div style={{
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    borderRadius: '20px',
+                    padding: '1.5rem',
+                    backdropFilter: 'blur(10px)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    height: '400px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between'
+                  }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-5px)';
                   e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.2)';
@@ -590,8 +661,10 @@ const FragmentsContent: React.FC = () => {
                     </div>
                   </div>
                 </div>
-              </Link>
-            </div>
+                </Link>
+              </SwiperSlide>
+            </Swiper>
+          </div>
           </div>
         </div>
       )}

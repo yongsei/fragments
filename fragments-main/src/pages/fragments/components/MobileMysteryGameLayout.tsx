@@ -408,6 +408,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
         color: 'white',
         padding: '1rem', // 기본 패딩
         paddingTop: 'max(env(safe-area-inset-top, 0px), 30px)', // 상단 패딩 축소
+        paddingBottom: 'max(env(safe-area-inset-bottom), 30px)',
         fontFamily: ui.typography.bodyFont,
         position: 'relative'
       }}>

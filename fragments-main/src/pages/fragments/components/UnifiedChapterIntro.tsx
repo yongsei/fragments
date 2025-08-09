@@ -137,25 +137,22 @@ const UnifiedChapterIntro: React.FC<UnifiedChapterIntroProps> = ({ data }) => {
       background: data.theme.primaryGradient,
       color: data.theme.textPrimary,
       fontFamily: "'Noto Sans KR', sans-serif",
-      paddingTop: 'max(env(safe-area-inset-top, 0px), 20px)' // 시스템 UI 영역 + 헤더 공간 축소
+      paddingTop: '15px' // 시스템 UI 영역 + 헤더 공간 축소
     }}>
-      {/* 상단 고정 헤더 - 시스템 UI 영역까지 커버 */}
+      {/* 상단 고정 헤더 - case1과 동일한 스타일로 통일 */}
       <div style={{
         position: 'fixed',
-        top: 0,
+        top: 'max(env(safe-area-inset-top, 0px), 0px)',
         left: 0,
         right: 0,
-        width: '100%',
-        height: 'max(env(safe-area-inset-top, 0px), 60px)',
+        height: '60px',
         background: '#2d1b69',
-        borderBottom: `1px solid ${data.theme.cardBorder}`,
-        zIndex: 9999,
+        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+        zIndex: 1001,
         display: 'flex',
-        alignItems: 'flex-end',
+        alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '0 1rem',
-        paddingBottom: '10px',
-        boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)'
+        padding: '0 1rem'
       }}>
         {/* 뒤로가기 버튼 - 게임과 동일한 위치 */}
         <Link 

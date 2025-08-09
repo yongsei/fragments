@@ -358,6 +358,8 @@ const CardDetailModal: React.FC<CardDetailModalProps> = ({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+        paddingTop: 'max(env(safe-area-inset-top), 60px)',
+        paddingBottom: 'max(env(safe-area-inset-bottom), 80px)',
         zIndex: 9999,
         color: defaultTheme.textColor,
         fontFamily: "'Noto Sans KR', sans-serif",
@@ -369,7 +371,7 @@ const CardDetailModal: React.FC<CardDetailModalProps> = ({
         onClick={handleSkip}
         style={{
           position: 'absolute',
-          top: '60px',
+          top: '120px',
           right: '60px',
           background: 'transparent',
           border: `2px solid ${defaultTheme.skipButtonColor}`,

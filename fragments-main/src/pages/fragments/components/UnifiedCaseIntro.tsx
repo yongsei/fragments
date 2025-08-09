@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, EffectCoverflow } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-coverflow';
 import SEOHead from '../../../components/SEOHead';
 import { useFragmentsTranslation } from '../hooks/useFragmentsTranslation';
 import { getCompletedChapters } from '../utils/gameProgress';
@@ -200,44 +205,78 @@ const UnifiedCaseIntro: React.FC<UnifiedCaseIntroProps> = ({ data }) => {
             </p>
           </div>
 
-          {/* 챕터 선택 */}
+          {/* 챕터 선택 - Swiper 적용 */}
           <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: '2rem',
-            marginBottom: '3rem'
+            width: '100%',
+            paddingBottom: '3rem'
           }}>
+            <Swiper
+              modules={[Pagination, EffectCoverflow]}
+              spaceBetween={30}
+              slidesPerView={1}
+              centeredSlides={true}
+              effect="coverflow"
+              coverflowEffect={{
+                rotate: 30,
+                stretch: 0,
+                depth: 80,
+                modifier: 1,
+                slideShadows: true,
+              }}
+              pagination={{
+                clickable: true,
+                dynamicBullets: true
+              }}
+              breakpoints={{
+                768: {
+                  slidesPerView: 1.5,
+                  spaceBetween: 40,
+                },
+                1024: {
+                  slidesPerView: 2,
+                  spaceBetween: 50,
+                }
+              }}
+              style={{
+                paddingBottom: '3rem'
+              }}
+            >
             {data.chapters.map((chapter) => {
               const isUnlocked = isChapterUnlocked(chapter.number);
               const isCompleted = completedChapters.includes(chapter.number);
 
               return (
-                <Link 
-                  key={chapter.number}
-                  to={isUnlocked ? chapter.link : '#'} 
-                  onClick={() => isUnlocked && window.scrollTo(0, 0)} 
-                  style={{ 
-                    textDecoration: 'none', 
-                    color: 'inherit',
-                    cursor: isUnlocked ? 'pointer' : 'not-allowed'
-                  }}
-                >
-                  <div style={{
-                    background: isUnlocked ? 'rgba(255, 255, 255, 0.1)' : 'rgba(100, 100, 100, 0.3)',
-                    borderRadius: '20px',
-                    padding: '2rem',
-                    backdropFilter: 'blur(10px)',
-                    border: isCompleted 
-                      ? '2px solid #4CAF50' 
-                      : isUnlocked 
-                        ? '1px solid rgba(255, 255, 255, 0.2)' 
-                        : '1px solid rgba(100, 100, 100, 0.2)',
-                    transition: 'all 0.3s ease',
-                    cursor: isUnlocked ? 'pointer' : 'not-allowed',
-                    height: '100%',
-                    position: 'relative',
-                    opacity: isUnlocked ? 1 : 0.6
-                  }}
+                <SwiperSlide key={chapter.number}>
+                  <Link 
+                    to={isUnlocked ? chapter.link : '#'} 
+                    onClick={() => isUnlocked && window.scrollTo(0, 0)} 
+                    style={{ 
+                      textDecoration: 'none', 
+                      color: 'inherit',
+                      cursor: isUnlocked ? 'pointer' : 'not-allowed',
+                      display: 'block',
+                      height: '100%'
+                    }}
+                  >
+                    <div style={{
+                      background: isUnlocked ? 'rgba(255, 255, 255, 0.1)' : 'rgba(100, 100, 100, 0.3)',
+                      borderRadius: '20px',
+                      padding: '2rem',
+                      backdropFilter: 'blur(10px)',
+                      border: isCompleted 
+                        ? '2px solid #4CAF50' 
+                        : isUnlocked 
+                          ? '1px solid rgba(255, 255, 255, 0.2)' 
+                          : '1px solid rgba(100, 100, 100, 0.2)',
+                      transition: 'all 0.3s ease',
+                      cursor: isUnlocked ? 'pointer' : 'not-allowed',
+                      height: '450px',
+                      position: 'relative',
+                      opacity: isUnlocked ? 1 : 0.6,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between'
+                    }}
                   onMouseEnter={(e) => {
                     if (isUnlocked) {
                       e.currentTarget.style.transform = 'translateY(-5px)';
@@ -330,10 +369,12 @@ const UnifiedCaseIntro: React.FC<UnifiedCaseIntroProps> = ({ data }) => {
                         : `🔒 ${originalLang === 'kr' ? '이전 챕터 완료 필요' : 'Complete previous chapter'}`
                       }
                     </div>
-                  </div>
-                </Link>
+                    </div>
+                  </Link>
+                </SwiperSlide>
               );
             })}
+            </Swiper>
           </div>
 
         </div>
