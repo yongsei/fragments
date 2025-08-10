@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MysteryGameLayout from '../../../components/MysteryGameLayout';
 import { caseCh2 } from './scenario_kr';
+import { caseChEn2 } from './scenario_en';
 import case1FeedbackData2 from './feedbackData_kr';
+import case1FeedbackDataEn2 from './feedbackData_en';
+import { useLanguage } from '../../../hooks/useLanguage';
 
 const Chapter2Game: React.FC = () => {
+  const { language } = useLanguage();
+  
+  // 언어에 따른 시나리오와 피드백 데이터 선택
+  const scenario = language === 'en' ? caseChEn2 : caseCh2;
+  const feedbackData = language === 'en' ? case1FeedbackDataEn2 : case1FeedbackData2;
+
   return (
     <div style={{
       minHeight: '100vh',
@@ -11,8 +20,8 @@ const Chapter2Game: React.FC = () => {
       color: '#ffffff'
     }}>
       <MysteryGameLayout
-        scenario={caseCh2}
-        feedbackData={case1FeedbackData2}
+        scenario={scenario}        
+        feedbackData={feedbackData}
         caseId="case1-ch2"
         backUrl="/fragments/case1/chapter2"
         seoTitle="어둠의 대성당 - 2장"

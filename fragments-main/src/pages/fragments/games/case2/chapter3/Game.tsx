@@ -1,9 +1,17 @@
 import React from 'react';
 import MysteryGameLayout from '../../../components/MysteryGameLayout';
 import { case2Ch3 } from './scenario_kr';
+import { case2ChEn3 } from './scenario_en';
 import case2FeedbackData3 from './feedbackData_kr';
+import case2FeedbackDataEn3 from './feedbackData_en';
+import { useLanguage } from '../../../hooks/useLanguage';
 
 const Chapter3Game: React.FC = () => {
+  const { language } = useLanguage();
+
+  // 언어에 따른 시나리오와 피드백 데이터 선택
+  const scenario = language === 'en' ? case2ChEn3 : case2Ch3;
+  const feedbackData = language === 'en' ? case2FeedbackDataEn3 : case2FeedbackData3;
   return (
     <div style={{
       minHeight: '100vh',
@@ -11,8 +19,8 @@ const Chapter3Game: React.FC = () => {
       color: '#ffffff'
     }}>
       <MysteryGameLayout
-        scenario={case2Ch3}
-        feedbackData={case2FeedbackData3}
+        scenario={scenario}        
+        feedbackData={feedbackData}
         caseId="case2-ch3"
         backUrl="/fragments/case2/chapter3"
         seoTitle="침묵의 도서관 - 3장"

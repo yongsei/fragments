@@ -90,9 +90,8 @@ export const useMysteryGame = ({
   const winCondition = propWinCondition || scenario.winCondition || '';
 
   const [gameState, setGameState] = useState<GameState>(() => {
-    const initialDiscoveredCardIds = [
-      ...initialCards
-    ];
+    // 오직 시나리오에서 명시된 initialCards만 초기에 발견된 상태로 설정
+    const initialDiscoveredCardIds = [...initialCards];
 
     // 초기 상태 (저장된 진행 상태는 useEffect에서 로드)
     const initialState = {
@@ -126,7 +125,10 @@ export const useMysteryGame = ({
     if (initialCards.length > 0) {
       setGameState(prevState => ({
         ...prevState,
-        discoveredCardIds: Array.from(new Set([...prevState.discoveredCardIds, ...initialCards]))
+        discoveredCardIds: Array.from(new Set([
+          ...prevState.discoveredCardIds, 
+          ...initialCards
+        ]))
       }));
     }
   }, [initialCards]);

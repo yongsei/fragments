@@ -1,9 +1,17 @@
 import React from 'react';
 import MysteryGameLayout from '../../../components/MysteryGameLayout';
 import { case2Ch4 } from './scenario_kr';
+import { case2ChEn4 } from './scenario_en';
 import case2FeedbackData4 from './feedbackData_kr';
+import case2FeedbackDataEn4 from './feedbackData_en';
+import { useLanguage } from '../../../hooks/useLanguage';
 
 const Chapter4Game: React.FC = () => {
+  const { language } = useLanguage();
+
+  // 언어에 따른 시나리오와 피드백 데이터 선택
+  const scenario = language === 'en' ? case2ChEn4 : case2Ch4;
+  const feedbackData = language === 'en' ? case2FeedbackDataEn4 : case2FeedbackData4;
   return (
     <div style={{
       minHeight: '100vh',
@@ -11,8 +19,8 @@ const Chapter4Game: React.FC = () => {
       color: '#ffffff'
     }}>
       <MysteryGameLayout
-        scenario={case2Ch4}
-        feedbackData={case2FeedbackData4}
+        scenario={scenario}        
+        feedbackData={feedbackData}
         caseId="case2-ch4"
         backUrl="/fragments/case2/chapter4"
         seoTitle="침묵의 도서관 - 4장"

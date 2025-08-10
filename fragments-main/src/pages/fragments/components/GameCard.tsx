@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card } from '../types';
 import { importCardImage } from '../utils/imageUtils';
+import { useSoundManager } from '../hooks/useSoundManager';
 
 interface CardUICustomization {
   suspectColor?: string;
@@ -48,7 +49,12 @@ const GameCard: React.FC<GameCardProps> = ({
   
   // 롱프레스 상태 관리
   const [pressTimer, setPressTimer] = useState<NodeJS.Timeout | null>(null);
+  const [messageTimer, setMessageTimer] = useState<NodeJS.Timeout | null>(null);
   const [isLongPressing, setIsLongPressing] = useState<boolean>(false);
+  const [pressMessage, setPressMessage] = useState<string>(''); // 단계별 메시지
+  
+  // 사운드 관리
+  const { playCardOpenSound, playCardCloseSound } = useSoundManager();
 
   // 이미지 로딩
   useEffect(() => {
@@ -78,11 +84,20 @@ const GameCard: React.FC<GameCardProps> = ({
   const handlePressStart = () => {
     if (!disabled && isDiscovered && onLongPress) {
       setIsLongPressing(true);
+      
+      // 1초 후: "카드 보기" 메시지 표시
+      const msgTimer = setTimeout(() => {
+        setPressMessage('카드 보기');
+      }, 1000);
+      setMessageTimer(msgTimer);
+      
+      // 2초 후: 카드 상세보기 실행
       const timer = setTimeout(() => {
         console.log('🔗 Long press detected on card:', card.id);
         onLongPress(card.id);
         setIsLongPressing(false);
-      }, 3000); // 3초
+        setPressMessage('');
+      }, 2000); // 3초 → 2초로 단축
       setPressTimer(timer);
     }
   };
@@ -93,7 +108,12 @@ const GameCard: React.FC<GameCardProps> = ({
       clearTimeout(pressTimer);
       setPressTimer(null);
     }
+    if (messageTimer) {
+      clearTimeout(messageTimer);
+      setMessageTimer(null);
+    }
     setIsLongPressing(false);
+    setPressMessage('');
   };
 
   // 컴포넌트 언마운트 시 타이머 정리
@@ -102,8 +122,28 @@ const GameCard: React.FC<GameCardProps> = ({
       if (pressTimer) {
         clearTimeout(pressTimer);
       }
+      if (messageTimer) {
+        clearTimeout(messageTimer);
+      }
     };
-  }, [pressTimer]);
+  }, [pressTimer, messageTimer]);
+
+  // 카드 클릭 핸들러 (효과음 포함)
+  const handleCardClick = () => {
+    if (disabled) return;
+    
+    // 카드 상태에 따른 효과음 재생
+    if (isSelected) {
+      // 현재 선택된 카드를 해제하는 경우 -> close.wav
+      playCardCloseSound();
+    } else {
+      // 카드를 새로 선택하는 경우 -> open.wav  
+      playCardOpenSound();
+    }
+    
+    // 원래 onClick 콜백 실행
+    onClick();
+  };
   // 애니메이션을 위한 스타일 추가
   React.useEffect(() => {
     const style = document.createElement('style');
@@ -295,13 +335,44 @@ const GameCard: React.FC<GameCardProps> = ({
 
   return (
     <div
-      style={getCardStyle()}
-      onClick={!disabled ? onClick : undefined}
+      style={{
+        ...getCardStyle(),
+        // 🔥 게임 카드 전용 강력한 컨텍스트 메뉴 차단
+        WebkitTouchCallout: 'none',
+        WebkitUserSelect: 'none',
+        MozUserSelect: 'none',
+        msUserSelect: 'none',
+        userSelect: 'none',
+        // 추가 모바일 터치 이벤트 차단
+        WebkitTapHighlightColor: 'transparent',
+        touchAction: 'manipulation'
+      }}
+      onClick={handleCardClick}
       onMouseDown={handlePressStart}
       onMouseUp={handlePressEnd}
-      onTouchStart={handlePressStart}
-      onTouchEnd={handlePressEnd}
-      onTouchCancel={handlePressEnd}
+      onTouchStart={(e) => {
+        // 롱프레스 시작 (하지만 클릭 이벤트는 방해하지 않음)
+        handlePressStart();
+      }}
+      onTouchEnd={(e) => {
+        // 롱프레스 종료
+        handlePressEnd();
+      }}
+      onTouchCancel={(e) => {
+        // 롱프레스 취소
+        handlePressEnd();
+      }}
+      // 🚫 컨텍스트 메뉴 이벤트 차단 (클릭 기능은 유지)
+      onContextMenu={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }}
+      // 🚫 드래그 방지 (클릭 기능은 유지)
+      onDragStart={(e) => {
+        e.preventDefault();
+        return false;
+      }}
       onMouseEnter={(e) => {
         if (!disabled && isDiscovered && !isLongPressing) {
           const hoverScale = uiCustomization.cardHoverScale || 1.03;
@@ -317,8 +388,8 @@ const GameCard: React.FC<GameCardProps> = ({
         }
       }}
     >
-      {/* 롱프레스 진행 표시 */}
-      {isLongPressing && (
+      {/* 롱프레스 진행 표시 - 1초 후부터 메시지 표시 */}
+      {isLongPressing && pressMessage && (
         <div style={{
           position: 'absolute',
           top: '8px',
@@ -333,7 +404,7 @@ const GameCard: React.FC<GameCardProps> = ({
           zIndex: 15,
           animation: 'newTagPulse 1s infinite'
         }}>
-          💜 HOLD
+          {pressMessage}
         </div>
       )}
 
@@ -481,7 +552,7 @@ const GameCard: React.FC<GameCardProps> = ({
                 fontSize: '0.7rem',
                 lineHeight: 1.3,
                 opacity: 0.8
-              }}>
+              }}>``
                 {card.description}
               </p>
               {card.details && (

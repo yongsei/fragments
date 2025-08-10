@@ -4,9 +4,15 @@ import { case5Ch7 } from './scenario_kr';
 import { case5ChEn7 } from './scenario_en';
 import case5FeedbackData7 from './feedbackData_kr';
 import case5FeedbackDataEn7 from './feedbackData_en';
+import { useLanguage } from '../../../hooks/useLanguage';
 import { case5DarkTheme } from '../case5-theme';
 
 const Chapter7Game: React.FC = () => {
+  const { language } = useLanguage();
+
+  // 언어에 따른 시나리오와 피드백 데이터 선택
+  const scenario = language === 'en' ? case5ChEn7 : case5Ch7;
+  const feedbackData = language === 'en' ? case5FeedbackDataEn7 : case5FeedbackData7;
   return (
     <div style={{
       minHeight: '100vh',
@@ -14,9 +20,8 @@ const Chapter7Game: React.FC = () => {
       color: case5DarkTheme.textPrimary
     }}>
       <MysteryGameLayout
-        scenario={case5Ch7}
-        
-        feedbackData={case5FeedbackData7}
+        scenario={scenario}        
+        feedbackData={feedbackData}
         
         caseId="case5-ch7"
         seoTitle="시간의 그림자들 - 7장"

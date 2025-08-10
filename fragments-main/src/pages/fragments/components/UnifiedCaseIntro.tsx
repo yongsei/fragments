@@ -8,6 +8,7 @@ import 'swiper/css/effect-coverflow';
 import SEOHead from '../../../components/SEOHead';
 import { useFragmentsTranslation } from '../hooks/useFragmentsTranslation';
 import { getCompletedChapters } from '../utils/gameProgress';
+import { useSoundManager } from '../hooks/useSoundManager';
 
 export interface CaseChapter {
   number: number;
@@ -63,6 +64,7 @@ interface UnifiedCaseIntroProps {
 
 const UnifiedCaseIntro: React.FC<UnifiedCaseIntroProps> = ({ data }) => {
   const { t, originalLang } = useFragmentsTranslation();
+  const { playChapterSound } = useSoundManager();
   const [completedChapters, setCompletedChapters] = useState<number[]>([]);
 
   useEffect(() => {
@@ -77,6 +79,29 @@ const UnifiedCaseIntro: React.FC<UnifiedCaseIntroProps> = ({ data }) => {
   const isChapterUnlocked = (chapterNumber: number): boolean => {
     if (chapterNumber === 1) return true;
     return completedChapters.includes(chapterNumber - 1);
+  };
+
+  // 챕터 선택 시 효과음 재생
+  const handleChapterClick = (isUnlocked: boolean, chapterNumber: number) => {
+    console.log('🎵 handleChapterClick 호출됨');
+    console.log('- isUnlocked:', isUnlocked);
+    console.log('- chapterNumber:', chapterNumber);
+    
+    if (isUnlocked) {
+      console.log('🎵 UnifiedCaseIntro에서 챕터 클릭 - playChapterSound() 호출');
+      console.log('🎵 playChapterSound 함수 타입:', typeof playChapterSound);
+      
+      try {
+        playChapterSound();
+        console.log('🎵 playChapterSound() 호출 성공');
+      } catch (error) {
+        console.error('🎵 playChapterSound() 호출 실패:', error);
+      }
+      
+      window.scrollTo(0, 0);
+    } else {
+      console.log('🚫 챕터가 잠겨있어 사운드 재생 안함');
+    }
   };
 
   const currentLang = originalLang === 'kr' ? 'kr' : 'en';
@@ -249,7 +274,16 @@ const UnifiedCaseIntro: React.FC<UnifiedCaseIntroProps> = ({ data }) => {
                 <SwiperSlide key={chapter.number}>
                   <Link 
                     to={isUnlocked ? chapter.link : '#'} 
-                    onClick={() => isUnlocked && window.scrollTo(0, 0)} 
+                    onClick={(e) => {
+                      console.log('🔗 Link onClick 이벤트 발생');
+                      console.log('- chapter.number:', chapter.number);
+                      console.log('- isUnlocked:', isUnlocked);
+                      if (!isUnlocked) {
+                        e.preventDefault(); // 잠긴 챕터는 네비게이션 차단
+                        return false;
+                      }
+                      handleChapterClick(isUnlocked, chapter.number);
+                    }} 
                     style={{ 
                       textDecoration: 'none', 
                       color: 'inherit',
@@ -378,6 +412,7 @@ const UnifiedCaseIntro: React.FC<UnifiedCaseIntroProps> = ({ data }) => {
           </div>
 
         </div>
+
 
         {/* 하단 푸터 - 게임화면과 동일한 스타일 */}
         <div style={{

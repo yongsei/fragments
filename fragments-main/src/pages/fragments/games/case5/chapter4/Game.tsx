@@ -4,9 +4,15 @@ import { case5Ch4 } from './scenario_kr';
 import { case5ChEn4 } from './scenario_en';
 import case5FeedbackData4 from './feedbackData_kr';
 import case5FeedbackDataEn4 from './feedbackData_en';
+import { useLanguage } from '../../../hooks/useLanguage';
 import { case5DarkTheme } from '../case5-theme';
 
 const Chapter4Game: React.FC = () => {
+  const { language } = useLanguage();
+
+  // 언어에 따른 시나리오와 피드백 데이터 선택
+  const scenario = language === 'en' ? case5ChEn4 : case5Ch4;
+  const feedbackData = language === 'en' ? case5FeedbackDataEn4 : case5FeedbackData4;
   return (
     <div style={{
       minHeight: '100vh',
@@ -14,9 +20,8 @@ const Chapter4Game: React.FC = () => {
       color: case5DarkTheme.textPrimary
     }}>
       <MysteryGameLayout
-        scenario={case5Ch4}
-        
-        feedbackData={case5FeedbackData4}
+        scenario={scenario}        
+        feedbackData={feedbackData}
         
         caseId="case5-ch4"
         seoTitle="시간의 그림자들 - 4장"

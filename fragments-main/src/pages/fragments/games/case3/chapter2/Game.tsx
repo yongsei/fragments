@@ -1,9 +1,17 @@
 import React from 'react';
 import MysteryGameLayout from '../../../components/MysteryGameLayout';
 import { case3Ch2 } from './scenario_kr';
+import { case3ChEn2 } from './scenario_en';
 import case3FeedbackData2 from './feedbackData_kr';
+import case3FeedbackDataEn2 from './feedbackData_en';
+import { useLanguage } from '../../../hooks/useLanguage';
 
 const Chapter2Game: React.FC = () => {
+  const { language } = useLanguage();
+
+  // 언어에 따른 시나리오와 피드백 데이터 선택
+  const scenario = language === 'en' ? case3ChEn2 : case3Ch2;
+  const feedbackData = language === 'en' ? case3FeedbackDataEn2 : case3FeedbackData2;
   return (
     <div style={{
       minHeight: '100vh',
@@ -11,8 +19,8 @@ const Chapter2Game: React.FC = () => {
       color: '#ffffff'
     }}>
       <MysteryGameLayout
-        scenario={case3Ch2}
-        feedbackData={case3FeedbackData2}
+        scenario={scenario}        
+        feedbackData={feedbackData}
         caseId="case3-ch2"
         backUrl="/fragments/case3/chapter2"
         seoTitle="브래스헬름의 잿불 - 2장"

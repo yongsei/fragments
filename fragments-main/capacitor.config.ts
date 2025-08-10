@@ -9,9 +9,9 @@ const config: CapacitorConfig = {
   },
   plugins: {
     StatusBar: {
-      backgroundColor: '#1a1a2e',
       style: 'light',
       overlaysWebView: false
+      // backgroundColor는 App.tsx에서 동적으로 설정
     },
     SplashScreen: {
       launchShowDuration: 2000,

@@ -70,6 +70,8 @@ const MysteryGameLayout: React.FC<MysteryGameLayoutProps> = (props) => {
   // 언어 상태 관리
   const languageState = useLanguageState();
   
+  // 사운드 관리 (배경음악은 App.tsx에서 전역 관리)
+  
   // 모바일 감지 상태
   const [isMobile, setIsMobile] = useState(false);
 
@@ -84,6 +86,8 @@ const MysteryGameLayout: React.FC<MysteryGameLayoutProps> = (props) => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  // 배경음악은 App.tsx에서 전역적으로 관리됨 (중복 제거)
+
   // maxHints 기본값 3으로 고정
   const propsWithDefaults = {
     ...props,
@@ -94,11 +98,7 @@ const MysteryGameLayout: React.FC<MysteryGameLayoutProps> = (props) => {
   return (
     <LanguageContext.Provider value={languageState}>
       {/* 디바이스에 따라 적절한 레이아웃 컴포넌트 렌더링 */}
-      {isMobile ? (
         <MobileMysteryGameLayout {...propsWithDefaults} />
-      ) : (
-        <PCMysteryGameLayout {...propsWithDefaults} />
-      )}
     </LanguageContext.Provider>
   );
 };

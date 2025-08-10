@@ -10,8 +10,46 @@ import GameResultScreen from './GameResultScreen';
 import AdModal from '../../../components/AdModal';
 import { useMysteryGame } from '../hooks/useMysteryGame';
 import { useLanguageState } from '../hooks/useLanguage';
-import type { GameScenario } from '../games/case5/chapter1/scenario_kr';
-import type { CaseFeedbackData } from '../games/case5/chapter1/feedbackData_kr';
+
+export interface GameScenario {
+  id: string;
+  title: string;
+  story?: string;
+  victim?: string;
+  suspects?: any[];
+  evidence?: any[];
+  locations?: any[];
+  connections?: any[];
+  connectionRules?: any[];
+  solution?: any;
+  initialFragment?: string;
+  finalFragment?: string;
+  endingMessage?: string;
+  fragments?: any[];
+  text?: string;
+  choices?: any[];
+  clues?: any[];
+  temporalFragments?: any[];
+  // 게임 설정 추가
+  initialCards?: string[];
+  winCondition?: string;
+}
+
+export interface CaseFeedbackData {
+  caseId: string;
+  correctSuspect: string;
+  keyEvidence: string[];
+  combinationFeedback: CombinationFeedback[];  // Changed to array-based
+  urgentHints: string[];
+  contextualHints: string[];
+}
+
+export interface CombinationFeedback {
+  cards: string[];  // Array format same as scenario
+  proximity: 'close' | 'partial' | 'none';
+  messages: string[];  // Messages by hint level (0,1,2 stages)
+}
+
 
 // CSS 애니메이션 추가
 const pulseKeyframes = `

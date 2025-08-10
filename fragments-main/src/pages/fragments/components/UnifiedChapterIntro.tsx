@@ -60,7 +60,7 @@ const UnifiedChapterIntro: React.FC<UnifiedChapterIntroProps> = ({ data }) => {
   const { originalLang } = useFragmentsTranslation();
   const currentLang = originalLang === 'kr' ? 'kr' : 'en';
   const navigate = useNavigate();
-  
+
   const [showResumePopup, setShowResumePopup] = useState(false);
   const [showAdModal, setShowAdModal] = useState(false);
   const [savedGameInfo, setSavedGameInfo] = useState<{
@@ -72,43 +72,64 @@ const UnifiedChapterIntro: React.FC<UnifiedChapterIntroProps> = ({ data }) => {
   const chapterCaseId = `${data.caseId}-ch${data.chapterNumber}`;
 
   const handleGameStart = async () => {
+    console.log('🎮 수사 시작 버튼 클릭, 저장된 데이터 확인 중...', chapterCaseId);
+    
     // 저장된 게임 데이터 확인
     try {
-      if (await hasGameProgress(chapterCaseId)) {
+      const hasProgress = await hasGameProgress(chapterCaseId);
+      console.log('📊 저장된 데이터 존재 여부:', hasProgress);
+      
+      if (hasProgress) {
         const progress = await loadGameProgress(chapterCaseId);
+        console.log('📋 로드된 진행상황:', progress);
+        
         if (progress && !progress.isCompleted) {
           setSavedGameInfo({
-            elapsedTime: progress.elapsedTime,
-            discoveredCardsCount: progress.totalDiscoveredCards || progress.discoveredCardIds.length
+            elapsedTime: progress.elapsedTime || 0,
+            discoveredCardsCount: progress.totalDiscoveredCards || progress.discoveredCardIds?.length || 0
           });
+          console.log('✅ 저장된 데이터 발견! 팝업 표시');
           setShowResumePopup(true);
           return;
         }
       }
       
-      // 저장된 데이터가 없으면 광고 모달 표시
+      // 저장된 데이터가 없으면 바로 광고 모달 표시
+      console.log('❌ 저장된 데이터 없음, 바로 광고 모달 표시');
       setShowAdModal(true);
     } catch (error) {
-      console.error('저장된 게임 데이터 확인 실패:', error);
-      // 에러 발생 시 광고 모달 표시
+      console.error('❌ 저장된 게임 데이터 확인 실패:', error);
+      // 에러 발생 시 바로 광고 모달 표시
       setShowAdModal(true);
     }
   };
 
   const handleResumeGame = () => {
+    console.log('🎮 "예" 선택: 저장된 데이터로 이어서 플레이');
+    console.log('📊 저장된 데이터 유지됨');
     setShowResumePopup(false);
     setShowAdModal(true);
   };
 
   const handleStartNewGame = async () => {
-    // 저장된 데이터 삭제 후 새 게임 시작
-    await clearGameProgress(chapterCaseId);
+    console.log('🗑️ "아니오" 선택: 새 게임 시작');
+    console.log('📊 저장된 데이터 삭제 중...', chapterCaseId);
+
+    try {
+      // 저장된 데이터 삭제 후 새 게임 시작
+      await clearGameProgress(chapterCaseId);
+      console.log('✅ 저장된 데이터 삭제 완료');
+    } catch (error) {
+      console.error('❌ 저장된 데이터 삭제 실패:', error);
+    }
+
     setShowResumePopup(false);
     setShowAdModal(true);
   };
 
   const handleAdCompleted = () => {
     console.log('광고 시청 완료! 게임 시작');
+    // 챕터 소개 페이지에서는 챕터 효과음 제거 (케이스 선택 페이지에서만 재생)
     setShowAdModal(false);
     window.scrollTo(0, 0);
     navigate(data.gameLink);
@@ -116,6 +137,7 @@ const UnifiedChapterIntro: React.FC<UnifiedChapterIntroProps> = ({ data }) => {
 
   const handleSkipAd = () => {
     console.log('광고 건너뛰기');
+    // 챕터 소개 페이지에서는 챕터 효과음 제거 (케이스 선택 페이지에서만 재생)
     setShowAdModal(false);
     window.scrollTo(0, 0);
     navigate(data.gameLink);
@@ -155,7 +177,7 @@ const UnifiedChapterIntro: React.FC<UnifiedChapterIntroProps> = ({ data }) => {
         padding: '0 1rem'
       }}>
         {/* 뒤로가기 버튼 - 게임과 동일한 위치 */}
-        <Link 
+        <Link
           to={`/fragments/${data.caseId}`}
           style={{
             color: 'rgba(255,255,255,0.8)',
@@ -171,7 +193,7 @@ const UnifiedChapterIntro: React.FC<UnifiedChapterIntroProps> = ({ data }) => {
           }}>
           ←
         </Link>
-        
+
         {/* 챕터 타이틀 - 절대 중앙 정렬 */}
         <div style={{
           position: 'absolute',

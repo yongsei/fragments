@@ -5,6 +5,7 @@ interface Card {
   id: string;
   name: string;
   description: string;
+  detail: string;
   [key: string]: any;
 }
 
@@ -39,7 +40,7 @@ const CardDetailModal: React.FC<CardDetailModalProps> = ({
     console.log('🎯 Available cards:', cards.map(c => ({ id: c.id, name: c.name })));
     return result;
   }, [cardIds, cards]);
-  
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentImageUrl, setCurrentImageUrl] = useState<string | null>(null);
   const [cardState, setCardState] = useState<'fadeIn' | 'show' | 'fadeOut'>('fadeIn');
@@ -47,11 +48,11 @@ const CardDetailModal: React.FC<CardDetailModalProps> = ({
   const [timeLeft, setTimeLeft] = useState(7); // intro 모드용 카운트다운
   const [isTransitioning, setIsTransitioning] = useState(false); // 전환 중인지 추적
   const [canStartCountdown, setCanStartCountdown] = useState(false); // 카운트다운 시작 허용 플래그
-  
+
   // useRef로 타이머 관리
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const countdownRef = useRef<NodeJS.Timeout | null>(null);
-  
+
   // 컴포넌트 언마운트 시 완전한 정리
   useEffect(() => {
     return () => {
@@ -78,7 +79,7 @@ const CardDetailModal: React.FC<CardDetailModalProps> = ({
 
   // 현재 카드 정보 가져오기
   const currentCard = cards.find(card => card.id === normalizedCardIds[currentIndex]);
-  
+
   // 현재 카드 상태 디버깅
   React.useEffect(() => {
     console.log(`🎯 Card ${currentIndex}: ID=${normalizedCardIds[currentIndex]}, Found=${!!currentCard}, Name=${currentCard?.name || 'NOT FOUND'}`);
@@ -87,13 +88,13 @@ const CardDetailModal: React.FC<CardDetailModalProps> = ({
   // SKIP 버튼용 핸들러
   const handleSkip = useCallback(() => {
     console.log('🚀 SKIP clicked, current state:', cardState, 'index:', currentIndex, 'mode:', mode);
-    
+
     // 이미 fadeOut 중이거나 마지막 카드인 경우 즉시 완료 처리
     if (cardState === 'fadeOut') {
       console.log('🚫 Already fading out, ignoring skip');
       return;
     }
-    
+
     // 마지막 카드인 경우 즉시 완료
     if (currentIndex >= normalizedCardIds.length - 1) {
       console.log('🏁 Last card skip - immediate completion');
@@ -110,7 +111,7 @@ const CardDetailModal: React.FC<CardDetailModalProps> = ({
       onComplete();
       return;
     }
-    
+
     // 활성 타이머들 정리
     if (timerRef.current) {
       console.log('🧹 Timer cleared by skip');
@@ -122,7 +123,7 @@ const CardDetailModal: React.FC<CardDetailModalProps> = ({
       clearInterval(countdownRef.current);
       countdownRef.current = null;
     }
-    
+
     // 카운트다운 비활성화하고 fadeOut 시작
     setCanStartCountdown(false);
     setCardState('fadeOut');
@@ -143,7 +144,7 @@ const CardDetailModal: React.FC<CardDetailModalProps> = ({
   useEffect(() => {
     if ((mode === 'slideshow' || mode === 'intro') && currentIndex > 0) {
       console.log(`🔄 ${mode}: Card index changed to:`, currentIndex);
-      
+
       // 기존 타이머들 정리
       if (timerRef.current) {
         clearTimeout(timerRef.current);
@@ -153,7 +154,7 @@ const CardDetailModal: React.FC<CardDetailModalProps> = ({
         clearInterval(countdownRef.current);
         countdownRef.current = null;
       }
-      
+
       if (mode === 'intro') {
         // intro 모드: fadeIn 없이 바로 show (크로스페이드 효과)
         console.log('🎮 Intro mode: Direct transition to show state');
@@ -161,7 +162,7 @@ const CardDetailModal: React.FC<CardDetailModalProps> = ({
         setCardState('show');
         setIsTransitioning(false); // 전환 완료
         setCanStartCountdown(true); // 카운트다운 시작 허용
-        
+
         // 중요: fadeOut 상태를 리셋하여 중복 fadeOut 방지
         console.log('🔧 Intro mode: Reset fadeOut state to prevent immediate transition');
       } else {
@@ -177,14 +178,14 @@ const CardDetailModal: React.FC<CardDetailModalProps> = ({
   useEffect(() => {
     if (cardState === 'fadeIn') {
       console.log('✨ Starting fadeIn animation');
-      
+
       // 초기 마운트 시 fadeIn 효과를 보장하기 위해 짧은 지연 후 show로 변경
       const fadeInTimer = setTimeout(() => {
         console.log('✨ FadeIn complete, showing card');
         setCardState('show');
         setCanStartCountdown(true); // fadeIn 완료 후 카운트다운 시작 허용
       }, 450); // CSS transition과 맞춤 (400ms + 50ms 여유)
-      
+
       return () => clearTimeout(fadeInTimer);
     }
   }, [cardState]);
@@ -226,12 +227,12 @@ const CardDetailModal: React.FC<CardDetailModalProps> = ({
 
   // fadeOut 처리 (cardState가 fadeOut일 때만) - 중복 실행 방지를 위해 ref 사용
   const fadeOutProcessedRef = useRef(false);
-  
+
   useEffect(() => {
     if (cardState === 'fadeOut' && !fadeOutProcessedRef.current) {
       console.log('🌅 Starting fadeOut process for card:', normalizedCardIds[currentIndex]);
       fadeOutProcessedRef.current = true; // 중복 실행 방지
-      
+
       if (mode === 'intro' && currentIndex < normalizedCardIds.length - 1) {
         // intro 모드: 다음 카드로 이동
         console.log('➡️ Intro mode: Moving to next card from', currentIndex, 'to', currentIndex + 1);
@@ -251,12 +252,12 @@ const CardDetailModal: React.FC<CardDetailModalProps> = ({
             setIsVisible(false);
           }
         }, 400);
-        
+
         return () => clearTimeout(fadeOutTimer);
       }
     }
   }, [cardState, mode, currentIndex, normalizedCardIds.length, onComplete]);
-  
+
   // 카드 인덱스가 변경될 때마다 fadeOut 플래그 리셋
   useEffect(() => {
     fadeOutProcessedRef.current = false;
@@ -368,130 +369,151 @@ const CardDetailModal: React.FC<CardDetailModalProps> = ({
       }}>
         {/* Skip/Close 버튼 */}
         <button
-        onClick={handleSkip}
-        style={{
-          position: 'absolute',
-          top: '120px',
-          right: '60px',
-          background: 'transparent',
-          border: `2px solid ${defaultTheme.skipButtonColor}`,
-          borderRadius: '25px',
-          color: defaultTheme.skipButtonColor,
-          padding: '8px 16px',
-          fontSize: '16px',
-          fontWeight: 'bold',
-          cursor: 'pointer',
-          animation: 'skipBlink 1.5s infinite',
-          transition: 'all 0.3s ease',
-          zIndex: 10000
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.background = defaultTheme.skipButtonColor;
-          e.currentTarget.style.color = 'white';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.background = 'transparent';
-          e.currentTarget.style.color = defaultTheme.skipButtonColor;
-        }}
-      >
-        {(mode === 'slideshow' || mode === 'intro') && normalizedCardIds.length > 1 ? 'SKIP >>' : 'CLOSE'}
-      </button>
+          onClick={handleSkip}
+          style={{
+            position: 'absolute',
+            top: '120px',
+            right: '60px',
+            background: 'transparent',
+            border: `2px solid ${defaultTheme.skipButtonColor}`,
+            borderRadius: '25px',
+            color: defaultTheme.skipButtonColor,
+            padding: '8px 16px',
+            fontSize: '16px',
+            fontWeight: 'bold',
+            cursor: 'pointer',
+            animation: 'skipBlink 1.5s infinite',
+            transition: 'all 0.3s ease',
+            zIndex: 10000
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = defaultTheme.skipButtonColor;
+            e.currentTarget.style.color = 'white';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'transparent';
+            e.currentTarget.style.color = defaultTheme.skipButtonColor;
+          }}
+        >
+          {(mode === 'slideshow' || mode === 'intro') && normalizedCardIds.length > 1 ? 'SKIP >>' : 'CLOSE'}
+        </button>
 
-      {/* 카드 컨텐츠 - 간단한 카드 디자인 */}
-      <div style={{
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-        {/* 카드 컨테이너 - 전체 화면 커버 */}
+        {/* 카드 컨텐츠 - 간단한 카드 디자인 */}
         <div style={{
-          width: 'calc(100% - 40px)', // 테두리를 위한 여백
-          height: 'calc(100% - 40px)', // 테두리를 위한 여백
-          borderRadius: '25px',
-          border: `6px solid ${defaultTheme.accentColor}`,
-          boxShadow: `inset 0 0 0 8px rgba(0, 0, 0, 0.3), 0 0 50px ${defaultTheme.accentColor}50`,
-          overflow: 'hidden',
-          position: 'relative',
-          ...(currentImageUrl 
-            ? {
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          {/* 카드 컨테이너 - 전체 화면 커버 */}
+          <div style={{
+            width: 'calc(100% - 40px)', // 테두리를 위한 여백
+            height: 'calc(100% - 40px)', // 테두리를 위한 여백
+            borderRadius: '25px',
+            border: `6px solid ${defaultTheme.accentColor}`,
+            boxShadow: `inset 0 0 0 8px rgba(0, 0, 0, 0.3), 0 0 50px ${defaultTheme.accentColor}50`,
+            overflow: 'hidden',
+            position: 'relative',
+            ...(currentImageUrl
+              ? {
                 backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url(${currentImageUrl})`,
                 backgroundSize: 'contain',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat'
               }
-            : {
+              : {
                 backgroundImage: `linear-gradient(135deg, ${defaultTheme.primaryGradient})`
               }
-          ),
-          animation: 'slideInFromLeft 0.8s ease-out'
-        }}>
-          {/* 카드 내부 여백 */}
-          <div style={{
-            width: '100%',
-            height: '100%',
-            padding: '1.5rem',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-end',
-            background: 'linear-gradient(transparent 0%, transparent 60%, rgba(0, 0, 0, 0.8) 100%)'
+            ),
+            animation: 'slideInFromLeft 0.8s ease-out'
           }}>
-            {/* 카드 제목 - 첫 번째 줄 */}
-            <div 
-              key={`title-${currentIndex}`}
-              style={{
-                animation: 'slideInLine1 1s ease-out 0.5s both'
-              }}
-            >
-              <h2 style={{
-                fontSize: 'clamp(1.3rem, 5vw, 2rem)',
-                fontWeight: 'bold',
-                margin: '0 0 0.5rem 0',
-                color: 'white',
-                textShadow: '0 2px 10px rgba(0, 0, 0, 0.8)',
-                lineHeight: 1.2
-              }}>
-                {currentCard.name}
-              </h2>
-            </div>
-            
-            {/* 카드 설명 - 두 번째 줄 */}
-            <div 
-              key={`desc-${currentIndex}`}
-              style={{
-                animation: 'slideInLine2 1s ease-out 0.8s both'
-              }}
-            >
-              <p style={{
-                fontSize: 'clamp(0.9rem, 3vw, 1.1rem)',
-                color: 'rgba(255, 255, 255, 0.9)',
-                textShadow: '0 1px 5px rgba(0, 0, 0, 0.8)',
-                margin: '0 0 0.8rem 0',
-                lineHeight: 1.4
-              }}>
-                {currentCard.description}
-              </p>
-            </div>
-          </div>
-          
-          {/* 로딩 상태 */}
-          {!currentImageUrl && (
+            {/* 카드 내부 여백 */}
             <div style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              fontSize: 'clamp(1rem, 4vw, 1.2rem)',
-              color: 'rgba(255, 255, 255, 0.8)',
-              textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)',
-              animation: 'slideInLine1 1.2s ease-out 0.3s both'
+              width: '100%',
+              height: '100%',
+              padding: '1.5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'flex-end',
+              background: 'linear-gradient(transparent 0%, transparent 60%, rgba(0, 0, 0, 0.8) 100%)'
             }}>
-              ⏳ 로딩 중...
+              {/* 카드 제목 - 첫 번째 줄 */}
+              <div
+                key={`title-${currentIndex}`}
+                style={{
+                  animation: 'slideInLine1 1s ease-out 0.5s both'
+                }}
+              >
+                <h2 style={{
+                  fontSize: 'clamp(1.3rem, 5vw, 2rem)',
+                  fontWeight: 'bold',
+                  margin: '0 0 0.5rem 0',
+                  color: 'white',
+                  textShadow: '0 2px 10px rgba(0, 0, 0, 0.8)',
+                  lineHeight: 1.2
+                }}>
+                  {currentCard.name}
+                </h2>
+              </div>
+
+              {/* 카드 설명 - 두 번째 줄 */}
+              <div
+                key={`desc-${currentIndex}`}
+                style={{
+                  animation: 'slideInLine2 1s ease-out 0.8s both'
+                }}
+              >
+                <p style={{
+                  fontSize: 'clamp(0.9rem, 3vw, 1.1rem)',
+                  color: 'rgba(255, 255, 255, 0.9)',
+                  textShadow: '0 1px 5px rgba(0, 0, 0, 0.8)',
+                  margin: '0 0 0.8rem 0',
+                  lineHeight: 1.4
+                }}>
+                  {currentCard.description}
+                </p>
+              </div>
+
+              {/* 카드 상세 설명 - 세 번째 줄 (details가 있을 때만 표시) */}
+              {currentCard.details && (
+                <div
+                  key={`details-${currentIndex}`}
+                  style={{
+                    animation: 'slideInLine3 1s ease-out 1.1s both'
+                  }}
+                >
+                  <p style={{
+                    fontSize: 'clamp(0.8rem, 2.5vw, 1rem)',
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    textShadow: '0 1px 5px rgba(0, 0, 0, 0.8)',
+                    margin: '0',
+                    lineHeight: 1.3,
+                    fontStyle: 'italic'
+                  }}>
+                    {currentCard.details}
+                  </p>
+                </div>
+              )}
             </div>
-          )}
+
+            {/* 로딩 상태 */}
+            {!currentImageUrl && (
+              <div style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                fontSize: 'clamp(1rem, 4vw, 1.2rem)',
+                color: 'rgba(255, 255, 255, 0.8)',
+                textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)',
+                animation: 'slideInLine1 1.2s ease-out 0.3s both'
+              }}>
+                ⏳ 로딩 중...
+              </div>
+            )}
+          </div>
         </div>
-      </div>
 
         {/* CSS 애니메이션 */}
         <style>

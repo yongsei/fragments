@@ -1,9 +1,17 @@
 import React from 'react';
 import MysteryGameLayout from '../../../components/MysteryGameLayout';
 import { case4Ch1 } from './scenario_kr';
+import { case4ChEn1 } from './scenario_en';
 import case4FeedbackData1 from './feedbackData_kr';
+import case4FeedbackDataEn1 from './feedbackData_en';
+import { useLanguage } from '../../../hooks/useLanguage';
 
 const Chapter1Game: React.FC = () => {
+  const { language } = useLanguage();
+
+  // 언어에 따른 시나리오와 피드백 데이터 선택
+  const scenario = language === 'en' ? case4ChEn1 : case4Ch1;
+  const feedbackData = language === 'en' ? case4FeedbackDataEn1 : case4FeedbackData1;
   return (
     <div style={{
       minHeight: '100vh',
@@ -11,8 +19,8 @@ const Chapter1Game: React.FC = () => {
       color: '#ffffff'
     }}>
       <MysteryGameLayout
-        scenario={case4Ch1}
-        feedbackData={case4FeedbackData1}
+        scenario={scenario}        
+        feedbackData={feedbackData}
         caseId="case4-ch1"
         backUrl="/fragments/case4/chapter1"
         seoTitle="디지털 포트리스 - 1장"

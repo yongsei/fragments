@@ -2,6 +2,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  /* 🔥 모바일 컨텍스트 메뉴 및 텍스트 선택 완전 비활성화 */
+  -webkit-touch-callout: none; /* iOS Safari 컨텍스트 메뉴 비활성화 */
+  -webkit-user-select: none;   /* 웹킷 브라우저 텍스트 선택 비활성화 */
+  -moz-user-select: none;      /* Firefox 텍스트 선택 비활성화 */
+  -ms-user-select: none;       /* IE/Edge 텍스트 선택 비활성화 */
+  user-select: none;           /* 표준 텍스트 선택 비활성화 */
 }
 
 body {
@@ -9,10 +15,11 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  /* 모바일 핀치 줌 방지 */
-  touch-action: manipulation;
-  -ms-content-zooming: none;
-  -ms-touch-action: manipulation;
+  /* 🎮 모바일 게임 최적화 */
+  touch-action: manipulation;     /* 핀치 줌 방지, 터치 최적화 */
+  -ms-content-zooming: none;      /* IE/Edge 줌 방지 */
+  -ms-touch-action: manipulation; /* IE/Edge 터치 액션 제어 */
+  -webkit-touch-callout: none;    /* iOS 컨텍스트 메뉴 비활성화 (body 레벨에서 추가 보장) */
   /* 배경색은 App.tsx에서 동적으로 설정됨 */
   /* background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); */
   /* 시스템 UI 영역 확실히 피하기 - 안전 마진 추가 */
@@ -20,6 +27,19 @@ body {
   padding-bottom: max(env(safe-area-inset-bottom), 80px);
   padding-left: env(safe-area-inset-left);
   padding-right: env(safe-area-inset-right);
+  
+  /* 갤럭시 플립 5 최적화 */
+  /* 폴더블 디바이스 감지 및 추가 패딩 */
+  @media (max-width: 480px) and (max-height: 900px) {
+    padding-top: max(env(safe-area-inset-top), 80px) !important;
+    padding-bottom: max(env(safe-area-inset-bottom), 100px) !important;
+  }
+  
+  /* 세로 긴 화면 (플립폰 특성) */
+  @media (aspect-ratio < 0.6) {
+    padding-top: max(env(safe-area-inset-top), 90px) !important;
+    padding-bottom: max(env(safe-area-inset-bottom), 120px) !important;
+  }
 }
 
 .App {

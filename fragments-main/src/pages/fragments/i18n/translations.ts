@@ -83,6 +83,12 @@ export interface FragmentsTranslations {
   playAgain: string;
   chapterCompleted: string;
   winConditionCardFound: string;
+  
+  // 사운드 설정
+  soundSettings: string;
+  soundDescription: string;
+  volumeQuiet: string;
+  volumeLoud: string;
 }
 
 // 한국어 번역
@@ -161,7 +167,12 @@ export const ko: FragmentsTranslations = {
   startChapter: "챕터 시작",
   playAgain: "다시 플레이",
   chapterCompleted: "챕터 완료",
-  winConditionCardFound: "🎯 최종 단서를 발견했습니다! 카드를 클릭하여 수사를 완료하세요."
+  winConditionCardFound: "🎯 최종 단서를 발견했습니다! 카드를 클릭하여 수사를 완료하세요.",
+  
+  soundSettings: "설정",
+  soundDescription: "게임에서 카드 선택, 시나리오, 챕터 선택 시<br/>소리가 재생됩니다.",
+  volumeQuiet: "조용함",
+  volumeLoud: "시끄러움"
 };
 
 // 영어 번역
@@ -240,7 +251,12 @@ export const en: FragmentsTranslations = {
   startChapter: "Start Chapter",
   playAgain: "Play Again",
   chapterCompleted: "Chapter Completed",
-  winConditionCardFound: "🎯 Final clue discovered! Click the card to complete the investigation."
+  winConditionCardFound: "🎯 Final clue discovered! Click the card to complete the investigation.",
+  
+  soundSettings: "Settings",
+  soundDescription: "Sounds will play when selecting cards, scenarios, and chapters in the game.",
+  volumeQuiet: "Quiet",
+  volumeLoud: "Loud"
 };
 
 // 기본 번역 객체
