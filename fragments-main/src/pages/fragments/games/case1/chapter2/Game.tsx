@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import MysteryGameLayout from '../../../components/MysteryGameLayout';
 import { caseCh2 } from './scenario_kr';
 import { caseChEn2 } from './scenario_en';
