@@ -43,7 +43,7 @@ export const case4IntroData: CaseIntroData = {
         kr: '마법공학자 스톤위크가 살해당하고 심장이 사라진 마법 도시의 첫 번째 미스터리.',
         en: 'The first mystery in a magical city where mage-engineer Stonewick was murdered and his heart disappeared.'
       },
-      link: 'chapter1'
+      link: 'chapter1/game'
     },
     {
       number: 2,
@@ -56,7 +56,7 @@ export const case4IntroData: CaseIntroData = {
         kr: '아르카눔의 각 종족들이 가진 비밀과 스톤위크의 연구에 숨겨진 진실을 밝혀냅니다.',
         en: 'Uncover the secrets of each race in Arcanum and the truth hidden in Stonewick\'s research.'
       },
-      link: 'chapter2'
+      link: 'chapter2/game'
     },
     {
       number: 3,
@@ -69,7 +69,7 @@ export const case4IntroData: CaseIntroData = {
         kr: '마법과 기술이 공존하는 도시에서 벌어진 역설적 살인의 진실을 밝혀냅니다.',
         en: 'Uncover the truth behind the paradoxical murder in a city where magic and technology coexist.'
       },
-      link: 'chapter3'
+      link: 'chapter3/game'
     },
     {
       number: 4,
@@ -82,7 +82,7 @@ export const case4IntroData: CaseIntroData = {
         kr: '모든 수수께끼가 풀리는 마지막 순간. 아르카눔 살인사건의 진범과 대면합니다.',
         en: 'The final moment when all mysteries are solved. Face the true culprit of the Arcanum murder case.'
       },
-      link: 'chapter4'
+      link: 'chapter4/game'
     }
   ]
 };

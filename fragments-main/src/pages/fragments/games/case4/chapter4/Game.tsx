@@ -22,7 +22,7 @@ const Chapter4Game: React.FC = () => {
         scenario={scenario}        
         feedbackData={feedbackData}
         caseId="case4-ch4"
-        backUrl="/fragments/case4/chapter4"
+        backUrl="/fragments/case4/"
         seoTitle="디지털 포트리스 - 4장"
         seoDescription="디지털 세계의 미스터리 4장"
         seoKeywords="미스터리,추리,디지털,포트리스"

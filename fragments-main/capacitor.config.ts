@@ -5,7 +5,9 @@ const config: CapacitorConfig = {
   appName: 'Fragment of Mystery',
   webDir: 'build',
   server: {
-    androidScheme: 'https'
+    androidScheme: 'https',
+    url: 'http://192.168.1.6:3333',
+    cleartext: true
   },
   plugins: {
     StatusBar: {

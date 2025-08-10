@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, EffectCoverflow } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/effect-coverflow';
+import { Link, useNavigate } from 'react-router-dom';
 import SEOHead from '../../../components/SEOHead';
+import AdModal from '../../../components/AdModal';
 import { useFragmentsTranslation } from '../hooks/useFragmentsTranslation';
 import { getCompletedChapters } from '../utils/gameProgress';
 import { useSoundManager } from '../hooks/useSoundManager';
@@ -65,7 +61,10 @@ interface UnifiedCaseIntroProps {
 const UnifiedCaseIntro: React.FC<UnifiedCaseIntroProps> = ({ data }) => {
   const { t, originalLang } = useFragmentsTranslation();
   const { playChapterSound } = useSoundManager();
+  const navigate = useNavigate();
   const [completedChapters, setCompletedChapters] = useState<number[]>([]);
+  const [showAdModal, setShowAdModal] = useState(false);
+  const [selectedChapterLink, setSelectedChapterLink] = useState<string>('');
 
   useEffect(() => {
     const loadCompletedChapters = async () => {
@@ -106,6 +105,19 @@ const UnifiedCaseIntro: React.FC<UnifiedCaseIntroProps> = ({ data }) => {
 
   const currentLang = originalLang === 'kr' ? 'kr' : 'en';
 
+  // 광고 커온대 핸들러
+  const handleAdCompleted = () => {
+    console.log('📺 광고 시청 완료');
+    // 광고 시청 후 게임으로 이동
+    navigate(`/fragments/${data.caseId}/${selectedChapterLink}`);
+  };
+
+  const handleAdSkip = () => {
+    console.log('🚑 광고 스킵');
+    // 광고 스킵해도 게임으로 이동
+    navigate(`/fragments/${data.caseId}/${selectedChapterLink}`);
+  };
+
   return (
     <>
       <SEOHead
@@ -120,14 +132,36 @@ const UnifiedCaseIntro: React.FC<UnifiedCaseIntroProps> = ({ data }) => {
       
       <div style={{
         minHeight: '100vh',
-        background: data.theme.background,
+        background: 'linear-gradient(135deg, rgb(26, 26, 46) 0%, rgb(22, 33, 62) 100%)',
         color: 'white',
-        paddingLeft: '2rem',
-        paddingRight: '2rem',
+        paddingLeft: '0.5rem',
+        paddingRight: '0.5rem',
         paddingTop: 'max(env(safe-area-inset-top, 0px), 40px)', // 상단 헤더 공간 축소
         fontFamily: "'Noto Sans KR', sans-serif",
         position: 'relative'
       }}>
+        {/* 상단 시스템 UI 영역 배경 통일 */}
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 'max(env(safe-area-inset-top, 0px), 0px)',
+          background: 'rgb(26, 26, 46)', // 불투명 배경
+          zIndex: 999
+        }} />
+
+        {/* 하단 시스템 UI 영역 배경 통일 */}
+        <div style={{
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 'env(safe-area-inset-bottom, 0px)', // 시스템 UI 영역만
+          background: 'rgb(26, 26, 46)', // 불투명 배경
+          zIndex: 99
+        }} />
+        
         {/* 상단 고정 헤더 - 게임 화면과 동일한 스타일 */}
         <div style={{
           position: 'fixed',
@@ -183,7 +217,7 @@ const UnifiedCaseIntro: React.FC<UnifiedCaseIntroProps> = ({ data }) => {
           textAlign: 'center'
         }}>
           {/* 헤더 */}
-          <div style={{ marginBottom: '3rem' }}>
+          <div style={{ marginBottom: '1.5rem' }}>
             <h1 style={{
               fontSize: 'clamp(2rem, 6vw, 3.5rem)',
               fontWeight: 700,
@@ -206,209 +240,144 @@ const UnifiedCaseIntro: React.FC<UnifiedCaseIntroProps> = ({ data }) => {
             </p>
           </div>
 
-          {/* 스토리 개요 */}
-          <div style={{
-            background: data.theme.cardBackground,
-            borderRadius: '15px',
-            padding: '2rem',
-            marginBottom: '3rem',
-            border: `1px solid ${data.theme.accent}`
-          }}>
-            <h2 style={{
-              fontSize: '1.5rem',
-              marginBottom: '1rem',
-              color: data.theme.accent.replace('rgba(', '').replace(', 0.3)', '').replace(')', '')
-            }}>
-              📖 {originalLang === 'kr' ? '전체 스토리' : 'Full Story'}
-            </h2>
-            <p style={{
-              fontSize: '1.1rem',
-              lineHeight: 1.6,
-              opacity: 0.9
-            }}>
-              {data.storyContent[currentLang]}
-            </p>
-          </div>
 
-          {/* 챕터 선택 - Swiper 적용 */}
+          {/* 챕터 선택 - 그리드 레이아웃 */}
           <div style={{
             width: '100%',
-            paddingBottom: '3rem'
+            paddingBottom: '1rem'
           }}>
-            <Swiper
-              modules={[Pagination, EffectCoverflow]}
-              spaceBetween={30}
-              slidesPerView={1}
-              centeredSlides={true}
-              effect="coverflow"
-              coverflowEffect={{
-                rotate: 30,
-                stretch: 0,
-                depth: 80,
-                modifier: 1,
-                slideShadows: true,
-              }}
-              pagination={{
-                clickable: true,
-                dynamicBullets: true
-              }}
-              breakpoints={{
-                768: {
-                  slidesPerView: 1.5,
-                  spaceBetween: 40,
-                },
-                1024: {
-                  slidesPerView: 2,
-                  spaceBetween: 50,
-                }
-              }}
-              style={{
-                paddingBottom: '3rem'
-              }}
-            >
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1rem',
+              padding: '0 0.5rem',
+              width: '100%',
+              margin: '0 auto'
+            }}>
             {data.chapters.map((chapter) => {
               const isUnlocked = isChapterUnlocked(chapter.number);
               const isCompleted = completedChapters.includes(chapter.number);
 
               return (
-                <SwiperSlide key={chapter.number}>
-                  <Link 
-                    to={isUnlocked ? chapter.link : '#'} 
+                <div key={chapter.number}>
+                  <div 
                     onClick={(e) => {
-                      console.log('🔗 Link onClick 이벤트 발생');
+                      console.log('🔗 Chapter onClick 이벤트 발생');
                       console.log('- chapter.number:', chapter.number);
                       console.log('- isUnlocked:', isUnlocked);
                       if (!isUnlocked) {
-                        e.preventDefault(); // 잠긴 챕터는 네비게이션 차단
-                        return false;
+                        e.preventDefault();
+                        return;
                       }
-                      handleChapterClick(isUnlocked, chapter.number);
+                      
+                      // 광고 모달 열기
+                      setSelectedChapterLink(chapter.link);
+                      setShowAdModal(true);
                     }} 
                     style={{ 
-                      textDecoration: 'none', 
-                      color: 'inherit',
                       cursor: isUnlocked ? 'pointer' : 'not-allowed',
                       display: 'block',
                       height: '100%'
                     }}
                   >
                     <div style={{
-                      background: isUnlocked ? 'rgba(255, 255, 255, 0.1)' : 'rgba(100, 100, 100, 0.3)',
-                      borderRadius: '20px',
-                      padding: '2rem',
-                      backdropFilter: 'blur(10px)',
+                      background: data.theme.cardBackground,
+                      borderRadius: '12px',
+                      padding: '1rem 0.75rem',
                       border: isCompleted 
                         ? '2px solid #4CAF50' 
                         : isUnlocked 
-                          ? '1px solid rgba(255, 255, 255, 0.2)' 
-                          : '1px solid rgba(100, 100, 100, 0.2)',
+                          ? `2px solid ${data.theme.accent}` 
+                          : '2px solid rgba(255, 255, 255, 0.2)',
                       transition: 'all 0.3s ease',
                       cursor: isUnlocked ? 'pointer' : 'not-allowed',
-                      height: '450px',
+                      height: 'auto',
                       position: 'relative',
                       opacity: isUnlocked ? 1 : 0.6,
                       display: 'flex',
-                      flexDirection: 'column',
+                      alignItems: 'center',
                       justifyContent: 'space-between'
                     }}
                   onMouseEnter={(e) => {
                     if (isUnlocked) {
-                      e.currentTarget.style.transform = 'translateY(-5px)';
-                      e.currentTarget.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.3)';
+                      e.currentTarget.style.transform = 'translateX(5px)';
+                      e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.2)';
                     }
                   }}
                   onMouseLeave={(e) => {
                     if (isUnlocked) {
-                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.transform = 'translateX(0)';
                       e.currentTarget.style.boxShadow = 'none';
                     }
                   }}>
                     
-                    {/* 완료 배지 */}
-                    {isCompleted && (
-                      <div style={{
-                        position: 'absolute',
-                        top: '1rem',
-                        right: '1rem',
-                        background: 'linear-gradient(45deg, #4CAF50, #45a049)',
-                        color: 'white',
-                        borderRadius: '50%',
-                        width: '40px',
-                        height: '40px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontSize: '1.2rem',
-                        fontWeight: 'bold',
-                        boxShadow: '0 4px 8px rgba(0,0,0,0.3)'
-                      }}>
-                        ✓
-                      </div>
-                    )}
-
-                    {/* 잠금 아이콘 */}
-                    {!isUnlocked && (
-                      <div style={{
-                        position: 'absolute',
-                        top: '1rem',
-                        right: '1rem',
-                        background: 'rgba(255, 255, 255, 0.2)',
-                        color: 'white',
-                        borderRadius: '50%',
-                        width: '40px',
-                        height: '40px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontSize: '1.2rem',
-                        fontWeight: 'bold'
-                      }}>
-                        🔒
-                      </div>
-                    )}
-
-                    <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>
-                      {chapter.icon}
-                    </div>
-                    <h3 style={{
-                      fontSize: '1.5rem',
-                      fontWeight: 600,
-                      marginBottom: '1rem',
-                      color: isUnlocked ? data.theme.accent.replace('rgba(', '').replace(', 0.3)', '').replace(')', '') : 'rgba(255, 255, 255, 0.5)'
-                    }}>
-                      {chapter.title[currentLang]}
-                    </h3>
-                    <p style={{
-                      fontSize: '1rem',
-                      lineHeight: 1.5,
-                      opacity: isUnlocked ? 0.8 : 0.5,
-                      marginBottom: '1.5rem'
-                    }}>
-                      {chapter.description[currentLang]}
-                    </p>
-                    
+                    {/* 왼쪽 영역: 챕터 정보 */}
                     <div style={{
-                      marginTop: '1.5rem',
-                      padding: '0.75rem 1.5rem',
-                      background: isUnlocked 
-                        ? data.theme.primary 
-                        : 'rgba(100, 100, 100, 0.3)',
-                      borderRadius: '25px',
-                      color: isUnlocked ? 'white' : 'rgba(255, 255, 255, 0.5)',
-                      fontWeight: 600,
-                      display: 'inline-block'
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '1rem',
+                      flex: 1
                     }}>
-                      {isUnlocked 
-                        ? `🚀 ${t.startChapter}` 
-                        : `🔒 ${originalLang === 'kr' ? '이전 챕터 완료 필요' : 'Complete previous chapter'}`
-                      }
+                      <div style={{
+                        textAlign: 'left',
+                        width: '100%'
+                      }}>
+                        <span style={{
+                          fontSize: '1.1rem',
+                          fontWeight: 600,
+                          color: isUnlocked ? 'white' : 'rgba(255, 255, 255, 0.5)'
+                        }}>
+                          {chapter.title[currentLang]}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* 오른쪽 영역: 상태 표시 */}
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      marginLeft: '1rem'
+                    }}>
+                      {isCompleted && (
+                        <span style={{
+                          background: 'linear-gradient(45deg, #4CAF50, #45a049)',
+                          color: 'white',
+                          borderRadius: '50%',
+                          width: '24px',
+                          height: '24px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          fontSize: '0.8rem',
+                          fontWeight: 'bold'
+                        }}>
+                          ✓
+                        </span>
+                      )}
+                      <span style={{
+                        fontSize: '0.95rem',
+                        color: isUnlocked ? 'white' : 'rgba(255, 255, 255, 0.5)',
+                        fontWeight: 700,
+                        minWidth: '80px',
+                        textAlign: 'center',
+                        background: isUnlocked ? data.theme.primary : 'rgba(255, 255, 255, 0.05)',
+                        padding: '0.4rem 0.8rem',
+                        borderRadius: '12px',
+                        border: isUnlocked ? `2px solid ${data.theme.accent}` : '1px solid rgba(255, 255, 255, 0.1)',
+                        boxShadow: isUnlocked ? '0 2px 8px rgba(0, 0, 0, 0.3)' : 'none',
+                        display: 'inline-block',
+                        transition: 'all 0.3s ease'
+                      }}>
+                        {isUnlocked ? '시작' : '잠김'}
+                      </span>
                     </div>
                     </div>
-                  </Link>
-                </SwiperSlide>
+                  </div>
+                </div>
               );
             })}
-            </Swiper>
+            </div>
           </div>
 
         </div>
@@ -422,8 +391,8 @@ const UnifiedCaseIntro: React.FC<UnifiedCaseIntroProps> = ({ data }) => {
           right: '0',
           background: '#1a1a2eff',
           borderTop: '1px solid rgba(255, 255, 255, 0.2)',
-          paddingTop: '12px',
-          paddingBottom: '12px',
+          paddingTop: '8px',
+          paddingBottom: '8px',
           paddingLeft: '20px',
           paddingRight: '20px',
           zIndex: 100
@@ -443,6 +412,15 @@ const UnifiedCaseIntro: React.FC<UnifiedCaseIntroProps> = ({ data }) => {
           </div>
         </div>
       </div>
+      
+      {/* 광고 모달 */}
+      <AdModal 
+        isOpen={showAdModal}
+        onClose={() => setShowAdModal(false)}
+        onAdCompleted={handleAdCompleted}
+        onSkip={handleAdSkip}
+        isHintReward={false}
+      />
     </>
   );
 };

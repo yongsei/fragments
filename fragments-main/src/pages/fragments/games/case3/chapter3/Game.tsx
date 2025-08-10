@@ -22,7 +22,7 @@ const Chapter3Game: React.FC = () => {
         scenario={scenario}        
         feedbackData={feedbackData}
         caseId="case3-ch3"
-        backUrl="/fragments/case3/chapter3"
+        backUrl="/fragments/case3/"
         seoTitle="브래스헬름의 잿불 - 3장"
         seoDescription="브래스헬름의 잿불에서 벌어진 미스터리"
         seoKeywords="미스터리,추리,브래스헬름,잿불"

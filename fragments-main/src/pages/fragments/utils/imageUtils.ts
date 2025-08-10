@@ -22,7 +22,7 @@ const extractCaseFolder = (caseId: string): string => {
 export const getCardImagePath = (caseId: string, cardId: string): string => {
   const caseFolder = extractCaseFolder(caseId);
   // 이미지 경로 생성
-  const imagePath = `/fragments-main/src/pages/fragments/games/${caseFolder}/img/${cardId}.png`;
+  const imagePath = `/fragments-main/src/pages/fragments/games/${caseFolder}/img/${cardId}.jpg`;
   return imagePath;
 };
 
@@ -51,8 +51,8 @@ export const importCardImage = async (caseId: string, cardId: string): Promise<s
   
   // case1은 img 서브폴더 있음, case2,3,4,5는 직접 접근
   const imagePath = caseFolder === 'case1' 
-    ? `/fragments/games/${caseFolder}/img/${cardId}.png`
-    : `/fragments/games/${caseFolder}/${cardId}.png`;
+    ? `/fragments/games/${caseFolder}/img/${cardId}.jpg`
+    : `/fragments/games/${caseFolder}/${cardId}.jpg`;
   
   try {
     // 이미지 존재 여부 확인

@@ -22,7 +22,7 @@ const Chapter1Game: React.FC = () => {
         scenario={scenario}        
         feedbackData={feedbackData}
         caseId="case2-ch1"
-        backUrl="/fragments/case2/chapter1"
+        backUrl="/fragments/case2/"
         seoTitle="침묵의 도서관 - 1장"
         seoDescription="침묵의 도서관에서 벌어진 미스터리"
         seoKeywords="미스터리,추리,도서관,침묵"

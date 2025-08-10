@@ -71,3 +71,4 @@ yarn-error.log*
 /fragments-main/ios/App/build/
 /fragments-main/ios/App/Pods/
 /fragments-main/ios/App/*.xcworkspace/xcuserdata/
+nul

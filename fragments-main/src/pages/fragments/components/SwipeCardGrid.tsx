@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import GameCard from './GameCard';
@@ -38,20 +38,32 @@ const SwipeCardGrid: React.FC<SwipeCardGridProps> = ({
   onCardLongPress,
   winConditionCardDiscovered
 }) => {
-  // 화면 크기에 따른 동적 카드 크기 계산
-  const screenWidth = window.innerWidth;
-  const spaceBetween = screenWidth < 360 ? 12 : 16;
-  const slidesPerView = screenWidth < 360 ? 2.3 : 2.8;
+  // 화면 크기에 따른 동적 카드 크기 계산 - useMemo로 최적화
+  const { spaceBetween, slidesPerView } = useMemo(() => {
+    const screenWidth = window.innerWidth;
+    return {
+      spaceBetween: screenWidth < 360 ? 12 : 16,
+      slidesPerView: screenWidth < 360 ? 2.3 : 2.8
+    };
+  }, []); // 빈 배열 = 컴포넌트 마운트 시에만 계산
 
-  // 카테고리별 카드 분류
-  const suspectCards = cards.filter(card => card.type === 'suspect');
-  const evidenceCards = cards.filter(card =>
-    card.type === 'evidence' ||
-    card.type === 'clue' ||
-    card.type === 'temporal_fragment' ||
-    card.type === 'fragment'
-  );
-  const locationCards = cards.filter(card => card.type === 'location');
+  // 카테고리별 카드 분류 - useMemo로 최적화
+  const { suspectCards, evidenceCards, locationCards } = useMemo(() => {
+    const suspects = cards.filter(card => card.type === 'suspect');
+    const evidences = cards.filter(card =>
+      card.type === 'evidence' ||
+      card.type === 'clue' ||
+      card.type === 'temporal_fragment' ||
+      card.type === 'fragment'
+    );
+    const locations = cards.filter(card => card.type === 'location');
+    
+    return {
+      suspectCards: suspects,
+      evidenceCards: evidences,
+      locationCards: locations
+    };
+  }, [cards]);
 
   // 카테고리별 라벨 색상
   const getCategoryColor = (category: 'suspect' | 'evidence' | 'location') => {

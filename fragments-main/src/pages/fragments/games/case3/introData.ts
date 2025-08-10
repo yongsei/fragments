@@ -43,7 +43,7 @@ export const case3IntroData: CaseIntroData = {
         kr: '눈보라 속 고립된 열차 안에서 볼코프가 살해당했습니다. 밀실에서 벌어진 살인의 첫 단서들을 찾아보세요.',
         en: 'Volkov was murdered on an isolated train in a snowstorm. Find the first clues of the murder in the locked room.'
       },
-      link: 'chapter1'
+      link: 'chapter1/game'
     },
     {
       number: 2,
@@ -56,7 +56,7 @@ export const case3IntroData: CaseIntroData = {
         kr: '열차에 탑승한 승객들 각자의 비밀과 볼코프와의 숨겨진 관계를 파헤칩니다.',
         en: 'Uncover the secrets of each passenger on the train and their hidden relationships with Volkov.'
       },
-      link: 'chapter2'
+      link: 'chapter2/game'
     },
     {
       number: 3,
@@ -69,7 +69,7 @@ export const case3IntroData: CaseIntroData = {
         kr: '모든 수수께끼가 풀리는 마지막 순간. 오리엔트 특급 열차 살인사건의 진실이 드러납니다.',
         en: 'The final moment when all mysteries are solved. The truth of the Orient Express murder case is revealed.'
       },
-      link: 'chapter3'
+      link: 'chapter3/game'
     },
     {
       number: 4,
@@ -82,7 +82,7 @@ export const case3IntroData: CaseIntroData = {
         kr: '모든 진실을 밝히고, 용의자들에게 최후의 심판을 내립니다. 복수의 오케스트라가 완성되는 마지막 순간입니다.',
         en: 'Reveal all truths and deliver final judgment to the suspects. This is the final moment when the orchestra of revenge is completed.'
       },
-      link: 'chapter4'
+      link: 'chapter4/game'
     }
   ]
 };

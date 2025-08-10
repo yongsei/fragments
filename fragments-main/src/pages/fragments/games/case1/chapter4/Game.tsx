@@ -22,7 +22,7 @@ const Chapter4Game: React.FC = () => {
         scenario={scenario}        
         feedbackData={feedbackData}
         caseId="case1-ch4"
-        backUrl="/fragments/case1/chapter4"
+        backUrl="/fragments/case1/"
         seoTitle="어둠의 대성당 - 4장"
         seoDescription="어둠의 대성당에서 벌어진 미스터리"
         seoKeywords="미스터리,추리,대성당,어둠"

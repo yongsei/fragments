@@ -8,6 +8,7 @@ import CardDetailModal from './CardDetailModal';
 import GameResultScreen from './GameResultScreen';
 // import { HintSystem } from '../components/HintSystem'; // 모바일에서는 사용하지 않음
 import AdModal from '../../../components/AdModal';
+import AdBanner from './AdBanner';
 import { useMysteryGame } from '../hooks/useMysteryGame';
 import { useLanguageState } from '../hooks/useLanguage';
 
@@ -316,6 +317,19 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
     console.log('🎯 CardDetailModal completed');
     setShowCardDetail(false);
     setCardDetailIds('');
+    
+    // 간혹 발생하는 터치 레이어 문제 해결을 위한 강제 포커스 리셋
+    setTimeout(() => {
+      // 문서 전체의 포인터 이벤트를 강제로 활성화
+      document.body.style.pointerEvents = 'auto';
+      // 혹시 남아있을 수 있는 모달 요소들 정리
+      const modalElements = document.querySelectorAll('[style*="z-index: 999"]');
+      modalElements.forEach(el => {
+        if (el instanceof HTMLElement) {
+          el.style.pointerEvents = 'none';
+        }
+      });
+    }, 100);
   };
 
 
@@ -446,7 +460,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
         color: 'white',
         padding: '1rem', // 기본 패딩
         paddingTop: 'max(env(safe-area-inset-top, 0px), 30px)', // 상단 패딩 축소
-        paddingBottom: 'max(env(safe-area-inset-bottom), 30px)',
+        paddingBottom: 'max(env(safe-area-inset-bottom), 100px)',
         fontFamily: ui.typography.bodyFont,
         position: 'relative'
       }}>
@@ -457,7 +471,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
           left: 0,
           right: 0,
           height: 'max(env(safe-area-inset-top, 0px), 0px)',
-          background: `${ui.systemUI.topBarBackground}dd`,
+          background: 'rgb(26, 26, 46)', // 불투명 배경으로 변경
           zIndex: 999
         }} />
 
@@ -468,7 +482,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
           left: 0,
           right: 0,
           height: `calc(max(env(safe-area-inset-bottom, 0px), 0px) + 140px)`, // 하단 UI(140px) + 시스템 UI
-          background: `${ui.systemUI.bottomBarBackground}dd`,
+          background: 'rgb(26, 26, 46)', // 불투명 배경으로 변경
           zIndex: 99
         }} />
         <div style={{
@@ -553,18 +567,20 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
             justifyContent: 'space-between',
             padding: '0 1rem'
           }}>
-            {/* 뒤로가기 */}
-            <Link
-              to={backUrl}
-              style={{
-                color: 'rgba(255,255,255,0.8)',
-                textDecoration: 'none',
-                fontSize: '0.9rem',
-                transition: 'color 0.3s ease'
-              }}
-            >
-              ←
-            </Link>
+            {/* 왼쪽: 뒤로가기 */}
+            <div>
+              <Link
+                to={backUrl}
+                style={{
+                  color: 'rgba(255,255,255,0.8)',
+                  textDecoration: 'none',
+                  fontSize: '0.9rem',
+                  transition: 'color 0.3s ease'
+                }}
+              >
+                ←
+              </Link>
+            </div>
 
             {/* 가운데: 진행시간 / 연결횟수 - 절대 중앙 정렬 */}
             <div style={{
@@ -579,35 +595,39 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
               {Math.floor(gameState.elapsedTime / 60)}:{String(gameState.elapsedTime % 60).padStart(2, '0')} | {gameState.connections.length}{t('times')}
             </div>
 
-            {/* 힌트 버튼 */}
-            <button
-              onClick={() => {
-                if (gameState.hintsUsed < maxHints) {
-                  handleRequestHint();
-                } else {
-                  // 모든 힌트를 사용한 후에는 광고 모달 표시
-                  setShowAdModal(true);
-                }
-              }}
-              style={{
-                background: gameState.hintsUsed >= maxHints
-                  ? 'linear-gradient(45deg, #ff6b6b, #ee5a24)' // 광고 힌트 버튼 색상
-                  : 'linear-gradient(45deg, #fbbf24, #f59e0b)',
-                color: 'white',
-                border: gameState.hintsUsed >= maxHints
-                  ? '1px solid rgba(255, 107, 107, 0.6)'
-                  : '1px solid rgba(251, 191, 36, 0.6)',
-                borderRadius: '8px',
-                padding: '6px 10px',
-                fontSize: '0.8rem',
-                fontWeight: 600,
-                cursor: 'pointer',
-                transition: 'all 0.3s ease'
-              }}
-            >
-              {gameState.hintsUsed >= maxHints ? '📺 광고 힌트' : '💡'} {gameState.hintsUsed}/{maxHints}
-            </button>
+            {/* 오른쪽: 힌트 버튼 */}
+            <div>
+              <button
+                onClick={() => {
+                  if (gameState.hintsUsed < maxHints) {
+                    handleRequestHint();
+                  } else {
+                    // 모든 힌트를 사용한 후에는 광고 모달 표시
+                    setShowAdModal(true);
+                  }
+                }}
+                style={{
+                  background: gameState.hintsUsed >= maxHints
+                    ? 'linear-gradient(45deg, #ff6b6b, #ee5a24)' // 광고 힌트 버튼 색상
+                    : 'linear-gradient(45deg, #fbbf24, #f59e0b)',
+                  color: 'white',
+                  border: gameState.hintsUsed >= maxHints
+                    ? '1px solid rgba(255, 107, 107, 0.6)'
+                    : '1px solid rgba(251, 191, 36, 0.6)',
+                  borderRadius: '8px',
+                  padding: '6px 10px',
+                  fontSize: '0.8rem',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease'
+                }}
+              >
+                {gameState.hintsUsed >= maxHints ? '📺 광고 힌트' : '💡'} {gameState.hintsUsed}/{maxHints}
+              </button>
+            </div>
           </div>
+
+
 
           {/* 모바일 하단 고정 연결 영역 */}
           <div style={{
@@ -757,6 +777,14 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
               >
                 {isConnecting ? t('connecting', '🔄 연결 중...') : t('connectCards', '🔗 단서 연결하기')}
               </button>
+            </div>
+            
+            {/* 광고 배너 - 연결 버튼 아래 */}
+            <div style={{
+              padding: '0.5rem 0', // 좌우 패딩 제거하여 더 넓게
+              backgroundColor: 'rgba(0,0,0,0.3)'
+            }}>
+              <AdBanner position="bottom" className="mobile-connection-ad" />
             </div>
           </div>
 

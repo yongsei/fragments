@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import MobileMysteryGameLayout from './MobileMysteryGameLayout';
-import PCMysteryGameLayout from './PCMysteryGameLayout';
 import { LanguageContext, useLanguageState } from '../hooks/useLanguage';
 import type { GameScenario } from '../games/case5/chapter1/scenario_kr';
 import type { CaseFeedbackData } from '../games/case5/chapter1/feedbackData_kr';
@@ -72,19 +71,7 @@ const MysteryGameLayout: React.FC<MysteryGameLayoutProps> = (props) => {
   
   // 사운드 관리 (배경음악은 App.tsx에서 전역 관리)
   
-  // 모바일 감지 상태
-  const [isMobile, setIsMobile] = useState(false);
-
-  // 모바일 감지
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  // PC 제거로 모바일 전용
 
   // 배경음악은 App.tsx에서 전역적으로 관리됨 (중복 제거)
 

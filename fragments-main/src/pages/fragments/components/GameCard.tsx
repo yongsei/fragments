@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Card } from '../types';
 import { importCardImage } from '../utils/imageUtils';
 import { useSoundManager } from '../hooks/useSoundManager';
@@ -29,7 +29,7 @@ interface GameCardProps {
   isWinConditionCard?: boolean; // 승리조건 카드 여부 추가
 }
 
-const GameCard: React.FC<GameCardProps> = ({ 
+const GameCard: React.FC<GameCardProps> = React.memo(({ 
   card, 
   isSelected, 
   isDiscovered, 
@@ -46,6 +46,8 @@ const GameCard: React.FC<GameCardProps> = ({
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [imageLoading, setImageLoading] = useState<boolean>(true);
   const [imageError, setImageError] = useState<boolean>(false);
+  const [shouldLoadImage, setShouldLoadImage] = useState<boolean>(false);
+  const cardRef = useRef<HTMLDivElement>(null);
   
   // 롱프레스 상태 관리
   const [pressTimer, setPressTimer] = useState<NodeJS.Timeout | null>(null);
@@ -56,29 +58,50 @@ const GameCard: React.FC<GameCardProps> = ({
   // 사운드 관리
   const { playCardOpenSound, playCardCloseSound } = useSoundManager();
 
-  // 이미지 로딩
+  // Intersection Observer를 통한 지연 로딩
   useEffect(() => {
-    const loadImage = async () => {
-      if (!caseId || !card.id) {
-        setImageLoading(false);
-        return;
-      }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting && !shouldLoadImage && isDiscovered) {
+          setShouldLoadImage(true);
+        }
+      },
+      { threshold: 0.1 } // 10%만 보여도 로딩 시작
+    );
 
-      try {
-        setImageLoading(true);
-        setImageError(false);
-        const url = await importCardImage(caseId, card.id);
-        setImageUrl(url);
-      } catch (error) {
-        console.log(`Failed to load image for card ${card.id}:`, error);
-        setImageError(true);
-      } finally {
-        setImageLoading(false);
-      }
-    };
+    if (cardRef.current && isDiscovered) {
+      observer.observe(cardRef.current);
+    }
 
-    loadImage();
-  }, [caseId, card.id]);
+    return () => observer.disconnect();
+  }, [shouldLoadImage, isDiscovered]);
+
+  // 이미지 로딩 - 카드가 보일 때만
+  const loadImage = useCallback(async () => {
+    if (!caseId || !card.id || !shouldLoadImage) {
+      setImageLoading(false);
+      return;
+    }
+
+    try {
+      setImageLoading(true);
+      setImageError(false);
+      const url = await importCardImage(caseId, card.id);
+      setImageUrl(url);
+    } catch (error) {
+      console.log(`Failed to load image for card ${card.id}:`, error);
+      setImageError(true);
+    } finally {
+      setImageLoading(false);
+    }
+  }, [caseId, card.id, shouldLoadImage]);
+
+  useEffect(() => {
+    if (shouldLoadImage) {
+      loadImage();
+    }
+  }, [shouldLoadImage, loadImage]);
   
   // 롱프레스 시작
   const handlePressStart = () => {
@@ -335,6 +358,7 @@ const GameCard: React.FC<GameCardProps> = ({
 
   return (
     <div
+      ref={cardRef}
       style={{
         ...getCardStyle(),
         // 🔥 게임 카드 전용 강력한 컨텍스트 메뉴 차단
@@ -583,6 +607,19 @@ const GameCard: React.FC<GameCardProps> = ({
       )}
     </div>
   );
-};
+}, (prevProps, nextProps) => {
+  // 성능 최적화를 위한 얕은 비교
+  return (
+    prevProps.card.id === nextProps.card.id &&
+    prevProps.isSelected === nextProps.isSelected &&
+    prevProps.isDiscovered === nextProps.isDiscovered &&
+    prevProps.isHighlighted === nextProps.isHighlighted &&
+    prevProps.disabled === nextProps.disabled &&
+    prevProps.feedbackEffect === nextProps.feedbackEffect &&
+    prevProps.caseId === nextProps.caseId &&
+    prevProps.isWinConditionCard === nextProps.isWinConditionCard &&
+    JSON.stringify(prevProps.uiCustomization) === JSON.stringify(nextProps.uiCustomization)
+  );
+});
 
 export default GameCard;

@@ -43,7 +43,7 @@ export const case2IntroData: CaseIntroData = {
         kr: '통신이 두절된 우주선에서 첫 번째 단서들을 찾아보세요. 선원들의 마지막 기록과 가이아의 수상한 행동을 추적합니다.',
         en: 'Find the first clues on the spaceship that lost communication. Track the crew\'s last records and Gaia\'s suspicious behavior.'
       },
-      link: 'chapter1'
+      link: 'chapter1/game'
     },
     {
       number: 2,
@@ -56,7 +56,7 @@ export const case2IntroData: CaseIntroData = {
         kr: '인공지능 가이아의 숨겨진 프로토콜을 발견하고, 선원들 사이의 갈등과 비밀을 파헤칩니다.',
         en: 'Discover AI Gaia\'s hidden protocols and uncover conflicts and secrets among the crew members.'
       },
-      link: 'chapter2'
+      link: 'chapter2/game'
     },
     {
       number: 3,
@@ -69,7 +69,7 @@ export const case2IntroData: CaseIntroData = {
         kr: '우주 탐사의 진정한 목적과 지구로부터 온 비밀 명령을 발견합니다.',
         en: 'Discover the true purpose of space exploration and secret orders from Earth.'
       },
-      link: 'chapter3'
+      link: 'chapter3/game'
     },
     {
       number: 4,
@@ -82,7 +82,7 @@ export const case2IntroData: CaseIntroData = {
         kr: '모든 수수께끼가 풀리는 마지막 순간. 오디세이 탐사선의 진정한 운명을 결정합니다.',
         en: 'The final moment when all mysteries are solved. Determine the true fate of the Odyssey exploration ship.'
       },
-      link: 'chapter4'
+      link: 'chapter4/game'
     }
   ]
 };

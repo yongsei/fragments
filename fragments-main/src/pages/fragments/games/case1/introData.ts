@@ -43,7 +43,7 @@ export const case1IntroData: CaseIntroData = {
         kr: '대주교의 기괴한 죽음 뒤에 숨겨진 비밀을 파헤치세요. 현장을 조사하고, 사라진 성물의 단서를 찾아내야 합니다.',
         en: 'Uncover the secrets behind the Archbishop\'s bizarre death. Investigate the scene and find clues about the missing relic.'
       },
-      link: 'chapter1'
+      link: 'chapter1/game'
     },
     {
       number: 2,
@@ -56,7 +56,7 @@ export const case1IntroData: CaseIntroData = {
         kr: '대주교가 남긴 비밀 연구의 흔적을 따라 도시의 가장 낮은 곳으로 향하며 기이한 소문과 마주합니다.',
         en: 'Follow traces of the Archbishop\'s secret research to the lowest parts of the city and encounter strange rumors.'
       },
-      link: 'chapter2'
+      link: 'chapter2/game'
     },
     {
       number: 3,
@@ -69,7 +69,7 @@ export const case1IntroData: CaseIntroData = {
         kr: '정보상이 지목한 \'잿빛 고아원\'에 잠입하여 충격적인 진실의 일부를 확인해야 합니다.',
         en: 'Infiltrate the \'Ash Orphanage\' pointed out by the informant and confirm part of the shocking truth.'
       },
-      link: 'chapter3'
+      link: 'chapter3/game'
     },
     {
       number: 4,
@@ -82,7 +82,7 @@ export const case1IntroData: CaseIntroData = {
         kr: '막달레나와의 최후 대결이 대성당에서 벌어집니다. 어둠의 의식을 막고 대성당과 도시를 구하세요.',
         en: 'The final battle against Magdalena takes place in the cathedral. Stop the dark ritual and save the cathedral and the city.'
       },
-      link: 'chapter4'
+      link: 'chapter4/game'
     }
   ]
 };

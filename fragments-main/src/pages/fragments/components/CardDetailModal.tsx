@@ -326,8 +326,12 @@ const CardDetailModal: React.FC<CardDetailModalProps> = ({
     );
   }
 
-  // isVisible이 false면 아무것도 렌더링하지 않음
+  // isVisible이 false면 아무것도 렌더링하지 않음 (포인터 이벤트도 완전 차단)
   if (!isVisible) {
+    // 혹시 남아있을 수 있는 포인터 이벤트 문제 방지
+    setTimeout(() => {
+      document.body.style.pointerEvents = 'auto';
+    }, 50);
     return null;
   }
 

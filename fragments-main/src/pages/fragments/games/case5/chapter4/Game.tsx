@@ -34,7 +34,7 @@ const Chapter4Game: React.FC = () => {
           accent: case5DarkTheme.accentPrimary
         }}
         cardIcon="⏳"
-        backUrl="/fragments/case5/chapter4"
+        backUrl="/fragments/case5/"
       />
     </div>
   );

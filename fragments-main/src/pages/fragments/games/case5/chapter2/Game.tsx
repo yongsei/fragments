@@ -23,7 +23,7 @@ const Chapter2Game: React.FC = () => {
         scenario={scenario}        
         feedbackData={feedbackData}
         caseId="case5-ch2"
-        backUrl="/fragments/case5/chapter2"
+        backUrl="/fragments/case5/"
         seoTitle="시간의 그림자들 - 2장"
         seoDescription="시간 속 미스터리 2장"
         seoKeywords="미스터리,추리,시간,그림자"
