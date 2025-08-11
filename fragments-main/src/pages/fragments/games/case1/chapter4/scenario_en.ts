@@ -128,7 +128,7 @@ export const caseChEn4: GameScenario = {
     {"id": "rule_D07", "cards": ["D06", "D04"], "result": "Interrogating Valerius, you get him to confess his motive: exploiting children's souls for eternal life.", "unlock": "D07"},
     {"id": "rule_D08", "cards": ["D07", "D06"], "result": "Under continued interrogation, he also reveals that he murdered the Archbishop who had noticed his experiments.", "unlock": "D08"},
     {"id": "rule_D09", "cards": ["D05", "D02"], "result": "You uncover the identity of the \"shadow that chirps like a bird\"—a creature born from Valerius's twisted soul and the children's sacrifice.", "unlock": "D09"},
-    {"id": "rule_D10", "cards": ["D09", "D07"], "result": "In the secret laboratory, you discover the irrefutable evidence of his crimes: the \'shattered souls\'.", "unlock": "D10"},
+    {"id": "rule_D10", "cards": ["D09", "D07"], "result": "In the secret laboratory, you discover the irrefutable evidence of his crimes: the 'shattered souls'.", "unlock": "D10"},
     {"id": "rule_D11", "cards": ["D06", "D09"], "result": "With everything revealed, Valerius, in a final act of desperation, causes his shadow to go berserk and attack you.", "unlock": "D11"},
     {"id": "rule_D12", "cards": ["D10", "D11"], "result": "After a fierce battle, you vanquish the shadow and subdue Valerius, finally bringing this horrific case to a close.", "unlock": "D12"}
   ],

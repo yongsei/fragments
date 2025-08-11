@@ -1,1 +1,3 @@
-google.com, pub-2557790798742070, DIRECT, f08c47fec0942fa0
+# 광고 없이 출시하므로 임시로 비활성화
+# AdMob 계정 생성 후 본인 Publisher ID로 교체 예정
+# google.com, pub-YOUR_PUBLISHER_ID, DIRECT, f08c47fec0942fa0

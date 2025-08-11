@@ -54,7 +54,6 @@ export const saveGameProgress = async (progressData: GameProgressData): Promise<
         key: key,
         value: dataString
       });
-      console.log(`게임 진행 상태 저장됨 (네이티브 - 케이스: ${progressData.caseId})`);
     } else {
       // 웹에서는 기존 쿠키 방식 사용
       const expiryDate = new Date();
@@ -64,7 +63,6 @@ export const saveGameProgress = async (progressData: GameProgressData): Promise<
       
       // localStorage 백업도 저장
       localStorage.setItem(key, dataString);
-      console.log(`게임 진행 상태 저장됨 (웹 - 케이스: ${progressData.caseId})`);
     }
   } catch (error) {
     console.error('게임 진행 상태 저장 실패:', error);

@@ -10,6 +10,7 @@ interface SoundFiles {
   cardClose: HTMLAudioElement | null;
   scenario: HTMLAudioElement | null;
   chapter: HTMLAudioElement | null;
+  skip: HTMLAudioElement | null;
 }
 
 const DEFAULT_SETTINGS: SoundSettings = {
@@ -80,7 +81,11 @@ export const useSoundManager = () => {
     cardClose: null,
     scenario: null,
     chapter: null,
+    skip: null,
   });
+
+  // 화면에 표시할 사운드 로딩 상태
+  const [soundLoadStatus, setSoundLoadStatus] = useState<string>('로딩 중...');
 
   // 설정 변경시 로컬 스토리지에 저장
   useEffect(() => {
@@ -120,21 +125,41 @@ export const useSoundManager = () => {
 
   // 오디오 파일 초기화 (게임 진입시에만)
   useEffect(() => {
-    const loadAudio = (src: string): HTMLAudioElement => {
+    const loadAudio = (src: string, name: string): HTMLAudioElement => {
       const audio = new Audio();
       audio.preload = 'metadata'; // 'auto' → 'metadata'로 변경 (로딩 최적화)
       audio.crossOrigin = 'anonymous'; // CORS 문제 방지
       audio.src = src;
       
+      // 화면에 표시할 로딩 상태 추적
+      audio.addEventListener('loadstart', () => {
+        console.log(`🔊 로드 시작: ${src}`);
+        setSoundLoadStatus(prev => prev + `\n${name}: 로딩 중...`);
+      });
+      
+      audio.addEventListener('canplay', () => {
+        console.log(`✅ 로드 완료: ${src}`);
+        setSoundLoadStatus(prev => prev.replace(`${name}: 로딩 중...`, `${name}: ✅완료`));
+      });
+      
+      audio.addEventListener('error', (e) => {
+        console.error(`❌ 로드 실패: ${src}`, e);
+        setSoundLoadStatus(prev => prev.replace(`${name}: 로딩 중...`, `${name}: ❌실패`));
+      });
+      
       return audio;
     };
 
-    // 효과음 파일 로드 (배경음악 제거)
+    // 초기 상태 설정
+    setSoundLoadStatus('사운드 파일 로딩 시작...');
+
+    // 효과음 파일 로드 (절대경로로 변경)
     soundFiles.current = {
-      cardOpen: loadAudio('/fragments/games/wave/open.wav'),
-      cardClose: loadAudio('/fragments/games/wave/close.wav'),
-      scenario: loadAudio('/fragments/games/wave/senario.wav'),
-      chapter: loadAudio('/fragments/games/wave/chapter.wav'),
+      cardOpen: loadAudio('/fragments/games/wave/open.wav', 'open'),
+      cardClose: loadAudio('/fragments/games/wave/close.wav', 'close'),
+      scenario: loadAudio('/fragments/games/wave/scenario.wav', 'scenario'),
+      chapter: loadAudio('/fragments/games/wave/chapter.wav', 'chapter'),
+      skip: loadAudio('/fragments/games/wave/close.wav', 'skip'), // 임시로 close.wav 사용
     };
 
     // 컴포넌트 언마운트시 정리
@@ -148,138 +173,34 @@ export const useSoundManager = () => {
     };
   }, []);
 
-  // 공통 효과음 재생 함수
+  // 🎵 빠른 효과음 재생 함수 (최적화 버전)
   const playEffectSound = useCallback(async (audio: HTMLAudioElement | null, soundName: string) => {
-    console.log(`🔊 playEffectSound 호출: ${soundName}`);
-    console.log(`🔊 효과음 활성화 상태: ${settings.soundEffectsEnabled}`);
-    console.log(`🔊 오디오 객체 존재: ${!!audio}`);
-    
-    if (!settings.soundEffectsEnabled) {
-      console.log(`❌ 효과음이 비활성화됨: ${soundName}`);
-      return;
-    }
-    
-    if (!audio) {
-      console.log(`❌ 오디오 객체가 null: ${soundName}`);
+    if (!settings.soundEffectsEnabled || !audio) {
       return;
     }
     
     try {
-      console.log(`🔊 ${soundName} - readyState: ${audio.readyState}`);
-      
-      // 🔧 재생 전 오디오 상태 완전 리셋
+      // 🔧 즉시 재생 시도 (복잡한 로드 대기 없음)
       if (!audio.paused) {
-        console.log(`🔄 ${soundName} - 이전 재생 중지 중...`);
         audio.pause();
       }
       
-      // 오디오가 로드될 때까지 기다림
-      if (audio.readyState < 2) { // HAVE_CURRENT_DATA
-        console.log(`⏳ ${soundName} - 오디오 로드 대기 중...`);
-        await new Promise((resolve, reject) => {
-          const timeout = setTimeout(() => {
-            audio.removeEventListener('canplay', onCanPlay);
-            audio.removeEventListener('error', onError);
-            reject(new Error('오디오 로드 타임아웃'));
-          }, 5000);
-          
-          const onCanPlay = () => {
-            clearTimeout(timeout);
-            console.log(`✅ ${soundName} - 오디오 로드 완료`);
-            audio.removeEventListener('canplay', onCanPlay);
-            audio.removeEventListener('error', onError);
-            resolve(true);
-          };
-          
-          const onError = (e: Event) => {
-            clearTimeout(timeout);
-            audio.removeEventListener('canplay', onCanPlay);
-            audio.removeEventListener('error', onError);
-            reject(new Error(`오디오 로드 오류: ${e}`));
-          };
-          
-          audio.addEventListener('canplay', onCanPlay);
-          audio.addEventListener('error', onError);
+      audio.currentTime = 0;
+      audio.volume = settings.effectsVolume;
+      
+      // 🔧 Promise 대기 없이 바로 재생 (더 빠른 응답)
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          // 재생 실패해도 로그만 남기고 사용자 경험 방해 안함
+          console.warn(`${soundName} 재생 실패:`, error);
         });
       }
       
-      // 🔧 재생 전 상태 확인 및 설정
-      audio.currentTime = 0;
-      audio.volume = settings.effectsVolume;
-      console.log(`🔊 ${soundName} - 볼륨: ${settings.effectsVolume}, 재생 시도 중...`);
-      
-      // 🔧 AbortError 방지를 위한 안전한 재생
-      const playPromise = audio.play();
-      if (playPromise !== undefined) {
-        await playPromise;
-        console.log(`✅ ${soundName} 재생 성공`);
-      }
+      console.log(`🔊 ${soundName} 재생 시도 완료`);
     } catch (error) {
-      console.error(`❌ ${soundName} 재생 실패:`, error);
-      
-      // 🔧 AbortError의 경우 한 번 더 시도
-      if (error instanceof DOMException && error.name === 'AbortError') {
-        console.log(`🔄 ${soundName} - AbortError 감지, 재시도 중...`);
-        try {
-          // 짧은 지연 후 재시도
-          await new Promise(resolve => setTimeout(resolve, 200));
-          
-          // 🔧 오디오 소스 재설정 (NotSupportedError 방지)
-          // originalSrc가 변경될 수 있으므로 고정된 경로 사용
-          let fixedSrc = '';
-          if (soundName.includes('chapter.wav')) {
-            fixedSrc = '/fragments/games/wave/chapter.wav';
-          } else if (soundName.includes('scenario.wav') || soundName.includes('senario.wav')) {
-            fixedSrc = '/fragments/games/wave/senario.wav';
-          } else if (soundName.includes('open.wav')) {
-            fixedSrc = '/fragments/games/wave/open.wav';
-          } else if (soundName.includes('close.wav')) {
-            fixedSrc = '/fragments/games/wave/close.wav';
-          } else {
-            fixedSrc = audio.src; // 폴백
-          }
-          
-          console.log(`🔄 ${soundName} - 오디오 소스 재설정`);
-          console.log(`- 기존 src: ${audio.src}`);
-          console.log(`- 새로운 src: ${fixedSrc}`);
-          
-          audio.src = '';
-          audio.src = fixedSrc;
-          
-          // 오디오 재로드 대기
-          await new Promise((resolve, reject) => {
-            const timeout = setTimeout(() => {
-              audio.removeEventListener('canplaythrough', onCanPlay);
-              audio.removeEventListener('error', onError);
-              reject(new Error('재시도 로드 타임아웃'));
-            }, 3000);
-            
-            const onCanPlay = () => {
-              clearTimeout(timeout);
-              audio.removeEventListener('canplaythrough', onCanPlay);
-              audio.removeEventListener('error', onError);
-              resolve(true);
-            };
-            
-            const onError = (e: Event) => {
-              clearTimeout(timeout);
-              audio.removeEventListener('canplaythrough', onCanPlay);
-              audio.removeEventListener('error', onError);
-              reject(new Error(`재시도 로드 오류: ${e}`));
-            };
-            
-            audio.addEventListener('canplaythrough', onCanPlay);
-            audio.addEventListener('error', onError);
-          });
-          
-          audio.currentTime = 0;
-          audio.volume = settings.effectsVolume;
-          await audio.play();
-          console.log(`✅ ${soundName} 재시도 성공`);
-        } catch (retryError) {
-          console.error(`❌ ${soundName} 재시도 실패:`, retryError);
-        }
-      }
+      // 재생 실패는 조용히 무시 (사용자 경험 방해 안함)
+      console.warn(`${soundName} 재생 오류:`, error);
     }
   }, [settings.soundEffectsEnabled, settings.effectsVolume]);
 
@@ -295,6 +216,24 @@ export const useSoundManager = () => {
   const playScenarioSound = useCallback(async () => {
     await playEffectSound(soundFiles.current.scenario, '시나리오 선택 효과음 (scenario.wav)');
   }, [playEffectSound]);
+
+  // 설정을 무시하고 강제로 scenario 효과음 재생하는 함수 (사운드 ON 확인용)
+  const playScenarioSoundForced = useCallback(async () => {
+    if (!soundFiles.current.scenario) {
+      console.log('❌ scenario 오디오 파일이 로드되지 않음');
+      return;
+    }
+    
+    try {
+      const audio = soundFiles.current.scenario;
+      audio.volume = settings.effectsVolume;
+      audio.currentTime = 0;
+      await audio.play();
+      console.log('✅ 강제 scenario 효과음 재생 성공');
+    } catch (error) {
+      console.error('❌ 강제 scenario 효과음 재생 실패:', error);
+    }
+  }, [settings.effectsVolume]);
 
   const playChapterSound = useCallback(async () => {
     console.log('🎵 playChapterSound 호출됨!');
@@ -314,6 +253,10 @@ export const useSoundManager = () => {
     await playEffectSound(soundFiles.current.chapter, '챕터 선택 효과음 (chapter.wav)');
   }, [playEffectSound, settings.soundEffectsEnabled, settings.effectsVolume]);
 
+  const playSkipSound = useCallback(async () => {
+    await playEffectSound(soundFiles.current.skip, '스킵 효과음 (skip.wav)');
+  }, [playEffectSound]);
+
   // 설정 업데이트 함수들 (배경음악 제거)
   const toggleSoundEffects = useCallback(() => {
     setSettings(prev => ({
@@ -332,8 +275,12 @@ export const useSoundManager = () => {
     playCardOpenSound,
     playCardCloseSound,
     playScenarioSound,
+    playScenarioSoundForced, // 설정 무시하고 강제 재생
     playChapterSound,
+    playSkipSound,
+    playEffectSound, // 직접 효과음 재생 (설정 무시)
     toggleSoundEffects,
     setEffectsVolume,
+    soundLoadStatus, // 핸드폰에서 사운드 로딩 상태 확인용
   };
 };

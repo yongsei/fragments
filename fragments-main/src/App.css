@@ -22,31 +22,12 @@ body {
   -webkit-touch-callout: none;    /* iOS 컨텍스트 메뉴 비활성화 (body 레벨에서 추가 보장) */
   /* 배경색은 App.tsx에서 동적으로 설정됨 */
   /* background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); */
-  /* 시스템 UI 영역 확실히 피하기 - 안전 마진 추가 */
-  padding-top: max(env(safe-area-inset-top), 60px);
-  padding-bottom: max(env(safe-area-inset-bottom), 80px);
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right);
-  
-  /* 갤럭시 플립 5 최적화 */
-  /* 폴더블 디바이스 감지 및 추가 패딩 */
-  @media (max-width: 480px) and (max-height: 900px) {
-    padding-top: max(env(safe-area-inset-top), 80px) !important;
-    padding-bottom: max(env(safe-area-inset-bottom), 100px) !important;
-  }
-  
-  /* 세로 긴 화면 (플립폰 특성) */
-  @media (aspect-ratio < 0.6) {
-    padding-top: max(env(safe-area-inset-top), 90px) !important;
-    padding-bottom: max(env(safe-area-inset-bottom), 120px) !important;
-  }
 }
 
 .App {
-  min-height: calc(100vh - max(env(safe-area-inset-top), 40px) - max(env(safe-area-inset-bottom), 80px));
+  min-height: 100vh;
   /* 배경색은 App.tsx에서 동적으로 설정됨 */
   /* background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); */
-  /* 시스템 UI와 겹치지 않도록 추가 패딩 */
   padding: 0;
   position: relative;
 }
@@ -113,35 +94,15 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-  min-height: calc(100vh - max(env(safe-area-inset-top), 40px) - max(env(safe-area-inset-bottom), 80px));
+  min-height: 100vh;
   width: 100%;
   box-sizing: border-box;
-  /* 시스템 UI와 겹치지 않도록 안전한 패딩 */
-  padding-top: 20px;
-  padding-bottom: 20px;
 }
 
-/* 모바일 디바이스용 시스템 UI 회피 스타일 */
+/* 모바일 최적화 - 간소화됨 */
 @media screen and (max-width: 768px) {
-  
   .container {
-    min-height: calc(100vh - max(env(safe-area-inset-top), 50px) - max(env(safe-area-inset-bottom), 100px));
-    /* 모바일에서 콘텐츠가 시스템 UI에 가려지지 않도록 */
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-}
-
-/* Android 특정 스타일 (Capacitor 환경) */
-@media screen and (max-width: 768px) {
-  /* Android 상태바 높이 대략 24dp = 48px (2x density) */
-  .android-safe-top {
-    padding-top: 48px !important;
-  }
-  
-  /* Android 네비게이션 바 높이 대략 48dp = 96px */
-  .android-safe-bottom {
-    padding-bottom: 96px !important;
+    margin: 0;
   }
 }
 

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect, useRef, useCallback } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import GameCard from './GameCard';
@@ -26,6 +26,8 @@ interface SwipeCardGridProps {
   caseId?: string; // 케이스 ID 추가
   onCardLongPress?: (cardId: string) => void; // 롱프레스 콜백 추가
   winConditionCardDiscovered?: string | null; // 승리조건 카드 발견 상태 추가
+  newlyDiscoveredCards?: string[]; // 새로 발견된 카드들
+  onFocusToCard?: (cardId: string) => void; // 포커스 이동 요청 콜백
 }
 
 const SwipeCardGrid: React.FC<SwipeCardGridProps> = ({
@@ -36,78 +38,130 @@ const SwipeCardGrid: React.FC<SwipeCardGridProps> = ({
   ui,
   caseId,
   onCardLongPress,
-  winConditionCardDiscovered
+  winConditionCardDiscovered,
+  newlyDiscoveredCards,
+  onFocusToCard
 }) => {
-  // 화면 크기에 따른 동적 카드 크기 계산 - useMemo로 최적화
+  // Swiper 인스턴스들에 대한 ref
+  const swiperRefs = useRef<any[]>([]);
+  // 화면 크기에 따른 동적 카드 크기 계산 - 카드 크기 증가
   const { spaceBetween, slidesPerView } = useMemo(() => {
     const screenWidth = window.innerWidth;
     return {
       spaceBetween: screenWidth < 360 ? 12 : 16,
-      slidesPerView: screenWidth < 360 ? 2.3 : 2.8
+      slidesPerView: screenWidth < 360 ? 2.1 : 2.5  // 2.3→2.1, 2.7→2.5로 카드 크기 증가
     };
   }, []); // 빈 배열 = 컴포넌트 마운트 시에만 계산
 
-  // 카테고리별 카드 분류 - useMemo로 최적화
-  const { suspectCards, evidenceCards, locationCards } = useMemo(() => {
-    const suspects = cards.filter(card => card.type === 'suspect');
-    const evidences = cards.filter(card =>
-      card.type === 'evidence' ||
-      card.type === 'clue' ||
-      card.type === 'temporal_fragment' ||
-      card.type === 'fragment'
-    );
-    const locations = cards.filter(card => card.type === 'location');
+  // 전체 카드를 3등분으로 분배 - useMemo로 최적화
+  const { tab1Cards, tab2Cards, tab3Cards } = useMemo(() => {
+    const tab1: Card[] = [];
+    const tab2: Card[] = [];
+    const tab3: Card[] = [];
+    
+    // 1,4,7 / 2,5,8 / 3,6,9 순서로 분배
+    cards.forEach((card, index) => {
+      const position = index % 3;
+      if (position === 0) {
+        tab1.push(card);
+      } else if (position === 1) {
+        tab2.push(card);
+      } else {
+        tab3.push(card);
+      }
+    });
     
     return {
-      suspectCards: suspects,
-      evidenceCards: evidences,
-      locationCards: locations
+      tab1Cards: tab1,
+      tab2Cards: tab2,
+      tab3Cards: tab3
     };
   }, [cards]);
 
-  // 카테고리별 라벨 색상
-  const getCategoryColor = (category: 'suspect' | 'evidence' | 'location') => {
-    switch (category) {
-      case 'suspect': return cardStyles.suspectColor;
-      case 'evidence': return cardStyles.evidenceColor;
-      case 'location': return cardStyles.locationColor;
-      default: return '#ffffff';
+  // 🎯 포커스 이동 함수 (useCallback으로 메모이제이션)
+  const focusToCard = useCallback((cardId: string) => {
+    console.log('🎯 포커스 이동 요청:', cardId);
+    
+    // 해당 카드가 어느 탭과 슬라이드에 있는지 찾기
+    const allCards = cards.filter(card => card.discovered);
+    const cardIndex = allCards.findIndex(card => card.id === cardId);
+    console.log('📍 카드 인덱스:', cardIndex, '/ 전체 발견된 카드:', allCards.length);
+    
+    if (cardIndex !== -1) {
+      // 1,4,7... / 2,5,8... / 3,6,9... 패턴으로 탭 결정
+      const tabIndex = cardIndex % 3;
+      const slideIndex = Math.floor(cardIndex / 3);
+      console.log(`📊 계산 결과: 탭${tabIndex + 1}, 슬라이드${slideIndex}`);
+      
+      // 해당 탭의 Swiper로 스크롤
+      const targetSwiper = swiperRefs.current[tabIndex];
+      if (targetSwiper) {
+        // 첫 번째 슬라이드(slideIndex === 0)는 자동 포커스하지 않음 (첫 번째 카드 보호)
+        if (slideIndex > 0) {
+          console.log(`✅ 포커스 이동 실행: 탭${tabIndex + 1}, 슬라이드${slideIndex}, 카드ID: ${cardId}`);
+          
+          // 즉시 이동 (타이머 없음)
+          targetSwiper.slideTo(slideIndex, 800); // 0.8초 애니메이션으로 이동
+        } else {
+          console.log(`⏭️ 첫 번째 슬라이드라서 포커스 이동 생략 (카드ID: ${cardId})`);
+        }
+      } else {
+        console.log('❌ targetSwiper가 없음');
+      }
+    } else {
+      console.log('❌ 카드 인덱스를 찾을 수 없음');
     }
-  };
+  }, [cards]); // cards만 의존성으로
 
-  // 카테고리별 라벨 텍스트
-  const getCategoryLabel = (category: 'suspect' | 'evidence' | 'location') => {
-    switch (category) {
-      case 'suspect': return '🧑 용의자';
-      case 'evidence': return '🔍 증거';
-      case 'location': return '📍 장소';
-      default: return '';
-    }
-  };
+  // 새로 발견된 카드가 있을 때 0.5초 후 자동 포커스
+  useEffect(() => {
+    if (!newlyDiscoveredCards || newlyDiscoveredCards.length === 0) return;
+
+    const latestCardId = newlyDiscoveredCards[newlyDiscoveredCards.length - 1];
+    console.log('🔔 새 카드 발견! 0.5초 후 포커스 이동:', latestCardId);
+    
+    const timer = setTimeout(() => {
+      focusToCard(latestCardId);
+    }, 500); // 0.5초 지연
+
+    return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 정리
+  }, [newlyDiscoveredCards, focusToCard]); // focusToCard 의존성 추가
+
+  // 탭별 라벨 (주석 처리됨)
+  // const getTabLabel = (tabIndex: number) => {
+  //   switch (tabIndex) {
+  //     case 0: return '1페이지';
+  //     case 1: return '2페이지';
+  //     case 2: return '3페이지';
+  //     default: return '';
+  //   }
+  // };
 
 
-  // Swiper 기반 카드 행 렌더링
-  const renderSwiperRow = (
-    category: 'suspect' | 'evidence' | 'location',
-    categoryCards: typeof cards
+  // Swiper 기반 탭 렌더링
+  const renderSwiperTab = (
+    tabIndex: number,
+    tabCards: typeof cards
   ) => {
     // 카드가 없으면 렌더링하지 않음
-    if (categoryCards.length === 0) return null;
+    if (tabCards.length === 0) return null;
 
     return (
-      <div key={category} style={{ marginBottom: '1rem' }}>
-        {/* 카테고리 라벨 */}
+      <div key={tabIndex} style={{ marginBottom: '1rem' }}>
+        {/* 탭 라벨 (주석 처리됨) */}
+        {/* 
         <div style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
           marginBottom: '0.5rem',
-          color: getCategoryColor(category),
+          color: '#ffffff',
           fontSize: '0.9rem',
           fontWeight: 'bold'
         }}>
-          <span>{getCategoryLabel(category)}</span>
+          <span>{getTabLabel(tabIndex)}</span>
         </div>
+        */}
 
         {/* Swiper 컨테이너 */}
         <div style={{ 
@@ -118,6 +172,9 @@ const SwipeCardGrid: React.FC<SwipeCardGridProps> = ({
           position: 'relative' // 위치 기준점 설정
         }}>
           <Swiper
+            onSwiper={(swiper: any) => {
+              swiperRefs.current[tabIndex] = swiper;
+            }}
             slidesPerView={slidesPerView}
             spaceBetween={spaceBetween}
             freeMode={false} // 자유 모드 비활성화로 정확한 스냅
@@ -132,7 +189,7 @@ const SwipeCardGrid: React.FC<SwipeCardGridProps> = ({
               overflow: 'visible'
             }}
           >
-            {categoryCards.map((card) => (
+            {tabCards.map((card) => (
               <SwiperSlide key={card.id} style={{ height: '180px' }}>
                 <div style={{
                   width: '100%',
@@ -172,14 +229,14 @@ const SwipeCardGrid: React.FC<SwipeCardGridProps> = ({
       maxWidth: '100%',
       overflow: 'hidden'
     }}>
-      {/* 용의자 행 - Swiper */}
-      {renderSwiperRow('suspect', suspectCards)}
+      {/* 탭 1 - 전체 카드 1,4,7... */}
+      {renderSwiperTab(0, tab1Cards)}
 
-      {/* 증거 행 - Swiper */}
-      {renderSwiperRow('evidence', evidenceCards)}
+      {/* 탭 2 - 전체 카드 2,5,8... */}
+      {renderSwiperTab(1, tab2Cards)}
 
-      {/* 장소 행 - Swiper */}
-      {renderSwiperRow('location', locationCards)}
+      {/* 탭 3 - 전체 카드 3,6,9... */}
+      {renderSwiperTab(2, tab3Cards)}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { AdMob, BannerAdOptions, BannerAdSize, BannerAdPosition } from '@capacitor-community/admob';
 import { Capacitor } from '@capacitor/core';
 
@@ -16,8 +16,8 @@ const AdBanner: React.FC<AdBannerProps> = ({
   const [isAdLoaded, setIsAdLoaded] = useState(false);
   const [adError, setAdError] = useState<string | null>(null);
 
-  // 테스트용 광고 단위 ID (실제 배포시에는 실제 ID로 변경)
-  const getAdUnitId = () => {
+  // 🚀 useCallback으로 감싸서 의존성 문제 해결
+  const getAdUnitId = useCallback(() => {
     if (adUnitId) return adUnitId;
     
     // 플랫폼별 테스트 광고 단위 ID
@@ -27,7 +27,7 @@ const AdBanner: React.FC<AdBannerProps> = ({
       return 'ca-app-pub-3940256099942544/2934735716'; // iOS 테스트 배너 ID
     }
     return 'ca-app-pub-3940256099942544/6300978111'; // 기본값
-  };
+  }, [adUnitId]);
 
   useEffect(() => {
     const initializeAd = async () => {

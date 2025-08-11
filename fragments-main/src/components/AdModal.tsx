@@ -35,7 +35,7 @@ const AdModal: React.FC<AdModalProps> = ({ isOpen, onClose, onAdCompleted, onSki
 
       return () => clearInterval(timer);
     }
-  }, [isOpen]);
+  }, [isOpen, initialize, loadRewardAd]);
 
   const handleWatchAd = async () => {
     const completed = await showRewardAd();

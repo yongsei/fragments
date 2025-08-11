@@ -6,6 +6,7 @@ interface ToastMessageProps {
   isVisible: boolean;
   onClose: () => void;
   duration?: number;
+  timestamp?: number; // 추가: 각 Toast의 고유 타이머 관리를 위해
 }
 
 const ToastMessage: React.FC<ToastMessageProps> = ({ 
@@ -13,7 +14,8 @@ const ToastMessage: React.FC<ToastMessageProps> = ({
   type, 
   isVisible, 
   onClose, 
-  duration = 3000 
+  duration = 3000,
+  timestamp = 0
 }) => {
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -31,7 +33,7 @@ const ToastMessage: React.FC<ToastMessageProps> = ({
     } else {
       setIsAnimating(false);
     }
-  }, [isVisible, duration, onClose]);
+  }, [isVisible, duration, onClose, timestamp]); // timestamp 추가로 각 Toast의 독립적 타이머 보장
 
   if (!isVisible && !isAnimating) return null;
 

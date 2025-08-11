@@ -45,7 +45,7 @@ const GameCard: React.FC<GameCardProps> = React.memo(({
   // 이미지 상태 관리
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [imageLoading, setImageLoading] = useState<boolean>(true);
-  const [imageError, setImageError] = useState<boolean>(false);
+  const [, setImageError] = useState<boolean>(false);
   const [shouldLoadImage, setShouldLoadImage] = useState<boolean>(false);
   const cardRef = useRef<HTMLDivElement>(null);
   
@@ -58,21 +58,22 @@ const GameCard: React.FC<GameCardProps> = React.memo(({
   // 사운드 관리
   const { playCardOpenSound, playCardCloseSound } = useSoundManager();
 
-  // Intersection Observer를 통한 지연 로딩
+  // 🚀 최적화된 Intersection Observer (이미 로드된 경우 스킵)
   useEffect(() => {
+    if (shouldLoadImage || !isDiscovered || !cardRef.current) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries;
-        if (entry.isIntersecting && !shouldLoadImage && isDiscovered) {
+        if (entry.isIntersecting) {
           setShouldLoadImage(true);
+          observer.disconnect(); // 즉시 해제하여 메모리 절약
         }
       },
-      { threshold: 0.1 } // 10%만 보여도 로딩 시작
+      { threshold: 0.1 }
     );
 
-    if (cardRef.current && isDiscovered) {
-      observer.observe(cardRef.current);
-    }
+    observer.observe(cardRef.current);
 
     return () => observer.disconnect();
   }, [shouldLoadImage, isDiscovered]);
@@ -155,16 +156,20 @@ const GameCard: React.FC<GameCardProps> = React.memo(({
   const handleCardClick = () => {
     if (disabled) return;
     
-    // 카드 상태에 따른 효과음 재생
+    // 카드 상태에 따른 효과음 재생 (비동기 대기하지 않음)
     if (isSelected) {
       // 현재 선택된 카드를 해제하는 경우 -> close.wav
-      playCardCloseSound();
+      playCardCloseSound().catch(error => {
+        console.warn('카드 닫기 효과음 재생 실패:', error);
+      });
     } else {
       // 카드를 새로 선택하는 경우 -> open.wav  
-      playCardOpenSound();
+      playCardOpenSound().catch(error => {
+        console.warn('카드 열기 효과음 재생 실패:', error);
+      });
     }
     
-    // 원래 onClick 콜백 실행
+    // 원래 onClick 콜백 실행 (효과음과 독립적으로 즉시 실행)
     onClick();
   };
   // 애니메이션을 위한 스타일 추가
@@ -472,6 +477,7 @@ const GameCard: React.FC<GameCardProps> = React.memo(({
         </div>
       )}
 
+
       {/* 선택 효과 */}
       {isSelected && (
         <div style={{
@@ -608,17 +614,34 @@ const GameCard: React.FC<GameCardProps> = React.memo(({
     </div>
   );
 }, (prevProps, nextProps) => {
-  // 성능 최적화를 위한 얕은 비교
+  // 🚀 최적화된 얕은 비교 (JSON.stringify 제거)
+  if (
+    prevProps.card.id !== nextProps.card.id ||
+    prevProps.isSelected !== nextProps.isSelected ||
+    prevProps.isDiscovered !== nextProps.isDiscovered ||
+    prevProps.isHighlighted !== nextProps.isHighlighted ||
+    prevProps.disabled !== nextProps.disabled ||
+    prevProps.feedbackEffect !== nextProps.feedbackEffect ||
+    prevProps.caseId !== nextProps.caseId ||
+    prevProps.isWinConditionCard !== nextProps.isWinConditionCard
+  ) {
+    return false; // 리렌더링 필요
+  }
+  
+  // uiCustomization 객체 비교 (JSON.stringify 대신 키별 비교)
+  const prevUI = prevProps.uiCustomization || {};
+  const nextUI = nextProps.uiCustomization || {};
+  
   return (
-    prevProps.card.id === nextProps.card.id &&
-    prevProps.isSelected === nextProps.isSelected &&
-    prevProps.isDiscovered === nextProps.isDiscovered &&
-    prevProps.isHighlighted === nextProps.isHighlighted &&
-    prevProps.disabled === nextProps.disabled &&
-    prevProps.feedbackEffect === nextProps.feedbackEffect &&
-    prevProps.caseId === nextProps.caseId &&
-    prevProps.isWinConditionCard === nextProps.isWinConditionCard &&
-    JSON.stringify(prevProps.uiCustomization) === JSON.stringify(nextProps.uiCustomization)
+    prevUI.suspectColor === nextUI.suspectColor &&
+    prevUI.evidenceColor === nextUI.evidenceColor &&
+    prevUI.locationColor === nextUI.locationColor &&
+    prevUI.discoveredBorderColor === nextUI.discoveredBorderColor &&
+    prevUI.selectedBorderColor === nextUI.selectedBorderColor &&
+    prevUI.cardBackground === nextUI.cardBackground &&
+    prevUI.cardHoverEffect === nextUI.cardHoverEffect &&
+    prevUI.cardBorderRadius === nextUI.cardBorderRadius &&
+    prevUI.cardHoverScale === nextUI.cardHoverScale
   );
 });
 

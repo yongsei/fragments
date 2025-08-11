@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Routes, Route, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, EffectCoverflow } from 'swiper/modules';
 import 'swiper/css';
@@ -18,20 +18,17 @@ const FragmentsContent: React.FC = () => {
   const isInCasePage = location.pathname.match(/\/case[12345]/); // 케이스 1, 2, 3, 4, 5 체크
   const { t, originalLang } = useFragmentsTranslation(); // Fragments 다국어
   const { settings, toggleSoundEffects, setEffectsVolume } = useSoundSettings(); // 설정만 관리
-  const { playScenarioSound } = useSoundManager(); // 시나리오 선택 효과음용
+  const { playScenarioSound, playScenarioSoundForced } = useSoundManager(); // 시나리오 선택 효과음용
   const [isVolumePopupOpen, setIsVolumePopupOpen] = useState(false);
 
   // 시나리오 선택 시 효과음 재생 (설정 확인 후)
-  const handleScenarioClick = () => {
-    console.log('🎵 메인 페이지에서 시나리오 선택 - 효과음 설정 확인');
-    console.log('🎵 효과음 활성화 상태:', settings.soundEffectsEnabled);
-    console.log('🎵 효과음 볼륨 설정:', settings.effectsVolume);
-
+  const handleScenarioClick = async () => {
     if (settings.soundEffectsEnabled) {
-      console.log('🎵 효과음이 활성화됨 - playScenarioSound() 호출');
-      playScenarioSound();
-    } else {
-      console.log('🔇 효과음이 비활성화됨 - 사운드 재생 안함');
+      try {
+        await playScenarioSound();
+      } catch (error) {
+        console.error('❌ 시나리오 효과음 재생 실패:', error);
+      }
     }
 
     window.scrollTo(0, 0);
@@ -307,7 +304,22 @@ const FragmentsContent: React.FC = () => {
                       <input
                         type="checkbox"
                         checked={settings.soundEffectsEnabled}
-                        onChange={toggleSoundEffects}
+                        onChange={async () => {
+                          const wasEnabled = settings.soundEffectsEnabled;
+                          toggleSoundEffects();
+                          
+                          // 효과음을 켤 때만 확인음 재생 (끌 때는 재생 안함)
+                          if (!wasEnabled) {
+                            // 설정과 관계없이 강제로 효과음 재생
+                            setTimeout(async () => {
+                              try {
+                                await playScenarioSoundForced();
+                              } catch (error) {
+                                console.error('❌ 효과음 ON 확인음 재생 실패:', error);
+                              }
+                            }, 100);
+                          }
+                        }}
                         style={{ display: 'none' }}
                       />
                       <div style={{
@@ -343,7 +355,19 @@ const FragmentsContent: React.FC = () => {
                       max="1"
                       step="0.1"
                       value={settings.effectsVolume}
-                      onChange={(e) => setEffectsVolume(parseFloat(e.target.value))}
+                      onChange={async (e) => {
+                        const newVolume = parseFloat(e.target.value);
+                        setEffectsVolume(newVolume);
+                        
+                        // 볼륨 조절 시 효과음으로 볼륨 확인
+                        if (settings.soundEffectsEnabled && newVolume > 0) {
+                          try {
+                            await playScenarioSound();
+                          } catch (error) {
+                            console.error('❌ 볼륨 조절 효과음 재생 실패:', error);
+                          }
+                        }
+                      }}
                       disabled={!settings.soundEffectsEnabled}
                       style={{
                         width: '100%',
@@ -393,7 +417,7 @@ const FragmentsContent: React.FC = () => {
             <div style={{
               textAlign: 'center',
               marginBottom: '3rem',
-              marginTop: '1rem' // 띠배너 아래 여백 축소
+              marginTop: `calc(max(env(safe-area-inset-top, 0px), 0px) + 80px)` // 상단 헤더(60px) + 여백(20px) + 시스템 UI 영역
             }}>
               <h1 style={{
                 fontSize: 'clamp(2rem, 6vw, 4rem)',
@@ -463,14 +487,14 @@ const FragmentsContent: React.FC = () => {
                     <div style={{
                       background: 'rgba(255, 255, 255, 0.1)',
                       borderRadius: '20px',
-                      padding: '1.5rem',
+                      padding: '1.2rem',
                       backdropFilter: 'blur(10px)',
                       border: '1px solid rgba(255, 255, 255, 0.2)',
                       transition: 'all 0.3s ease',
                       cursor: 'pointer',
                       position: 'relative',
                       overflow: 'hidden',
-                      height: '400px',
+                      height: '320px',
                       display: 'flex',
                       flexDirection: 'column',
                       justifyContent: 'space-between'
@@ -506,7 +530,7 @@ const FragmentsContent: React.FC = () => {
                         </div>
 
                         <h3 style={{
-                          fontSize: '1.5rem',
+                          fontSize: '1.3rem',
                           margin: '0 0 1rem 0',
                           fontWeight: 'bold',
                           textAlign: 'center'
@@ -529,7 +553,7 @@ const FragmentsContent: React.FC = () => {
                           marginBottom: '1rem'
                         }}>
                           <div style={{
-                            fontSize: '0.9rem',
+                            fontSize: '0.85rem',
                             opacity: '0.8',
                             marginBottom: '1rem'
                           }}>
@@ -542,7 +566,7 @@ const FragmentsContent: React.FC = () => {
                             color: 'white',
                             padding: '0.8rem 1.5rem',
                             borderRadius: '25px',
-                            fontSize: '0.9rem',
+                            fontSize: '0.85rem',
                             fontWeight: 'bold',
                             boxShadow: '0 4px 15px rgba(157, 78, 221, 0.3)',
                             transition: 'all 0.3s ease',
@@ -579,14 +603,14 @@ const FragmentsContent: React.FC = () => {
                     <div style={{
                       background: 'rgba(255, 255, 255, 0.1)',
                       borderRadius: '20px',
-                      padding: '1.5rem',
+                      padding: '1.2rem',
                       backdropFilter: 'blur(10px)',
                       border: '1px solid rgba(255, 255, 255, 0.2)',
                       transition: 'all 0.3s ease',
                       cursor: 'pointer',
                       position: 'relative',
                       overflow: 'hidden',
-                      height: '400px',
+                      height: '320px',
                       display: 'flex',
                       flexDirection: 'column',
                       justifyContent: 'space-between'
@@ -622,7 +646,7 @@ const FragmentsContent: React.FC = () => {
                         </div>
 
                         <h3 style={{
-                          fontSize: '1.5rem',
+                          fontSize: '1.3rem',
                           margin: '0 0 1rem 0',
                           fontWeight: 'bold',
                           textAlign: 'center'
@@ -645,7 +669,7 @@ const FragmentsContent: React.FC = () => {
                           marginBottom: '1rem'
                         }}>
                           <div style={{
-                            fontSize: '0.9rem',
+                            fontSize: '0.85rem',
                             opacity: '0.8',
                             marginBottom: '1rem'
                           }}>
@@ -658,7 +682,7 @@ const FragmentsContent: React.FC = () => {
                             color: 'white',
                             padding: '0.8rem 1.5rem',
                             borderRadius: '25px',
-                            fontSize: '0.9rem',
+                            fontSize: '0.85rem',
                             fontWeight: 'bold',
                             boxShadow: '0 4px 15px rgba(61, 42, 71, 0.3)',
                             transition: 'all 0.3s ease',
@@ -695,14 +719,14 @@ const FragmentsContent: React.FC = () => {
                     <div style={{
                       background: 'rgba(255, 255, 255, 0.1)',
                       borderRadius: '20px',
-                      padding: '1.5rem',
+                      padding: '1.2rem',
                       backdropFilter: 'blur(10px)',
                       border: '1px solid rgba(255, 255, 255, 0.2)',
                       transition: 'all 0.3s ease',
                       cursor: 'pointer',
                       position: 'relative',
                       overflow: 'hidden',
-                      height: '400px',
+                      height: '320px',
                       display: 'flex',
                       flexDirection: 'column',
                       justifyContent: 'space-between'
@@ -738,7 +762,7 @@ const FragmentsContent: React.FC = () => {
                         </div>
 
                         <h3 style={{
-                          fontSize: '1.5rem',
+                          fontSize: '1.3rem',
                           margin: '0 0 1rem 0',
                           fontWeight: 'bold',
                           textAlign: 'center'
@@ -761,7 +785,7 @@ const FragmentsContent: React.FC = () => {
                           marginBottom: '1rem'
                         }}>
                           <div style={{
-                            fontSize: '0.9rem',
+                            fontSize: '0.85rem',
                             opacity: '0.8',
                             marginBottom: '1rem'
                           }}>
@@ -774,7 +798,7 @@ const FragmentsContent: React.FC = () => {
                             color: 'white',
                             padding: '0.8rem 1.5rem',
                             borderRadius: '25px',
-                            fontSize: '0.9rem',
+                            fontSize: '0.85rem',
                             fontWeight: 'bold',
                             boxShadow: '0 4px 15px rgba(139, 69, 19, 0.3)',
                             transition: 'all 0.3s ease',
@@ -811,14 +835,14 @@ const FragmentsContent: React.FC = () => {
                     <div style={{
                       background: 'rgba(255, 255, 255, 0.1)',
                       borderRadius: '20px',
-                      padding: '1.5rem',
+                      padding: '1.2rem',
                       backdropFilter: 'blur(10px)',
                       border: '1px solid rgba(255, 255, 255, 0.2)',
                       transition: 'all 0.3s ease',
                       cursor: 'pointer',
                       position: 'relative',
                       overflow: 'hidden',
-                      height: '400px',
+                      height: '320px',
                       display: 'flex',
                       flexDirection: 'column',
                       justifyContent: 'space-between'
@@ -854,7 +878,7 @@ const FragmentsContent: React.FC = () => {
                         </div>
 
                         <h3 style={{
-                          fontSize: '1.5rem',
+                          fontSize: '1.3rem',
                           margin: '0 0 1rem 0',
                           fontWeight: 'bold',
                           textAlign: 'center'
@@ -877,7 +901,7 @@ const FragmentsContent: React.FC = () => {
                           marginBottom: '1rem'
                         }}>
                           <div style={{
-                            fontSize: '0.9rem',
+                            fontSize: '0.85rem',
                             opacity: '0.8',
                             marginBottom: '1rem'
                           }}>
@@ -890,7 +914,7 @@ const FragmentsContent: React.FC = () => {
                             color: 'white',
                             padding: '0.8rem 1.5rem',
                             borderRadius: '25px',
-                            fontSize: '0.9rem',
+                            fontSize: '0.85rem',
                             fontWeight: 'bold',
                             boxShadow: '0 4px 15px rgba(138, 43, 226, 0.3)',
                             transition: 'all 0.3s ease',
@@ -927,14 +951,14 @@ const FragmentsContent: React.FC = () => {
                     <div style={{
                       background: 'rgba(255, 255, 255, 0.1)',
                       borderRadius: '20px',
-                      padding: '1.5rem',
+                      padding: '1.2rem',
                       backdropFilter: 'blur(10px)',
                       border: '1px solid rgba(255, 255, 255, 0.2)',
                       transition: 'all 0.3s ease',
                       cursor: 'pointer',
                       position: 'relative',
                       overflow: 'hidden',
-                      height: '400px',
+                      height: '320px',
                       display: 'flex',
                       flexDirection: 'column',
                       justifyContent: 'space-between'
@@ -970,7 +994,7 @@ const FragmentsContent: React.FC = () => {
                         </div>
 
                         <h3 style={{
-                          fontSize: '1.5rem',
+                          fontSize: '1.3rem',
                           margin: '0 0 1rem 0',
                           fontWeight: 'bold',
                           textAlign: 'center'
@@ -993,7 +1017,7 @@ const FragmentsContent: React.FC = () => {
                           marginBottom: '1rem'
                         }}>
                           <div style={{
-                            fontSize: '0.9rem',
+                            fontSize: '0.85rem',
                             opacity: '0.8',
                             marginBottom: '1rem'
                           }}>
@@ -1006,7 +1030,7 @@ const FragmentsContent: React.FC = () => {
                             color: 'white',
                             padding: '0.8rem 1.5rem',
                             borderRadius: '25px',
-                            fontSize: '0.9rem',
+                            fontSize: '0.85rem',
                             fontWeight: 'bold',
                             boxShadow: '0 4px 15px rgba(0, 123, 255, 0.3)',
                             transition: 'all 0.3s ease',
@@ -1060,28 +1084,7 @@ const FragmentsContent: React.FC = () => {
                   gap: '1rem',
                   alignItems: 'center'
                 }}>
-                  <a
-                    href="/privacy-policy.html"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      color: 'rgba(255, 255, 255, 0.8)',
-                      textDecoration: 'none',
-                      fontSize: '0.8rem',
-                      transition: 'color 0.3s ease',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '4px'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.color = '#c084fc';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)';
-                    }}
-                  >
-                    🔒 개인정보 처리방침
-                  </a>
+                  {/* 개인정보 처리방침 링크 숨김 */}
                 </div>
 
                 {/* 중앙: 게임 정보 */}

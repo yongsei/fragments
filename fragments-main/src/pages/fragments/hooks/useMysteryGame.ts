@@ -177,7 +177,7 @@ export const useMysteryGame = ({
     };
 
     loadSavedProgress();
-  }, [caseId]);
+  }, [caseId, initialCards]);
 
 
   const [cards, setCards] = useState<Card[]>([]);
@@ -191,7 +191,8 @@ export const useMysteryGame = ({
     message: string;
     type: 'success' | 'error' | 'info' | 'hint';
     isVisible: boolean;
-  }>({ message: '', type: 'info', isVisible: false });
+    timestamp: number; // 추가: Toast 생성 시간 추적
+  }>({ message: '', type: 'info', isVisible: false, timestamp: 0 });
 
   // 스마트 피드백 시스템을 위한 상태
   const [attemptHistory, setAttemptHistory] = useState<{
@@ -462,6 +463,38 @@ export const useMysteryGame = ({
     });
   };
 
+  // 🔧 개선된 Toast 표시 함수 - 겹침 문제 해결 (handleConnect보다 먼저 정의)
+  const showToast = useCallback((message: string, type: 'success' | 'error' | 'info' | 'hint') => {
+    const timestamp = Date.now();
+    
+    // 기존 Toast 상태 확인
+    setToastMessage(prev => {
+      const hasExistingToast = prev.isVisible;
+      
+      if (hasExistingToast) {
+        // 기존 Toast가 있으면 즉시 숨기고 잠시 후 새 Toast 표시
+        setTimeout(() => {
+          setToastMessage({
+            message,
+            type,
+            isVisible: true,
+            timestamp
+          });
+        }, 150); // 150ms 지연으로 애니메이션 완료 대기
+        
+        return { ...prev, isVisible: false };
+      } else {
+        // 기존 Toast가 없으면 즉시 새 Toast 표시
+        return {
+          message,
+          type,
+          isVisible: true,
+          timestamp
+        };
+      }
+    });
+  }, []);
+
   const handleConnect = useCallback(async () => {
     if (gameState.selectedCards.length !== 2 || !gameState.currentScenario) return;
 
@@ -520,11 +553,7 @@ export const useMysteryGame = ({
     }
 
     // 토스트 메시지 표시
-    setToastMessage({
-      message: resultMessage,
-      type: messageType,
-      isVisible: true
-    });
+    showToast(resultMessage, messageType);
 
     const newConnection: Connection = {
       id: Date.now().toString(),
@@ -602,11 +631,10 @@ export const useMysteryGame = ({
       if (isNewDiscovery && rule.unlock === winCondition) {
         setWinConditionCardDiscovered(rule.unlock);
         // 토스트 메시지로 알림
-        setToastMessage({
-          message: t('winConditionCardFound') || '🎯 최종 단서를 발견했습니다! 카드를 클릭하여 수사를 완료하세요.',
-          type: 'success',
-          isVisible: true
-        });
+        showToast(
+          t('winConditionCardFound') || '🎯 최종 단서를 발견했습니다! 카드를 클릭하여 수사를 완료하세요.',
+          'success'
+        );
       }
 
       return {
@@ -629,11 +657,16 @@ export const useMysteryGame = ({
     });
 
     setIsConnecting(false);
-  }, [gameState, onCardUnlock, winCondition, attemptHistory, updateAttemptHistory, getSmartFeedback, getCardCombinationKey, cards, scenario.connectionRules, t]);
+  }, [gameState, onCardUnlock, winCondition, attemptHistory, updateAttemptHistory, getSmartFeedback, getCardCombinationKey, showToast, t]);
 
   const handleClearSelection = () => {
     setGameState(prev => ({ ...prev, selectedCards: [] }));
   };
+
+  // 🚀 카드 검색 최적화를 위한 Map 생성
+  const cardMap = useMemo(() => {
+    return new Map(cards.map(card => [card.id, card]));
+  }, [cards]);
 
   // 고급 힌트 생성 로직 (HintSystem에서 이동)
   const generateAdvancedHint = useCallback((): string => {
@@ -664,7 +697,7 @@ export const useMysteryGame = ({
       if (hasAllCards && notUsedYet) {
         // 조합 가능한 규칙 발견! 모든 필요한 카드들을 명시
         const cardNames = rule.cards.map((cardId: string) => {
-          const card = cards.find(c => c.id === cardId);
+          const card = cardMap.get(cardId); // 🚀 O(1) 검색으로 최적화
           return card ? card.name : cardId;
         });
         
@@ -690,11 +723,7 @@ export const useMysteryGame = ({
         }, rule.cards.length * 1000 + 3000);
         
         // 토스트로 힌트 표시
-        setToastMessage({
-          message: hintMessage,
-          type: 'hint',
-          isVisible: true
-        });
+        showToast(hintMessage, 'hint');
         
         return hintMessage;
       }
@@ -710,14 +739,10 @@ export const useMysteryGame = ({
     
     const randomHint = availableHints[Math.floor(Math.random() * availableHints.length)];
     const finalHintMessage = t('hintPrefix').replace('{0}', randomHint);
-    setToastMessage({
-      message: finalHintMessage,
-      type: 'hint',
-      isVisible: true
-    });
+    showToast(finalHintMessage, 'hint');
     
     return finalHintMessage;
-  }, [cards, gameState.connections, gameState.currentScenario?.connectionRules, setHighlightedCardId, setToastMessage, t]);
+  }, [cards, cardMap, gameState.connections, gameState.currentScenario?.connectionRules, setHighlightedCardId, showToast, t]);
 
   const handleRequestHint = useCallback(() => {
     if (gameState.hintsUsed >= maxHints) return;
@@ -751,11 +776,7 @@ export const useMysteryGame = ({
     const undiscoveredCards = cards.filter(card => !card.discovered);
     
     if (undiscoveredCards.length === 0) {
-      setToastMessage({
-        message: t('allCardsFound'),
-        type: 'info',
-        isVisible: true
-      });
+      showToast(t('allCardsFound'), 'info');
       return;
     }
 
@@ -794,11 +815,10 @@ export const useMysteryGame = ({
               }, index * 200);
             });
             
-            setToastMessage({
-              message: t('answerHint').replace('{0}', rule.cards.length.toString()),
-              type: 'info',
-              isVisible: true
-            });
+            showToast(
+              t('answerHint').replace('{0}', rule.cards.length.toString()),
+              'info'
+            );
             return;
           }
         }
@@ -806,18 +826,15 @@ export const useMysteryGame = ({
     }
     
     // 가능한 연결이 없으면 일반적인 힌트 제공
-    setToastMessage({
-      message: t('generalHint'),
-      type: 'info',
-      isVisible: true
-    });
+    showToast(t('generalHint'), 'info');
     
     setGameState(prev => ({
       ...prev,
       hintsUsed: prev.hintsUsed + 1,
       playerProgress: { ...prev.playerProgress, hintsUsed: prev.playerProgress.hintsUsed + 1 }
     }));
-  }, [cards, scenario.connectionRules, gameState.connections, t]);
+  }, [cards, scenario.connectionRules, gameState.connections, showToast, t]);
+
 
   const handleRestart = () => {
     window.location.reload();
@@ -828,7 +845,6 @@ export const useMysteryGame = ({
   }, []);
 
   // 진행 상태 저장 (연결 성공 또는 힌트 사용 시에만)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (caseId && (gameState.connections.length > 0 || gameState.hintsUsed > 0)) {
       const progressData: GameProgressData = {
@@ -851,13 +867,13 @@ export const useMysteryGame = ({
         isCompleted: gameWon || showResult
       };
 
+      // 저장 시도 (에러 시에만 로그 출력)
       saveGameProgress(progressData).catch(error => {
         console.error('게임 진행 상태 저장 실패:', error);
       });
     }
-  // 의도적으로 gameState.elapsedTime을 의존성에서 제외 (매초 저장 방지)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [caseId, gameState.connections.length, gameState.hintsUsed, gameState.discoveredCardIds, gameState.playerProgress.correctConnections, cards, gameWon, showResult]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps  
+  }, [caseId, gameState.connections.length, gameState.hintsUsed, gameState.discoveredCardIds.length, gameWon, showResult]);
 
   // 게임 완료 시 진행 상태 삭제
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -920,11 +936,7 @@ export const useMysteryGame = ({
     const bonusHint = generateAdvancedHint();
     
     // 토스트 메시지로 힌트 표시
-    setToastMessage({
-      message: `🎁 광고 보상 힌트: ${bonusHint}`,
-      type: 'hint',
-      isVisible: true
-    });
+    showToast(`🎁 광고 보상 힌트: ${bonusHint}`, 'hint');
     
     // 연결 기록에 광고 힌트 추가
     setGameState(prev => {
@@ -945,7 +957,7 @@ export const useMysteryGame = ({
     });
     
     console.log('광고 보상 힌트 제공:', bonusHint);
-  }, [generateAdvancedHint, setToastMessage]);
+  }, [generateAdvancedHint, showToast]);
 
   return {
     // Game State
@@ -974,6 +986,6 @@ export const useMysteryGame = ({
     
     // Setters for UI components
     setHighlightedCardId,
-    setToastMessage
+    showToast
   };
 };

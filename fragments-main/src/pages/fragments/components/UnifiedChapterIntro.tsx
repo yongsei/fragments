@@ -561,7 +561,7 @@ const UnifiedChapterIntro: React.FC<UnifiedChapterIntroProps> = ({ data }) => {
         bottom: `max(env(safe-area-inset-bottom, 0px), 0px)`,
         left: '0',
         right: '0',
-        background: '#1a1a2eff',
+        background: 'linear-gradient(135deg, rgb(26, 26, 46) 0%, rgb(22, 33, 62) 100%)',
         borderTop: '1px solid rgba(255, 255, 255, 0.2)',
         paddingTop: '12px',
         paddingBottom: '12px',

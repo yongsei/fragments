@@ -5,9 +5,8 @@ const config: CapacitorConfig = {
   appName: 'Fragment of Mystery',
   webDir: 'build',
   server: {
-    androidScheme: 'https',
-    url: 'http://192.168.1.6:3333',
-    cleartext: true
+    androidScheme: 'https'
+    // 프로덕션 모드: Live Reload 설정 제거
   },
   plugins: {
     StatusBar: {
@@ -21,13 +20,13 @@ const config: CapacitorConfig = {
       androidSplashResourceName: 'splash',
       showSpinner: false
     },
-    AdMob: {
-      appId: 'ca-app-pub-2644745250787584~8383662488',
-      testingDevices: [],
-      tagForChildDirectedTreatment: false,
-      tagForUnderAgeOfConsent: false,
-      maxAdContentRating: 'MA'
-    }
+    // AdMob: {
+    //   appId: 'ca-app-pub-2644745250787584~8383662488',
+    //   testingDevices: [],
+    //   tagForChildDirectedTreatment: false,
+    //   tagForUnderAgeOfConsent: false,
+    //   maxAdContentRating: 'MA'
+    // }
   }
 };
 

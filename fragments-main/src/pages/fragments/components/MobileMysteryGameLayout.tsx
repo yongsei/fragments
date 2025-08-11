@@ -334,13 +334,18 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
 
 
   // 새 카드 알림 상태 관리 (스와이프 UI에서는 전역 알림만 사용)
-  const [newCardNotification, setNewCardNotification] = useState<{ [key: string]: boolean }>({});
+  const [, setNewCardNotification] = useState<{ [key: string]: boolean }>({});
 
   // 새로운 스와이프 UI에서는 탭 시스템 불필요
 
 
 
 
+
+  // 🚀 카드 검색 최적화를 위한 Map 생성
+  const cardMap = useMemo(() => {
+    return new Map(cards.map(card => [card.id, card]));
+  }, [cards]);
 
   // 새로 발견된 카드 감지 및 알림 설정 + 자동 모달 표시
   useEffect(() => {
@@ -350,7 +355,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
       const notifications: { [key: string]: boolean } = {};
 
       gameState.newlyDiscoveredCards.forEach(cardId => {
-        const card = cards.find(c => c.id === cardId);
+        const card = cardMap.get(cardId); // 🚀 O(1) 검색으로 최적화
         if (card) {
           // 메인 카테고리 알림 설정
           if (card.type === 'suspect') {
@@ -401,7 +406,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
         });
       }, 5000);
     }
-  }, [gameState.newlyDiscoveredCards, cards]);
+  }, [gameState.newlyDiscoveredCards, cardMap]);
 
 
 
@@ -460,7 +465,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
         color: 'white',
         padding: '1rem', // 기본 패딩
         paddingTop: 'max(env(safe-area-inset-top, 0px), 30px)', // 상단 패딩 축소
-        paddingBottom: 'max(env(safe-area-inset-bottom), 100px)',
+        paddingBottom: `calc(max(env(safe-area-inset-bottom, 0px), 0px) + 160px)`, // 하단 UI(140px) + 여백(20px) + 시스템 UI
         fontFamily: ui.typography.bodyFont,
         position: 'relative'
       }}>
@@ -471,7 +476,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
           left: 0,
           right: 0,
           height: 'max(env(safe-area-inset-top, 0px), 0px)',
-          background: 'rgb(26, 26, 46)', // 불투명 배경으로 변경
+          background: 'linear-gradient(135deg, rgb(26, 26, 46) 0%, rgb(22, 33, 62) 100%)', // 메인 배경과 통일
           zIndex: 999
         }} />
 
@@ -482,13 +487,13 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
           left: 0,
           right: 0,
           height: `calc(max(env(safe-area-inset-bottom, 0px), 0px) + 140px)`, // 하단 UI(140px) + 시스템 UI
-          background: 'rgb(26, 26, 46)', // 불투명 배경으로 변경
+          background: 'linear-gradient(135deg, rgb(26, 26, 46) 0%, rgb(22, 33, 62) 100%)', // 메인 배경과 통일
           zIndex: 99
         }} />
         <div style={{
           maxWidth: ui.layout.containerMaxWidth,
           margin: '0 auto',
-          paddingBottom: '20px' // 120px에서 20px로 축소
+          paddingBottom: '40px' // 하단 여백 확보
         }}>
           {/* 모바일에서는 사건 개요 제거 - 팝업으로 이동 */}
 
@@ -539,7 +544,9 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
 
               {/* 새로운 스와이프 카드 그리드 */}
               <SwipeCardGrid
-                cards={cards.filter(card => card.discovered)}
+                cards={gameState.discoveredCardIds.map(cardId => 
+                  cards.find(card => card.id === cardId)
+                ).filter((card): card is typeof cards[0] => card !== undefined)}
                 selectedCards={gameState.selectedCards}
                 onCardClick={handleCardSelect}
                 onCardLongPress={handleCardLongPress}
@@ -547,6 +554,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
                 ui={ui}
                 caseId={caseId}
                 winConditionCardDiscovered={winConditionCardDiscovered}
+                newlyDiscoveredCards={gameState.newlyDiscoveredCards}
               />
             </div>
 
@@ -559,7 +567,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
             left: 0,
             right: 0,
             height: '60px', // 기존 140px에서 60px로 대폭 축소
-            background: '#1a1a2eff',
+            background: 'linear-gradient(135deg, rgb(26, 26, 46) 0%, rgb(22, 33, 62) 100%)',
             borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
             zIndex: 1001,
             display: 'flex',
@@ -635,7 +643,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
             bottom: `max(env(safe-area-inset-bottom, 0px), 0px)`, // 시스템 UI 바로 위에 위치
             left: '0',
             right: '0',
-            background: '#1a1a2eff',
+            background: 'linear-gradient(135deg, rgb(26, 26, 46) 0%, rgb(22, 33, 62) 100%)',
             borderTop: '1px solid rgba(255, 255, 255, 0.2)',
             paddingTop: '12px',
             paddingBottom: '12px', // 고정 패딩으로 일관성 확보
@@ -795,6 +803,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
             isVisible={toastMessage.isVisible}
             onClose={handleToastClose}
             duration={3000}
+            timestamp={toastMessage.timestamp}
           />
 
           {/* 사건 개요 팝업 */}

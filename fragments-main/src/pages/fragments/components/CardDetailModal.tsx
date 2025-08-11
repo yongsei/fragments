@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { importCardImage } from '../utils/imageUtils';
+import { useSoundManager } from '../hooks/useSoundManager';
 
 interface Card {
   id: string;
@@ -33,6 +34,8 @@ const CardDetailModal: React.FC<CardDetailModalProps> = ({
   showCountdown = false,
   theme = {}
 }) => {
+  // 사운드 매니저 훅
+  const { playSkipSound } = useSoundManager();
   // 카드 ID 배열로 정규화 - useMemo로 최적화
   const normalizedCardIds = useMemo(() => {
     const result = Array.isArray(cardIds) ? cardIds : [cardIds];
@@ -45,7 +48,7 @@ const CardDetailModal: React.FC<CardDetailModalProps> = ({
   const [currentImageUrl, setCurrentImageUrl] = useState<string | null>(null);
   const [cardState, setCardState] = useState<'fadeIn' | 'show' | 'fadeOut'>('fadeIn');
   const [isVisible, setIsVisible] = useState(true);
-  const [timeLeft, setTimeLeft] = useState(7); // intro 모드용 카운트다운
+  const [, setTimeLeft] = useState(7); // intro 모드용 카운트다운
   const [isTransitioning, setIsTransitioning] = useState(false); // 전환 중인지 추적
   const [canStartCountdown, setCanStartCountdown] = useState(false); // 카운트다운 시작 허용 플래그
 
@@ -55,8 +58,12 @@ const CardDetailModal: React.FC<CardDetailModalProps> = ({
 
   // 컴포넌트 언마운트 시 완전한 정리
   useEffect(() => {
+    // 모달이 열릴 때 body 스크롤 방지 및 포인터 이벤트 보장
+    document.body.style.overflow = 'hidden';
+    document.body.style.pointerEvents = 'auto';
+
     return () => {
-      console.log('🧹 CardDetailModal unmounting - cleaning up all timers');
+      console.log('🧹 CardDetailModal unmounting - cleaning up all timers and restoring body');
       if (timerRef.current) {
         clearTimeout(timerRef.current);
         timerRef.current = null;
@@ -67,6 +74,10 @@ const CardDetailModal: React.FC<CardDetailModalProps> = ({
       }
       // 상태 초기화
       fadeOutProcessedRef.current = false;
+
+      // 강제로 body 스타일 복원
+      document.body.style.overflow = 'auto';
+      document.body.style.pointerEvents = 'auto';
     };
   }, []);
 
@@ -85,49 +96,77 @@ const CardDetailModal: React.FC<CardDetailModalProps> = ({
     console.log(`🎯 Card ${currentIndex}: ID=${normalizedCardIds[currentIndex]}, Found=${!!currentCard}, Name=${currentCard?.name || 'NOT FOUND'}`);
   }, [currentIndex, normalizedCardIds, currentCard]);
 
-  // SKIP 버튼용 핸들러
-  const handleSkip = useCallback(() => {
-    console.log('🚀 SKIP clicked, current state:', cardState, 'index:', currentIndex, 'mode:', mode);
+  // 모달 완전 종료 핸들러
+  const handleCompleteClose = useCallback(() => {
+    console.log('🏁 Complete modal close initiated');
 
-    // 이미 fadeOut 중이거나 마지막 카드인 경우 즉시 완료 처리
-    if (cardState === 'fadeOut') {
-      console.log('🚫 Already fading out, ignoring skip');
-      return;
-    }
-
-    // 마지막 카드인 경우 즉시 완료
-    if (currentIndex >= normalizedCardIds.length - 1) {
-      console.log('🏁 Last card skip - immediate completion');
-      // 모든 타이머 정리
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
-        timerRef.current = null;
-      }
-      if (countdownRef.current) {
-        clearInterval(countdownRef.current);
-        countdownRef.current = null;
-      }
-      // 즉시 완료
-      onComplete();
-      return;
-    }
-
-    // 활성 타이머들 정리
+    // 모든 타이머 즉시 정리
     if (timerRef.current) {
-      console.log('🧹 Timer cleared by skip');
       clearTimeout(timerRef.current);
       timerRef.current = null;
     }
     if (countdownRef.current) {
-      console.log('🧹 Countdown cleared by skip');
       clearInterval(countdownRef.current);
       countdownRef.current = null;
     }
 
-    // 카운트다운 비활성화하고 fadeOut 시작
+    // 상태 초기화
     setCanStartCountdown(false);
-    setCardState('fadeOut');
-  }, [cardState, currentIndex, mode, normalizedCardIds.length, onComplete]);
+    fadeOutProcessedRef.current = false;
+
+    // 즉시 모달 숨김
+    setIsVisible(false);
+
+    // body 스타일 강제 복원
+    document.body.style.overflow = 'auto';
+    document.body.style.pointerEvents = 'auto';
+
+    // 약간의 지연 후 onComplete 호출 (DOM 정리 시간 확보)
+    setTimeout(() => {
+      onComplete();
+    }, 50);
+  }, [onComplete]);
+
+  // SKIP 버튼용 핸들러
+  const handleSkip = useCallback(() => {
+    console.log('🚀 SKIP clicked, current state:', cardState, 'index:', currentIndex, 'mode:', mode);
+
+    // 🔊 skip 효과음 재생하고 약간 지연 후 로직 실행
+    playSkipSound();
+
+    // 이미 fadeOut 중인 경우에도 소리는 나게 하되, 로직은 중단
+    if (cardState === 'fadeOut') {
+      console.log('🚫 Already fading out, but sound played');
+      return;
+    }
+
+    // 사운드 재생을 위해 약간의 지연 후 로직 실행
+    setTimeout(() => {
+      // 마지막 카드인 경우 즉시 완료
+      if (currentIndex >= normalizedCardIds.length - 1) {
+        console.log('🏁 Last card skip - immediate complete close');
+        handleCompleteClose();
+        return;
+      }
+
+      // 나머지 로직도 지연 실행
+      // 활성 타이머들 정리
+      if (timerRef.current) {
+        console.log('🧹 Timer cleared by skip');
+        clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+      if (countdownRef.current) {
+        console.log('🧹 Countdown cleared by skip');
+        clearInterval(countdownRef.current);
+        countdownRef.current = null;
+      }
+
+      // 카운트다운 비활성화하고 fadeOut 시작
+      setCanStartCountdown(false);
+      setCardState('fadeOut');
+    }, 200); // 200ms 지연
+  }, [cardState, currentIndex, mode, normalizedCardIds.length, handleCompleteClose, playSkipSound]);
 
   // 이미지 로드
   useEffect(() => {
@@ -246,32 +285,48 @@ const CardDetailModal: React.FC<CardDetailModalProps> = ({
             console.log('➡️ Moving to next card in slideshow');
             setCurrentIndex(prev => prev + 1);
           } else {
-            console.log('🏁 Modal completed - starting final fadeOut');
-            // 즉시 onComplete 호출하고 모달 정리
-            onComplete();
-            setIsVisible(false);
+            console.log('🏁 Modal completed - complete close');
+            handleCompleteClose();
           }
         }, 400);
 
         return () => clearTimeout(fadeOutTimer);
       }
     }
-  }, [cardState, mode, currentIndex, normalizedCardIds.length, onComplete]);
+  }, [cardState, mode, currentIndex, normalizedCardIds, handleCompleteClose]);
 
   // 카드 인덱스가 변경될 때마다 fadeOut 플래그 리셋
   useEffect(() => {
     fadeOutProcessedRef.current = false;
   }, [currentIndex]);
 
+  // ESC 키로 모달 닫기
+  useEffect(() => {
+    const handleEscKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isVisible) {
+        console.log('⌨️ ESC key pressed - closing modal');
+        handleSkip();
+      }
+    };
+
+    if (isVisible) {
+      document.addEventListener('keydown', handleEscKey);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscKey);
+    };
+  }, [isVisible, handleSkip]);
+
   // 카드가 로드되지 않았으면 잠시 후 완료 처리
   useEffect(() => {
     if (cards.length === 0) {
       const timeout = setTimeout(() => {
-        onComplete();
+        handleCompleteClose();
       }, 3000);
       return () => clearTimeout(timeout);
     }
-  }, [cards.length, onComplete]);
+  }, [cards.length, handleCompleteClose]);
 
   // 카드가 없으면 로딩 상태로 처리 (즉시 완료하지 않음)
   if (!currentCard) {
@@ -328,49 +383,53 @@ const CardDetailModal: React.FC<CardDetailModalProps> = ({
 
   // isVisible이 false면 아무것도 렌더링하지 않음 (포인터 이벤트도 완전 차단)
   if (!isVisible) {
-    // 혹시 남아있을 수 있는 포인터 이벤트 문제 방지
-    setTimeout(() => {
-      document.body.style.pointerEvents = 'auto';
-    }, 50);
     return null;
   }
 
   return (
     <>
-      {/* 어두운 배경 오버레이 */}
-      <div style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        background: 'rgba(0, 0, 0, 0.85)',
-        backdropFilter: 'blur(8px)',
-        zIndex: 9998,
-        opacity: cardState === 'fadeIn' ? 0 : cardState === 'fadeOut' ? 0 : 1,
-        transition: 'opacity 0.4s ease-out'
-      }} />
+      {/* 어두운 배경 오버레이 - 클릭 시 모달 닫기 */}
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0, 0, 0, 0.85)',
+          backdropFilter: 'blur(8px)',
+          zIndex: 9998,
+          opacity: cardState === 'fadeIn' ? 0 : cardState === 'fadeOut' ? 0 : 1,
+          transition: 'opacity 0.4s ease-out',
+          pointerEvents: 'auto' // 명시적으로 포인터 이벤트 활성화
+        }}
+        onClick={handleSkip} // 배경 클릭 시 모달 닫기
+      />
 
       {/* 메인 모달 컨테이너 */}
-      <div style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        background: defaultTheme.primaryGradient,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingTop: 'max(env(safe-area-inset-top), 60px)',
-        paddingBottom: 'max(env(safe-area-inset-bottom), 80px)',
-        zIndex: 9999,
-        color: defaultTheme.textColor,
-        fontFamily: "'Noto Sans KR', sans-serif",
-        opacity: cardState === 'fadeIn' ? 0 : cardState === 'fadeOut' ? 0 : 1,
-        transition: 'opacity 0.4s ease-out'
-      }}>
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: defaultTheme.primaryGradient,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          paddingTop: 'max(env(safe-area-inset-top), 60px)',
+          paddingBottom: 'max(env(safe-area-inset-bottom), 80px)',
+          zIndex: 9999,
+          color: defaultTheme.textColor,
+          fontFamily: "'Noto Sans KR', sans-serif",
+          opacity: cardState === 'fadeIn' ? 0 : cardState === 'fadeOut' ? 0 : 1,
+          transition: 'opacity 0.4s ease-out',
+          pointerEvents: 'auto' // 명시적으로 포인터 이벤트 활성화
+        }}
+        onClick={(e) => e.stopPropagation()} // 카드 영역 클릭 시 이벤트 전파 방지
+      >
         {/* Skip/Close 버튼 */}
         <button
           onClick={handleSkip}
@@ -386,7 +445,7 @@ const CardDetailModal: React.FC<CardDetailModalProps> = ({
             fontSize: '16px',
             fontWeight: 'bold',
             cursor: 'pointer',
-            animation: 'skipBlink 1.5s infinite',
+            animation: 'Blink 1.5s infinite',
             transition: 'all 0.3s ease',
             zIndex: 10000
           }}
