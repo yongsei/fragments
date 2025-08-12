@@ -125,7 +125,7 @@ export const case3Ch1: GameScenario = {
   ],
   "connectionRules": [
     {"id": "rule_A04", "cards": ["A02", "A03"], "result": "볼코프의 침실에서 시신을 조사하자, 살인에 사용된 단검을 발견합니다.", "unlock": "A04"},
-    {"id": "rule_A05", "cards": ["A02", "A03"], "result": "볼코프의 침실에서 시신을 조사하자, 재떨이에서 반쯤 타다 만 편지 조각을 발견합니다.", "unlock": "A05"},
+    {"id": "rule_A05", "cards": ["A01", "A03"], "result": "헤이스팅스 경이 볼코프의 시신을 직접 조사하여, 재떨이에서 반쯤 타다 만 편지 조각을 발견합니다.", "unlock": "A05"},
     {"id": "rule_A06", "cards": ["A02", "A04"], "result": "볼코프의 침실과 단검을 연결하여, 문 안쪽의 흠집이 밀실 트릭의 단서임을 파악합니다.", "unlock": "A06"},
     {"id": "rule_A12", "cards": ["A07", "A08"], "result": "엘레나 백작부인과 닥터 슈미트를 심문하여, 그들의 알리바이를 확보합니다.", "unlock": "A12"}
   ],

@@ -124,7 +124,7 @@ export const case3ChEn1: GameScenario = {
   ],
   "connectionRules": [
     {"id": "rule_A04", "cards": ["A02", "A03"], "result": "Investigating Volkov's cabin and body, you discover the dagger used in the murder.", "unlock": "A04"},
-    {"id": "rule_A05", "cards": ["A02", "A03"], "result": "Investigating Volkov's cabin and body, you find a half-burned letter fragment in the ashtray.", "unlock": "A05"},
+    {"id": "rule_A05", "cards": ["A01", "A03"], "result": "Inspector Hastings directly examines Volkov's body and finds a half-burned letter fragment in the ashtray.", "unlock": "A05"},
     {"id": "rule_A06", "cards": ["A02", "A04"], "result": "Connecting Volkov's cabin and the dagger, you realize the scratch mark on the inside of the door is a clue to the locked-room trick.", "unlock": "A06"},
     {"id": "rule_A12", "cards": ["A07", "A08"], "result": "Interrogating Countess Elena and Dr. Schmidt, you secure their alibis.", "unlock": "A12"}
   ],

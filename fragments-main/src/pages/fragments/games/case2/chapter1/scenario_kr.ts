@@ -121,7 +121,7 @@ export const case2Ch1: GameScenario = {
   ],
   "connectionRules": [
     {"id": "rule_A04", "cards": ["A01", "A03"], "result": "함장 카이는 산소 감소 상황을 기술자 리아에게 분석을 지시합니다.", "unlock": "A04"},
-    {"id": "rule_A05", "cards": ["A01", "A02"], "result": "함장 카이는 오디세이의 상황을 보안관 제이콥에게 보고하고 경계를 지시합니다.", "unlock": "A05"},
+    {"id": "rule_A05", "cards": ["A01", "A04"], "result": "함장 카이는 기술자 리아와 함께 보안관 제이콥에게 상황을 보고하고 경계를 지시합니다.", "unlock": "A05"},
     {"id": "rule_A06", "cards": ["A01", "A02"], "result": "함장 카이는 오디세이의 상황을 스카우트 함선과 연결하여 분석합니다.", "unlock": "A06"},
     {"id": "rule_A07", "cards": ["A04", "A06"], "result": "리아는 스카우트 함선과의 연결을 통해 오디세이의 에어록이 잠겼음을 확인합니다.", "unlock": "A07"},
     {"id": "rule_A08", "cards": ["A02", "A03"], "result": "오디세이의 산소 감소와 함선 상태를 통해 가이아의 기계 음성이 불길하게 들립니다.", "unlock": "A08"},

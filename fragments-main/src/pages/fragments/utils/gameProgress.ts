@@ -24,6 +24,9 @@ export interface GameProgressData {
   };
   timestamp: number;
   isCompleted: boolean;
+  // 데이터 버전 관리 추가
+  dataVersion: string; // 앱 버전 정보
+  schemaVersion: number; // 데이터 스키마 버전
 }
 
 // 챕터 완료 상태 인터페이스
@@ -37,16 +40,70 @@ export interface ChapterCompletionData {
 // 쿠키 만료 시간 (7일)
 const COOKIE_EXPIRY_DAYS = 7;
 
+// 현재 데이터 스키마 버전
+const CURRENT_SCHEMA_VERSION = 1;
+
+// 앱 버전 정보 (package.json에서 가져오거나 하드코딩)
+const APP_VERSION = '1.0.0';
+
 // 쿠키 이름 생성
 const getCookieName = (caseId: string): string => {
   return `fragments_progress_${caseId}`;
 };
 
+// 데이터 마이그레이션 함수
+const migrateGameProgressData = (data: any): GameProgressData => {
+  // 기존 데이터에 버전 정보가 없으면 추가
+  if (!data.dataVersion) {
+    data.dataVersion = APP_VERSION;
+  }
+  if (!data.schemaVersion) {
+    data.schemaVersion = CURRENT_SCHEMA_VERSION;
+  }
+
+  // 스키마 버전별 마이그레이션 로직
+  if (data.schemaVersion < CURRENT_SCHEMA_VERSION) {
+    console.log(`🔄 데이터 마이그레이션: v${data.schemaVersion} → v${CURRENT_SCHEMA_VERSION}`);
+    
+    // 필요한 경우 여기에 마이그레이션 로직 추가
+    // 예: 새로운 필드 추가, 데이터 구조 변경 등
+    
+    data.schemaVersion = CURRENT_SCHEMA_VERSION;
+  }
+
+  return data as GameProgressData;
+};
+
+// 데이터 무결성 검증
+const validateGameProgressData = (data: any): boolean => {
+  try {
+    return (
+      typeof data.caseId === 'string' &&
+      typeof data.hintsUsed === 'number' &&
+      Array.isArray(data.connections) &&
+      Array.isArray(data.discoveredCardIds) &&
+      typeof data.elapsedTime === 'number' &&
+      typeof data.timestamp === 'number' &&
+      typeof data.isCompleted === 'boolean'
+    );
+  } catch {
+    return false;
+  }
+};
+
 // 게임 진행 상태 저장 (Capacitor Storage 또는 localStorage 사용)
 export const saveGameProgress = async (progressData: GameProgressData): Promise<void> => {
   try {
+    // 버전 정보 추가
+    const dataWithVersion = {
+      ...progressData,
+      dataVersion: APP_VERSION,
+      schemaVersion: CURRENT_SCHEMA_VERSION,
+      timestamp: Date.now() // 저장 시점 업데이트
+    };
+    
     const key = getCookieName(progressData.caseId);
-    const dataString = JSON.stringify(progressData);
+    const dataString = JSON.stringify(dataWithVersion);
     
     if (Capacitor.isNativePlatform()) {
       // 네이티브 앱에서는 Capacitor Preferences 사용
@@ -101,7 +158,24 @@ export const loadGameProgress = async (caseId: string): Promise<GameProgressData
     }
     
     if (dataString) {
-      const progressData = JSON.parse(dataString) as GameProgressData;
+      let rawData;
+      try {
+        rawData = JSON.parse(dataString);
+      } catch (parseError) {
+        console.error('데이터 파싱 실패:', parseError);
+        await clearGameProgress(caseId);
+        return null;
+      }
+
+      // 데이터 무결성 검증
+      if (!validateGameProgressData(rawData)) {
+        console.warn(`손상된 데이터 발견 (케이스: ${caseId}), 삭제합니다.`);
+        await clearGameProgress(caseId);
+        return null;
+      }
+
+      // 데이터 마이그레이션
+      const progressData = migrateGameProgressData(rawData);
       
       // 타임스탬프 검증 (7일이 지났으면 무시)
       const now = Date.now();
@@ -113,7 +187,13 @@ export const loadGameProgress = async (caseId: string): Promise<GameProgressData
         return null;
       }
       
-      console.log(`게임 진행 상태 로드됨 (케이스: ${caseId})`);
+      // 마이그레이션이 발생했으면 다시 저장
+      if (rawData.schemaVersion !== CURRENT_SCHEMA_VERSION) {
+        console.log(`🔄 마이그레이션된 데이터 재저장 (케이스: ${caseId})`);
+        await saveGameProgress(progressData);
+      }
+      
+      console.log(`게임 진행 상태 로드됨 (케이스: ${caseId}, 버전: ${progressData.dataVersion})`);
       return progressData;
     }
     
@@ -357,5 +437,78 @@ export const getCompletedChapters = async (caseId: string): Promise<number[]> =>
   } catch (error) {
     console.error('완료된 챕터 목록 조회 실패:', error);
     return [];
+  }
+};
+
+// 전체 게임 데이터 백업 (JSON 형태로 내보내기)
+export const exportAllGameData = async (): Promise<string> => {
+  try {
+    const allData: { [key: string]: any } = {};
+    
+    if (Capacitor.isNativePlatform()) {
+      const keys = await Preferences.keys();
+      const fragmentsKeys = keys.keys.filter(key => key.startsWith('fragments_'));
+      
+      for (const key of fragmentsKeys) {
+        const result = await Preferences.get({ key });
+        if (result.value) {
+          allData[key] = JSON.parse(result.value);
+        }
+      }
+    } else {
+      // localStorage에서 모든 fragments 데이터 수집
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith('fragments_')) {
+          const data = localStorage.getItem(key);
+          if (data) {
+            allData[key] = JSON.parse(data);
+          }
+        }
+      }
+    }
+    
+    const exportData = {
+      exportedAt: Date.now(),
+      appVersion: APP_VERSION,
+      schemaVersion: CURRENT_SCHEMA_VERSION,
+      data: allData
+    };
+    
+    return JSON.stringify(exportData, null, 2);
+  } catch (error) {
+    console.error('게임 데이터 백업 실패:', error);
+    throw error;
+  }
+};
+
+// 백업 데이터 복원
+export const importAllGameData = async (backupData: string): Promise<boolean> => {
+  try {
+    const importData = JSON.parse(backupData);
+    
+    if (!importData.data || typeof importData.data !== 'object') {
+      throw new Error('잘못된 백업 데이터 형식');
+    }
+    
+    console.log(`🔄 게임 데이터 복원 시작 (백업 버전: ${importData.appVersion})`);
+    
+    for (const [key, value] of Object.entries(importData.data)) {
+      if (typeof key === 'string' && key.startsWith('fragments_')) {
+        const dataString = JSON.stringify(value);
+        
+        if (Capacitor.isNativePlatform()) {
+          await Preferences.set({ key, value: dataString });
+        } else {
+          localStorage.setItem(key, dataString);
+        }
+      }
+    }
+    
+    console.log('✅ 게임 데이터 복원 완료');
+    return true;
+  } catch (error) {
+    console.error('게임 데이터 복원 실패:', error);
+    return false;
   }
 };

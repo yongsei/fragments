@@ -89,35 +89,28 @@ export const useMysteryGame = ({
   const initialCards = useMemo(() => propInitialCards || scenario.initialCards || [], [propInitialCards, scenario.initialCards]);
   const winCondition = propWinCondition || scenario.winCondition || '';
 
-  const [gameState, setGameState] = useState<GameState>(() => {
-    // 오직 시나리오에서 명시된 initialCards만 초기에 발견된 상태로 설정
-    const initialDiscoveredCardIds = [...initialCards];
-
-    // 초기 상태 (저장된 진행 상태는 useEffect에서 로드)
-    const initialState = {
-      phase: 'playing' as const,
-      currentScenario: scenario,
-      gamePhase: 1 as const,
-      elapsedTime: 0,
-      selectedCards: [],
-      connections: [],
-      discoveredClues: [],
-      discoveredCardIds: initialDiscoveredCardIds,
-      newlyDiscoveredCards: [],
-      cardOrder: [],
-      consecutiveFailures: 0,
+  // 🔄 1단계: 항상 깨끗한 초기 상태로 시작
+  const [gameState, setGameState] = useState<GameState>({
+    phase: 'playing' as const,
+    currentScenario: scenario,
+    gamePhase: 1 as const,
+    elapsedTime: 0,
+    selectedCards: [],
+    connections: [],
+    discoveredClues: [],
+    discoveredCardIds: [...initialCards], // 시나리오에서 명시된 initialCards만
+    newlyDiscoveredCards: [],
+    cardOrder: [],
+    consecutiveFailures: 0,
+    hintsUsed: 0,
+    playerProgress: {
+      totalConnections: 0,
+      correctConnections: 0,
+      wrongConnections: 0,
       hintsUsed: 0,
-      playerProgress: {
-        totalConnections: 0,
-        correctConnections: 0,
-        wrongConnections: 0,
-        hintsUsed: 0,
-        timeSpent: 0,
-        phase: 1
-      }
-    };
-
-    return initialState;
+      timeSpent: 0,
+      phase: 1
+    }
   });
 
   // initialCards 변경 시 discoveredCardIds 업데이트
@@ -142,20 +135,23 @@ export const useMysteryGame = ({
     }
   }, [caseId, initialCards]);
 
-  // 저장된 게임 진행 상태 로드
+  // 🔄 2단계: 초기화 완료 후 저장된 데이터가 있으면 로딩
   useEffect(() => {
     const loadSavedProgress = async () => {
       if (!caseId) return;
+      
+      console.log('🔄 게임 초기화 완료 - 저장된 진행 상태 확인 중...');
       
       try {
         const savedProgress = await loadGameProgress(caseId);
         
         if (savedProgress && !savedProgress.isCompleted) {
-          console.log('저장된 게임 진행 상태를 복원합니다:', savedProgress);
+          console.log('📁 저장된 게임 진행 상태 발견 - 데이터 복원 중...', savedProgress);
           setHasSavedProgress(true);
           
+          // 저장된 상태로 게임 상태 업데이트 (초기 상태 위에 덮어쓰기)
           setGameState(prevState => ({
-            ...prevState,
+            ...prevState, // 깨끗한 초기 상태 유지
             elapsedTime: savedProgress.elapsedTime,
             connections: savedProgress.connections.map((conn, index) => ({
               id: `restored-${index}-${conn.timestamp}`,
@@ -168,15 +164,25 @@ export const useMysteryGame = ({
             hintsUsed: savedProgress.hintsUsed,
             playerProgress: savedProgress.playerProgress
           }));
+          
+          console.log('✅ 저장된 게임 상태 복원 완료');
         } else {
+          console.log('🆕 새 게임 시작 - 저장된 진행 상태 없음');
           setHasSavedProgress(false);
         }
       } catch (error) {
-        console.error('저장된 진행 상태 로드 실패:', error);
+        console.error('❌ 게임 진행 상태 로드 실패:', error);
+        setHasSavedProgress(false);
+        console.log('🆕 오류로 인해 새 게임으로 시작');
       }
     };
 
-    loadSavedProgress();
+    // 컴포넌트 마운트 후 잠시 대기 후 실행 (초기화 완료 보장)
+    const timer = setTimeout(() => {
+      loadSavedProgress();
+    }, 100);
+
+    return () => clearTimeout(timer);
   }, [caseId, initialCards]);
 
 
@@ -431,7 +437,7 @@ export const useMysteryGame = ({
       }, 1000);
       return () => clearTimeout(timer);
     }
-  }, [gameState.elapsedTime, gameWon, showResult]);
+  }, [gameWon, showResult]); // elapsedTime 의존성 제거하여 무한 루프 방지
 
   // 게임 로직 함수들
   const handleCardSelect = (cardId: string) => {
@@ -657,7 +663,7 @@ export const useMysteryGame = ({
     });
 
     setIsConnecting(false);
-  }, [gameState, onCardUnlock, winCondition, attemptHistory, updateAttemptHistory, getSmartFeedback, getCardCombinationKey, showToast, t]);
+  }, [gameState.selectedCards, gameState.currentScenario, gameState.discoveredClues, onCardUnlock, winCondition, attemptHistory, updateAttemptHistory, getSmartFeedback, getCardCombinationKey, showToast, t]); // gameState 전체 대신 필요한 것만 의존성으로
 
   const handleClearSelection = () => {
     setGameState(prev => ({ ...prev, selectedCards: [] }));
@@ -864,7 +870,10 @@ export const useMysteryGame = ({
           timeSpent: gameState.elapsedTime // 저장 시에만 현재 시간으로 업데이트
         },
         timestamp: Date.now(),
-        isCompleted: gameWon || showResult
+        isCompleted: gameWon || showResult,
+        // 새로 추가된 필드들
+        dataVersion: '1.0.0',
+        schemaVersion: 1
       };
 
       // 저장 시도 (에러 시에만 로그 출력)
@@ -897,7 +906,10 @@ export const useMysteryGame = ({
           timeSpent: gameState.elapsedTime // 저장 시에만 현재 시간으로 업데이트
         },
         timestamp: Date.now(),
-        isCompleted: true
+        isCompleted: true,
+        // 새로 추가된 필드들
+        dataVersion: '1.0.0',
+        schemaVersion: 1
       };
 
       saveGameProgress(progressData).catch(error => {

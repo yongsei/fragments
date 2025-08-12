@@ -44,6 +44,8 @@ const SwipeCardGrid: React.FC<SwipeCardGridProps> = ({
 }) => {
   // Swiper 인스턴스들에 대한 ref
   const swiperRefs = useRef<any[]>([]);
+  // 포커스 이동 완료된 카드들을 추적하는 ref (중복 실행 방지)
+  const focusedCardsRef = useRef<Set<string>>(new Set());
   // 화면 크기에 따른 동적 카드 크기 계산 - 카드 크기 증가
   const { spaceBetween, slidesPerView } = useMemo(() => {
     const screenWidth = window.innerWidth;
@@ -113,19 +115,50 @@ const SwipeCardGrid: React.FC<SwipeCardGridProps> = ({
     }
   }, [cards]); // cards만 의존성으로
 
-  // 새로 발견된 카드가 있을 때 0.5초 후 자동 포커스
+  // 새로 발견된 카드가 있을 때 0.5초 후 자동 포커스 (중복 실행 방지)
   useEffect(() => {
     if (!newlyDiscoveredCards || newlyDiscoveredCards.length === 0) return;
 
     const latestCardId = newlyDiscoveredCards[newlyDiscoveredCards.length - 1];
+    
+    // 이미 포커스 이동한 카드인지 확인
+    if (focusedCardsRef.current.has(latestCardId)) {
+      console.log('⏭️ 이미 포커스 이동한 카드라서 건너뜀:', latestCardId);
+      return;
+    }
+    
     console.log('🔔 새 카드 발견! 0.5초 후 포커스 이동:', latestCardId);
     
     const timer = setTimeout(() => {
+      // 포커스 이동 실행
       focusToCard(latestCardId);
+      // 포커스 이동 완료 후 목록에 추가 (중복 방지)
+      focusedCardsRef.current.add(latestCardId);
+      console.log('✅ 포커스 이동 완료, 기록에 추가:', latestCardId);
     }, 500); // 0.5초 지연
 
     return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 정리
   }, [newlyDiscoveredCards, focusToCard]); // focusToCard 의존성 추가
+
+  // 카드 목록이 변경되면 포커스 기록 초기화 (새 게임 시작 시)
+  useEffect(() => {
+    // 카드 목록이 크게 변경되면 포커스 기록 초기화
+    if (cards.length === 0) {
+      console.log('🔄 카드 목록 초기화 - 포커스 기록 리셋');
+      focusedCardsRef.current.clear();
+    }
+  }, [cards.length]);
+
+  // 디버깅: newlyDiscoveredCards 변경 시 상태 로그
+  useEffect(() => {
+    if (newlyDiscoveredCards && newlyDiscoveredCards.length > 0) {
+      console.log('📊 포커스 상태 체크:', {
+        newlyDiscovered: newlyDiscoveredCards,
+        alreadyFocused: Array.from(focusedCardsRef.current),
+        totalCards: cards.length
+      });
+    }
+  }, [newlyDiscoveredCards, cards.length]);
 
   // 탭별 라벨 (주석 처리됨)
   // const getTabLabel = (tabIndex: number) => {

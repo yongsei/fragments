@@ -96,7 +96,7 @@ const AdBanner: React.FC<AdBannerProps> = ({
   return (
     <div className={`ad-banner-space ${className}`} style={{
       width: '100%',
-      height: isAdLoaded ? '50px' : '50px', // 다시 50px로 원복
+      height: isAdLoaded ? '50px' : '0px', // 로드되지 않으면 높이 0으로 설정
       transition: 'height 0.3s ease-in-out',
       backgroundColor: isAdLoaded ? 'transparent' : '#00ff00', // 로드되지 않으면 초록색으로 표시
       display: 'flex',

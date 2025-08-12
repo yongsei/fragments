@@ -120,11 +120,11 @@ export const case3ChEn2: GameScenario = {
     }
   ],
   "connectionRules": [
-    {"id": "rule_B04", "cards": ["B01", "B02"], "result": "Following his intuition, Hastings smells an exotic perfume from Countess Elena's cabin door.", "unlock": "B04"},
-    {"id": "rule_B05", "cards": ["B01", "B02"], "result": "Following his intuition, Hastings finds a newspaper clipping in Dr. Schmidt's cabin.", "unlock": "B05"},
-    {"id": "rule_B06", "cards": ["B01", "B02"], "result": "Following his intuition, Hastings discovers a torn portrait in Samuel Goldberg's cabin.", "unlock": "B06"},
-    {"id": "rule_B07", "cards": ["B01", "B02"], "result": "Following his intuition, Hastings smells medicine from Maria Ivanova's cabin.", "unlock": "B07"},
-    {"id": "rule_B08", "cards": ["B01", "B02"], "result": "Following his intuition, Hastings finds an old map in Colonel John Smith's cabin.", "unlock": "B08"},
+    {"id": "rule_B04", "cards": ["B01", "B03"], "result": "Through Hastings' intuition about the locked-room paradox, he smells an exotic perfume from Countess Elena's cabin door.", "unlock": "B04"},
+    {"id": "rule_B05", "cards": ["B01", "B04"], "result": "Following his intuition about Elena's strange perfume, Hastings finds a newspaper clipping in Dr. Schmidt's cabin.", "unlock": "B05"},
+    {"id": "rule_B06", "cards": ["B01", "B05"], "result": "Following the clue from Schmidt's newspaper clipping, Hastings discovers a torn portrait in Samuel Goldberg's cabin.", "unlock": "B06"},
+    {"id": "rule_B07", "cards": ["B01", "B06"], "result": "Following the clue from Goldberg's torn portrait, Hastings smells medicine from Maria Ivanova's cabin.", "unlock": "B07"},
+    {"id": "rule_B08", "cards": ["B01", "B07"], "result": "Following the clue from Maria's medicine scent, Hastings finds an old map in Colonel John Smith's cabin.", "unlock": "B08"},
     {"id": "rule_B09", "cards": ["B06", "B03"], "result": "Connecting Goldberg's torn portrait and the paradox of the locked room, you deduce that the small metal piece is part of the locked-room trick.", "unlock": "B09"},
     {"id": "rule_B10", "cards": ["B03", "B01"], "result": "Through the paradox of the locked room and Hastings' intuition, you discover a thin thread fragment clutched in Volkov's hand.", "unlock": "B10"},
     {"id": "rule_B11", "cards": ["B10", "B03"], "result": "Connecting the thin thread fragment and the paradox of the locked room, you realize the scratch mark on the inner door was made during the retrieval of the thread.", "unlock": "B11"},

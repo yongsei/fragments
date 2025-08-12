@@ -120,7 +120,7 @@ export const case2ChEn1: GameScenario = {
   ],
   "connectionRules": [
     {"id": "rule_A04", "cards": ["A01", "A03"], "result": "Captain Kai instructs Technician Lia to analyze the decreasing oxygen situation.", "unlock": "A04"},
-    {"id": "rule_A05", "cards": ["A01", "A02"], "result": "Captain Kai reports the Odyssey's situation to Security Officer Jacob and orders him to maintain vigilance.", "unlock": "A05"},
+    {"id": "rule_A05", "cards": ["A01", "A04"], "result": "Captain Kai works with Technician Lia to report the situation to Security Officer Jacob and orders him to maintain vigilance.", "unlock": "A05"},
     {"id": "rule_A06", "cards": ["A01", "A02"], "result": "Captain Kai analyzes the Odyssey's situation by connecting with the Scout Ship.", "unlock": "A06"},
     {"id": "rule_A07", "cards": ["A04", "A06"], "result": "Lia confirms that the Odyssey's airlocks are locked through the connection with the Scout Ship.", "unlock": "A07"},
     {"id": "rule_A08", "cards": ["A02", "A03"], "result": "Through the Odyssey's oxygen decrease and ship status, Gaia's mechanical voice sounds ominous.", "unlock": "A08"},
