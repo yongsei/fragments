@@ -5,23 +5,11 @@ import { Preferences } from '@capacitor/preferences';
 export interface GameProgressData {
   caseId: string;
   hintsUsed: number;
-  connections: Array<{
-    cards: string[];
-    result: string;
-    timestamp: number;
-    isCorrect: boolean;
-  }>;
+  // connections 필드 제거 - 성능 최적화
   discoveredCardIds: string[];
   totalDiscoveredCards: number; // 실제 발견한 카드 수 (안전한 카운트)
   elapsedTime: number;
-  playerProgress: {
-    totalConnections: number;
-    correctConnections: number;
-    wrongConnections: number;
-    hintsUsed: number;
-    timeSpent: number;
-    phase: number;
-  };
+  // playerProgress 필드 제거 - 게임 중에 실시간 계산
   timestamp: number;
   isCompleted: boolean;
   // 데이터 버전 관리 추가
@@ -65,8 +53,15 @@ const migrateGameProgressData = (data: any): GameProgressData => {
   if (data.schemaVersion < CURRENT_SCHEMA_VERSION) {
     console.log(`🔄 데이터 마이그레이션: v${data.schemaVersion} → v${CURRENT_SCHEMA_VERSION}`);
     
-    // 필요한 경우 여기에 마이그레이션 로직 추가
-    // 예: 새로운 필드 추가, 데이터 구조 변경 등
+    // 불필요한 필드 제거 (성능 최적화)
+    if (data.connections) {
+      console.log('🗑️ connections 필드 제거');
+      delete data.connections;
+    }
+    if (data.playerProgress) {
+      console.log('🗑️ playerProgress 필드 제거');
+      delete data.playerProgress;
+    }
     
     data.schemaVersion = CURRENT_SCHEMA_VERSION;
   }
@@ -74,13 +69,12 @@ const migrateGameProgressData = (data: any): GameProgressData => {
   return data as GameProgressData;
 };
 
-// 데이터 무결성 검증
+// 데이터 무결성 검증 - 필수 필드만 체크
 const validateGameProgressData = (data: any): boolean => {
   try {
     return (
       typeof data.caseId === 'string' &&
       typeof data.hintsUsed === 'number' &&
-      Array.isArray(data.connections) &&
       Array.isArray(data.discoveredCardIds) &&
       typeof data.elapsedTime === 'number' &&
       typeof data.timestamp === 'number' &&

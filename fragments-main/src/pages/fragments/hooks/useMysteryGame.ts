@@ -2,19 +2,19 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import type { GameScenario } from '../games/case5/chapter1/scenario_kr';
 import { Card, Connection } from '../types';
 import type { CaseFeedbackData } from '../games/case5/chapter1/feedbackData_kr';
-import { 
-  saveGameProgress, 
-  loadGameProgress, 
-  clearGameProgress, 
+import {
+  saveGameProgress,
+  loadGameProgress,
+  clearGameProgress,
   saveChapterCompletion,
-  type GameProgressData 
+  type GameProgressData
 } from '../utils/gameProgress';
 import { useLanguage } from './useLanguage';
 
 // Utility function to identify unlock-only cards
 const getUnlockOnlyCards = (scenario: GameScenario, initialCards: string[]): string[] => {
   const unlockOnlyCards: string[] = [];
-  
+
   // Get all card IDs that appear in unlock rules
   const unlockableCardIds = new Set<string>();
   (scenario.connectionRules || []).forEach(rule => {
@@ -23,21 +23,21 @@ const getUnlockOnlyCards = (scenario: GameScenario, initialCards: string[]): str
       unlockIds.forEach((id: string) => unlockableCardIds.add(id));
     }
   });
-  
+
   // Get all initial card IDs (cards that should be visible from the start)
   const initialCardIds = new Set([
     ...(scenario.suspects || []).map(s => s.id),
     ...(scenario.locations || []).map(l => l.id),
     ...initialCards
   ]);
-  
+
   // Cards that are unlockable but not in initial cards are "unlock-only"
   unlockableCardIds.forEach(cardId => {
     if (!initialCardIds.has(cardId)) {
       unlockOnlyCards.push(cardId);
     }
   });
-  
+
   return unlockOnlyCards;
 };
 
@@ -84,7 +84,28 @@ export const useMysteryGame = ({
   caseId
 }: UseMysteryGameProps) => {
   const { t } = useLanguage();
-  
+
+  // 타이머 정리를 위한 ref들
+  const timersRef = useRef<NodeJS.Timeout[]>([]);
+
+  // 타이머 관리 헬퍼 함수
+  const addTimer = useCallback((timer: NodeJS.Timeout) => {
+    timersRef.current.push(timer);
+  }, []);
+
+  const clearAllTimers = useCallback(() => {
+    timersRef.current.forEach(timer => clearTimeout(timer));
+    timersRef.current = [];
+  }, []);
+
+  // 컴포넌트 언마운트 시 모든 타이머 정리
+  useEffect(() => {
+    return () => {
+      console.log('🧹 useMysteryGame: 모든 타이머 정리');
+      clearAllTimers();
+    };
+  }, [clearAllTimers]);
+
   // scenario에서 초기 카드와 승리 조건 가져오기
   const initialCards = useMemo(() => propInitialCards || scenario.initialCards || [], [propInitialCards, scenario.initialCards]);
   const winCondition = propWinCondition || scenario.winCondition || '';
@@ -119,7 +140,7 @@ export const useMysteryGame = ({
       setGameState(prevState => ({
         ...prevState,
         discoveredCardIds: Array.from(new Set([
-          ...prevState.discoveredCardIds, 
+          ...prevState.discoveredCardIds,
           ...initialCards
         ]))
       }));
@@ -139,32 +160,26 @@ export const useMysteryGame = ({
   useEffect(() => {
     const loadSavedProgress = async () => {
       if (!caseId) return;
-      
+
       console.log('🔄 게임 초기화 완료 - 저장된 진행 상태 확인 중...');
-      
+
       try {
         const savedProgress = await loadGameProgress(caseId);
-        
+
         if (savedProgress && !savedProgress.isCompleted) {
           console.log('📁 저장된 게임 진행 상태 발견 - 데이터 복원 중...', savedProgress);
           setHasSavedProgress(true);
-          
+
           // 저장된 상태로 게임 상태 업데이트 (초기 상태 위에 덮어쓰기)
           setGameState(prevState => ({
             ...prevState, // 깨끗한 초기 상태 유지
             elapsedTime: savedProgress.elapsedTime,
-            connections: savedProgress.connections.map((conn, index) => ({
-              id: `restored-${index}-${conn.timestamp}`,
-              cards: conn.cards,
-              result: conn.result,
-              timestamp: conn.timestamp,
-              verified: conn.isCorrect
-            })),
+            connections: [], // 연결 기록은 복원하지 않음 (성능 최적화)
             discoveredCardIds: Array.from(new Set([...initialCards, ...savedProgress.discoveredCardIds])),
-            hintsUsed: savedProgress.hintsUsed,
-            playerProgress: savedProgress.playerProgress
+            hintsUsed: savedProgress.hintsUsed
+            // playerProgress는 복원하지 않음 (게임 중에 다시 계산됨)
           }));
-          
+
           console.log('✅ 저장된 게임 상태 복원 완료');
         } else {
           console.log('🆕 새 게임 시작 - 저장된 진행 상태 없음');
@@ -222,12 +237,12 @@ export const useMysteryGame = ({
   const updateAttemptHistory = useCallback((selectedCards: string[]) => {
     const combinationKey = getCardCombinationKey(selectedCards);
     const now = Date.now();
-    
+
     setAttemptHistory(prev => {
       const existingAttempt = prev.find(attempt => attempt.cardId === combinationKey);
       if (existingAttempt) {
-        return prev.map(attempt => 
-          attempt.cardId === combinationKey 
+        return prev.map(attempt =>
+          attempt.cardId === combinationKey
             ? { ...attempt, attempts: attempt.attempts + 1, lastAttempt: now }
             : attempt
         );
@@ -240,21 +255,21 @@ export const useMysteryGame = ({
   const getProximityLevel = useCallback((selectedCards: string[], connectionRules: any[]): 'none' | 'partial' | 'close' => {
     let maxMatches = 0;
     let hasPartialMatch = false;
-    
+
     // 모든 규칙을 검사하여 최고 매칭도 찾기
     for (const rule of connectionRules) {
       const ruleCards = rule.cards || [];
       const matchingCards = selectedCards.filter(card => ruleCards.includes(card));
-      
+
       if (matchingCards.length > maxMatches) {
         maxMatches = matchingCards.length;
       }
-      
+
       if (matchingCards.length === 1) {
         hasPartialMatch = true;
       }
     }
-    
+
     // 정확한 매칭 (하지만 다른 규칙)은 close로 분류
     if (maxMatches === 2) return 'close';
     if (maxMatches === 1 || hasPartialMatch) return 'partial';
@@ -262,17 +277,17 @@ export const useMysteryGame = ({
   }, []);
 
   const getSmartFeedback = useCallback((
-    selectedCards: string[], 
-    connectionRules: any[], 
-    attemptCount: number, 
+    selectedCards: string[],
+    connectionRules: any[],
+    attemptCount: number,
     consecutiveFailures: number
   ): { message: string; type: 'error' | 'info'; cardEffects?: { cardId: string; effect: 'warm' | 'cold' | 'neutral' }[] } => {
     const proximityLevel = getProximityLevel(selectedCards, connectionRules);
     const hintLevel = Math.min(Math.floor(consecutiveFailures / 2), 2); // 0, 1, 2 단계
-    
+
     // 케이스별 피드백 데이터 사용
     const caseFeedback = feedbackData;
-    
+
     // 카드별 시각적 효과 결정
     const cardEffects = selectedCards.map(cardId => {
       const isInAnyRule = connectionRules.some(rule => rule.cards?.includes(cardId));
@@ -281,7 +296,7 @@ export const useMysteryGame = ({
         effect: (isInAnyRule ? 'warm' : 'cold') as 'warm' | 'cold' | 'neutral'
       };
     });
-    
+
     // 케이스별 맞춤 피드백이 있는 경우 - 배열 기반 매칭
     if (caseFeedback) {
       // 선택된 카드들과 일치하는 피드백 찾기 (순서 무관)
@@ -289,7 +304,7 @@ export const useMysteryGame = ({
         if (feedback.cards.length !== selectedCards.length) return false;
         return feedback.cards.every(card => selectedCards.includes(card));
       });
-      
+
       if (feedbackData) {
         const message = feedbackData.messages[Math.min(hintLevel, feedbackData.messages.length - 1)];
         return { message, type: 'info', cardEffects };
@@ -305,7 +320,7 @@ export const useMysteryGame = ({
       ];
       return { message: hints[hintLevel], type: 'info', cardEffects };
     }
-    
+
     if (proximityLevel === 'partial') {
       const hints = [
         t('keyClueFound'),
@@ -316,17 +331,17 @@ export const useMysteryGame = ({
     }
 
 
-    
+
     if (attemptCount >= 3) {
       const encouragingMessages = [
         t('notConnected'),
         "🤔 새로운 시각이 필요할 것 같습니다. 사건의 시간순서를 고려해보세요.",
         "🔄 이 단서들 사이의 직접적 연관성은 보이지 않습니다. 다른 연결고리를 찾아보세요."
       ];
-      return { 
-        message: encouragingMessages[Math.min(hintLevel, 2)], 
+      return {
+        message: encouragingMessages[Math.min(hintLevel, 2)],
         type: 'info',
-        cardEffects 
+        cardEffects
       };
     }
 
@@ -335,109 +350,114 @@ export const useMysteryGame = ({
       t('noConnection'),
       "🔍 이 단서들은 서로 연결되지 않는 것 같습니다. 다른 접근이 필요해 보입니다."
     ];
-    
-    return { 
-      message: defaultMessages[Math.min(hintLevel, 2)], 
+
+    return {
+      message: defaultMessages[Math.min(hintLevel, 2)],
       type: 'error',
-      cardEffects 
+      cardEffects
     };
   }, [getProximityLevel, feedbackData, t]);
 
-  // 카드 설정
-  useEffect(() => {
-    if (gameState.currentScenario) {
-      const allScenarioCards: Card[] = [
-        ...((gameState.currentScenario.suspects || [])).map(suspect => ({
-          id: suspect.id,
-          name: suspect.name,
-          type: 'suspect' as const,
-          description: suspect.role,
-          details: suspect.description,
-          discovered: false
-        })),
-        ...((gameState.currentScenario.evidence || [])).map((evidence) => ({
-          id: evidence.id,
-          name: evidence.name,
-          type: 'evidence' as const,
-          description: evidence.description,
-          details: evidence.details,
-          discovered: false
-        })),
-        ...((gameState.currentScenario.locations || [])).map(location => ({
-          id: location.id,
-          name: location.name,
-          type: 'location' as const,
-          description: location.description,
-          details: location.details,
-          discovered: false
-        }))
-      ];
+  // 카드 설정 - 메모이제이션으로 최적화
+  const memoizedCards = useMemo(() => {
+    if (!gameState.currentScenario) return [];
 
-      // Get unlock-only cards to filter them out
-      const unlockOnlyCards = getUnlockOnlyCards(gameState.currentScenario, initialCards);
-      
-      // Filter out unlock-only cards that haven't been discovered yet
-      const visibleCards = allScenarioCards.filter(card => {
-        // If it's an unlock-only card and hasn't been discovered, hide it
-        if (unlockOnlyCards.includes(card.id) && !gameState.discoveredCardIds.includes(card.id)) {
-          return false;
+    console.log('🔄 카드 재계산 중...');
+    const allScenarioCards: Card[] = [
+      ...((gameState.currentScenario.suspects || [])).map(suspect => ({
+        id: suspect.id,
+        name: suspect.name,
+        type: 'suspect' as const,
+        description: suspect.role,
+        details: suspect.description,
+        discovered: false
+      })),
+      ...((gameState.currentScenario.evidence || [])).map((evidence) => ({
+        id: evidence.id,
+        name: evidence.name,
+        type: 'evidence' as const,
+        description: evidence.description,
+        details: evidence.details,
+        discovered: false
+      })),
+      ...((gameState.currentScenario.locations || [])).map(location => ({
+        id: location.id,
+        name: location.name,
+        type: 'location' as const,
+        description: location.description,
+        details: location.details,
+        discovered: false
+      }))
+    ];
+
+    // Get unlock-only cards to filter them out
+    const unlockOnlyCards = getUnlockOnlyCards(gameState.currentScenario, initialCards);
+
+    // Filter out unlock-only cards that haven't been discovered yet
+    const visibleCards = allScenarioCards.filter(card => {
+      // If it's an unlock-only card and hasn't been discovered, hide it
+      if (unlockOnlyCards.includes(card.id) && !gameState.discoveredCardIds.includes(card.id)) {
+        return false;
+      }
+      return true;
+    });
+
+    const finalCards = visibleCards.map(card => ({
+      ...card,
+      discovered: gameState.discoveredCardIds.includes(card.id),
+      isNew: gameState.newlyDiscoveredCards.includes(card.id) // NEW 태그용
+    }));
+
+    // 카드 순서 관리: 한 번 정해진 순서는 유지
+    let sortedCards = finalCards;
+
+    // cardOrder가 비어있으면 초기 순서 설정
+    if (gameState.cardOrder.length === 0) {
+      const initialOrder = finalCards.map(card => card.id);
+      setGameState(prev => ({ ...prev, cardOrder: initialOrder }));
+    } else {
+      // 기존 순서에 따라 정렬하고, 새로운 카드는 맨 뒤에 추가
+      const orderedCards: typeof finalCards = [];
+      const newCards: typeof finalCards = [];
+
+      // 기존 순서대로 카드 배치
+      gameState.cardOrder.forEach(cardId => {
+        const card = finalCards.find(c => c.id === cardId);
+        if (card) {
+          orderedCards.push(card);
         }
-        return true;
       });
 
-      const finalCards = visibleCards.map(card => ({
-        ...card,
-        discovered: gameState.discoveredCardIds.includes(card.id),
-        isNew: gameState.newlyDiscoveredCards.includes(card.id) // NEW 태그용
-      }));
+      // 새로운 카드들 찾기
+      finalCards.forEach(card => {
+        if (!gameState.cardOrder.includes(card.id)) {
+          newCards.push(card);
+        }
+      });
 
-      // 카드 순서 관리: 한 번 정해진 순서는 유지
-      let sortedCards = finalCards;
-      
-      // cardOrder가 비어있으면 초기 순서 설정
-      if (gameState.cardOrder.length === 0) {
-        const initialOrder = finalCards.map(card => card.id);
-        setGameState(prev => ({ ...prev, cardOrder: initialOrder }));
-      } else {
-        // 기존 순서에 따라 정렬하고, 새로운 카드는 맨 뒤에 추가
-        const orderedCards: typeof finalCards = [];
-        const newCards: typeof finalCards = [];
-        
-        // 기존 순서대로 카드 배치
-        gameState.cardOrder.forEach(cardId => {
-          const card = finalCards.find(c => c.id === cardId);
-          if (card) {
-            orderedCards.push(card);
-          }
-        });
-        
-        // 새로운 카드들 찾기
-        finalCards.forEach(card => {
-          if (!gameState.cardOrder.includes(card.id)) {
-            newCards.push(card);
-          }
-        });
-        
-        sortedCards = [...orderedCards, ...newCards];
-      }
-
-      setCards(sortedCards);
+      sortedCards = [...orderedCards, ...newCards];
     }
+
+    return sortedCards;
   }, [gameState.currentScenario, gameState.discoveredCardIds, gameState.newlyDiscoveredCards, gameState.cardOrder, initialCards]);
 
-  // 진행 시간 타이머
+  // 메모이제이션된 카드를 상태에 설정
+  useEffect(() => {
+    setCards(memoizedCards);
+  }, [memoizedCards]);
+
+  // 진행 시간 타이머 - 성능 최적화
   useEffect(() => {
     if (!gameWon && !showResult) {
       const timer = setTimeout(() => {
-        setGameState(prev => ({ 
-          ...prev, 
+        setGameState(prev => ({
+          ...prev,
           elapsedTime: prev.elapsedTime + 1
-          // playerProgress.timeSpent 제거 - 저장 시에만 계산
         }));
       }, 1000);
       return () => clearTimeout(timer);
     }
-  }, [gameWon, showResult]); // elapsedTime 의존성 제거하여 무한 루프 방지
+  }, [gameState.elapsedTime, gameWon, showResult]); // 의존성 명시적 추가
 
   // 게임 로직 함수들
   const handleCardSelect = (cardId: string) => {
@@ -472,11 +492,11 @@ export const useMysteryGame = ({
   // 🔧 개선된 Toast 표시 함수 - 겹침 문제 해결 (handleConnect보다 먼저 정의)
   const showToast = useCallback((message: string, type: 'success' | 'error' | 'info' | 'hint') => {
     const timestamp = Date.now();
-    
+
     // 기존 Toast 상태 확인
     setToastMessage(prev => {
       const hasExistingToast = prev.isVisible;
-      
+
       if (hasExistingToast) {
         // 기존 Toast가 있으면 즉시 숨기고 잠시 후 새 Toast 표시
         setTimeout(() => {
@@ -487,7 +507,7 @@ export const useMysteryGame = ({
             timestamp
           });
         }, 150); // 150ms 지연으로 애니메이션 완료 대기
-        
+
         return { ...prev, isVisible: false };
       } else {
         // 기존 Toast가 없으면 즉시 새 Toast 표시
@@ -513,12 +533,12 @@ export const useMysteryGame = ({
 
     await new Promise(resolve => setTimeout(resolve, 1000));
 
-    const isAlreadyDiscovered = !!(rule && rule.unlock && 
+    const isAlreadyDiscovered = !!(rule && rule.unlock &&
       rule.unlock.split(',').every((item: string) => gameState.discoveredClues.includes(item.trim())));
 
     let resultMessage: string;
     let messageType: 'success' | 'error' | 'info' = 'error';
-    
+
     if (rule) {
       if (isAlreadyDiscovered) {
         resultMessage = t('alreadyChecked');
@@ -532,17 +552,17 @@ export const useMysteryGame = ({
       updateAttemptHistory(gameState.selectedCards);
       const combinationKey = getCardCombinationKey(gameState.selectedCards);
       const attemptCount = attemptHistory.find(a => a.cardId === combinationKey)?.attempts || 1;
-      
+
       const smartFeedback = getSmartFeedback(
         gameState.selectedCards,
         gameState.currentScenario.connectionRules || [],
         attemptCount,
         gameState.consecutiveFailures
       );
-      
+
       resultMessage = smartFeedback.message;
       messageType = smartFeedback.type;
-      
+
       // 카드별 시각적 효과 적용
       if (smartFeedback.cardEffects) {
         const now = Date.now();
@@ -550,11 +570,14 @@ export const useMysteryGame = ({
           ...effect,
           timestamp: now
         })));
-        
-        // 3초 후 피드백 효과 제거
-        setTimeout(() => {
+
+        // 3초 후 피드백 효과 제거 - 타이머 정리 추가
+        const feedbackTimer = setTimeout(() => {
           setCardFeedback(prev => prev.filter(feedback => feedback.timestamp !== now));
         }, 3000);
+
+        // 컴포넌트 언마운트 시 타이머 정리를 위해 ref에 저장
+        return () => clearTimeout(feedbackTimer);
       }
     }
 
@@ -571,13 +594,13 @@ export const useMysteryGame = ({
     };
 
     setGameState(prev => {
-      const isNewDiscovery = rule && rule.unlock && 
+      const isNewDiscovery = rule && rule.unlock &&
         !rule.unlock.split(',').every((item: string) => prev.discoveredClues.includes(item.trim()));
 
       // 연속 실패 카운트 관리 및 자동 힌트 트리거
       const newWrongConnections = !isNewDiscovery ? prev.playerProgress.wrongConnections + 1 : prev.playerProgress.wrongConnections;
       const newConsecutiveFailures = isNewDiscovery ? 0 : prev.consecutiveFailures + 1; // 성공하면 0으로 초기화
-      
+
 
 
       let newDiscoveredClues = prev.discoveredClues;
@@ -589,15 +612,15 @@ export const useMysteryGame = ({
           }
         }
       }
-      
+
       let newDiscoveredCardIds = prev.discoveredCardIds;
       let newlyDiscoveredCards = prev.newlyDiscoveredCards;
       let newCardOrder = prev.cardOrder;
-      
+
       if (isNewDiscovery && rule.unlock) {
         // 새로운 카드가 추가되면 이전 NEW 마크들을 제거하고 새로운 카드만 NEW로 설정
         const newCardsToAdd: string[] = [];
-        
+
         // 커스텀 unlock 로직이 있으면 사용, 없으면 기본 로직
         if (onCardUnlock) {
           const cardsToUnlock = onCardUnlock(rule.unlock);
@@ -626,7 +649,7 @@ export const useMysteryGame = ({
             }
           }
         }
-        
+
         // 새로운 카드가 실제로 추가되었다면, 이전 NEW 마크는 제거하고 새로운 카드만 NEW로 설정
         if (newCardsToAdd.length > 0) {
           newlyDiscoveredCards = newCardsToAdd;
@@ -654,10 +677,10 @@ export const useMysteryGame = ({
         consecutiveFailures: newConsecutiveFailures,
         selectedCards: [],
         playerProgress: {
-            ...prev.playerProgress,
-            totalConnections: prev.playerProgress.totalConnections + 1,
-            correctConnections: isNewDiscovery ? prev.playerProgress.correctConnections + 1 : prev.playerProgress.correctConnections,
-            wrongConnections: newWrongConnections,
+          ...prev.playerProgress,
+          totalConnections: prev.playerProgress.totalConnections + 1,
+          correctConnections: isNewDiscovery ? prev.playerProgress.correctConnections + 1 : prev.playerProgress.correctConnections,
+          wrongConnections: newWrongConnections,
         }
       };
     });
@@ -679,10 +702,10 @@ export const useMysteryGame = ({
     // 1. 플레이어가 가진 발견된 카드들 확인
     const discoveredCards = cards.filter(card => card.discovered);
     const discoveredCardIds = discoveredCards.map(card => card.id);
-    
+
     // 2. 이미 성공한 연결들 확인 - 더 정확한 비교
     const successfulConnections = gameState.connections.filter(conn => conn.verified);
-    const usedCombinations = new Set(successfulConnections.map(conn => 
+    const usedCombinations = new Set(successfulConnections.map(conn =>
       conn.cards.sort().join(',')
     ));
 
@@ -690,23 +713,23 @@ export const useMysteryGame = ({
     const connectionRules = gameState.currentScenario?.connectionRules || [];
     for (const rule of connectionRules) {
       if (!rule.cards || !rule.unlock) continue;
-      
+
       // 조건 1: 규칙에 필요한 모든 카드를 플레이어가 가지고 있는가?
-      const hasAllCards = rule.cards.every((cardId: string) => 
+      const hasAllCards = rule.cards.every((cardId: string) =>
         discoveredCardIds.includes(cardId)
       );
-      
+
       // 조건 2: 해당 조합을 아직 사용하지 않았는가?
       const combinationKey = rule.cards.sort().join(',');
       const notUsedYet = !usedCombinations.has(combinationKey);
-      
+
       if (hasAllCards && notUsedYet) {
         // 조합 가능한 규칙 발견! 모든 필요한 카드들을 명시
         const cardNames = rule.cards.map((cardId: string) => {
           const card = cardMap.get(cardId); // 🚀 O(1) 검색으로 최적화
           return card ? card.name : cardId;
         });
-        
+
         let hintMessage = '';
         if (rule.cards.length === 2) {
           hintMessage = t('hintTwoCards').replace('{0}', cardNames[0]).replace('{1}', cardNames[1]);
@@ -715,26 +738,26 @@ export const useMysteryGame = ({
         } else {
           hintMessage = t('hintMultipleCards').replace('{0}', cardNames.join(', '));
         }
-        
+
         // 모든 관련 카드들을 순차적으로 하이라이트
         rule.cards.forEach((cardId: string, index: number) => {
           setTimeout(() => {
             setHighlightedCardId(cardId);
           }, index * 1000); // 1초 간격으로 순차 하이라이트
         });
-        
+
         // 마지막에 하이라이트 제거
         setTimeout(() => {
           setHighlightedCardId(null);
         }, rule.cards.length * 1000 + 3000);
-        
+
         // 토스트로 힌트 표시
         showToast(hintMessage, 'hint');
-        
+
         return hintMessage;
       }
     }
-    
+
     // 조합 가능한 규칙이 없으면 다른 힌트 제공
     const availableHints = [
       t('tryDifferentCombos'),
@@ -742,20 +765,20 @@ export const useMysteryGame = ({
       t('connectSuspectEvidence'),
       t('connectLocationEvidence')
     ];
-    
+
     const randomHint = availableHints[Math.floor(Math.random() * availableHints.length)];
     const finalHintMessage = t('hintPrefix').replace('{0}', randomHint);
     showToast(finalHintMessage, 'hint');
-    
+
     return finalHintMessage;
   }, [cards, cardMap, gameState.connections, gameState.currentScenario?.connectionRules, setHighlightedCardId, showToast, t]);
 
   const handleRequestHint = useCallback(() => {
     if (gameState.hintsUsed >= maxHints) return;
-    
+
     // 고급 힌트 생성 (기존 로직 유지)
     const actualHintMessage = generateAdvancedHint();
-    
+
     // 실제 힌트 메시지를 연결 기록에 추가
     const hintMessage = actualHintMessage;
     const hintConnection: Connection = {
@@ -767,7 +790,7 @@ export const useMysteryGame = ({
       isHint: true,
       hintMessage: hintMessage
     };
-    
+
     // 힌트 사용 횟수 증가 및 힌트 기록 추가
     setGameState(prev => ({
       ...prev,
@@ -780,7 +803,7 @@ export const useMysteryGame = ({
   // 상단 정답 힌트 (새로운 힌트 시스템)
   const handleAnswerHint = useCallback(() => {
     const undiscoveredCards = cards.filter(card => !card.discovered);
-    
+
     if (undiscoveredCards.length === 0) {
       showToast(t('allCardsFound'), 'info');
       return;
@@ -789,21 +812,21 @@ export const useMysteryGame = ({
     // 연결 가능한 카드 조합 중 하나를 찾아서 정답을 알려줌
     const availableCards = cards.filter(card => card.discovered);
     const connectionRules = scenario.connectionRules || [];
-    
+
     // 가능한 연결 중 하나를 찾기
     for (const rule of connectionRules) {
       if (rule.cards && rule.unlock) {
-        const requiredCards = rule.cards.filter((cardId: string) => 
+        const requiredCards = rule.cards.filter((cardId: string) =>
           availableCards.some(card => card.id === cardId)
         );
-        
+
         if (requiredCards.length === rule.cards.length) {
           // 이미 해결된 조합인지 확인
-          const alreadySolved = gameState.connections.some(conn => 
-            conn.verified && 
+          const alreadySolved = gameState.connections.some(conn =>
+            conn.verified &&
             conn.cards.sort().join(',') === rule.cards.sort().join(',')
           );
-          
+
           if (!alreadySolved) {
             // 정답 조합을 자동으로 선택
             setGameState(prev => ({
@@ -812,7 +835,7 @@ export const useMysteryGame = ({
               hintsUsed: prev.hintsUsed + 1,
               playerProgress: { ...prev.playerProgress, hintsUsed: prev.playerProgress.hintsUsed + 1 }
             }));
-            
+
             // 선택된 카드들을 강조 표시
             rule.cards.forEach((cardId: string, index: number) => {
               setTimeout(() => {
@@ -820,7 +843,7 @@ export const useMysteryGame = ({
                 setTimeout(() => setHighlightedCardId(null), 1000);
               }, index * 200);
             });
-            
+
             showToast(
               t('answerHint').replace('{0}', rule.cards.length.toString()),
               'info'
@@ -830,10 +853,10 @@ export const useMysteryGame = ({
         }
       }
     }
-    
+
     // 가능한 연결이 없으면 일반적인 힌트 제공
     showToast(t('generalHint'), 'info');
-    
+
     setGameState(prev => ({
       ...prev,
       hintsUsed: prev.hintsUsed + 1,
@@ -850,39 +873,47 @@ export const useMysteryGame = ({
     setToastMessage(prev => ({ ...prev, isVisible: false }));
   }, []);
 
-  // 진행 상태 저장 (연결 성공 또는 힌트 사용 시에만)
+  // 진행 상태 저장 (힌트 사용이나 새 카드 발견 시에만) - 디바운싱 적용
   useEffect(() => {
-    if (caseId && (gameState.connections.length > 0 || gameState.hintsUsed > 0)) {
-      const progressData: GameProgressData = {
-        caseId,
-        hintsUsed: gameState.hintsUsed,
-        connections: gameState.connections.map(conn => ({
-          cards: conn.cards,
-          result: conn.result,
-          timestamp: conn.timestamp || Date.now(),
-          isCorrect: conn.verified || false
-        })),
-        discoveredCardIds: gameState.discoveredCardIds,
-        totalDiscoveredCards: cards.filter(card => card.discovered).length, // 실제 발견한 카드 수
-        elapsedTime: gameState.elapsedTime, // 현재 시간을 저장
-        playerProgress: {
-          ...gameState.playerProgress,
-          timeSpent: gameState.elapsedTime // 저장 시에만 현재 시간으로 업데이트
-        },
-        timestamp: Date.now(),
-        isCompleted: gameWon || showResult,
-        // 새로 추가된 필드들
-        dataVersion: '1.0.0',
-        schemaVersion: 1
-      };
+    // 힌트를 사용했거나, 초기 카드보다 더 많은 카드를 발견했을 때만 저장
+    const shouldSave = caseId && (
+      gameState.hintsUsed > 0 ||
+      gameState.discoveredCardIds.length > initialCards.length
+    );
 
-      // 저장 시도 (에러 시에만 로그 출력)
-      saveGameProgress(progressData).catch(error => {
-        console.error('게임 진행 상태 저장 실패:', error);
-      });
+    if (shouldSave) {
+      // 디바운싱: 1초 후에 저장 (너무 자주 저장하지 않도록)
+      const saveTimer = setTimeout(() => {
+        console.log('💾 게임 진행 상태 저장:', {
+          hintsUsed: gameState.hintsUsed,
+          discoveredCards: gameState.discoveredCardIds.length,
+          initialCards: initialCards.length,
+          newCards: gameState.discoveredCardIds.length - initialCards.length
+        });
+        const progressData: GameProgressData = {
+          caseId,
+          hintsUsed: gameState.hintsUsed,
+          discoveredCardIds: gameState.discoveredCardIds,
+          totalDiscoveredCards: cards.filter(card => card.discovered).length, // 실제 발견한 카드 수
+          elapsedTime: gameState.elapsedTime, // 현재 시간을 저장
+          // playerProgress 제거 - 게임 완료 시 어차피 삭제되므로 불필요
+          timestamp: Date.now(),
+          isCompleted: gameWon || showResult,
+          // 새로 추가된 필드들
+          dataVersion: '1.0.0',
+          schemaVersion: 1
+        };
+
+        // 저장 시도 (에러 시에만 로그 출력)
+        saveGameProgress(progressData).catch(error => {
+          console.error('게임 진행 상태 저장 실패:', error);
+        });
+      }, 1000); // 1초 디바운싱
+
+      return () => clearTimeout(saveTimer);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps  
-  }, [caseId, gameState.connections.length, gameState.hintsUsed, gameState.discoveredCardIds.length, gameWon, showResult]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps  
+  }, [caseId, gameState.hintsUsed, gameState.discoveredCardIds.length, gameWon, showResult]);
 
   // 게임 완료 시 진행 상태 삭제
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -892,19 +923,10 @@ export const useMysteryGame = ({
       const progressData: GameProgressData = {
         caseId,
         hintsUsed: gameState.hintsUsed,
-        connections: gameState.connections.map(conn => ({
-          cards: conn.cards,
-          result: conn.result,
-          timestamp: conn.timestamp || Date.now(),
-          isCorrect: conn.verified || false
-        })),
         discoveredCardIds: gameState.discoveredCardIds,
         totalDiscoveredCards: cards.filter(card => card.discovered).length, // 실제 발견한 카드 수
         elapsedTime: gameState.elapsedTime,
-        playerProgress: {
-          ...gameState.playerProgress,
-          timeSpent: gameState.elapsedTime // 저장 시에만 현재 시간으로 업데이트
-        },
+        // playerProgress 제거 - 게임 완료 시 어차피 삭제되므로 불필요
         timestamp: Date.now(),
         isCompleted: true,
         // 새로 추가된 필드들
@@ -912,8 +934,10 @@ export const useMysteryGame = ({
         schemaVersion: 1
       };
 
-      saveGameProgress(progressData).catch(error => {
-        console.error('게임 완료 상태 저장 실패:', error);
+      // 게임 완료 시 세이브 파일 즉시 삭제 (저장하지 않고 바로 삭제)
+      console.log('🎉 게임 완료! 세이브 파일 삭제 중...');
+      clearGameProgress(caseId).catch(error => {
+        console.error('세이브 파일 삭제 실패:', error);
       });
 
       // 챕터 완료 상태 저장 (caseId에서 챕터 정보 추출)
@@ -921,35 +945,28 @@ export const useMysteryGame = ({
       if (chapterMatch) {
         const baseCaseId = chapterMatch[1];
         const chapterNumber = parseInt(chapterMatch[2]);
-        
+
         saveChapterCompletion(baseCaseId, chapterNumber).catch(error => {
           console.error('챕터 완료 상태 저장 실패:', error);
         });
-        
+
         console.log(`챕터 ${chapterNumber} 완료! 케이스: ${baseCaseId}`);
       }
-      
-      // 3초 후 진행 상태 삭제 (결과 화면을 보여준 후)
-      setTimeout(async () => {
-        try {
-          await clearGameProgress(caseId);
-        } catch (error) {
-          console.error('게임 진행 상태 삭제 실패:', error);
-        }
-      }, 3000);
+
+      // 세이브 파일은 이미 위에서 즉시 삭제했으므로 추가 작업 불필요
     }
   }, [caseId, gameWon, showResult, gameState, cards]);
 
   // 광고 시청 후 추가 힌트 제공 기능
   const handleAdHintReward = useCallback(() => {
     console.log('광고 시청 완료! 추가 힌트 제공');
-    
+
     // 추가 힌트를 제공 (generateAdvancedHint 사용)
     const bonusHint = generateAdvancedHint();
-    
+
     // 토스트 메시지로 힌트 표시
     showToast(`🎁 광고 보상 힌트: ${bonusHint}`, 'hint');
-    
+
     // 연결 기록에 광고 힌트 추가
     setGameState(prev => {
       const newConnection = {
@@ -961,13 +978,13 @@ export const useMysteryGame = ({
         isHint: true,
         hintMessage: bonusHint
       };
-      
+
       return {
         ...prev,
         connections: [...prev.connections, newConnection]
       };
     });
-    
+
     console.log('광고 보상 힌트 제공:', bonusHint);
   }, [generateAdvancedHint, showToast]);
 
@@ -985,7 +1002,7 @@ export const useMysteryGame = ({
     winCondition,
     winConditionCardDiscovered,
     hasSavedProgress,
-    
+
     // Game Actions
     handleCardSelect,
     handleConnect,
@@ -995,7 +1012,7 @@ export const useMysteryGame = ({
     handleRestart,
     handleToastClose,
     handleAdHintReward, // 광고 시청 후 추가 힌트 제공
-    
+
     // Setters for UI components
     setHighlightedCardId,
     showToast
