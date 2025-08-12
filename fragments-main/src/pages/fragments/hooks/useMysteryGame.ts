@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import type { GameScenario } from '../games/case5/chapter1/scenario_kr';
 import { Card, Connection } from '../types';
 import type { CaseFeedbackData } from '../games/case5/chapter1/feedbackData_kr';
@@ -89,9 +89,6 @@ export const useMysteryGame = ({
   const timersRef = useRef<NodeJS.Timeout[]>([]);
 
   // 타이머 관리 헬퍼 함수
-  const addTimer = useCallback((timer: NodeJS.Timeout) => {
-    timersRef.current.push(timer);
-  }, []);
 
   const clearAllTimers = useCallback(() => {
     timersRef.current.forEach(timer => clearTimeout(timer));
@@ -526,6 +523,8 @@ export const useMysteryGame = ({
 
     setIsConnecting(true);
 
+    try {
+
     const rule = (gameState.currentScenario.connectionRules || []).find((rule: any) =>
       rule.cards.length === gameState.selectedCards.length &&
       rule.cards.every((cardId: string) => gameState.selectedCards.includes(cardId))
@@ -571,13 +570,10 @@ export const useMysteryGame = ({
           timestamp: now
         })));
 
-        // 3초 후 피드백 효과 제거 - 타이머 정리 추가
-        const feedbackTimer = setTimeout(() => {
+        // 3초 후 피드백 효과 제거
+        setTimeout(() => {
           setCardFeedback(prev => prev.filter(feedback => feedback.timestamp !== now));
         }, 3000);
-
-        // 컴포넌트 언마운트 시 타이머 정리를 위해 ref에 저장
-        return () => clearTimeout(feedbackTimer);
       }
     }
 
@@ -685,8 +681,13 @@ export const useMysteryGame = ({
       };
     });
 
-    setIsConnecting(false);
-  }, [gameState.selectedCards, gameState.currentScenario, gameState.discoveredClues, onCardUnlock, winCondition, attemptHistory, updateAttemptHistory, getSmartFeedback, getCardCombinationKey, showToast, t]); // gameState 전체 대신 필요한 것만 의존성으로
+    } catch (error) {
+      console.error('Connection error:', error);
+      showToast(t('connectionError', '연결 중 오류가 발생했습니다.'), 'error');
+    } finally {
+      setIsConnecting(false);
+    }
+  }, [gameState.selectedCards, gameState.currentScenario, gameState.discoveredClues, gameState.consecutiveFailures, onCardUnlock, winCondition, attemptHistory, updateAttemptHistory, getSmartFeedback, getCardCombinationKey, showToast, t]); // gameState 전체 대신 필요한 것만 의존성으로
 
   const handleClearSelection = () => {
     setGameState(prev => ({ ...prev, selectedCards: [] }));
@@ -703,14 +704,9 @@ export const useMysteryGame = ({
     const discoveredCards = cards.filter(card => card.discovered);
     const discoveredCardIds = discoveredCards.map(card => card.id);
 
-    // 2. 이미 성공한 연결들 확인 - 더 정확한 비교
-    const successfulConnections = gameState.connections.filter(conn => conn.verified);
-    const usedCombinations = new Set(successfulConnections.map(conn =>
-      conn.cards.sort().join(',')
-    ));
-
-    // 3. connectionRules를 스캔하여 조합 가능한 규칙 찾기
+    // 2. 노출된 카드 기준 힌트 시스템 - 아직 얻지 못한 카드를 얻을 수 있는 조합만 힌트 제공
     const connectionRules = gameState.currentScenario?.connectionRules || [];
+    
     for (const rule of connectionRules) {
       if (!rule.cards || !rule.unlock) continue;
 
@@ -719,11 +715,10 @@ export const useMysteryGame = ({
         discoveredCardIds.includes(cardId)
       );
 
-      // 조건 2: 해당 조합을 아직 사용하지 않았는가?
-      const combinationKey = rule.cards.sort().join(',');
-      const notUsedYet = !usedCombinations.has(combinationKey);
+      // 조건 2: 이 조합의 결과 카드를 플레이어가 아직 얻지 못했는가?
+      const resultCardNotObtained = !discoveredCardIds.includes(rule.unlock);
 
-      if (hasAllCards && notUsedYet) {
+      if (hasAllCards && resultCardNotObtained) {
         // 조합 가능한 규칙 발견! 모든 필요한 카드들을 명시
         const cardNames = rule.cards.map((cardId: string) => {
           const card = cardMap.get(cardId); // 🚀 O(1) 검색으로 최적화
@@ -771,7 +766,7 @@ export const useMysteryGame = ({
     showToast(finalHintMessage, 'hint');
 
     return finalHintMessage;
-  }, [cards, cardMap, gameState.connections, gameState.currentScenario?.connectionRules, setHighlightedCardId, showToast, t]);
+  }, [cards, cardMap, gameState.currentScenario?.connectionRules, setHighlightedCardId, showToast, t]);
 
   const handleRequestHint = useCallback(() => {
     if (gameState.hintsUsed >= maxHints) return;
@@ -919,20 +914,7 @@ export const useMysteryGame = ({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (caseId && (gameWon || showResult)) {
-      // 게임 완료 표시를 위해 한 번 더 저장 후 삭제
-      const progressData: GameProgressData = {
-        caseId,
-        hintsUsed: gameState.hintsUsed,
-        discoveredCardIds: gameState.discoveredCardIds,
-        totalDiscoveredCards: cards.filter(card => card.discovered).length, // 실제 발견한 카드 수
-        elapsedTime: gameState.elapsedTime,
-        // playerProgress 제거 - 게임 완료 시 어차피 삭제되므로 불필요
-        timestamp: Date.now(),
-        isCompleted: true,
-        // 새로 추가된 필드들
-        dataVersion: '1.0.0',
-        schemaVersion: 1
-      };
+      // 게임 완료 처리
 
       // 게임 완료 시 세이브 파일 즉시 삭제 (저장하지 않고 바로 삭제)
       console.log('🎉 게임 완료! 세이브 파일 삭제 중...');

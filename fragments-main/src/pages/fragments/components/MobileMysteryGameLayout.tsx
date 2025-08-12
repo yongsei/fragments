@@ -789,7 +789,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
             
             {/* 광고 배너 - 연결 버튼 아래 */}
             <div style={{
-              padding: '0.5rem 0', // 좌우 패딩 제거하여 더 넓게
+              padding: '0.5rem 0 6rem 0', // 하단 패딩을 6rem으로 증가하여 시스템 UI와 겹치지 않도록
               backgroundColor: 'rgba(0,0,0,0.3)'
             }}>
               <AdBanner position="bottom" className="mobile-connection-ad" />

@@ -40,7 +40,7 @@ const AdBanner: React.FC<AdBannerProps> = ({
             adId: getAdUnitId(),
             adSize: BannerAdSize.BANNER, // 320x50 표준 배너
             position: position === 'top' ? BannerAdPosition.TOP_CENTER : BannerAdPosition.BOTTOM_CENTER,
-            margin: 0,
+            margin: position === 'bottom' ? 120 : 0, // 하단 광고는 시스템 UI와 겹치지 않도록 120px 마진
             // 필요한 경우 추가 설정
             isTesting: false, // 개발 중에는 true, 배포시에는 false로 변경
           };
