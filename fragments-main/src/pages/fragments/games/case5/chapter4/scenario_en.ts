@@ -166,7 +166,7 @@ export const case5ChEn4: GameScenario = {
     {"id": "rule_D04", "cards": ["D02", "D03"], "result": "A time tunnel is generated through the unfinished time travel device and Sarah's rose.", "unlock": "D04"},
     {"id": "rule_D05", "cards": ["D04", "D01"], "result": "Through time tunnel generation and preparation for the leap of faith, the instability of the time tunnel is recognized.", "unlock": "D05"},
     {"id": "rule_D06", "cards": ["D05", "D01"], "result": "Through time tunnel instability and preparation for the leap of faith, the danger of a time paradox is recognized.", "unlock": "D06"},
-    {"id": "rule_D07", "cards": ["D04", "D05"], "result": "Through time tunnel generation and overcoming time tunnel instability, they arrive in New York 2122.", "unlock": "D07"}
+    {"id": "rule_D07", "cards": ["D04", "D05"], "result": "Through time tunnel generation and overcoming time tunnel instability, they arrive in New York 2122.", "unlock": "D07"},
     {"id": "rule_D08", "cards": ["D07", "D06"], "result": "Through arrival in New York 2122 and the danger of a time paradox, they witness the desolate future of New York.", "unlock": "D08"},
     {"id": "rule_D09", "cards": ["D08", "D07"], "result": "Through the desolate future of New York and arrival in New York 2122, a giant monument is discovered.", "unlock": "D09"},
     {"id": "rule_D10", "cards": ["D09", "D08"], "result": "Through the giant monument and the desolate future of New York, they hear the old man's testimony.", "unlock": "D10"},

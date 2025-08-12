@@ -170,7 +170,7 @@ export const case5ChEn1: GameScenario = {
     {"id": "rule_A08", "cards": ["A01", "A07"], "result": "Detective Lee Jin-woo heads to Kim Min-jun's lab based on the paper fragment.", "unlock": "A08"},
     {"id": "rule_A09", "cards": ["A08", "A04"], "result": "In Kim Min-jun's lab, along with Detective Park Jun-young, an unfinished time travel device is discovered.", "unlock": "A09"},
     {"id": "rule_A10", "cards": ["A09", "A05"], "result": "Through the unfinished time travel device and the blade mark, subtle time distortion energy is detected around the device.", "unlock": "A10"},
-    {"id": "rule_A11", "cards": ["A08", "A09"], "result": "In Kim Min-jun's lab, through the unfinished time travel device, an encrypted tablet is discovered.", "unlock": "A11"}
+    {"id": "rule_A11", "cards": ["A08", "A09"], "result": "In Kim Min-jun's lab, through the unfinished time travel device, an encrypted tablet is discovered.", "unlock": "A11"},
     {"id": "rule_A12", "cards": ["A11", "A01"], "result": "Detective Lee Jin-woo decrypts the tablet and confirms the early entries of Kim Min-jun's journal.", "unlock": "A12"},
     {"id": "rule_A13", "cards": ["A12", "A07"], "result": "Through Kim Min-jun's journal and the paper fragment, the existence of 'Chronos' is identified.", "unlock": "A13"},
     {"id": "rule_A14", "cards": ["A08", "A10"], "result": "Through Kim Min-jun's lab and the detected time distortion energy, an unknown data packet is found.", "unlock": "A14"},

@@ -165,7 +165,7 @@ export const case5ChEn5: GameScenario = {
     {"id": "rule_E04", "cards": ["E01", "E02"], "result": "Through the reality of New York 2122 and the old man's testimony, you understand that Chronos initiated the 'Great Cleansing'.", "unlock": "E04"},
     {"id": "rule_E05", "cards": ["E01", "E04"], "result": "Through the reality of New York 2122 and the beginning of the 'Great Cleansing', you discover the 'Monument to Forgotten Heroes'.", "unlock": "E05"},
     {"id": "rule_E06", "cards": ["E05", "E02"], "result": "Through the 'Monument to Forgotten Heroes' and the old man's testimony, you confirm Kim Min-jun's name on the monument.", "unlock": "E06"},
-    {"id": "rule_E07", "cards": ["E05", "E06"], "result": "Through the 'Monument to Forgotten Heroes' and Kim Min-jun's name, you confirm Alistair Finch's name on the monument.", "unlock": "E07"}
+    {"id": "rule_E07", "cards": ["E05", "E06"], "result": "Through the 'Monument to Forgotten Heroes' and Kim Min-jun's name, you confirm Alistair Finch's name on the monument.", "unlock": "E07"},
     {"id": "rule_E08", "cards": ["E02", "E03"], "result": "Through the old man's testimony and the concept of Guardians of Time, you reconfirm Sarah's identity.", "unlock": "E08"},
     {"id": "rule_E09", "cards": ["E08", "E03"], "result": "Through Sarah's identity and the concept of Guardians of Time, you reconfirm that 'Sarah's Rose' pulsates more intensely when touched by the old man.", "unlock": "E09"},
     {"id": "rule_E10", "cards": ["E04", "E08"], "result": "Through the beginning of the 'Great Cleansing' and Sarah's identity, you understand that Chronos tried to eliminate Sarah because her lecture had the potential to threaten their 'optimized future'.", "unlock": "E10"},
