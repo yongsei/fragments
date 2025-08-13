@@ -27,7 +27,7 @@ export interface GameScenario {
 export const case6ch1En: GameScenario = {
   id: 'case6_chapter1',
   title: 'The Whispering Manuscript',
-  story: 'In the ancient Grand Library, a seemingly ordinary discovery of a glowing manuscript quickly unravels into a complex web of secrets. The player must navigate the library\'s forbidden sections, encounter its enigmatic head librarian, Elara, and piece together initial clues that hint at a mysterious \"glowing plague\" and a hidden world beneath the city. This chapter introduces key characters and locations, setting the stage for a deeper investigation into a conspiracy that threatens the city.',
+  story: 'In the ancient Grand Library, a seemingly ordinary discovery of a glowing manuscript quickly unravels into a complex web of secrets. The player must navigate the library\'s forbidden sections, encounter its enigmatic head librarian, Elara, and piece together initial clues that hint at a mysterious "glowing plague" and a hidden world beneath the city. This chapter introduces key characters and locations, setting the stage for a deeper investigation into a conspiracy that threatens the city.',
   victim: '',
   suspects: [
     {
@@ -254,7 +254,7 @@ export const case6ch1En: GameScenario = {
   winCondition: 'CH1_EV11',
   initialCards: [
     'CH1_EV01',
-    'CH1_LC01', 
+    'CH1_LC01',
     'CH1_CH01'
   ]
 };

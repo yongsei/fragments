@@ -163,10 +163,10 @@ export const case5ChEn2: GameScenario = {
   ],
   "locations": [],
   "connectionRules": [
-    {"id": "rule_B04", "cards": ["B01", "B02"], "result": "Through Professor Alistair Finch and Kim Min-jun's journal, you deduce that 'Chronos' is not just a murderer, but a collective consciousness or organization manipulating time.", "unlock": "B04"},
-    {"id": "rule_B05", "cards": ["B01", "B03"], "result": "Through Professor Alistair Finch and the Time Anomaly Detector, you understand the theory of 'Temporal Resonance'.", "unlock": "B05"},
+    {"id": "rule_B04", "cards": ["B02", "B03"], "result": "Through Professor Alistair Finch and Kim Min-jun's journal, you deduce that 'Chronos' is not just a murderer, but a collective consciousness or organization manipulating time.", "unlock": "B04"},
+    {"id": "rule_B05", "cards": ["B01", "B04"], "result": "Through Professor Alistair Finch and the Time Anomaly Detector, you understand the theory of 'Temporal Resonance'.", "unlock": "B05"},
     {"id": "rule_B06", "cards": ["B05", "B02"], "result": "Through the 'Temporal Resonance' theory and Kim Min-jun's journal, you grasp the concept of 'Echoes of Time'.", "unlock": "B06"},
-    {"id": "rule_B07", "cards": ["B01", "B04"], "result": "Through Professor Alistair Finch and the identity of 'Chronos', you discover the record of Finch disappearing without a trace in 1890.", "unlock": "B07"},
+    {"id": "rule_B07", "cards": ["B04", "B05"], "result": "Through Professor Alistair Finch and the identity of 'Chronos', you discover the record of Finch disappearing without a trace in 1890.", "unlock": "B07"},
     {"id": "rule_B08", "cards": ["B03", "B06"], "result": "Through the Time Anomaly Detector and 'Echoes of Time', you detect a faint, localized time distortion phenomenon near an old bookshelf in the lab.", "unlock": "B08"},
     {"id": "rule_B09", "cards": ["B08", "B07"], "result": "Through the localized time distortion phenomenon and Finch's disappearance, you discover a small wooden box.", "unlock": "B09"},
     {"id": "rule_B10", "cards": ["B09", "B06"], "result": "Through the small wooden box and 'Echoes of Time', you discover a perfectly preserved dried rose.", "unlock": "B10"},

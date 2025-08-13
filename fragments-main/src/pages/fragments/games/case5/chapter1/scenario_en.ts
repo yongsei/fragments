@@ -163,12 +163,12 @@ export const case5ChEn1: GameScenario = {
     }
   ],
   "connectionRules": [
-    {"id": "rule_A04", "cards": ["A01", "A02"], "result": "Detective Lee Jin-woo, realizing the gravity of the situation from Kim Min-jun's body, instructs Detective Park Jun-young to investigate.", "unlock": "A04"},
-    {"id": "rule_A05", "cards": ["A02", "A03"], "result": "Through Kim Min-jun's body and the old pocket watch, traces of an early 20th-century blade are found.", "unlock": "A05"},
+    {"id": "rule_A04", "cards": ["A02", "A03"], "result": "Detective Lee Jin-woo, realizing the gravity of the situation from Kim Min-jun's body, instructs Detective Park Jun-young to investigate.", "unlock": "A04"},
+    {"id": "rule_A05", "cards": ["A02", "A04"], "result": "Through Kim Min-jun's body and the old pocket watch, traces of an early 20th-century blade are found.", "unlock": "A05"},
     {"id": "rule_A06", "cards": ["A03", "A05"], "result": "Through the old pocket watch and the blade mark, the \"1888 London\" engraving is confirmed.", "unlock": "A06"},
     {"id": "rule_A07", "cards": ["A02", "A06"], "result": "Through Kim Min-jun's body and the \"1888 London\" engraving, a paper fragment clutched in the victim's hand is found.", "unlock": "A07"},
-    {"id": "rule_A08", "cards": ["A01", "A07"], "result": "Detective Lee Jin-woo heads to Kim Min-jun's lab based on the paper fragment.", "unlock": "A08"},
-    {"id": "rule_A09", "cards": ["A08", "A04"], "result": "In Kim Min-jun's lab, along with Detective Park Jun-young, an unfinished time travel device is discovered.", "unlock": "A09"},
+    {"id": "rule_A08", "cards": ["A07", "A06"], "result": "Detective Lee Jin-woo heads to Kim Min-jun's lab based on the paper fragment.", "unlock": "A08"},
+    {"id": "rule_A09", "cards": ["A08", "A05"], "result": "In Kim Min-jun's lab, along with Detective Park Jun-young, an unfinished time travel device is discovered.", "unlock": "A09"},
     {"id": "rule_A10", "cards": ["A09", "A05"], "result": "Through the unfinished time travel device and the blade mark, subtle time distortion energy is detected around the device.", "unlock": "A10"},
     {"id": "rule_A11", "cards": ["A08", "A09"], "result": "In Kim Min-jun's lab, through the unfinished time travel device, an encrypted tablet is discovered.", "unlock": "A11"},
     {"id": "rule_A12", "cards": ["A11", "A01"], "result": "Detective Lee Jin-woo decrypts the tablet and confirms the early entries of Kim Min-jun's journal.", "unlock": "A12"},

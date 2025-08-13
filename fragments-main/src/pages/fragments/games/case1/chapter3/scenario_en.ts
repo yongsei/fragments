@@ -119,15 +119,15 @@ export const caseChEn3: GameScenario = {
     }
   ],
   "connectionRules": [
-    {"id": "rule_C04", "cards": ["C01", "C03"], "result": "Using your skills as an Inquisitor, you locate the informant, the Silent Scribe, in the darkness of Spiderweb Alley.", "unlock": "C04"},
-    {"id": "rule_C05", "cards": ["C04", "C02"], "result": "When you demand information about the rumor from the Silent Scribe, he smiles knowingly and proposes a deal.", "unlock": "C05"},
-    {"id": "rule_C06", "cards": ["C03", "C04"], "result": "Instead of a deal, you succeed in pressuring the informant by using a weakness of the church that only you know.", "unlock": "C06"},
-    {"id": "rule_C07", "cards": ["C05", "C06"], "result": "After a combination of dealing and threatening, the informant finally reveals a shocking testimony about the nature of the rumor.", "unlock": "C07"},
-    {"id": "rule_C08", "cards": ["C07", "C01"], "result": "Based on the informant's testimony, you identify the source of the rumor as the 'Ashen Orphanage' and head there immediately.", "unlock": "C08"},
-    {"id": "rule_C09", "cards": ["C08", "C02"], "result": "While investigating around the orphanage, you hear a bad reputation that the children change frequently.", "unlock": "C09"},
-    {"id": "rule_C10", "cards": ["C08", "C03"], "result": "Judging a direct approach to be too risky, you use your skills as an Inquisitor to plan an infiltration of the orphanage.", "unlock": "C10"},
-    {"id": "rule_C11", "cards": ["C10", "C09"], "result": "The state of the children you encounter after infiltrating the orphanage proves that the terrible rumors are true.", "unlock": "C11"},
-    {"id": "rule_C12", "cards": ["C11", "C10"], "result": "You head to the Director's Office, where the perpetrator of all this must be. An ominous aura seeps from the door.", "unlock": "C12"}
+    { "id": "rule_C04", "cards": ["C01", "C03"], "result": "Using your skills as an Inquisitor, you locate the informant, the Silent Scribe, in the darkness of Spiderweb Alley.", "unlock": "C04" },
+    { "id": "rule_C05", "cards": ["C04", "C02"], "result": "When you demand information about the rumor from the Silent Scribe, he smiles knowingly and proposes a deal.", "unlock": "C05" },
+    { "id": "rule_C06", "cards": ["C05", "C03"], "result": "When the deal terms prove difficult, you succeed in pressuring the informant by using a weakness of the church that only you know.", "unlock": "C06" },
+    { "id": "rule_C07", "cards": ["C05", "C06"], "result": "After a combination of dealing and threatening, the informant finally reveals a shocking testimony about the nature of the rumor.", "unlock": "C07" },
+    { "id": "rule_C08", "cards": ["C07", "C02"], "result": "Based on the informant's testimony, you identify the source of the rumor as the 'Ashen Orphanage' and head there immediately.", "unlock": "C08" },
+    { "id": "rule_C09", "cards": ["C08", "C07"], "result": "While investigating around the orphanage, you confirm the bad reputation that children change frequently, just as the informant testified.", "unlock": "C09" },
+    { "id": "rule_C10", "cards": ["C09", "C03"], "result": "Judging a direct approach to be too risky, you use your skills as an Inquisitor to plan an infiltration of the orphanage.", "unlock": "C10" },
+    { "id": "rule_C11", "cards": ["C10", "C09"], "result": "The state of the children you encounter after infiltrating the orphanage proves that the terrible rumors are true.", "unlock": "C11" },
+    { "id": "rule_C12", "cards": ["C11", "C08"], "result": "You head to the Director's Office, where the perpetrator of all this must be. An ominous aura seeps from the door.", "unlock": "C12" }
   ],
   "fragments": [],
   "winCondition": "C12",

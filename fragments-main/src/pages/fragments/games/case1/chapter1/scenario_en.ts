@@ -124,11 +124,11 @@ export const caseChEn1: GameScenario = {
     {"id": "rule_A05", "cards": ["A04", "A03"], "result": "Connecting the body and the crows, you conclude that the wound is unnatural.", "unlock": "A05"},
     {"id": "rule_A06", "cards": ["A02", "A03"], "result": "Asking around about the spire and the crows, you obtain a suspicious testimony from a guard.", "unlock": "A06"},
     {"id": "rule_A07", "cards": ["A05", "A06"], "result": "Combining the wound and the testimony, you realize a third, magical force was involved.", "unlock": "A07"},
-    {"id": "rule_A08", "cards": ["A04", "A01"], "result": "Seeing the state of the body, you judge that the clues lie with the victim's surroundings rather than the scene, and head to his private chamber.", "unlock": "A08"},
+    {"id": "rule_A08", "cards": ["A07", "A02"], "result": "With magical traces detected at the spire making further clues difficult to find, you decide to search the Archbishop's private chamber.", "unlock": "A08"},
     {"id": "rule_A09", "cards": ["A08", "A05"], "result": "While searching the private chamber, you look for any stolen items related to the precise wound and find an empty reliquary.", "unlock": "A09"},
     {"id": "rule_A10", "cards": ["A09", "A07"], "result": "Through the empty reliquary and the traces of magic, you identify the missing item as a powerful magical artifact.", "unlock": "A10"},
-    {"id": "rule_A11", "cards": ["A10", "A01"], "result": "Realizing the power of the missing chalice, you deduce the culprit's next objective.", "unlock": "A11"},
-    {"id": "rule_A12", "cards": ["A08", "A10"], "result": "While looking for a connection between the private chamber and the missing chalice, you discover that the Archbishop was secretly researching something.", "unlock": "A12"}
+    {"id": "rule_A11", "cards": ["A10", "A06"], "result": "Connecting the chalice's power with the guard's testimony, you realize the culprit intends to steal the Archbishop's memories.", "unlock": "A11"},
+    {"id": "rule_A12", "cards": ["A11", "A08"], "result": "After understanding the culprit's objective, you investigate the private chamber more thoroughly and discover the Archbishop was secretly researching something.", "unlock": "A12"}
   ],
   "fragments": [],
   "winCondition": "A12",
