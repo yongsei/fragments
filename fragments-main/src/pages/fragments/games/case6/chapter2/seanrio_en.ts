@@ -207,6 +207,12 @@ export const case6ch2En: GameScenario = {
       unlock: 'CH2_EV05'
     },
     {
+      id: 'rule_CH2_5_new',
+      cards: ['CH2_CH02', 'CH2_EV04'],
+      result: 'The connection between the waterway scavenger and the grotesque experiments leads you to the hidden illegal market, the Sunken Marketplace.',
+      unlock: 'CH2_LC02'
+    },
+    {
       id: 'rule_CH2_6',
       cards: ['CH2_LC02', 'CH2_EV05'],
       result: 'The Sunken Market, a hub of illicit dealings, is where you encounter the Whispering Merchant, a key figure in Kael\'s supply chain.',
@@ -277,21 +283,7 @@ export const case6ch2En: GameScenario = {
   winCondition: 'CH2_LC05',
   initialCards: [
     'CH2_EV01',
-    'CH2_LC01',
-    'CH2_CH01',
-    'CH2_EV04',
-    'CH2_EV06',
-    'CH2_LC03',
-    'CH2_CH02',
-    'CH2_LC02',
-    'CH2_CH03',
-    'CH2_EV07',
-    'CH2_CH04',
-    'CH2_EV08',
-    'CH2_LC04',
-    'CH2_EV09',
-    'CH2_CH05',
-    'CH2_EV10',
-    'CH2_LC05'
+    'CH2_LC01', 
+    'CH2_CH01'
   ]
 };

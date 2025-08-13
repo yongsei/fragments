@@ -207,6 +207,12 @@ export const case6ch2: GameScenario = {
       unlock: 'CH2_EV05'
     },
     {
+      id: 'rule_CH2_5_new',
+      cards: ['CH2_CH02', 'CH2_EV04'],
+      result: '수로 청소부와 기괴한 실험의 연결은 숨겨진 불법 시장인 가라앉은 시장으로 당신을 이끌게 됩니다.',
+      unlock: 'CH2_LC02'
+    },
+    {
       id: 'rule_CH2_6',
       cards: ['CH2_LC02', 'CH2_EV05'],
       result: '불법 거래의 중심지인 가라앉은 시장에서, 당신은 카엘의 공급망에서 핵심 인물인 속삭이는 상인을 만납니다.',
@@ -277,21 +283,7 @@ export const case6ch2: GameScenario = {
   winCondition: 'CH2_LC05',
   initialCards: [
     'CH2_EV01',
-    'CH2_LC01',
-    'CH2_CH01',
-    'CH2_EV04',
-    'CH2_EV06',
-    'CH2_LC03',
-    'CH2_CH02',
-    'CH2_LC02',
-    'CH2_CH03',
-    'CH2_EV07',
-    'CH2_CH04',
-    'CH2_EV08',
-    'CH2_LC04',
-    'CH2_EV09',
-    'CH2_CH05',
-    'CH2_EV10',
-    'CH2_LC05'
+    'CH2_LC01', 
+    'CH2_CH01'
   ]
 };

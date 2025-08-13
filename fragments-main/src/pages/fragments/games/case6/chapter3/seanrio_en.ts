@@ -254,22 +254,6 @@ export const case6ch3En: GameScenario = {
   initialCards: [
     'CH3_EV01',
     'CH3_LC01',
-    'CH3_CH01',
-    'CH3_CH02',
-    'CH3_LC02',
-    'CH3_EV03',
-    'CH3_CH03',
-    'CH3_EV04',
-    'CH3_LC03',
-    'CH3_EV05',
-    'CH3_CH04',
-    'CH3_EV06',
-    'CH3_LC04',
-    'CH3_EV07',
-    'CH3_CH05',
-    'CH3_EV08',
-    'CH3_LC05',
-    'CH3_EV09',
-    'CH3_LC06'
+    'CH3_CH01'
   ]
 };

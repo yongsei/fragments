@@ -15,7 +15,7 @@ import { useSoundSettings, useSoundManager } from './hooks/useSoundManager';
 // 내부 컴포넌트: LanguageProvider 안에서 useFragmentsTranslation 사용
 const FragmentsContent: React.FC = () => {
   const location = useLocation();
-  const isInCasePage = location.pathname.match(/\/case[123456]/); // 케이스 1, 2, 3, 4, 5, 6 체크
+  const isInCasePage = location.pathname.match(/\/case[1234567]/); // 케이스 1, 2, 3, 4, 5, 6, 7 체크
   const { t, originalLang } = useFragmentsTranslation(); // Fragments 다국어
   const { settings, toggleSoundEffects, setEffectsVolume } = useSoundSettings(); // 설정만 관리
   const { playScenarioSound, playScenarioSoundForced } = useSoundManager(); // 시나리오 선택 효과음용

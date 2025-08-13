@@ -221,18 +221,36 @@ export const case6ch1: GameScenario = {
     },
     {
       id: 'rule_CH1_8',
+      cards: ['CH1_EV08', 'CH1_LC03'],
+      result: '조나스의 목격담을 비밀 별관에서 분석하던 중, 금지된 지식을 수집하는 속삭이는 학자를 발견합니다.',
+      unlock: 'CH1_CH04'
+    },
+    {
+      id: 'rule_CH1_9',
       cards: ['CH1_EV02', 'CH1_CH04'],
       result: '원고에서 찢어진 페이지를 속삭이는 학자에게 보여주자, 그것이 고대 아스트롤라베의 일부로 확인되어 우주적 연결을 암시합니다.',
       unlock: 'CH1_EV09'
     },
     {
-      id: 'rule_CH1_9',
+      id: 'rule_CH1_10',
+      cards: ['CH1_LC02', 'CH1_EV07'],
+      result: '약제상 뒷방에서 경고 편지의 단서를 따라가던 중, 어둠 속에서 지켜보는 침묵하는 감시자를 발견합니다.',
+      unlock: 'CH1_CH05'
+    },
+    {
+      id: 'rule_CH1_11_new',
+      cards: ['CH1_EV04', 'CH1_CH04'],
+      result: '수수께끼 지도를 속삭이는 학자와 함께 해독하여 대도서관 옥상 천문대의 위치를 찾아냅니다.',
+      unlock: 'CH1_LC04'
+    },
+    {
+      id: 'rule_CH1_12_new',
       cards: ['CH1_EV09', 'CH1_LC04'],
       result: '고대 아스트롤라베 조각을 대도서관 옥상 천문대로 가져가자, 희미한 연금술 다이어그램이 드러나 전염병의 인공적인 기원을 암시합니다.',
       unlock: 'CH1_EV10'
     },
     {
-      id: 'rule_CH1_10',
+      id: 'rule_CH1_13_new',
       cards: ['CH1_EV06', 'CH1_CH05'],
       result: '도시 경비대의 실종 보고서와 침묵하는 감시자의 관찰이 결합되면, 수로 근처에서 긁힌 은색 로켓이 발견되어 희생자 또는 음모의 핵심 인물과의 개인적인 연결을 암시합니다.',
       unlock: 'CH1_EV11'

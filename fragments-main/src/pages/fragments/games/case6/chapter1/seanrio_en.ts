@@ -221,30 +221,48 @@ export const case6ch1En: GameScenario = {
     },
     {
       id: 'rule_CH1_8',
+      cards: ['CH1_EV08', 'CH1_LC03'],
+      result: 'Jonas\'s secret confession, when cross-referenced with evidence found in the Secret Annex, reveals the existence of the Whispering Scholar.',
+      unlock: 'CH1_CH04'
+    },
+    {
+      id: 'rule_CH1_9',
       cards: ['CH1_EV02', 'CH1_CH04'],
       result: 'The torn page from the manuscript, when shown to the Whispering Scholar, is identified as part of an ancient astrolabe, hinting at cosmic connections.',
       unlock: 'CH1_EV09'
     },
     {
-      id: 'rule_CH1_9',
+      id: 'rule_CH1_10',
+      cards: ['CH1_LC02', 'CH1_EV07'],
+      result: 'The cryptic warning letter, when investigated at the Apothecary\'s Back Room, leads to the discovery of the Silent Watcher.',
+      unlock: 'CH1_CH05'
+    },
+    {
+      id: 'rule_CH1_11_new',
+      cards: ['CH1_EV04', 'CH1_CH04'],
+      result: 'The cryptic sewer map, when interpreted by the Whispering Scholar, reveals the location of the Grand Library\'s Rooftop Observatory.',
+      unlock: 'CH1_LC04'
+    },
+    {
+      id: 'rule_CH1_12',
       cards: ['CH1_EV09', 'CH1_LC04'],
       result: 'The ancient astrolabe fragment, when brought to the Grand Library\'s Rooftop Observatory, reveals a faded alchemical diagram, hinting at the artificial origin of the plague.',
       unlock: 'CH1_EV10'
     },
     {
-      id: 'rule_CH1_10',
+      id: 'rule_CH1_13',
       cards: ['CH1_EV06', 'CH1_CH05'],
       result: 'The City Guard\'s report on disappearances, combined with observations of the Silent Watcher, leads to the discovery of a scratched silver locket near the aqueducts, hinting at a victim\'s personal connection.',
       unlock: 'CH1_EV11'
     },
     {
-      id: 'rule_CH1_11',
+      id: 'rule_CH1_14',
       cards: ['CH1_CH01', 'CH1_CH03'],
       result: 'Elara and Sergeant Thorne, despite their differences, share a common goal: understanding the strange events. Their combined insights reveal the existence of a secret annex within the library.',
       unlock: 'CH1_LC03'
     },
     {
-      id: 'rule_CH1_12',
+      id: 'rule_CH1_15',
       cards: ['CH1_EV05', 'CH1_CH02'],
       result: 'The receipt for alchemical herbs, when discussed with Jonas, leads him to recall the Apothecary\'s Back Room, a place of suspicious dealings.',
       unlock: 'CH1_LC02'
@@ -255,6 +273,8 @@ export const case6ch1En: GameScenario = {
   initialCards: [
     'CH1_EV01',
     'CH1_LC01',
-    'CH1_CH01'
+    'CH1_CH01',
+    'CH1_CH02',
+    'CH1_CH03'
   ]
 };
