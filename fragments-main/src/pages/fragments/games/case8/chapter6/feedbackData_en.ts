@@ -24,7 +24,7 @@ export const case8FeedbackDataEn6: CaseFeedbackData = {
       proximity: 'close',
       messages: [
         "The fog-cleared village and the dispersed guardian clearly show that the curse has been completely lifted.",
-        "The guardian\'s disappearance is the direct cause of the fog clearing.",
+        "The guardian's disappearance is the direct cause of the fog clearing.",
         "💡 The clearing fog and the vanished guardian mean the curse has ended. Savor this victory."
       ]
     },
@@ -32,18 +32,18 @@ export const case8FeedbackDataEn6: CaseFeedbackData = {
       cards: ['F15', 'F14'],
       proximity: 'close',
       messages: [
-        "The fog-cleared village and the ordinary 'Fragment of the Loop' prove that the curse\'s power has completely vanished.",
-        "The fragment\'s change is decisive evidence that the curse has been broken.",
-        "💡 The clearing fog and the ordinary fragment mean the curse\'s power has dissipated. Confirm the remnants of the curse."
+        "The fog-cleared village and the ordinary 'Fragment of the Loop' prove that the curse's power has completely vanished.",
+        "The fragment's change is decisive evidence that the curse has been broken.",
+        "💡 The clearing fog and the ordinary fragment mean the curse's power has dissipated. Confirm the remnants of the curse."
       ]
     },
     {
       cards: ['F15', 'F16'],
       proximity: 'close',
       messages: [
-        "The fog-cleared village and Lily\'s new drawing symbolize liberation from the curse and a new beginning.",
-        "Lily\'s change reflects the village\'s transformation.",
-        "💡 The clearing fog and Lily\'s changed drawing mean liberation from the curse. Seek new hope."
+        "The fog-cleared village and Lily's new drawing symbolize liberation from the curse and a new beginning.",
+        "Lily's change reflects the village's transformation.",
+        "💡 The clearing fog and Lily's changed drawing mean liberation from the curse. Seek new hope."
       ]
     },
     {
@@ -60,17 +60,17 @@ export const case8FeedbackDataEn6: CaseFeedbackData = {
       proximity: 'close',
       messages: [
         "The dispersed guardian and the ordinary 'Fragment of the Loop' prove that the core of the curse has been completely destroyed.",
-        "The guardian\'s disappearance and the fragment\'s change mean the curse has ended.",
-        "💡 The vanished guardian and the ordinary fragment mean the core of the curse has been destroyed. Confirm the curse\'s demise."
+        "The guardian's disappearance and the fragment's change mean the curse has ended.",
+        "💡 The vanished guardian and the ordinary fragment mean the core of the curse has been destroyed. Confirm the curse's demise."
       ]
     },
     {
       cards: ['F13', 'F16'],
       proximity: 'close',
       messages: [
-        "The dispersed guardian and Lily\'s new drawing symbolize liberation from the curse and the restoration of innocence.",
-        "The guardian\'s disappearance made Lily\'s change possible.",
-        "💡 The vanished guardian and Lily\'s changed drawing mean liberation from the curse. Celebrate the restoration of innocence."
+        "The dispersed guardian and Lily's new drawing symbolize liberation from the curse and the restoration of innocence.",
+        "The guardian's disappearance made Lily's change possible.",
+        "💡 The vanished guardian and Lily's changed drawing mean liberation from the curse. Celebrate the restoration of innocence."
       ]
     },
     {
@@ -78,7 +78,7 @@ export const case8FeedbackDataEn6: CaseFeedbackData = {
       proximity: 'close',
       messages: [
         "The dispersed guardian and the last piece of evidence show the scars remaining even after the curse is lifted.",
-        "The guardian\'s disappearance ended the curse, but the scars gained in the process cannot be erased.",
+        "The guardian's disappearance ended the curse, but the scars gained in the process cannot be erased.",
         "💡 Understand the true cost of the curse revealed by the vanished guardian and the last piece of evidence combined."
       ]
     },
@@ -86,9 +86,9 @@ export const case8FeedbackDataEn6: CaseFeedbackData = {
       cards: ['F14', 'F16'],
       proximity: 'close',
       messages: [
-        "The ordinary 'Fragment of the Loop' and Lily\'s new drawing symbolize the disappearance of the curse\'s power and the beginning of new hope.",
-        "The fragment\'s change made Lily\'s change possible.",
-        "💡 The ordinary fragment and Lily\'s changed drawing mean the end of the curse and a new beginning. Seek hope."
+        "The ordinary 'Fragment of the Loop' and Lily's new drawing symbolize the disappearance of the curse's power and the beginning of new hope.",
+        "The fragment's change made Lily's change possible.",
+        "💡 The ordinary fragment and Lily's changed drawing mean the end of the curse and a new beginning. Seek hope."
       ]
     },
     {
@@ -96,7 +96,7 @@ export const case8FeedbackDataEn6: CaseFeedbackData = {
       proximity: 'close',
       messages: [
         "The ordinary 'Fragment of the Loop' and the last piece of evidence show the scars remaining even after the curse is lifted.",
-        "The fragment\'s change ended the curse, but the scars gained in the process cannot be erased.",
+        "The fragment's change ended the curse, but the scars gained in the process cannot be erased.",
         "💡 Understand the true cost of the curse revealed by the ordinary fragment and the last piece of evidence combined."
       ]
     },
@@ -104,9 +104,9 @@ export const case8FeedbackDataEn6: CaseFeedbackData = {
       cards: ['F16', 'F18'],
       proximity: 'close',
       messages: [
-        "Lily\'s new drawing and the last piece of evidence simultaneously show liberation from the curse and the scars gained in the process.",
-        "Lily\'s change symbolizes hope, and the evidence symbolizes the cost.",
-        "💡 Understand the liberation from the curse and its cost revealed by Lily\'s new drawing and the last piece of evidence combined."
+        "Lily's new drawing and the last piece of evidence simultaneously show liberation from the curse and the scars gained in the process.",
+        "Lily's change symbolizes hope, and the evidence symbolizes the cost.",
+        "💡 Understand the liberation from the curse and its cost revealed by Lily's new drawing and the last piece of evidence combined."
       ]
     },
     // partial combinations
@@ -115,8 +115,8 @@ export const case8FeedbackDataEn6: CaseFeedbackData = {
       proximity: 'partial',
       messages: [
         "The player and Alex witnessing the fog-cleared village shows that their efforts have borne fruit.",
-        "The village\'s transformation reflects their sacrifice and effort.",
-        "💭 The fog has cleared thanks to your efforts. Confirm your achievement through the village\'s transformation."
+        "The village's transformation reflects their sacrifice and effort.",
+        "💭 The fog has cleared thanks to your efforts. Confirm your achievement through the village's transformation."
       ]
     },
     {
@@ -125,7 +125,7 @@ export const case8FeedbackDataEn6: CaseFeedbackData = {
       messages: [
         "The villagers' changed gaze after the curse is lifted signifies liberation from the curse.",
         "Their eyes have regained serenity, but fatigue still remains.",
-        "📖 Understand the curse\'s impact on the villagers through their eyes, and observe their recovery."
+        "📖 Understand the curse's impact on the villagers through their eyes, and observe their recovery."
       ]
     },
     {
@@ -142,7 +142,7 @@ export const case8FeedbackDataEn6: CaseFeedbackData = {
       proximity: 'partial',
       messages: [
         "The place where Lily handed over her drawing has regained serenity, hinting at a new beginning.",
-        "Lily\'s change reflects the village\'s transformation.",
+        "Lily's change reflects the village's transformation.",
         "💭 Find the meaning of a new beginning through Lily and the place where her drawing was handed over."
       ]
     },

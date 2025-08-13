@@ -273,6 +273,18 @@ export const case7ch4: GameScenario = {
       cards: ['D15', 'D16'],
       result: '진실의 핵심과 범인의 추격을 통해 최후의 단서를 확보합니다.',
       unlock: 'D20'
+    },
+    {
+      id: 'rule_D20_alt',
+      cards: ['D09', 'D19'],
+      result: '살해 동기와 자선 단체 기부 계획을 통해 최후의 단서를 확보합니다.',
+      unlock: 'D20'
+    },
+    {
+      id: 'rule_D20_direct',
+      cards: ['D08', 'D17'],
+      result: '상속권 박탈 계획과 알리바이 조작을 통해 최후의 단서에 도달합니다.',
+      unlock: 'D20'
     }
   ],
 

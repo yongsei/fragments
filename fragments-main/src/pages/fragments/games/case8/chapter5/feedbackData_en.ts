@@ -23,7 +23,7 @@ export const case8FeedbackDataEn5: CaseFeedbackData = {
       cards: ['E01', 'E13'],
       proximity: 'close',
       messages: [
-        "The Curse Guardian and the 'Fragment of the Loop' form the core of the curse. The fragment is the source of the guardian\'s power.",
+        "The Curse Guardian and the 'Fragment of the Loop' form the core of the curse. The fragment is the source of the guardian's power.",
         "Defeating the guardian and destroying the fragment is the only way to end the curse.",
         "💡 The Curse Guardian and the Fragment of the Loop are the core of the curse. Understand their relationship and destroy the fragment."
       ]
@@ -42,7 +42,7 @@ export const case8FeedbackDataEn5: CaseFeedbackData = {
       proximity: 'close',
       messages: [
         "The Curse Guardian and his attack are a direct threat to the player. You must understand his attack patterns.",
-        "The guardian\'s attack causes both physical and mental pain.",
+        "The guardian's attack causes both physical and mental pain.",
         "💡 The Curse Guardian and his attack are the final challenge to break the curse. Evade attacks and find his weakness."
       ]
     },
@@ -68,9 +68,9 @@ export const case8FeedbackDataEn5: CaseFeedbackData = {
       cards: ['E13', 'E15'],
       proximity: 'close',
       messages: [
-        "The 'Fragment of the Loop' and the guardian\'s attack show that the fragment is the source of the guardian\'s power.",
-        "Destroying the fragment might weaken the guardian\'s power.",
-        "💡 The Fragment of the Loop and the guardian\'s attack are the core of the curse. Destroy the fragment to weaken the guardian\'s power."
+        "The 'Fragment of the Loop' and the guardian's attack show that the fragment is the source of the guardian's power.",
+        "Destroying the fragment might weaken the guardian's power.",
+        "💡 The Fragment of the Loop and the guardian's attack are the core of the curse. Destroy the fragment to weaken the guardian's power."
       ]
     },
     {
@@ -86,9 +86,9 @@ export const case8FeedbackDataEn5: CaseFeedbackData = {
       cards: ['E14', 'E15'],
       proximity: 'close',
       messages: [
-        "The 'Reversed Ritual Incantation' and the guardian\'s attack show that you must anticipate the guardian\'s interference while reciting the incantation.",
+        "The 'Reversed Ritual Incantation' and the guardian's attack show that you must anticipate the guardian's interference while reciting the incantation.",
         "You must evade attacks and successfully recite the incantation.",
-        "💡 The Reversed Ritual Incantation and the guardian\'s attack are the final confrontation to break the curse. Evade attacks and recite the incantation."
+        "💡 The Reversed Ritual Incantation and the guardian's attack are the final confrontation to break the curse. Evade attacks and recite the incantation."
       ]
     },
     {
@@ -104,9 +104,9 @@ export const case8FeedbackDataEn5: CaseFeedbackData = {
       cards: ['E15', 'E18'],
       proximity: 'close',
       messages: [
-        "The guardian\'s attack and the last piece of evidence will determine the success of the final attempt to break the curse.",
-        "This evidence suggests a way to overcome the guardian\'s attack and end the curse.",
-        "💡 Grasp all truths of the curse revealed by the guardian\'s attack and the last piece of evidence combined."
+        "The guardian's attack and the last piece of evidence will determine the success of the final attempt to break the curse.",
+        "This evidence suggests a way to overcome the guardian's attack and end the curse.",
+        "💡 Grasp all truths of the curse revealed by the guardian's attack and the last piece of evidence combined."
       ]
     },
     // partial combinations
@@ -115,35 +115,35 @@ export const case8FeedbackDataEn5: CaseFeedbackData = {
       proximity: 'partial',
       messages: [
         "Alex and the Reversed Ritual Incantation show his desperate efforts to break the curse.",
-        "Alex\'s concentration and desperation can affect the success of the incantation.",
-        "💭 How do Alex\'s efforts and the incantation affect breaking the curse? Find clues through his actions."
+        "Alex's concentration and desperation can affect the success of the incantation.",
+        "💭 How do Alex's efforts and the incantation affect breaking the curse? Find clues through his actions."
       ]
     },
     {
       cards: ['E03', 'E15'],
       proximity: 'partial',
       messages: [
-        "The villagers' illusions and the guardian\'s attack confuse the player\'s mind and amplify his power.",
-        "The illusions amplify the guardian\'s power or confuse the player\'s mind.",
-        "🚨 Understand the impact of the villagers' illusions and the guardian\'s attack, and strengthen your resolve."
+        "The villagers' illusions and the guardian's attack confuse the player's mind and amplify his power.",
+        "The illusions amplify the guardian's power or confuse the player's mind.",
+        "🚨 Understand the impact of the villagers' illusions and the guardian's attack, and strengthen your resolve."
       ]
     },
     {
       cards: ['E04', 'E16'],
       proximity: 'partial',
       messages: [
-        "Grandma Elara\'s warning and the repeating agony show that her prophecy is coming true.",
+        "Grandma Elara's warning and the repeating agony show that her prophecy is coming true.",
         "Her warning helps understand the meaning of the pain the player is experiencing.",
-        "📖 What do Grandma Elara\'s warning and the repeating agony signify? Reflect on her prophecy."
+        "📖 What do Grandma Elara's warning and the repeating agony signify? Reflect on her prophecy."
       ]
     },
     {
       cards: ['E05', 'E17'],
       proximity: 'partial',
       messages: [
-        "The player\'s desperate endurance and the black smoke emanating from the 'Fragment of the Loop' show the curse\'s power.",
-        "The smoke forms the guardian\'s shape and amplifies the curse\'s power.",
-        "💭 How are the player\'s suffering and the black smoke related? Find a way to turn the curse\'s power against itself."
+        "The player's desperate endurance and the black smoke emanating from the 'Fragment of the Loop' show the curse's power.",
+        "The smoke forms the guardian's shape and amplifies the curse's power.",
+        "💭 How are the player's suffering and the black smoke related? Find a way to turn the curse's power against itself."
       ]
     },
     {
@@ -151,8 +151,8 @@ export const case8FeedbackDataEn5: CaseFeedbackData = {
       proximity: 'partial',
       messages: [
         "The entity that might be sacrificed in the final attempt to break the curse and the spatial background of the moment the curse is broken or intensified foreshadow the climax.",
-        "Their combination represents the curse\'s final outcome and its location.",
-        "🏠 Understand the curse\'s final outcome and its location through the last character and the last location."
+        "Their combination represents the curse's final outcome and its location.",
+        "🏠 Understand the curse's final outcome and its location through the last character and the last location."
       ]
     },
     {
@@ -160,7 +160,7 @@ export const case8FeedbackDataEn5: CaseFeedbackData = {
       proximity: 'partial',
       messages: [
         "The church underground altar and the mural around the altar show the place where the final confrontation with the Curse Guardian occurs and traces of the ritual.",
-        "The mural depicts the ritual\'s process, and now it seems to writhe.",
+        "The mural depicts the ritual's process, and now it seems to writhe.",
         "📖 Find the core of the curse and traces of the ritual through the church underground altar and the mural."
       ]
     }

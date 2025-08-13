@@ -42,8 +42,8 @@ export const case8FeedbackDataEn4: CaseFeedbackData = {
       proximity: 'close',
       messages: [
         "The Guardian of the Curse is deeply connected to the Secret of the Mural. The mural depicts the origin of the curse.",
-        "You must understand the guardian\'s identity and the mural\'s content to grasp the essence of the curse.",
-        "💡 The Guardian of the Curse and the Secret of the Mural reveal the origin of the curse. Find the guardian\'s weakness through the mural."
+        "You must understand the guardian's identity and the mural's content to grasp the essence of the curse.",
+        "💡 The Guardian of the Curse and the Secret of the Mural reveal the origin of the curse. Find the guardian's weakness through the mural."
       ]
     },
     {
@@ -68,9 +68,9 @@ export const case8FeedbackDataEn4: CaseFeedbackData = {
       cards: ['D13', 'D15'],
       proximity: 'close',
       messages: [
-        "The 'Fragment of the Loop' and the Secret of the Mural are important for understanding the essence of the curse and the fragment\'s role.",
+        "The 'Fragment of the Loop' and the Secret of the Mural are important for understanding the essence of the curse and the fragment's role.",
         "The mural shows how the fragment is connected to the curse.",
-        "💡 Understand the core of the curse through the Fragment of the Loop and the Secret of the Mural, and grasp the fragment\'s true power."
+        "💡 Understand the core of the curse through the Fragment of the Loop and the Secret of the Mural, and grasp the fragment's true power."
       ]
     },
     {
@@ -87,7 +87,7 @@ export const case8FeedbackDataEn4: CaseFeedbackData = {
       proximity: 'close',
       messages: [
         "The 'Reversed Ritual' and the Secret of the Mural are important for understanding the ritual process to break the curse.",
-        "The mural shows the ritual\'s origin, and the Reversed Ritual shows its inverse.",
+        "The mural shows the ritual's origin, and the Reversed Ritual shows its inverse.",
         "💡 Understand all steps of the ritual to break the curse through the Reversed Ritual and the Secret of the Mural."
       ]
     },
@@ -105,7 +105,7 @@ export const case8FeedbackDataEn4: CaseFeedbackData = {
       proximity: 'close',
       messages: [
         "The Secret of the Mural and the last piece of evidence connect the origin of the curse with its final solution.",
-        "These pieces of evidence suggest a way to end the curse through the mural\'s content.",
+        "These pieces of evidence suggest a way to end the curse through the mural's content.",
         "💡 Grasp all truths of the curse revealed by the Secret of the Mural and the last piece of evidence combined."
       ]
     },
@@ -114,9 +114,9 @@ export const case8FeedbackDataEn4: CaseFeedbackData = {
       cards: ['D01', 'D16'],
       proximity: 'partial',
       messages: [
-        "Grandma Elara\'s anxiety and the amplification of time distortion show the risks of attempting to break the curse.",
-        "Her appearance reflects the curse\'s impact on the village.",
-        "💭 What do Grandma Elara\'s anxiety and the amplification of time distortion signify? Consider the cost of breaking the curse."
+        "Grandma Elara's anxiety and the amplification of time distortion show the risks of attempting to break the curse.",
+        "Her appearance reflects the curse's impact on the village.",
+        "💭 What do Grandma Elara's anxiety and the amplification of time distortion signify? Consider the cost of breaking the curse."
       ]
     },
     {
@@ -132,7 +132,7 @@ export const case8FeedbackDataEn4: CaseFeedbackData = {
       cards: ['D04', 'D07'],
       proximity: 'partial',
       messages: [
-        "The figure of the ritual leader in Lily\'s drawing and the old church connect the origin of the curse with its location.",
+        "The figure of the ritual leader in Lily's drawing and the old church connect the origin of the curse with its location.",
         "The church is where the ritual was performed, and the figure is its leader.",
         "🏠 Understand the origin and location of the curse through the figure of the ritual leader and the old church."
       ]
@@ -150,9 +150,9 @@ export const case8FeedbackDataEn4: CaseFeedbackData = {
       cards: ['D06', 'D12'],
       proximity: 'partial',
       messages: [
-        "The identity of the core entity maintaining the curse and the place where the curse\'s core is most powerfully manifested show the essence of the curse.",
-        "Their combination represents the curse\'s final form and its center.",
-        "🏠 Understand the curse\'s final form and its center through the last character and the last location."
+        "The identity of the core entity maintaining the curse and the place where the curse's core is most powerfully manifested show the essence of the curse.",
+        "Their combination represents the curse's final form and its center.",
+        "🏠 Understand the curse's final form and its center through the last character and the last location."
       ]
     },
     {
@@ -160,8 +160,8 @@ export const case8FeedbackDataEn4: CaseFeedbackData = {
       proximity: 'partial',
       messages: [
         "A specific space inside the church and the place where villagers' eyes begin to fill with madness show the spread of the curse.",
-        "Their combination indicates the curse\'s impact on the entire village.",
-        "💭 Understand the process of the curse\'s spread through the church interior and the place filled with madness."
+        "Their combination indicates the curse's impact on the entire village.",
+        "💭 Understand the process of the curse's spread through the church interior and the place filled with madness."
       ]
     }
   ],

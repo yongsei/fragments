@@ -273,6 +273,30 @@ export const case7ch2: GameScenario = {
       cards: ['B18', 'B19'],
       result: '가면을 쓴 가족과 위험한 관계를 통해 진실이 더욱 깊은 미궁 속에 있음을 깨닫습니다.',
       unlock: 'B20'
+    },
+    {
+      id: 'rule_B20_direct',
+      cards: ['B15', 'B16'],
+      result: '재정적 압박과 숨겨진 동기를 통해 진실의 미궁에 직접 도달합니다.',
+      unlock: 'B20'
+    },
+    {
+      id: 'rule_B20_alt',
+      cards: ['B13', 'B17'],
+      result: '가족들의 불신과 하인의 증언을 통해 진실의 미궁을 파악합니다.',
+      unlock: 'B20'
+    },
+    {
+      id: 'rule_B17_alt',
+      cards: ['B12', 'B03'],
+      result: '도서관과 세바스찬의 모호함을 통해 하인의 증언을 확보합니다.',
+      unlock: 'B17'
+    },
+    {
+      id: 'rule_B19_alt',
+      cards: ['B14', 'B17'],
+      result: '거짓된 증언과 하인의 증언을 통해 위험한 관계를 파악합니다.',
+      unlock: 'B19'
     }
   ],
 

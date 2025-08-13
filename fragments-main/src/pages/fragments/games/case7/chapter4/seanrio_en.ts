@@ -277,6 +277,18 @@ export const case7ch4En: GameScenario = {
       cards: ['D15', 'D16'],
       result: 'Through the core of the truth and the culprit\'s pursuit, you secure the final clue.',
       unlock: 'D20'
+    },
+    {
+      id: 'rule_D20_alt',
+      cards: ['D09', 'D19'],
+      result: 'Through the motive for murder and the charity donation plan, you secure the final clue.',
+      unlock: 'D20'
+    },
+    {
+      id: 'rule_D20_direct',
+      cards: ['D08', 'D17'],
+      result: 'Through the disinheritance plan and alibi fabrication, you reach the final clue.',
+      unlock: 'D20'
     }
   ],
 

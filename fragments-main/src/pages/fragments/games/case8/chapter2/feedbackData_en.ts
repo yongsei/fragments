@@ -24,7 +24,7 @@ export const case8FeedbackDataEn2: CaseFeedbackData = {
       proximity: 'close',
       messages: [
         "Eerie repetition and stagnant time are the core phenomena of the curse dominating this village.",
-        "The repetition, as if time has stopped, shows the curse\'s impact on the entire village.",
+        "The repetition, as if time has stopped, shows the curse's impact on the entire village.",
         "💡 Repeating phenomena and stopped time reveal the essence of the curse. Delve deeply into their relationship."
       ]
     },
@@ -32,9 +32,9 @@ export const case8FeedbackDataEn2: CaseFeedbackData = {
       cards: ['B13', 'B15'],
       proximity: 'close',
       messages: [
-        "Grandma Elara\'s warning is a crucial clue about the eerie repetition phenomenon.",
+        "Grandma Elara's warning is a crucial clue about the eerie repetition phenomenon.",
         "You need to understand how her words connect to the repeating curse.",
-        "💡 Grandma Elara\'s warning tells the meaning of the repeating shadows. Reflect on her words."
+        "💡 Grandma Elara's warning tells the meaning of the repeating shadows. Reflect on her words."
       ]
     },
     {
@@ -50,9 +50,9 @@ export const case8FeedbackDataEn2: CaseFeedbackData = {
       cards: ['B14', 'B15'],
       proximity: 'close',
       messages: [
-        "Stagnant time and Grandma Elara\'s warning emphasize the abnormal state of the village.",
+        "Stagnant time and Grandma Elara's warning emphasize the abnormal state of the village.",
         "Her warning is important for understanding the meaning of stopped time.",
-        "💡 Grandma Elara\'s warning holds the secret of stopped time. Unravel the stagnation of time through her words."
+        "💡 Grandma Elara's warning holds the secret of stopped time. Unravel the stagnation of time through her words."
       ]
     },
     {
@@ -68,9 +68,9 @@ export const case8FeedbackDataEn2: CaseFeedbackData = {
       cards: ['B15', 'B18'],
       proximity: 'close',
       messages: [
-        "Grandma Elara\'s warning and the last piece of evidence confirm the existence of the curse.",
+        "Grandma Elara's warning and the last piece of evidence confirm the existence of the curse.",
         "These two elements are the most direct and decisive clues about the curse.",
-        "💡 Grasp the true nature of the curse indicated by Grandma Elara\'s warning and the last piece of evidence."
+        "💡 Grasp the true nature of the curse indicated by Grandma Elara's warning and the last piece of evidence."
       ]
     },
     {
@@ -88,7 +88,7 @@ export const case8FeedbackDataEn2: CaseFeedbackData = {
       messages: [
         "Grandma Elara warned about the stagnant time phenomenon.",
         "Her warning is important for understanding the meaning of stopped time.",
-        "💡 Grandma Elara\'s warning holds the secret of stopped time. Unravel the stagnation of time through her words."
+        "💡 Grandma Elara's warning holds the secret of stopped time. Unravel the stagnation of time through her words."
       ]
     },
     {
@@ -97,16 +97,16 @@ export const case8FeedbackDataEn2: CaseFeedbackData = {
       messages: [
         "The repeating elder is living proof of the eerie repetition phenomenon.",
         "His actions can be an important clue to understanding the pattern of the curse.",
-        "💡 The repeating elder\'s actions show the pattern of the curse. Understand the meaning of repetition through him."
+        "💡 The repeating elder's actions show the pattern of the curse. Understand the meaning of repetition through him."
       ]
     },
     {
       cards: ['B03', 'B13'],
       proximity: 'close',
       messages: [
-        "The children\'s song is another form of the repeating phenomenon.",
+        "The children's song is another form of the repeating phenomenon.",
         "You must find the eerie meaning of repetition hidden behind their innocent appearance.",
-        "💡 The children\'s song contains the pattern of the repeating curse. Understand the meaning of that song."
+        "💡 The children's song contains the pattern of the repeating curse. Understand the meaning of that song."
       ]
     },
     // partial combinations
@@ -114,9 +114,9 @@ export const case8FeedbackDataEn2: CaseFeedbackData = {
       cards: ['B04', 'B16'],
       proximity: 'partial',
       messages: [
-        "The additional character and the children\'s song are elements found in the repeating daily life of the village.",
+        "The additional character and the children's song are elements found in the repeating daily life of the village.",
         "Their combination can hint at the suffering of the villagers trapped by the curse.",
-        "💭 What do the additional character\'s actions and the children\'s song signify? Observe the villagers' reactions."
+        "💭 What do the additional character's actions and the children's song signify? Observe the villagers' reactions."
       ]
     },
     {
@@ -133,7 +133,7 @@ export const case8FeedbackDataEn2: CaseFeedbackData = {
       proximity: 'partial',
       messages: [
         "The last character and additional evidence symbolize the collective unconscious or reaction of the villagers to the curse.",
-        "Their combination can show the curse\'s impact on the villagers.",
+        "Their combination can show the curse's impact on the villagers.",
         "💭 Understand the villagers' reactions revealed by the last character and additional evidence combined."
       ]
     },
@@ -142,8 +142,8 @@ export const case8FeedbackDataEn2: CaseFeedbackData = {
       proximity: 'partial',
       messages: [
         "Grandma Elara and the repeating elder are characters showing the abnormal phenomena of the village.",
-        "The presence of these two elders can hint that the village\'s curse is ancient.",
-        "💭 What clues do the actions and words of these two elders provide about the village\'s curse?"
+        "The presence of these two elders can hint that the village's curse is ancient.",
+        "💭 What clues do the actions and words of these two elders provide about the village's curse?"
       ]
     },
     {
@@ -152,7 +152,7 @@ export const case8FeedbackDataEn2: CaseFeedbackData = {
       messages: [
         "The repeating elder lingering by the old mailbox is a symbol of stagnant time.",
         "The mailbox implies that no one has sent letters for a long time.",
-        "📖 The combination of the old mailbox and the repeating elder represents the village\'s isolation and stagnant time."
+        "📖 The combination of the old mailbox and the repeating elder represents the village's isolation and stagnant time."
       ]
     },
     {
@@ -161,7 +161,7 @@ export const case8FeedbackDataEn2: CaseFeedbackData = {
       messages: [
         "Children repeatedly singing in the village square shows the normalization of the curse.",
         "The square is the center of the village, but an eerie silence, rather than vibrancy, hangs over it.",
-        "🏠 The village square and the children\'s song show the appearance of the village trapped by the curse."
+        "🏠 The village square and the children's song show the appearance of the village trapped by the curse."
       ]
     }
   ],

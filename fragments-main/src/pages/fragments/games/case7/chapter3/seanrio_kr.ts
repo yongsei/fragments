@@ -270,6 +270,30 @@ export const case7ch3: GameScenario = {
       cards: ['C06', 'C16'],
       result: '비밀 통로의 존재와 저택의 비밀을 통해 진실의 문턱에 도달합니다.',
       unlock: 'C20'
+    },
+    {
+      id: 'rule_C20_alt',
+      cards: ['C14', 'C19'],
+      result: '텅 빈 소리와 미스터리의 심화를 통해 진실의 문턱에 도달합니다.',
+      unlock: 'C20'
+    },
+    {
+      id: 'rule_C20_direct',
+      cards: ['C09', 'C15'],
+      result: '유령의 연극과 인간의 악의를 통해 진실의 문턱에 직접 도달합니다.',
+      unlock: 'C20'
+    },
+    {
+      id: 'rule_C19_alt',
+      cards: ['C05', 'C12'],
+      result: '벽 속으로 사라진 형체와 촛불의 소멸을 통해 미스터리가 심화됩니다.',
+      unlock: 'C19'
+    },
+    {
+      id: 'rule_C16_alt',
+      cards: ['C10', 'C14'],
+      result: '숨겨진 공간과 텅 빈 소리를 통해 저택의 비밀을 알게 됩니다.',
+      unlock: 'C16'
     }
   ],
 

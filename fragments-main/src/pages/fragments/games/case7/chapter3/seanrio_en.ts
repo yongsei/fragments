@@ -268,8 +268,32 @@ export const case7ch3En: GameScenario = {
     {
       id: 'rule_C20',
       cards: ['C06', 'C16'],
-      result: '[TRANSLATE] 비밀 통로의 존재와 저택의 비밀을 통해 진실의 문턱에 도달합니다.',
+      result: 'Through the existence of the secret passage and the secrets of the manor, you reach the threshold of truth.',
       unlock: 'C20'
+    },
+    {
+      id: 'rule_C20_alt',
+      cards: ['C14', 'C19'],
+      result: 'Through the hollow sound and the deepening mystery, you reach the threshold of truth.',
+      unlock: 'C20'
+    },
+    {
+      id: 'rule_C20_direct',
+      cards: ['C09', 'C15'],
+      result: 'Through the ghost\'s performance and human malice, you directly reach the threshold of truth.',
+      unlock: 'C20'
+    },
+    {
+      id: 'rule_C19_alt',
+      cards: ['C05', 'C12'],
+      result: 'Through the figure disappearing into the wall and the extinguishing candles, the mystery deepens.',
+      unlock: 'C19'
+    },
+    {
+      id: 'rule_C16_alt',
+      cards: ['C10', 'C14'],
+      result: 'Through the hidden space and the hollow sound, you learn about the secrets of the manor.',
+      unlock: 'C16'
     }
   ],
 

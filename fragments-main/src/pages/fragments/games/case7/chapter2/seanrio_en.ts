@@ -276,6 +276,30 @@ export const case7ch2En: GameScenario = {
       cards: ['B18', 'B19'],
       result: 'Through the masked family and the dangerous relationship, you realize that the truth lies deeper within the labyrinth.',
       unlock: 'B20'
+    },
+    {
+      id: 'rule_B20_direct',
+      cards: ['B15', 'B16'],
+      result: 'Through financial pressure and hidden motives, you directly reach the labyrinth of truth.',
+      unlock: 'B20'
+    },
+    {
+      id: 'rule_B20_alt',
+      cards: ['B13', 'B17'],
+      result: 'Through family distrust and the servant\'s testimony, you understand the labyrinth of truth.',
+      unlock: 'B20'
+    },
+    {
+      id: 'rule_B17_alt',
+      cards: ['B12', 'B03'],
+      result: 'Through the library and Sebastian\'s ambiguity, you secure the servant\'s testimony.',
+      unlock: 'B17'
+    },
+    {
+      id: 'rule_B19_alt',
+      cards: ['B14', 'B17'],
+      result: 'Through false testimonies and the servant\'s testimony, you understand the dangerous relationship.',
+      unlock: 'B19'
     }
   ],
 

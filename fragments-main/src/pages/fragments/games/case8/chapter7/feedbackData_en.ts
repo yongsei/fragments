@@ -23,17 +23,17 @@ export const case8FeedbackDataEn7: CaseFeedbackData = {
       cards: ['G18', 'G13'],
       proximity: 'close',
       messages: [
-        "The epilogue\'s last piece of evidence and Alex\'s notebook show the indelible mark left by the Echowood Village experience and the collapse of his logical worldview.",
+        "The epilogue's last piece of evidence and Alex's notebook show the indelible mark left by the Echowood Village experience and the collapse of his logical worldview.",
         "Their combination proves that mental scars remain even after the curse ends.",
-        "💡 Understand the true cost of the Echowood Village experience revealed by the last piece of evidence and Alex\'s notebook combined."
+        "💡 Understand the true cost of the Echowood Village experience revealed by the last piece of evidence and Alex's notebook combined."
       ]
     },
     {
       cards: ['G18', 'G14'],
       proximity: 'close',
       messages: [
-        "The epilogue\'s last piece of evidence and the vibration of the 'Fragment of the Loop' show that physical remnants remain even after the curse is lifted.",
-        "Their combination proves that the curse\'s influence still affects the player.",
+        "The epilogue's last piece of evidence and the vibration of the 'Fragment of the Loop' show that physical remnants remain even after the curse is lifted.",
+        "Their combination proves that the curse's influence still affects the player.",
         "💡 Confirm the physical remnants of the curse revealed by the last piece of evidence and the vibration of the Fragment of the Loop combined."
       ]
     },
@@ -41,8 +41,8 @@ export const case8FeedbackDataEn7: CaseFeedbackData = {
       cards: ['G18', 'G15'],
       proximity: 'close',
       messages: [
-        "The epilogue\'s last piece of evidence and the memory of Echowood Village show that deep mental scars remain even after the curse is lifted.",
-        "Their combination proves that the village\'s nightmare is deeply embedded in the player\'s life.",
+        "The epilogue's last piece of evidence and the memory of Echowood Village show that deep mental scars remain even after the curse is lifted.",
+        "Their combination proves that the village's nightmare is deeply embedded in the player's life.",
         "💡 Understand the mental scars of the curse revealed by the last piece of evidence and the memory of Echowood Village combined."
       ]
     },
@@ -50,18 +50,18 @@ export const case8FeedbackDataEn7: CaseFeedbackData = {
       cards: ['G13', 'G14'],
       proximity: 'close',
       messages: [
-        "Alex\'s notebook and the vibration of the 'Fragment of the Loop' show that the collapse of his logical worldview and physical remnants remain even after the curse ends.",
-        "Their combination proves that the curse\'s influence affects both Alex and the player.",
-        "💡 Confirm the remnants of the curse revealed by Alex\'s notebook and the vibration of the Fragment of the Loop combined."
+        "Alex's notebook and the vibration of the 'Fragment of the Loop' show that the collapse of his logical worldview and physical remnants remain even after the curse ends.",
+        "Their combination proves that the curse's influence affects both Alex and the player.",
+        "💡 Confirm the remnants of the curse revealed by Alex's notebook and the vibration of the Fragment of the Loop combined."
       ]
     },
     {
       cards: ['G13', 'G15'],
       proximity: 'close',
       messages: [
-        "Alex\'s notebook and the memory of Echowood Village show that the collapse of his logical worldview and deep mental scars remain even after the curse ends.",
-        "Their combination proves that the curse\'s influence is deeply embedded in Alex\'s mind.",
-        "💡 Understand the mental scars of the curse revealed by Alex\'s notebook and the memory of Echowood Village combined."
+        "Alex's notebook and the memory of Echowood Village show that the collapse of his logical worldview and deep mental scars remain even after the curse ends.",
+        "Their combination proves that the curse's influence is deeply embedded in Alex's mind.",
+        "💡 Understand the mental scars of the curse revealed by Alex's notebook and the memory of Echowood Village combined."
       ]
     },
     {
@@ -69,7 +69,7 @@ export const case8FeedbackDataEn7: CaseFeedbackData = {
       proximity: 'close',
       messages: [
         "The vibration of the 'Fragment of the Loop' and the memory of Echowood Village show that deep physical remnants and mental scars remain even after the curse is lifted.",
-        "Their combination proves that the curse\'s influence affects both the player\'s body and mind.",
+        "Their combination proves that the curse's influence affects both the player's body and mind.",
         "💡 Confirm the physical and mental remnants of the curse revealed by the vibration of the Fragment of the Loop and the memory of Echowood Village combined."
       ]
     },
@@ -79,7 +79,7 @@ export const case8FeedbackDataEn7: CaseFeedbackData = {
       messages: [
         "Alex, returned to civilization, and his notebook show that the curse has shattered his logical worldview.",
         "The notebook is no longer being written in and lies blankly open.",
-        "💡 Understand the impact the curse has had on Alex\'s life through him and his notebook."
+        "💡 Understand the impact the curse has had on Alex's life through him and his notebook."
       ]
     },
     {
@@ -95,18 +95,18 @@ export const case8FeedbackDataEn7: CaseFeedbackData = {
       cards: ['G03', 'G15'],
       proximity: 'close',
       messages: [
-        "The player seeing shadows of Echowood Village in his ordinary life and the village\'s memory show that the curse is deeply embedded in his mind.",
+        "The player seeing shadows of Echowood Village in his ordinary life and the village's memory show that the curse is deeply embedded in his mind.",
         "He reads the fear of the villagers in the faces of passersby.",
-        "💡 Understand the impact the curse has had on your mind through the player\'s illusions and the memory of Echowood Village."
+        "💡 Understand the impact the curse has had on your mind through the player's illusions and the memory of Echowood Village."
       ]
     },
     {
       cards: ['G04', 'G16'],
       proximity: 'close',
       messages: [
-        "The player hearing Grandma Elara\'s warning even in the bleak wind and the lingering presence of the curse show that the curse continues to follow him.",
+        "The player hearing Grandma Elara's warning even in the bleak wind and the lingering presence of the curse show that the curse continues to follow him.",
         "The memory of the village continues to torment him.",
-        "💡 Confirm the lasting impact the curse has had on your life through the player\'s auditory hallucinations and Grandma Elara\'s warning."
+        "💡 Confirm the lasting impact the curse has had on your life through the player's auditory hallucinations and Grandma Elara's warning."
       ]
     },
     {
@@ -115,7 +115,7 @@ export const case8FeedbackDataEn7: CaseFeedbackData = {
       messages: [
         "Alex, returned to civilization, and the cityscape show that he is not the same as before.",
         "It shows that his logical worldview has collapsed.",
-        "💭 Understand the impact the curse has had on Alex\'s life through him and the cityscape."
+        "💭 Understand the impact the curse has had on Alex's life through him and the cityscape."
       ]
     },
     {
@@ -131,16 +131,16 @@ export const case8FeedbackDataEn7: CaseFeedbackData = {
       cards: ['G05', 'G17'],
       proximity: 'partial',
       messages: [
-        "The player seeing Lily\'s drawings repeatedly in his dreams and the village\'s nightmare show that the curse is deeply embedded in his subconscious.",
-        "Their combination proves the lasting impact the curse has had on the player\'s mind.",
-        "💭 Understand the impact the curse has had on your subconscious through the player\'s dreams and Lily\'s drawings."
+        "The player seeing Lily's drawings repeatedly in his dreams and the village's nightmare show that the curse is deeply embedded in his subconscious.",
+        "Their combination proves the lasting impact the curse has had on the player's mind.",
+        "💭 Understand the impact the curse has had on your subconscious through the player's dreams and Lily's drawings."
       ]
     },
     {
       cards: ['G06', 'G12'],
       proximity: 'partial',
       messages: [
-        "The player\'s inner self, forever changed by the Echowood Village experience, and the space symbolizing a new kind of 'fog' show the indelible mark left by the curse.",
+        "The player's inner self, forever changed by the Echowood Village experience, and the space symbolizing a new kind of 'fog' show the indelible mark left by the curse.",
         "Their combination leaves a lingering impression that the player might wander in a new kind of 'fog'.",
         "🏠 Confirm the indelible mark the curse has left on your life through the last character and the new fog space."
       ]
@@ -149,8 +149,8 @@ export const case8FeedbackDataEn7: CaseFeedbackData = {
       cards: ['G09', 'G10'],
       proximity: 'partial',
       messages: [
-        "A specific place in Echowood Village repeating in the player\'s dreams and Echowood Village remaining unmapped show the mental remnants left by the curse.",
-        "Their combination proves that the village\'s nightmare remains vivid in the player\'s memory.",
+        "A specific place in Echowood Village repeating in the player's dreams and Echowood Village remaining unmapped show the mental remnants left by the curse.",
+        "Their combination proves that the village's nightmare remains vivid in the player's memory.",
         "💭 Understand the impact the curse has had on your memory through Echowood in dreams and unmapped Echowood."
       ]
     },
@@ -167,8 +167,8 @@ export const case8FeedbackDataEn7: CaseFeedbackData = {
       cards: ['G07', 'G08'],
       proximity: 'none',
       messages: [
-        "The road leaving Echowood Village and the cityscape of returning to civilization represent the player\'s travel path.",
-        "This combination shows the player\'s current location but is not a direct clue.",
+        "The road leaving Echowood Village and the cityscape of returning to civilization represent the player's travel path.",
+        "This combination shows the player's current location but is not a direct clue.",
         "🏠 These locations show your travel path, but are not core clues."
       ]
     },
@@ -176,8 +176,8 @@ export const case8FeedbackDataEn7: CaseFeedbackData = {
       cards: ['G09', 'G11'],
       proximity: 'none',
       messages: [
-        "A specific place in Echowood Village repeating in the player\'s dreams and the place where the player sees shadows of Echowood Village in his daily life show the mental remnants left by the curse.",
-        "This combination shows the lasting impact the curse has had on the player\'s mind, but is not a direct clue.",
+        "A specific place in Echowood Village repeating in the player's dreams and the place where the player sees shadows of Echowood Village in his daily life show the mental remnants left by the curse.",
+        "This combination shows the lasting impact the curse has had on the player's mind, but is not a direct clue.",
         "💭 These locations show the impact the curse has had on your mind, but are not core clues."
       ]
     },
@@ -186,8 +186,8 @@ export const case8FeedbackDataEn7: CaseFeedbackData = {
       proximity: 'none',
       messages: [
         "Alex, returned to civilization, and the road leaving Echowood Village show that he has left the village.",
-        "This combination shows Alex\'s location but is not a direct clue.",
-        "🔍 These locations help identify Alex\'s location, but are not core clues for solving the case."
+        "This combination shows Alex's location but is not a direct clue.",
+        "🔍 These locations help identify Alex's location, but are not core clues for solving the case."
       ]
     },
     {
@@ -195,7 +195,7 @@ export const case8FeedbackDataEn7: CaseFeedbackData = {
       proximity: 'none',
       messages: [
         "The player, having left Echowood Village, and the cityscape of returning to civilization show that he is trying to adapt to a new environment.",
-        "This combination shows the player\'s current situation but is not a direct clue.",
+        "This combination shows the player's current situation but is not a direct clue.",
         "🚨 These locations show your current situation, but are not core clues."
       ]
     },
