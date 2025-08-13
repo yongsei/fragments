@@ -60,7 +60,7 @@ const CardDetailModal: React.FC<CardDetailModalProps> = ({
   useEffect(() => {
     // 모달이 열릴 때 body 스크롤 방지 및 포인터 이벤트 보장
     document.body.style.overflow = 'hidden';
-    document.body.style.pointerEvents = 'auto';
+    document.body.classList.add('modal-open');
 
     return () => {
       console.log('🧹 CardDetailModal unmounting - cleaning up all timers and restoring body');
@@ -75,9 +75,16 @@ const CardDetailModal: React.FC<CardDetailModalProps> = ({
       // 상태 초기화
       fadeOutProcessedRef.current = false;
 
-      // 강제로 body 스타일 복원
-      document.body.style.overflow = 'auto';
-      document.body.style.pointerEvents = 'auto';
+      // 강제로 body 스타일 복원 - 더 확실하게
+      document.body.style.overflow = '';
+      document.body.style.pointerEvents = '';
+      document.body.classList.remove('modal-open');
+
+      // 추가 보장: 약간의 지연 후 한 번 더 복원
+      setTimeout(() => {
+        document.body.style.overflow = '';
+        document.body.style.pointerEvents = '';
+      }, 50);
     };
   }, []);
 
@@ -117,14 +124,21 @@ const CardDetailModal: React.FC<CardDetailModalProps> = ({
     // 즉시 모달 숨김
     setIsVisible(false);
 
-    // body 스타일 강제 복원
-    document.body.style.overflow = 'auto';
-    document.body.style.pointerEvents = 'auto';
+    // body 스타일 강제 복원 - 더 확실하게
+    document.body.style.overflow = '';
+    document.body.style.pointerEvents = '';
+    document.body.removeAttribute('style'); // 모든 인라인 스타일 제거
+
+    // 추가적으로 body에 강제로 클래스 추가하여 포인터 이벤트 보장
+    document.body.classList.remove('modal-open');
+    document.body.style.pointerEvents = 'auto !important';
 
     // 약간의 지연 후 onComplete 호출 (DOM 정리 시간 확보)
     setTimeout(() => {
+      // 한 번 더 확실하게 복원
+      document.body.style.pointerEvents = '';
       onComplete();
-    }, 50);
+    }, 100);
   }, [onComplete]);
 
   // SKIP 버튼용 핸들러
@@ -581,6 +595,17 @@ const CardDetailModal: React.FC<CardDetailModalProps> = ({
         {/* CSS 애니메이션 */}
         <style>
           {`
+            /* 모달 관련 body 스타일 보장 */
+            body:not(.modal-open) {
+              pointer-events: auto !important;
+              overflow: auto !important;
+            }
+            
+            body.modal-open {
+              overflow: hidden;
+              pointer-events: auto;
+            }
+            
             @keyframes skipBlink {
               0%, 50% { opacity: 1; }
               51%, 100% { opacity: 0.6; }
