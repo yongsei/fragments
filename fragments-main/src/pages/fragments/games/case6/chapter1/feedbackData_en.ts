@@ -1,6 +1,24 @@
-import { CaseFeedbackData, CombinationFeedback } from "../types";
 
-export const chapter1FeedbackData: CaseFeedbackData = {
+// Mystery Prototype dedicated case-specific feedback system
+// Provides customized feedback and hints for each case
+
+export interface CombinationFeedback {
+  cards: string[];  // Array format same as scenario
+  proximity: 'close' | 'partial' | 'none';
+  messages: string[];  // Messages by hint level (0,1,2 stages)
+}
+
+export interface CaseFeedbackData {
+  caseId: string;
+  correctSuspect: string;
+  keyEvidence: string[];
+  combinationFeedback: CombinationFeedback[];  // Changed to array-based
+  urgentHints: string[];
+  contextualHints: string[];
+}
+
+
+export const feedbackCase6Ch1En: CaseFeedbackData = {
   caseId: 'case6_chapter1',
   correctSuspect: 'D-P01', // 닥터 아서 랭던 (전체 시나리오의 최종 범인)
   keyEvidence: [
@@ -14,9 +32,9 @@ export const chapter1FeedbackData: CaseFeedbackData = {
       cards: ['CH1_EV01', 'CH1_CH01'],
       proximity: 'close',
       messages: [
-        'The glowing manuscript seems to be central to Elara's research. What is she hiding?',
-        'Elara's deep involvement with the manuscript suggests she knows more about its true nature and purpose.',
-        '💡 Focus on Elara's connection to the manuscript. Her personal diary (CH1_EV03) might reveal her secrets.'
+        'The glowing manuscript seems to be central to Elara\'s research. What is she hiding?',
+        'Elara\'s deep involvement with the manuscript suggests she knows more about its true nature and purpose.',
+        '💡 Focus on Elara\'s connection to the manuscript. Her personal diary (CH1_EV03) might reveal her secrets.'
       ]
     },
     {
@@ -25,23 +43,23 @@ export const chapter1FeedbackData: CaseFeedbackData = {
       messages: [
         'Elara spends a lot of time in the Forbidden Section. What is she doing there?',
         'Her presence in the Forbidden Section is directly linked to her secret research. Look for hidden items.',
-        '💡 Elara's personal diary (CH1_EV03) is likely hidden within the Forbidden Section. Find it!'
+        '💡 Elara\'s personal diary (CH1_EV03) is likely hidden within the Forbidden Section. Find it!'
       ]
     },
     {
       cards: ['CH1_EV03', 'CH1_CH02'],
       proximity: 'close',
       messages: [
-        'Jonas seems very nervous about Elara's activities. What did he see?',
-        'Jonas's fear is connected to Elara's desperate attempts to find a cure. He might have witnessed something crucial.',
-        '💡 Jonas's secret confession (CH1_EV08) will reveal what he knows about Elara's rituals and the plague.'
+        'Jonas seems very nervous about Elara\'s activities. What did he see?',
+        'Jonas\'s fear is connected to Elara\'s desperate attempts to find a cure. He might have witnessed something crucial.',
+        '💡 Jonas\'s secret confession (CH1_EV08) will reveal what he knows about Elara\'s rituals and the plague.'
       ]
     },
     {
       cards: ['CH1_EV06', 'CH1_CH05'],
       proximity: 'close',
       messages: [
-        'The City Guard's report mentions strange disappearances. Is the Silent Watcher connected?',
+        'The City Guard\'s report mentions strange disappearances. Is the Silent Watcher connected?',
         'The Silent Watcher seems to be observing the victims. Their presence is unsettling and significant.',
         '💡 The scratched silver locket (CH1_EV11) found near the aqueducts might link the Silent Watcher to a victim.'
       ]
@@ -51,18 +69,18 @@ export const chapter1FeedbackData: CaseFeedbackData = {
       cards: ['CH1_EV04', 'CH1_EV01'],
       proximity: 'partial',
       messages: [
-        'A map of the sewers from the manuscript? This suggests a hidden connection to the city's underbelly.',
+        'A map of the sewers from the manuscript? This suggests a hidden connection to the city\'s underbelly.',
         '📖 This map hints at a subterranean network. Could the glowing plague originate from below?',
-        '💭 Consider how the sewers might be connected to the disappearances mentioned in the City Guard's report (CH1_EV06).'
+        '💭 Consider how the sewers might be connected to the disappearances mentioned in the City Guard\'s report (CH1_EV06).'
       ]
     },
     {
       cards: ['CH1_EV05', 'CH1_CH02'],
       proximity: 'partial',
       messages: [
-        'Jonas knows something about Elara's purchases. What kind of herbs was she buying?',
+        'Jonas knows something about Elara\'s purchases. What kind of herbs was she buying?',
         '⚕️ The receipt for rare alchemical herbs suggests Elara is experimenting with potent substances. Where did she buy them?',
-        '💡 The Apothecary's Back Room (CH1_LC02) might be where these illicit transactions took place. Investigate there.'
+        '💡 The Apothecary\'s Back Room (CH1_LC02) might be where these illicit transactions took place. Investigate there.'
       ]
     },
     {
@@ -70,8 +88,8 @@ export const chapter1FeedbackData: CaseFeedbackData = {
       proximity: 'partial',
       messages: [
         'The torn page has strange symbols. The Whispering Scholar might understand them.',
-        '📖 The scholar's knowledge of ancient lore could decipher the symbols. What do they represent?',
-        '💭 The ancient astrolabe fragment (CH1_EV09) might be related to these symbols and the scholar's insights.'
+        '📖 The scholar\'s knowledge of ancient lore could decipher the symbols. What do they represent?',
+        '💭 The ancient astrolabe fragment (CH1_EV09) might be related to these symbols and the scholar\'s insights.'
       ]
     },
     {
@@ -80,7 +98,7 @@ export const chapter1FeedbackData: CaseFeedbackData = {
       messages: [
         'An astrolabe fragment at the observatory? This suggests celestial connections.',
         '🏠 The observatory was used for charting stars. Could the plague be linked to cosmic events?',
-        '🔍 The faded alchemical diagram (CH1_EV10) might be found here, revealing more about the plague's origin.'
+        '🔍 The faded alchemical diagram (CH1_EV10) might be found here, revealing more about the plague\'s origin.'
       ]
     },
     // 'none' 조합
@@ -97,7 +115,7 @@ export const chapter1FeedbackData: CaseFeedbackData = {
       cards: ['CH1_CH03', 'CH1_CH04'],
       proximity: 'none',
       messages: [
-        'Sergeant Thorne and the Whispering Scholar are very different people. Do they have a common link?',
+        'sergeant Thorne and the Whispering Scholar are very different people. Do they have a common link?',
         '💭 Their approaches to knowledge are vastly different. A direct collaboration seems unlikely.',
         '🔍 Consider their individual roles and how they might contribute to the investigation separately.'
       ]
@@ -116,7 +134,7 @@ export const chapter1FeedbackData: CaseFeedbackData = {
     '🚨 Urgent Report: More citizens are showing signs of the glowing affliction. The plague is spreading faster than anticipated!',
     '🚨 Witness Testimony: A terrified citizen claims to have seen a cloaked figure lurking near the aqueducts just before a disappearance.',
     '🚨 Library Security Log: Elara accessed the Forbidden Section late at night, just hours before the first reported glowing incident.',
-    '🚨 Alchemical Residue: Traces of an unknown, bioluminescent substance have been found in the city's water supply, hinting at a widespread contamination.'
+    '🚨 Alchemical Residue: Traces of an unknown, bioluminescent substance have been found in the city\'s water supply, hinting at a widespread contamination.'
   ],
   contextualHints: [
     '💡 Deduction Tip: Sometimes, the most obvious suspect is a red herring. Look for subtle inconsistencies.',

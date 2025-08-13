@@ -1,6 +1,30 @@
-import { GameScenario } from "./types";
+export interface GameScenario {
+  id: string;
+  title: string;
+  story?: string;
+  victim?: string;
+  suspects?: any[];
+  evidence?: any[];
+  locations?: any[];
+  connections?: any[];
+  connectionRules?: any[];
+  solution?: any;
+  initialFragment?: string;
+  finalFragment?: string;
+  endingMessage?: string;
+  fragments?: any[];
+  text?: string;
+  choices?: any[];
+  clues?: any[];
+  temporalFragments?: any[];
+  // 게임 설정 추가
+  initialCards?: string[];
+  winCondition?: string;
+}// 임시 파일 - 빌드 오류 해결을 위한 최소한의 export
 
-export const gameScenario: GameScenario = {
+
+
+export const case6ch2En: GameScenario = {
   id: 'case6_chapter2',
   title: 'The Alchemist\'s Shadow',
   story: 'Following the unsettling clues from the Grand Library, the investigation delves into the city\'s murky aqueducts, where the mysterious "glowing plague" claims its first victim. The trail leads to Kael, a disgraced alchemist operating from a hidden, grotesque laboratory. As the player uncovers Kael\'s disturbing research notes, failed experiments, and a chilling list of ingredients, the true, horrifying nature of the plague and Kael\'s desperate quest for immortality begin to unfold, revealing a conspiracy far darker than initially imagined.',

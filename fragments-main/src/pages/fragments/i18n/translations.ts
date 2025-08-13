@@ -35,6 +35,13 @@ export interface FragmentsTranslations {
     storyTitle: string;
     storyContent: string;
   };
+  case6: {
+    title: string;
+    subtitle: string;
+    description: string;
+    storyTitle: string;
+    storyContent: string;
+  };
   
   // 게임 기능 설명
   features: {
@@ -123,6 +130,13 @@ export const ko: FragmentsTranslations = {
     storyTitle: "사건 개요", 
     storyContent: "최첨단 시간 연구소에서 천재 물리학자 크로노스 박사가 흔적도 없이 사라졌습니다. 그가 연구하던 시간 여행 실험과 관련이 있을까요? 시간 관측 AI, 경쟁 연구자, 연구 보조원들 사이에서 벌어진 복잡한 사건의 진실을 파헤쳐야 합니다. 시간의 파편들을 올바르게 조합하여 박사의 실종 미스터리를 해결해보세요."
   },
+  case6: {
+    title: "어둠의 수도원",
+    subtitle: "신성한 벽 뒤의 비밀",
+    description: "외딴 수도원에서 발견된 수도사의 시신. 성스러운 곳에서 벌어진 살인 사건의 진실을 파헤쳐보세요.",
+    storyTitle: "사건 개요",
+    storyContent: "깊은 산속 외딴 수도원에서 충격적인 사건이 발생했습니다. 새벽 기도 시간, 성당에서 한 수도사가 피를 흘린 채 발견되었습니다. 신성한 장소에서 벌어진 이 끔찍한 범죄는 수도원 전체를 공포에 떨게 했습니다. 피해자는 브라더 토마스, 도서관을 관리하던 온화한 수도사였습니다. 고요한 수도원의 평화를 깨뜨린 이 사건의 진실을 밝혀내세요."
+  },
   
   features: {
     deduction: {
@@ -206,6 +220,13 @@ export const en: FragmentsTranslations = {
     description: "Dr. Chronos has suddenly disappeared from the time research laboratory. Combine temporal fragments to uncover the truth behind his disappearance.",
     storyTitle: "Case Overview",
     storyContent: "The genius physicist Dr. Chronos has vanished without a trace from the cutting-edge temporal research laboratory. Could it be related to his time travel experiments? You must unravel the truth behind the complex case involving the temporal observation AI, rival researchers, and lab assistants. Correctly combine the fragments of time to solve the mystery of the doctor's disappearance."
+  },
+  case6: {
+    title: "The Dark Abbey",
+    subtitle: "Secrets Behind Sacred Walls",
+    description: "A monk's body discovered in a remote abbey. Uncover the truth behind this murder in a holy place.",
+    storyTitle: "Case Overview",
+    storyContent: "A shocking incident has occurred at a remote abbey deep in the mountains. During morning prayers, a monk was found bleeding in the chapel. This horrific crime in a sacred place has filled the entire abbey with terror. The victim was Brother Thomas, a gentle monk who managed the library. Uncover the truth behind this incident that shattered the peace of the quiet abbey."
   },
   
   features: {

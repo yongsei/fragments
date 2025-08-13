@@ -10,6 +10,7 @@ import './App.css';
 // 케이스별 테마 파일 import (각 케이스 폴더에서)
 import { case1Theme } from './pages/fragments/games/case1/case1-theme';
 import { case2Theme } from './pages/fragments/games/case2/case2-theme';
+import { case6Theme } from './pages/fragments/games/case6/case6-theme';
 // import { case3Theme } from './pages/fragments/games/case3/case3-theme';
 // import { chapter1Theme } from './pages/fragments/games/case3/chapter1/chapter1-theme';
 // import { chapter2Theme } from './pages/fragments/games/case3/chapter2/chapter2-theme';
@@ -27,6 +28,8 @@ const getThemeColors = (pathname: string) => {
   } else if (pathname.includes('/case5')) {
     // case5 다크 테마 색상
     return 'linear-gradient(135deg, #0f0f23 0%, #16213e 50%, #1a1a2e 100%)';
+  } else if (pathname.includes('/case6')) {
+    return case6Theme.main;
   }
   // 기본 색상 (메인 페이지)
   return case1Theme.main;
@@ -42,6 +45,8 @@ const getStatusBarColor = (pathname: string) => {
     return '#ff9a9e'; // case3 핑크
   } else if (pathname.includes('/case5')) {
     return '#0f0f23'; // case5 다크
+  } else if (pathname.includes('/case6')) {
+    return '#2c1810'; // case6 다크 브라운
   }
   // 기본 색상 (메인 페이지)
   return '#1a1a2e';

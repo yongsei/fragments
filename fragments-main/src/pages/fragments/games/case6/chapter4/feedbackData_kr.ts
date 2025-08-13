@@ -1,6 +1,24 @@
-import { CaseFeedbackData, CombinationFeedback } from "../types";
 
-export const chapter4FeedbackData: CaseFeedbackData = {
+// Mystery Prototype dedicated case-specific feedback system
+// Provides customized feedback and hints for each case
+
+export interface CombinationFeedback {
+  cards: string[];  // Array format same as scenario
+  proximity: 'close' | 'partial' | 'none';
+  messages: string[];  // Messages by hint level (0,1,2 stages)
+}
+
+export interface CaseFeedbackData {
+  caseId: string;
+  correctSuspect: string;
+  keyEvidence: string[];
+  combinationFeedback: CombinationFeedback[];  // Changed to array-based
+  urgentHints: string[];
+  contextualHints: string[];
+}
+
+
+export const feedbackCase6Ch4: CaseFeedbackData = {
   caseId: 'case6_chapter4',
   correctSuspect: 'D-P01', // 닥터 아서 랭던 (전체 시나리오의 최종 범인)
   keyEvidence: [

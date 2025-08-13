@@ -1,6 +1,24 @@
-import { CaseFeedbackData, CombinationFeedback } from "../types";
 
-export const chapter2FeedbackData: CaseFeedbackData = {
+// Mystery Prototype dedicated case-specific feedback system
+// Provides customized feedback and hints for each case
+
+export interface CombinationFeedback {
+  cards: string[];  // Array format same as scenario
+  proximity: 'close' | 'partial' | 'none';
+  messages: string[];  // Messages by hint level (0,1,2 stages)
+}
+
+export interface CaseFeedbackData {
+  caseId: string;
+  correctSuspect: string;
+  keyEvidence: string[];
+  combinationFeedback: CombinationFeedback[];  // Changed to array-based
+  urgentHints: string[];
+  contextualHints: string[];
+}
+
+
+export const feedbackCase6Ch2En: CaseFeedbackData = {
   caseId: 'case6_chapter2',
   correctSuspect: 'D-P01', // 닥터 아서 랭던 (전체 시나리오의 최종 범인)
   keyEvidence: [
@@ -15,34 +33,34 @@ export const chapter2FeedbackData: CaseFeedbackData = {
       proximity: 'close',
       messages: [
         'The aqueducts are vast. Why would Kael choose this place?',
-        'Kael's presence in the aqueducts is highly suspicious. Look for a hidden base.',
-        '💡 Kael's Hidden Laboratory (CH2_EV02) is likely deep within the aqueducts. Find it!'
+        'Kael\'s presence in the aqueducts is highly suspicious. Look for a hidden base.',
+        '💡 Kael\'s Hidden Laboratory (CH2_EV02) is likely deep within the aqueducts. Find it!'
       ]
     },
     {
       cards: ['CH2_CH01', 'CH2_EV02'],
       proximity: 'close',
       messages: [
-        'Kael's lab is a mess of dark alchemy. What was he trying to create?',
-        'The lab is the heart of Kael's operations. His research notes will reveal his true intentions.',
-        '💡 Kael's Disturbing Research Notes (CH2_EV03) are crucial to understanding his experiments.'
+        'Kael\'s lab is a mess of dark alchemy. What was he trying to create?',
+        'The lab is the heart of Kael\'s operations. His research notes will reveal his true intentions.',
+        '💡 Kael\'s Disturbing Research Notes (CH2_EV03) are crucial to understanding his experiments.'
       ]
     },
     {
       cards: ['CH2_EV01', 'CH2_EV07'],
       proximity: 'close',
       messages: [
-        'The first victim's glowing skin matches the elixir's effects. Is this Kael's work?',
-        'The Elixir's Chilling Recipe directly explains the glowing plague. This is a direct link.',
-        '💡 This combination confirms Kael's method. Now, find out who his clients are (CH2_EV05).'
+        'The first victim\'s glowing skin matches the elixir\'s effects. Is this Kael\'s work?',
+        'The Elixir\'s Chilling Recipe directly explains the glowing plague. This is a direct link.',
+        '💡 This combination confirms Kael\'s method. Now, find out who his clients are (CH2_EV05).'
       ]
     },
     {
       cards: ['CH2_EV02', 'CH2_EV07'],
       proximity: 'close',
       messages: [
-        'Kael's lab and the elixir recipe. This is where the plague is being manufactured.',
-        'This combination reveals the full scope of Kael's depravity and his deadly concoction.',
+        'Kael\'s lab and the elixir recipe. This is where the plague is being manufactured.',
+        'This combination reveals the full scope of Kael\'s depravity and his deadly concoction.',
         '💡 The grotesque failed experiment (CH2_EV04) in the lab is a chilling testament to his methods.'
       ]
     },
@@ -61,8 +79,8 @@ export const chapter2FeedbackData: CaseFeedbackData = {
       proximity: 'partial',
       messages: [
         'The Sunken Market is a hub for illicit goods. Is the Whispering Merchant involved with Kael?',
-        '🏠 The merchant is a key link in Kael's supply chain. They deal in rare alchemical ingredients.',
-        '💡 Look for a coded ledger from the market (CH2_EV10) that details Kael's transactions.'
+        '🏠 The merchant is a key link in Kael\'s supply chain. They deal in rare alchemical ingredients.',
+        '💡 Look for a coded ledger from the market (CH2_EV10) that details Kael\'s transactions.'
       ]
     },
     {
@@ -70,17 +88,17 @@ export const chapter2FeedbackData: CaseFeedbackData = {
       proximity: 'partial',
       messages: [
         'A desperate noble commissioned Kael? Who would pay such a price for immortality?',
-        '💭 The Desperate Noble is Kael's wealthy client, driven by a fear of mortality. Their identity is crucial.',
-        '🔍 This connection reveals the true nature of Kael's clientele and their dark desires.'
+        '💭 The Desperate Noble is Kael\'s wealthy client, driven by a fear of mortality. Their identity is crucial.',
+        '🔍 This connection reveals the true nature of Kael\'s clientele and their dark desires.'
       ]
     },
     {
       cards: ['CH2_EV09', 'CH2_LC04'],
       proximity: 'partial',
       messages: [
-        'The second victim's glowing remains are at the morgue. What can we learn from them?',
-        '⚕️ The City Morgue's Secret Chamber is where the true extent of the plague is being understood. Look for more clues there.',
-        '💡 This confirms the plague's spread. Now, find out who is supplying Kael (CH2_CH05).'
+        'The second victim\'s glowing remains are at the morgue. What can we learn from them?',
+        '⚕️ The City Morgue\'s Secret Chamber is where the true extent of the plague is being understood. Look for more clues there.',
+        '💡 This confirms the plague\'s spread. Now, find out who is supplying Kael (CH2_CH05).'
       ]
     },
     // 'none' 조합
@@ -88,9 +106,9 @@ export const chapter2FeedbackData: CaseFeedbackData = {
       cards: ['CH2_LC03', 'CH2_LC05'],
       proximity: 'none',
       messages: [
-        'The Abandoned Pumping Station and Kael's Escape Route are both in the aqueducts. Are they directly related?',
+        'The Abandoned Pumping Station and Kael\'s Escape Route are both in the aqueducts. Are they directly related?',
         '🏠 These are distinct locations, though both are in the aqueducts. Their connection might be indirect.',
-        '🔍 Focus on the specific purpose of each location in Kael's operations.'
+        '🔍 Focus on the specific purpose of each location in Kael\'s operations.'
       ]
     },
     {

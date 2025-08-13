@@ -15,7 +15,7 @@ import { useSoundSettings, useSoundManager } from './hooks/useSoundManager';
 // 내부 컴포넌트: LanguageProvider 안에서 useFragmentsTranslation 사용
 const FragmentsContent: React.FC = () => {
   const location = useLocation();
-  const isInCasePage = location.pathname.match(/\/case[12345]/); // 케이스 1, 2, 3, 4, 5 체크
+  const isInCasePage = location.pathname.match(/\/case[123456]/); // 케이스 1, 2, 3, 4, 5, 6 체크
   const { t, originalLang } = useFragmentsTranslation(); // Fragments 다국어
   const { settings, toggleSoundEffects, setEffectsVolume } = useSoundSettings(); // 설정만 관리
   const { playScenarioSound, playScenarioSoundForced } = useSoundManager(); // 시나리오 선택 효과음용
@@ -96,6 +96,15 @@ const FragmentsContent: React.FC = () => {
                 "description": "시간 연구소에서 사라진 박사의 비밀을 파헤치는 SF 시간여행 미스터리",
                 "url": "https://norri.netlify.app/fragments/case2/",
                 "genre": "SF 추리 게임",
+                "gamePlatform": "Web Browser",
+                "isAccessibleForFree": true
+              },
+              {
+                "@type": "Game",
+                "name": "케이스 6: 어둠의 수도원",
+                "description": "신성한 벽 뒤에 숨겨진 수도원의 어둠의 비밀을 파헤치는 고딕 미스터리",
+                "url": "https://norri.netlify.app/fragments/case6/",
+                "genre": "고딕 추리 게임",
                 "gamePlatform": "Web Browser",
                 "isAccessibleForFree": true
               }
@@ -1044,6 +1053,122 @@ const FragmentsContent: React.FC = () => {
                             onMouseLeave={(e) => {
                               e.currentTarget.style.transform = 'scale(1)';
                               e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 123, 255, 0.3)';
+                            }}
+                          >
+                            🚀 {t.startGame}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                </SwiperSlide>
+
+                {/* 케이스 6: 어둠의 수도원 */}
+                <SwiperSlide>
+                  <Link to="/fragments/case6"
+                    onClick={handleScenarioClick}
+                    style={{
+                      textDecoration: 'none',
+                      color: 'inherit',
+                      display: 'block',
+                      height: '100%'
+                    }}>
+                    <div style={{
+                      background: 'rgba(255, 255, 255, 0.1)',
+                      borderRadius: '20px',
+                      padding: '1.2rem',
+                      backdropFilter: 'blur(10px)',
+                      border: '1px solid rgba(255, 255, 255, 0.2)',
+                      transition: 'all 0.3s ease',
+                      cursor: 'pointer',
+                      position: 'relative',
+                      overflow: 'hidden',
+                      height: '320px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between'
+                    }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-5px)';
+                        e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.2)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = 'none';
+                      }}>
+
+                      {/* 고딕 수도원 배경 패턴 */}
+                      <div style={{
+                        position: 'absolute',
+                        top: '-50%',
+                        right: '-50%',
+                        width: '200%',
+                        height: '200%',
+                        background: 'linear-gradient(45deg, transparent 40%, rgba(139, 69, 19, 0.3) 50%, transparent 60%)',
+                        transform: 'rotate(-15deg)',
+                        pointerEvents: 'none'
+                      }} />
+
+                      <div style={{ position: 'relative', zIndex: 1 }}>
+                        <div style={{
+                          fontSize: '3rem',
+                          marginBottom: '1rem',
+                          textAlign: 'center'
+                        }}>
+                          🏰
+                        </div>
+
+                        <h3 style={{
+                          fontSize: '1.3rem',
+                          margin: '0 0 1rem 0',
+                          fontWeight: 'bold',
+                          textAlign: 'center'
+                        }}>
+                          {originalLang === 'kr' ? '케이스 6: 어둠의 수도원' : 'Case 6: The Dark Abbey'}
+                        </h3>
+
+                        <p style={{
+                          fontSize: '1rem',
+                          margin: '0 0 1.5rem 0',
+                          opacity: '0.9',
+                          lineHeight: '1.6',
+                          textAlign: 'center'
+                        }}>
+                          {originalLang === 'kr' ? '신성한 벽 뒤에 숨겨진 수도원의 어둠의 비밀' : 'Dark secrets hidden behind sacred walls'}
+                        </p>
+
+                        <div style={{
+                          textAlign: 'center',
+                          marginBottom: '1rem'
+                        }}>
+                          <div style={{
+                            fontSize: '0.85rem',
+                            opacity: '0.8',
+                            marginBottom: '1rem'
+                          }}>
+                            🎯 {t.difficulty}: ⭐⭐⭐⭐
+                          </div>
+
+                          {/* 시작하기 버튼 */}
+                          <div style={{
+                            background: 'linear-gradient(45deg, #8b4513, #a0522d)',
+                            color: 'white',
+                            padding: '0.8rem 1.5rem',
+                            borderRadius: '25px',
+                            fontSize: '0.85rem',
+                            fontWeight: 'bold',
+                            boxShadow: '0 4px 15px rgba(139, 69, 19, 0.3)',
+                            transition: 'all 0.3s ease',
+                            cursor: 'pointer',
+                            border: 'none'
+                          }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.transform = 'scale(1.05)';
+                              e.currentTarget.style.boxShadow = '0 6px 20px rgba(139, 69, 19, 0.4)';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.transform = 'scale(1)';
+                              e.currentTarget.style.boxShadow = '0 4px 15px rgba(139, 69, 19, 0.3)';
                             }}
                           >
                             🚀 {t.startGame}

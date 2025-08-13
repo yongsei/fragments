@@ -1,6 +1,30 @@
-import { GameScenario } from "./types";
+export interface GameScenario {
+  id: string;
+  title: string;
+  story?: string;
+  victim?: string;
+  suspects?: any[];
+  evidence?: any[];
+  locations?: any[];
+  connections?: any[];
+  connectionRules?: any[];
+  solution?: any;
+  initialFragment?: string;
+  finalFragment?: string;
+  endingMessage?: string;
+  fragments?: any[];
+  text?: string;
+  choices?: any[];
+  clues?: any[];
+  temporalFragments?: any[];
+  // 게임 설정 추가
+  initialCards?: string[];
+  winCondition?: string;
+}// 임시 파일 - 빌드 오류 해결을 위한 최소한의 export
 
-export const gameScenario: GameScenario = {
+
+
+export const case6ch1En: GameScenario = {
   id: 'case6_chapter1',
   title: 'The Whispering Manuscript',
   story: 'In the ancient Grand Library, a seemingly ordinary discovery of a glowing manuscript quickly unravels into a complex web of secrets. The player must navigate the library\'s forbidden sections, encounter its enigmatic head librarian, Elara, and piece together initial clues that hint at a mysterious \"glowing plague\" and a hidden world beneath the city. This chapter introduces key characters and locations, setting the stage for a deeper investigation into a conspiracy that threatens the city.',
@@ -230,19 +254,7 @@ export const gameScenario: GameScenario = {
   winCondition: 'CH1_EV11',
   initialCards: [
     'CH1_EV01',
-    'CH1_LC01',
-    'CH1_CH01',
-    'CH1_CH02',
-    'CH1_EV05',
-    'CH1_LC02',
-    'CH1_CH03',
-    'CH1_EV06',
-    'CH1_LC03',
-    'CH1_CH04',
-    'CH1_EV09',
-    'CH1_LC04',
-    'CH1_CH05',
-    'CH1_EV10',
-    'CH1_EV11'
+    'CH1_LC01', 
+    'CH1_CH01'
   ]
 };

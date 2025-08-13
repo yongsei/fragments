@@ -1,6 +1,30 @@
-import { GameScenario } from "./types";
+export interface GameScenario {
+  id: string;
+  title: string;
+  story?: string;
+  victim?: string;
+  suspects?: any[];
+  evidence?: any[];
+  locations?: any[];
+  connections?: any[];
+  connectionRules?: any[];
+  solution?: any;
+  initialFragment?: string;
+  finalFragment?: string;
+  endingMessage?: string;
+  fragments?: any[];
+  text?: string;
+  choices?: any[];
+  clues?: any[];
+  temporalFragments?: any[];
+  // 게임 설정 추가
+  initialCards?: string[];
+  winCondition?: string;
+}// 임시 파일 - 빌드 오류 해결을 위한 최소한의 export
 
-export const gameScenario: GameScenario = {
+
+
+export const case6ch1: GameScenario = {
   id: 'case6_chapter1',
   title: '속삭이는 원고',
   story: '고대 대도서관에서 평범해 보이는 빛나는 원고의 발견은 빠르게 복잡한 비밀의 거미줄로 얽혀 들어갑니다. 플레이어는 도서관의 금지된 구역을 탐색하고, 수수께끼 같은 수석 사서 엘라라를 만나며, 신비한 \"빛나는 전염병\"과 도시 아래 숨겨진 세계를 암시하는 초기 단서들을 조합해야 합니다. 이 챕터는 도시를 위협하는 음모에 대한 더 깊은 조사를 위한 무대를 설정하며 핵심 인물과 장소를 소개합니다.',
@@ -230,19 +254,9 @@ export const gameScenario: GameScenario = {
   winCondition: 'CH1_EV11',
   initialCards: [
     'CH1_EV01',
-    'CH1_LC01',
+    'CH1_LC01', 
     'CH1_CH01',
     'CH1_CH02',
-    'CH1_EV05',
-    'CH1_LC02',
-    'CH1_CH03',
-    'CH1_EV06',
-    'CH1_LC03',
-    'CH1_CH04',
-    'CH1_EV09',
-    'CH1_LC04',
-    'CH1_CH05',
-    'CH1_EV10',
-    'CH1_EV11'
+    'CH1_CH03'
   ]
 };

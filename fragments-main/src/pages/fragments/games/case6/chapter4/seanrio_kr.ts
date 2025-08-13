@@ -1,6 +1,30 @@
-import { GameScenario } from "./types";
+export interface GameScenario {
+  id: string;
+  title: string;
+  story?: string;
+  victim?: string;
+  suspects?: any[];
+  evidence?: any[];
+  locations?: any[];
+  connections?: any[];
+  connectionRules?: any[];
+  solution?: any;
+  initialFragment?: string;
+  finalFragment?: string;
+  endingMessage?: string;
+  fragments?: any[];
+  text?: string;
+  choices?: any[];
+  clues?: any[];
+  temporalFragments?: any[];
+  // 게임 설정 추가
+  initialCards?: string[];
+  winCondition?: string;
+}// 임시 파일 - 빌드 오류 해결을 위한 최소한의 export
 
-export const gameScenario: GameScenario = {
+
+
+export const case6ch4: GameScenario = {
   id: 'case6_chapter4',
   title: '가라앉은 진실',
   story: '마지막 챕터는 엘라라의 절박한 탄원에 이끌려 신화 속 가라앉은 대성당으로 플레이어를 바다 깊이 빠뜨립니다. 이곳에서 고대 수정의 수호자는 빛나는 전염병, 카엘의 끝없는 야망, 그리고 도시의 임박한 파멸 뒤에 숨겨진 완전하고 끔찍한 진실을 밝힙니다. 플레이어는 카엘과의 절정의 대결과 도시와 주민들의 운명을 결정할 심오한 도덕적 선택에 직면하며, 영웅주의와 희생을 재정의하는 해결책으로 이어집니다.',

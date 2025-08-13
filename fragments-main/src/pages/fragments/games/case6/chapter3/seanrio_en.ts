@@ -1,6 +1,30 @@
-import { GameScenario } from "./types";
+export interface GameScenario {
+  id: string;
+  title: string;
+  story?: string;
+  victim?: string;
+  suspects?: any[];
+  evidence?: any[];
+  locations?: any[];
+  connections?: any[];
+  connectionRules?: any[];
+  solution?: any;
+  initialFragment?: string;
+  finalFragment?: string;
+  endingMessage?: string;
+  fragments?: any[];
+  text?: string;
+  choices?: any[];
+  clues?: any[];
+  temporalFragments?: any[];
+  // 게임 설정 추가
+  initialCards?: string[];
+  winCondition?: string;
+}// 임시 파일 - 빌드 오류 해결을 위한 최소한의 export
 
-export const gameScenario: GameScenario = {
+
+
+export const case6ch3En: GameScenario = {
   id: 'case6_chapter3',
   title: 'The Web of Deception',
   story: 'The city is in turmoil as Elara, the respected librarian, is unjustly arrested for the glowing plague. Captain Valerius, a man of law and order, finds himself grappling with mounting inconsistencies in the case, leading him to a deeper, more clandestine investigation. The player must navigate a complex web of deceit, uncovering a smuggler\'s testimony, a hidden financial trail, and a desperate plea from a victim, all pointing away from Elara and squarely towards Kael, revealing the true extent of his influence and the desperate measures taken to conceal his crimes.',

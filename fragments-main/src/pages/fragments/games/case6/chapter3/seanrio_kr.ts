@@ -1,6 +1,30 @@
-import { GameScenario } from "./types";
+export interface GameScenario {
+  id: string;
+  title: string;
+  story?: string;
+  victim?: string;
+  suspects?: any[];
+  evidence?: any[];
+  locations?: any[];
+  connections?: any[];
+  connectionRules?: any[];
+  solution?: any;
+  initialFragment?: string;
+  finalFragment?: string;
+  endingMessage?: string;
+  fragments?: any[];
+  text?: string;
+  choices?: any[];
+  clues?: any[];
+  temporalFragments?: any[];
+  // 게임 설정 추가
+  initialCards?: string[];
+  winCondition?: string;
+}// 임시 파일 - 빌드 오류 해결을 위한 최소한의 export
 
-export const gameScenario: GameScenario = {
+
+
+export const case6ch3: GameScenario = {
   id: 'case6_chapter3',
   title: '기만의 거미줄',
   story: '존경받는 사서 엘라라가 빛나는 전염병으로 부당하게 체포되면서 도시는 혼란에 빠집니다. 법과 질서의 수호자인 발레리우스 대장은 사건의 모순점들과 씨름하며, 그를 더 깊고 은밀한 조사로 이끌게 됩니다. 플레이어는 밀수업자의 증언, 숨겨진 금융 거래 내역, 그리고 희생자의 절박한 탄원을 밝혀내며 복잡한 기만의 거미줄을 헤쳐나가야 합니다. 이 모든 단서들은 엘라라로부터 멀어져 카엘을 향하며, 그의 영향력의 진정한 범위와 범죄를 숨기기 위해 취해진 필사적인 조치들을 드러냅니다.',
