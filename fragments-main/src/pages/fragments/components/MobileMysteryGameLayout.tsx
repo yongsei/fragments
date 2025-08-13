@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import SEOHead from '../../../components/SEOHead';
 import SwipeCardGrid from './SwipeCardGrid';
@@ -75,9 +75,10 @@ const pulseKeyframes = `
   }
 `;
 
-// 스타일시트에 애니메이션 추가
-if (typeof document !== 'undefined') {
+// 스타일시트에 애니메이션 추가 (중복 방지)
+if (typeof document !== 'undefined' && !document.getElementById('mystery-game-animations')) {
   const styleSheet = document.createElement('style');
+  styleSheet.id = 'mystery-game-animations';
   styleSheet.type = 'text/css';
   styleSheet.innerText = pulseKeyframes;
   document.head.appendChild(styleSheet);
@@ -312,7 +313,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
   };
 
   // CardDetailModal 완료 핸들러
-  const handleCardDetailComplete = () => {
+  const handleCardDetailComplete = useCallback(() => {
     console.log('🎯 CardDetailModal completed');
     setShowCardDetail(false);
     setCardDetailIds('');
@@ -329,7 +330,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
         }
       });
     }, 100);
-  };
+  }, []);
 
 
   // 새 카드 알림 상태 관리 (스와이프 UI에서는 전역 알림만 사용)
@@ -394,8 +395,8 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
         setShowCardDetail(true);
       }
 
-      // 5초 후 알림 제거
-      setTimeout(() => {
+      // 5초 후 알림 제거 - cleanup 함수 추가
+      const timeoutId = setTimeout(() => {
         setNewCardNotification(prev => {
           const updated = { ...prev };
           Object.keys(notifications).forEach(key => {
@@ -404,6 +405,9 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
           return updated;
         });
       }, 5000);
+
+      // cleanup 함수로 메모리 누수 방지
+      return () => clearTimeout(timeoutId);
     }
   }, [gameState.newlyDiscoveredCards, cardMap]);
 

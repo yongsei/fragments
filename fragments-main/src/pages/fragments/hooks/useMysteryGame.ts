@@ -89,6 +89,9 @@ export const useMysteryGame = ({
   const timersRef = useRef<NodeJS.Timeout[]>([]);
 
   // 타이머 관리 헬퍼 함수
+  const addTimer = useCallback((timer: NodeJS.Timeout) => {
+    timersRef.current.push(timer);
+  }, []);
 
   const clearAllTimers = useCallback(() => {
     timersRef.current.forEach(timer => clearTimeout(timer));
@@ -98,7 +101,6 @@ export const useMysteryGame = ({
   // 컴포넌트 언마운트 시 모든 타이머 정리
   useEffect(() => {
     return () => {
-      console.log('🧹 useMysteryGame: 모든 타이머 정리');
       clearAllTimers();
     };
   }, [clearAllTimers]);
@@ -463,10 +465,11 @@ export const useMysteryGame = ({
 
     // 승리조건 카드를 클릭한 경우 게임 완료
     if (winConditionCardDiscovered && cardId === winConditionCardDiscovered) {
-      setTimeout(() => {
+      const winTimer = setTimeout(() => {
         setGameWon(true);
         setShowResult(true);
       }, 500);
+      addTimer(winTimer);
       return;
     }
 
@@ -496,7 +499,7 @@ export const useMysteryGame = ({
 
       if (hasExistingToast) {
         // 기존 Toast가 있으면 즉시 숨기고 잠시 후 새 Toast 표시
-        setTimeout(() => {
+        const toastTimer = setTimeout(() => {
           setToastMessage({
             message,
             type,
@@ -504,6 +507,7 @@ export const useMysteryGame = ({
             timestamp
           });
         }, 150); // 150ms 지연으로 애니메이션 완료 대기
+        addTimer(toastTimer);
 
         return { ...prev, isVisible: false };
       } else {
@@ -571,9 +575,10 @@ export const useMysteryGame = ({
         })));
 
         // 3초 후 피드백 효과 제거
-        setTimeout(() => {
+        const feedbackTimer = setTimeout(() => {
           setCardFeedback(prev => prev.filter(feedback => feedback.timestamp !== now));
         }, 3000);
+        addTimer(feedbackTimer);
       }
     }
 
@@ -736,15 +741,17 @@ export const useMysteryGame = ({
 
         // 모든 관련 카드들을 순차적으로 하이라이트
         rule.cards.forEach((cardId: string, index: number) => {
-          setTimeout(() => {
+          const highlightTimer = setTimeout(() => {
             setHighlightedCardId(cardId);
           }, index * 1000); // 1초 간격으로 순차 하이라이트
+          addTimer(highlightTimer);
         });
 
         // 마지막에 하이라이트 제거
-        setTimeout(() => {
+        const clearHighlightTimer = setTimeout(() => {
           setHighlightedCardId(null);
         }, rule.cards.length * 1000 + 3000);
+        addTimer(clearHighlightTimer);
 
         // 토스트로 힌트 표시
         showToast(hintMessage, 'hint');
@@ -833,10 +840,12 @@ export const useMysteryGame = ({
 
             // 선택된 카드들을 강조 표시
             rule.cards.forEach((cardId: string, index: number) => {
-              setTimeout(() => {
+              const highlightTimer = setTimeout(() => {
                 setHighlightedCardId(cardId);
-                setTimeout(() => setHighlightedCardId(null), 1000);
+                const clearTimer = setTimeout(() => setHighlightedCardId(null), 1000);
+                addTimer(clearTimer);
               }, index * 200);
+              addTimer(highlightTimer);
             });
 
             showToast(
@@ -904,6 +913,7 @@ export const useMysteryGame = ({
           console.error('게임 진행 상태 저장 실패:', error);
         });
       }, 1000); // 1초 디바운싱
+      addTimer(saveTimer);
 
       return () => clearTimeout(saveTimer);
     }

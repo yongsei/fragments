@@ -28,6 +28,7 @@ import Case2Chapter4Game from '../games/case2/chapter4/Game';
 import Case3Chapter1Game from '../games/case3/chapter1/Game';
 import Case3Chapter2Game from '../games/case3/chapter2/Game';
 import Case3Chapter3Game from '../games/case3/chapter3/Game';
+import Case3Chapter4Game from '../games/case3/chapter4/Game';
 
 import Case4Chapter1Game from '../games/case4/chapter1/Game';
 import Case4Chapter2Game from '../games/case4/chapter2/Game';
@@ -84,6 +85,7 @@ const UnifiedFragmentsRouter: React.FC = () => {
       <Route path="case3/chapter1/game" element={<Case3Chapter1Game />} />
       <Route path="case3/chapter2/game" element={<Case3Chapter2Game />} />
       <Route path="case3/chapter3/game" element={<Case3Chapter3Game />} />
+      <Route path="case3/chapter4/game" element={<Case3Chapter4Game />} />
 
       {/* Case 4: 아르카눔 그림자 - /game 경로만 유지 */}
       <Route path="case4" element={<UnifiedCaseIntro data={case4IntroData} />} />
