@@ -520,7 +520,7 @@ export const useMysteryGame = ({
         };
       }
     });
-  }, []);
+  }, [addTimer]);
 
   const handleConnect = useCallback(async () => {
     if (gameState.selectedCards.length !== 2 || !gameState.currentScenario) return;
@@ -692,7 +692,7 @@ export const useMysteryGame = ({
     } finally {
       setIsConnecting(false);
     }
-  }, [gameState.selectedCards, gameState.currentScenario, gameState.discoveredClues, gameState.consecutiveFailures, onCardUnlock, winCondition, attemptHistory, updateAttemptHistory, getSmartFeedback, getCardCombinationKey, showToast, t]); // gameState 전체 대신 필요한 것만 의존성으로
+  }, [gameState.selectedCards, gameState.currentScenario, gameState.discoveredClues, gameState.consecutiveFailures, onCardUnlock, winCondition, attemptHistory, updateAttemptHistory, getSmartFeedback, getCardCombinationKey, showToast, t, addTimer]); // gameState 전체 대신 필요한 것만 의존성으로
 
   const handleClearSelection = () => {
     setGameState(prev => ({ ...prev, selectedCards: [] }));
@@ -773,7 +773,7 @@ export const useMysteryGame = ({
     showToast(finalHintMessage, 'hint');
 
     return finalHintMessage;
-  }, [cards, cardMap, gameState.currentScenario?.connectionRules, setHighlightedCardId, showToast, t]);
+  }, [cards, cardMap, gameState.currentScenario?.connectionRules, setHighlightedCardId, showToast, t, addTimer]);
 
   const handleRequestHint = useCallback(() => {
     if (gameState.hintsUsed >= maxHints) return;
@@ -866,7 +866,7 @@ export const useMysteryGame = ({
       hintsUsed: prev.hintsUsed + 1,
       playerProgress: { ...prev.playerProgress, hintsUsed: prev.playerProgress.hintsUsed + 1 }
     }));
-  }, [cards, scenario.connectionRules, gameState.connections, showToast, t]);
+  }, [cards, scenario.connectionRules, gameState.connections, showToast, t, addTimer]);
 
 
   const handleRestart = () => {

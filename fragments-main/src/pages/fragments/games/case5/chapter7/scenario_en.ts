@@ -179,6 +179,7 @@ export const case5ChEn7: GameScenario = {
     {"id": "rule_G14", "cards": ["G13", "G02"], "result": "Through the 'Chronos Protocol' and Sarah's safety, you understand that Chronos tried to eliminate Sarah because her lecture had the potential to threaten their 'optimized future'.", "unlock": "G14"},
     {"id": "rule_G15", "cards": ["G14", "G03"], "result": "Through the reason for Sarah's elimination and time distortion energy analysis, you realize Sarah's lecture will change human perception and overturn Chronos's plan.", "unlock": "G15"},
     {"id": "rule_G16", "cards": ["G02", "G15"], "result": "Through Sarah's safety and the importance of Sarah's lecture, you instruct Sarah to go to the lecture hall and begin her lecture.", "unlock": "G16"},
+    {"id": "rule_G17", "cards": ["G16", "G13"], "result": "Through Sarah's lecture beginning and the 'Chronos Protocol' content, the last Chronos agent appears and initiates the final confrontation.", "unlock": "G17"},
     {"id": "rule_G18", "cards": ["G17", "G15"], "result": "Through the confrontation with the last agent and the importance of Sarah's lecture, Lee Jin-woo's team shows its readiness to fight for the truth.", "unlock": "G18"}
   ],
   "fragments": [],

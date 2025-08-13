@@ -171,12 +171,13 @@ export const case5ChEn2: GameScenario = {
     {"id": "rule_B09", "cards": ["B08", "B07"], "result": "Through the localized time distortion phenomenon and Finch's disappearance, you discover a small wooden box.", "unlock": "B09"},
     {"id": "rule_B10", "cards": ["B09", "B06"], "result": "Through the small wooden box and 'Echoes of Time', you discover a perfectly preserved dried rose.", "unlock": "B10"},
     {"id": "rule_B11", "cards": ["B10", "B05"], "result": "Through the perfectly preserved dried rose and the 'Temporal Resonance' theory, you experience a fleeting vision upon touching the rose.", "unlock": "B11"},
-    {"id": "rule_B12", "cards": ["B04", "B02"], "result": "Through the identity of 'Chronos' and Kim Min-jun's journal, you understand the 'Chronos Protocol'.", "unlock": "B12"},
+    {"id": "rule_B12", "cards": ["B09", "B11"], "result": "Through the small wooden box and the fleeting vision, you understand the 'Chronos Protocol'.", "unlock": "B12"},
     {"id": "rule_B13", "cards": ["B02", "B10"], "result": "Through Kim Min-jun's journal and the perfectly preserved dried rose, you understand the 'Leap of Faith' theory.", "unlock": "B13"},
     {"id": "rule_B14", "cards": ["B05", "B13"], "result": "Through the 'Temporal Resonance' theory and the 'Leap of Faith' theory, you understand the 'Temporal Anchor' concept.", "unlock": "B14"},
-    {"id": "rule_B15", "cards": ["B04", "B12"], "result": "Through the identity of 'Chronos' and the 'Chronos Protocol', you reconfirm the warning message from the future.", "unlock": "B15"},
+    {"id": "rule_B15", "cards": ["B14", "B12"], "result": "Through the 'Temporal Anchor' concept and the 'Chronos Protocol', you reconfirm the warning message from the future.", "unlock": "B15"},
+    {"id": "rule_B16", "cards": ["B13", "B11"], "result": "Through the 'Leap of Faith' theory and the fleeting vision, you confirm the existence of Sarah.", "unlock": "B16"},
     {"id": "rule_B17", "cards": ["B10", "B16"], "result": "Through the perfectly preserved dried rose and the existence of Sarah, you deduce that the rose is connected to Sarah.", "unlock": "B17"},
-    {"id": "rule_B18", "cards": ["B12", "B15"], "result": "Through the 'Chronos Protocol' and the warning message from the future, you identify the historical event in 2122 New York.", "unlock": "B18"}
+    {"id": "rule_B18", "cards": ["B17", "B15"], "result": "Through Sarah's connection with the rose and the warning message from the future, you identify the historical event in 2122 New York.", "unlock": "B18"}
   ],
   "fragments": [],
   "winCondition": "B18",
