@@ -13,7 +13,7 @@ export interface CaseFeedbackData {
   contextualHints: string[];
 }
 
-export const case8_chapter3FeedbackData: CaseFeedbackData = {
+export const case8FeedbackData4: CaseFeedbackData = {
   caseId: 'case8_chapter3',
   correctSuspect: 'D02', // Guardian of the Curse
   keyEvidence: ['D13', 'D14', 'D15', 'D18'], // Fragment of the Loop, Reversed Ritual, Secret of the Mural, Chapter 3\'s Last Evidence

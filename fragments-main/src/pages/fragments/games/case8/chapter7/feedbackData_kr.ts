@@ -13,7 +13,7 @@ export interface CaseFeedbackData {
   contextualHints: string[];
 }
 
-export const case8_chapter6FeedbackData: CaseFeedbackData = {
+export const case8FeedbackData7: CaseFeedbackData = {
   caseId: 'case8_chapter6',
   correctSuspect: 'G18', // Epilogue\'s Last Evidence
   keyEvidence: ['G13', 'G14', 'G15', 'G18'], // Alex\'s Notebook, Vibration of the Fragment of the Loop, Memory of Echowood Village, Epilogue\'s Last Evidence

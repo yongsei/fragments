@@ -9,7 +9,8 @@ import { case3IntroData } from '../games/case3/introData';
 import { case4IntroData } from '../games/case4/introData';
 import { case5IntroData } from '../games/case5/introData';
 import { case6IntroData } from '../games/case6/introData';
-import { case7IntroKr, case7IntroEn } from '../games/case7/introData';
+import { case7IntroData } from '../games/case7/introData';
+import { case8IntroData } from '../games/case8/introData';
 
 // 챕터 소개 페이지를 사용하지 않으므로 이 imports들은 삭제
 
@@ -52,6 +53,14 @@ import Case7Chapter2Game from '../games/case7/chapter2/Game';
 import Case7Chapter3Game from '../games/case7/chapter3/Game';
 import Case7Chapter4Game from '../games/case7/chapter4/Game';
 import Case7Chapter5Game from '../games/case7/chapter5/Game';
+
+import Case8Chapter1Game from '../games/case8/chapter1/Game';
+import Case8Chapter2Game from '../games/case8/chapter2/Game';
+import Case8Chapter3Game from '../games/case8/chapter3/Game';
+import Case8Chapter4Game from '../games/case8/chapter4/Game';
+import Case8Chapter5Game from '../games/case8/chapter5/Game';
+import Case8Chapter6Game from '../games/case8/chapter6/Game';
+import Case8Chapter7Game from '../games/case8/chapter7/Game';
 
 const UnifiedFragmentsRouter: React.FC = () => {
   return (
@@ -102,12 +111,22 @@ const UnifiedFragmentsRouter: React.FC = () => {
       <Route path="case6/chapter4/game" element={<Case6Chapter4Game />} />
 
       {/* Case 7: 블랙우드 저택의 비밀 - /game 경로만 유지 */}
-      <Route path="case7" element={<UnifiedCaseIntro data={{ kr: case7IntroKr, en: case7IntroEn }} />} />
+      <Route path="case7" element={<UnifiedCaseIntro data={case7IntroData} />} />
       <Route path="case7/chapter1/game" element={<Case7Chapter1Game />} />
       <Route path="case7/chapter2/game" element={<Case7Chapter2Game />} />
       <Route path="case7/chapter3/game" element={<Case7Chapter3Game />} />
       <Route path="case7/chapter4/game" element={<Case7Chapter4Game />} />
       <Route path="case7/chapter5/game" element={<Case7Chapter5Game />} />
+
+      {/* Case 8: 에코우드의 저주 - /game 경로만 유지 */}
+      <Route path="case8" element={<UnifiedCaseIntro data={case8IntroData} />} />
+      <Route path="case8/chapter1/game" element={<Case8Chapter1Game />} />
+      <Route path="case8/chapter2/game" element={<Case8Chapter2Game />} />
+      <Route path="case8/chapter3/game" element={<Case8Chapter3Game />} />
+      <Route path="case8/chapter4/game" element={<Case8Chapter4Game />} />
+      <Route path="case8/chapter5/game" element={<Case8Chapter5Game />} />
+      <Route path="case8/chapter6/game" element={<Case8Chapter6Game />} />
+      <Route path="case8/chapter7/game" element={<Case8Chapter7Game />} />
     </Routes>
   );
 };

@@ -2,8 +2,8 @@ import React from 'react';
 import MysteryGameLayout from '../../../components/MysteryGameLayout';
 import { case7ch4 } from './seanrio_kr';
 import { case7ch4En } from './seanrio_en';
-import case7FeedbackData4 from './feedbackData_kr';
-import case7FeedbackDataEn4 from './feedbackData_en';
+import { feedbackCase7Ch4 } from './feedbackData_kr';
+import { feedbackCase7Ch4En } from './feedbackData_en';
 import { useLanguage } from '../../../hooks/useLanguage';
 
 const Chapter4Game: React.FC = () => {
@@ -11,7 +11,7 @@ const Chapter4Game: React.FC = () => {
 
   // 언어에 따른 시나리오와 피드백 데이터 선택
   const scenario = language === 'en' ? case7ch4En : case7ch4;
-  const feedbackData = language === 'en' ? case7FeedbackDataEn4 : case7FeedbackData4;
+  const feedbackData = language === 'en' ? feedbackCase7Ch4En : feedbackCase7Ch4;
   
   return (
     <div style={{

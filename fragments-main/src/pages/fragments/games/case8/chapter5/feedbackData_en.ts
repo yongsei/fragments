@@ -13,7 +13,7 @@ export interface CaseFeedbackData {
   contextualHints: string[];
 }
 
-export const case8_chapter4FeedbackData: CaseFeedbackData = {
+export const case8FeedbackDataEn5: CaseFeedbackData = {
   caseId: 'case8_chapter4',
   correctSuspect: 'E01', // Curse Guardian
   keyEvidence: ['E13', 'E14', 'E15', 'E18'], // Fragment of the Loop, Reversed Ritual Incantation, Guardian\'s Attack, Chapter 4\'s Last Evidence

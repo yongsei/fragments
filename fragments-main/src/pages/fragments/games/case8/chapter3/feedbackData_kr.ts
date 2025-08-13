@@ -13,7 +13,7 @@ export interface CaseFeedbackData {
   contextualHints: string[];
 }
 
-export const case8_chapter2FeedbackData: CaseFeedbackData = {
+export const case8FeedbackData3: CaseFeedbackData = {
   caseId: 'case8_chapter2',
   correctSuspect: 'C05', // Ritual Leader in Lily\'s Drawing
   keyEvidence: ['C14', 'C18', 'C17', 'C15'], // Lily\'s Drawing, Chapter 2\'s Last Evidence, Chapter 2\'s Additional Evidence, Déjà Vu Phenomenon

@@ -308,7 +308,7 @@ const UnifiedCaseIntro: React.FC<UnifiedCaseIntroProps> = ({ data }) => {
                           if (progress && !progress.isCompleted) {
                             setSavedGameInfo({
                               elapsedTime: progress.elapsedTime || 0,
-                              discoveredCardsCount: progress.totalDiscoveredCards || progress.discoveredCardIds?.length || 0
+                              discoveredCardsCount: progress.discoveredCardIds?.length || progress.totalDiscoveredCards || 0
                             });
                             console.log('✅ 저장된 데이터 발견! 세이브/로드 팝업 표시');
                             setShowSaveLoadModal(true);

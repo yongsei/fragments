@@ -13,7 +13,7 @@ export interface CaseFeedbackData {
   contextualHints: string[];
 }
 
-export const case8_chapter5FeedbackData: CaseFeedbackData = {
+export const case8FeedbackDataEn6: CaseFeedbackData = {
   caseId: 'case8_chapter5',
   correctSuspect: 'F15', // Cleared Fog
   keyEvidence: ['F13', 'F14', 'F15', 'F16', 'F18'], // Dispersed Guardian, Ordinary Fragment, Cleared Fog, Lily\'s New Drawing, Chapter 5\'s Last Evidence

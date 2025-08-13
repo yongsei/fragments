@@ -13,7 +13,7 @@ export interface CaseFeedbackData {
   contextualHints: string[];
 }
 
-export const case8_chapter1FeedbackData: CaseFeedbackData = {
+export const case8FeedbackDataEn2: CaseFeedbackData = {
   caseId: 'case8_chapter1',
   correctSuspect: 'B13', // Eerie Repetition
   keyEvidence: ['B13', 'B14', 'B15', 'B18'], // Eerie Repetition, Stagnant Time, Elara\'s Warning, Chapter 1\'s Last Evidence

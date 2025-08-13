@@ -13,7 +13,7 @@ export interface CaseFeedbackData {
   contextualHints: string[];
 }
 
-export const case8_chapter0FeedbackData: CaseFeedbackData = {
+export const case8FeedbackDataEn1: CaseFeedbackData = {
   caseId: 'case8_chapter0',
   correctSuspect: 'A05', // Shadow Figure
   keyEvidence: ['A15', 'A17', 'A14', 'A06', 'A18'], // Name Not on Map, Ominous Aura, Uneasy Gaze, Prologue\'s Last Character, Prologue\'s Last Evidence
