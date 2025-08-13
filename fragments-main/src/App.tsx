@@ -49,23 +49,23 @@ const getStatusBarColor = (pathname: string) => {
 
 function App() {
   const location = useLocation();
-  
+
   // 배경음악 제거됨 - 효과음만 사용
 
   // 경로 변경 시 body 배경색과 StatusBar 동적 설정
   useEffect(() => {
     const themeGradient = getThemeColors(location.pathname);
     const statusBarColor = getStatusBarColor(location.pathname);
-    
+
     // Body 배경색 설정
     document.body.style.background = themeGradient;
-    
+
     // App 클래스의 배경도 동적으로 설정
     const appElement = document.querySelector('.App') as HTMLElement;
     if (appElement) {
       appElement.style.background = themeGradient;
     }
-    
+
     // 🎨 StatusBar 색상 동적 변경 (Capacitor 네이티브 앱에서만 동작)
     const setStatusBarColor = async () => {
       try {
@@ -76,7 +76,7 @@ function App() {
         console.log('💻 웹 브라우저 환경 - StatusBar 색상 변경 스킵');
       }
     };
-    
+
     setStatusBarColor();
   }, [location.pathname]);
 
@@ -87,11 +87,9 @@ function App() {
         <Route path="/fragments/*" element={<FragmentsIndex />} />
         <Route path="/test-result" element={<GameResultTest />} />
       </Routes>
-      
+
       {/* 광고 배너 - 연결 버튼 아래 */}
-      <div style={{
-        padding: '0.5rem 0 130px 0', // 하단에 130px 여백 추가로 광고와 게임 버튼 분리
-      }}>
+      <div>
         <AdBanner position="bottom" className="mobile-connection-ad" />
       </div>
     </div>

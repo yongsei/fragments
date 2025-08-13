@@ -1,0 +1,256 @@
+
+{
+  "id": "chapter_1",
+  "title_kr": "1일차 - 폭풍우가 남긴 것",
+  "title_en": "Day 1 - What the Storm Left Behind",
+  "story_kr": "탐정은 폭풍우가 몰아치는 고립된 섬에 도착하여 세계적인 작가 알리스터 블랙우드의 사망 사건을 마주한다. 경찰은 심장마비로 종결하려 하지만, 탐정은 현장의 여러 단서들을 통해 타살의 가능성을 직감하고 수사를 시작한다.",
+  "story_en": "The detective arrives at an isolated island amidst a storm, confronting the death of world-renowned mystery writer Alister Blackwood. While the police attempt to conclude the case as a heart attack, the detective, through various clues at the scene, instinctively senses the possibility of murder and begins an investigation.",
+  "victim": "알리스터 블랙우드",
+  "suspects": [
+    {
+      "id": "A-P01",
+      "name_kr": "알리스터 블랙우드",
+      "name_en": "Alister Blackwood",
+      "role_kr": "피해자",
+      "role_en": "Victim",
+      "description_kr": "세계적인 추리소설 작가이자 이 사건의 피해자. 그의 저택 '미궁의 서재'에서 싸늘한 시신으로 발견되었으며, 그의 죽음은 자신이 쓴 소설의 한 장면과 기묘하게 일치한다. 그의 삶과 작품은 수많은 비밀과 복잡한 관계들로 얽혀 있다.",
+      "description_en": "A world-renowned mystery writer and the victim of this case. His cold body was discovered in his mansion, 'The Labyrinthine Study,' and his death eerily matches a scene from his own novel. His life and works are intertwined with numerous secrets and complex relationships.",
+      "alibi_kr": "",
+      "alibi_en": "",
+      "motive_kr": "",
+      "motive_en": ""
+    },
+    {
+      "id": "A-P02",
+      "name_kr": "탐정",
+      "name_en": "Detective",
+      "role_kr": "탐정",
+      "role_en": "Detective",
+      "description_kr": "폭풍우가 몰아치는 외딴 섬에 도착한 당신. 날카로운 직감과 뛰어난 추리력을 가진 인물로, 이 미스터리한 살인 사건의 진실을 파헤쳐야 하는 임무를 맡았다. 당신의 모든 관찰과 추론이 사건 해결의 열쇠가 된다.",
+      "description_en": "You, the detective, arrive on a remote island amidst a raging storm. With keen intuition and excellent deductive skills, you are tasked with uncovering the truth behind this mysterious murder. Your every observation and deduction will be the key to solving the case.",
+      "alibi_kr": "",
+      "alibi_en": "",
+      "motive_kr": "",
+      "motive_en": ""
+    },
+    {
+      "id": "A-P03",
+      "name_kr": "지역 경찰관",
+      "name_en": "Local Police Officer",
+      "role_kr": "경찰관",
+      "role_en": "Police Officer",
+      "description_kr": "사건 현장에 가장 먼저 도착한 지역 경찰관. 알리스터 블랙우드의 죽음을 단순한 심장마비로 추정하며 사건을 서둘러 종결하려 하지만, 탐정의 예리한 질문과 관찰에 점차 의문을 품게 된다.",
+      "description_en": "The local police officer who first arrived at the crime scene. He initially presumes Alister Blackwood's death to be a simple heart attack and attempts to quickly close the case, but gradually begins to question it due to the detective's sharp questions and observations.",
+      "alibi_kr": "",
+      "alibi_en": "",
+      "motive_kr": "",
+      "motive_en": ""
+    }
+  ],
+  "evidence": [
+    {
+      "id": "A-E01",
+      "name_kr": "알리스터의 시신",
+      "name_en": "Alister's Body",
+      "description_kr": "외상은 전혀 없으며, 마치 잠들 듯 평온한 자세로 발견되었다. 하지만 그의 눈동자 깊은 곳에는 알 수 없는 공포의 잔상이 서려 있는 듯하며, 굳게 쥐어진 손에서는 마지막 순간의 몸부림이 느껴진다.",
+      "description_en": "There are no external injuries, and the body was found in a peaceful, as if sleeping, posture. However, a lingering trace of unknown terror seems to reside deep within his eyes, and his tightly clenched hand suggests a struggle in his final moments.",
+      "details_kr": "외상은 전혀 없으며, 마치 잠들 듯 평온한 자세로 발견되었다. 하지만 그의 눈동자 깊은 곳에는 알 수 없는 공포의 잔상이 서려 있는 듯하며, 굳게 쥐어진 손에서는 마지막 순간의 몸부림이 느껴진다.",
+      "details_en": "There are no external injuries, and the body was found in a peaceful, as if sleeping, posture. However, a lingering trace of unknown terror seems to reside deep within his eyes, and his tightly clenched hand suggests a struggle in his final moments.",
+      "location": "A-L03"
+    },
+    {
+      "id": "A-E02",
+      "name_kr": "홍차 잔 파편",
+      "name_en": "Teacup Shards",
+      "description_kr": "깨져 있음. 육안 식별 불가 미량 특이 물질 흔적.",
+      "description_en": "Broken. Traces of a minute, unidentifiable substance are present, not visible to the naked eye.",
+      "details_kr": "깨져 있음. 육안 식별 불가 미량 특이 물질 흔적.",
+      "details_en": "Broken. Traces of a minute, unidentifiable substance are present, not visible to the naked eye.",
+      "location": "A-L03"
+    },
+    {
+      "id": "A-E03",
+      "name_kr": "마지막 원고 '종말의 잉크'",
+      "name_en": "Final Manuscript 'Ink of Doom'",
+      "description_kr": "알리스터 블랙우드의 유작으로, 그의 책상 위에 놓여 있었다. 갓 인쇄된 듯 따끈한 원고 뭉치로, 표지에는 '종말의 잉크'라는 제목이 선명하게 새겨져 있다. 이 원고가 사건의 열쇠임을 탐정은 직감한다.",
+      "description_en": "Alister Blackwood's posthumous work, found on his desk. It was a freshly printed, warm bundle of manuscript, with the title 'Ink of Doom' clearly embossed on the cover. The detective instinctively senses that this manuscript holds the key to the case.",
+      "details_kr": "알리스터 블랙우드의 유작으로, 그의 책상 위에 놓여 있었다. 갓 인쇄된 듯 따끈한 원고 뭉치로, 표지에는 '종말의 잉크'라는 제목이 선명하게 새겨져 있다. 이 원고가 사건의 열쇠임을 탐정은 직감한다.",
+      "details_en": "Alister Blackwood's posthumous work, found on his desk. It was a freshly printed, warm bundle of manuscript, with the title 'Ink of Doom' clearly embossed on the cover. The detective instinctively senses that this manuscript holds the key to the case.",
+      "location": "A-L03"
+    },
+    {
+      "id": "A-E04",
+      "name_kr": "미세한 향기",
+      "name_en": "Faint Scent",
+      "description_kr": "알리스터의 시신 주변에서 희미하게 감지되는, 그러나 정체를 알 수 없는 독특한 향기. 이는 일반적인 독극물과는 다른, 극도로 미량의 신경독이 사용되었을 가능성을 암시한다.",
+      "description_en": "A faint, yet unidentifiable, unique scent detected around Alister's body. This suggests the possibility of an extremely minute amount of neurotoxin being used, unlike common poisons.",
+      "details_kr": "알리스터의 시신 주변에서 희미하게 감지되는, 그러나 정체를 알 수 없는 독특한 향기. 이는 일반적인 독극물과는 다른, 극도로 미량의 신경독이 사용되었을 가능성을 암시한다.",
+      "details_en": "A faint, yet unidentifiable, unique scent detected around Alister's body. This suggests the possibility of an extremely minute amount of neurotoxin being used, unlike common poisons.",
+      "location": ""
+    },
+    {
+      "id": "A-E05",
+      "name_kr": "깨진 잔의 위치",
+      "name_en": "Location of Broken Cup",
+      "description_kr": "홍차 잔이 깨진 위치와 파편의 흩어진 모양은 단순한 사고가 아닌, 누군가 고의로 잔을 떨어뜨렸거나, 혹은 알리스터가 마지막 순간에 격렬하게 몸부림쳤음을 시사한다.",
+      "description_en": "The position where the teacup broke and the scattering pattern of its shards suggest not a simple accident, but that someone intentionally dropped the cup, or that Alister struggled violently in his final moments.",
+      "details_kr": "홍차 잔이 깨진 위치와 파편의 흩어진 모양은 단순한 사고가 아닌, 누군가 고의로 잔을 떨어뜨렸거나, 혹은 알리스터가 마지막 순간에 격렬하게 몸부림쳤음을 시사한다.",
+      "details_en": "The position where the teacup broke and the scattering pattern of its shards suggest not a simple accident, but that someone intentionally dropped the cup, or that Alister struggled violently in his final moments.",
+      "location": "A-L03"
+    },
+    {
+      "id": "A-E06",
+      "name_kr": "원고 1장 내용",
+      "name_en": "Manuscript Chapter 1 Content",
+      "description_kr": "'종말의 잉크'의 첫 챕터 '거장의 죽음'에 묘사된 살인 방식과 피해자의 상황이 알리스터의 죽음과 소름 끼치도록 일치한다. 소설 속 주인공 '아서 코난'이 홍차를 마시고 죽음을 맞이하는 장면은 현실을 그대로 재현한다.",
+      "description_en": "The murder method and victim's situation described in the first chapter of 'Ink of Doom,' titled 'The Death of a Master,' eerily match Alister's death. The scene where the novel's protagonist, 'Arthur Conan,' drinks tea and meets his demise, perfectly recreates reality.",
+      "details_kr": "'종말의 잉크'의 첫 챕터 '거장의 죽음'에 묘사된 살인 방식과 피해자의 상황이 알리스터의 죽음과 소름 끼치도록 일치한다. 소설 속 주인공 '아서 코난'이 홍차를 마시고 죽음을 맞이하는 장면은 현실을 그대로 재현한다.",
+      "details_en": "The murder method and victim's situation described in the first chapter of 'Ink of Doom,' titled 'The Death of a Master,' eerily match Alister's death. The scene where the novel's protagonist, 'Arthur Conan,' drinks tea and meets his demise, perfectly recreates reality.",
+      "location": ""
+    },
+    {
+      "id": "A-E07",
+      "name_kr": "탐정의 직감",
+      "name_en": "Detective's Intuition",
+      "description_kr": "부검의와 지역 경찰관이 알리스터의 죽음을 심장마비로 추정하지만, 탐정은 현장의 미묘한 단서들과 자신의 예리한 직감을 통해 단순한 자연사가 아님을 확신한다.",
+      "description_en": "Although the medical examiner and local police officer presume Alister's death to be a heart attack, the detective, through subtle clues at the scene and his keen intuition, is convinced that it was not a natural death.",
+      "details_kr": "부검의와 지역 경찰관이 알리스터의 죽음을 심장마비로 추정하지만, 탐정은 현장의 미묘한 단서들과 자신의 예리한 직감을 통해 단순한 자연사가 아님을 확신한다.",
+      "details_en": "Although the medical examiner and local police officer presume Alister's death to be a heart attack, the detective, through subtle clues at the scene and his keen intuition, is convinced that it was not a natural death.",
+      "location": ""
+    },
+    {
+      "id": "A-E08",
+      "name_kr": "폭풍우 소리",
+      "name_en": "Sound of the Storm",
+      "description_kr": "사건 발생 당시 섬을 강타했던 거센 폭풍우 소리. 이는 외부와의 모든 소통을 단절시키고, 저택 내부에서 발생한 소음을 은폐하는 역할을 하여 밀실 살인을 가능하게 했다.",
+      "description_en": "The sound of the fierce storm that struck the island at the time of the incident. This severed all external communication and served to conceal any noises occurring inside the mansion, making a locked-room murder possible.",
+      "details_kr": "사건 발생 당시 섬을 강타했던 거센 폭풍우 소리. 이는 외부와의 모든 소통을 단절시키고, 저택 내부에서 발생한 소음을 은폐하는 역할을 하여 밀실 살인을 가능하게 했다.",
+      "details_en": "The sound of the fierce storm that struck the island at the time of the incident. This severed all external communication and served to conceal any noises occurring inside the mansion, and served to conceal any noises occurring inside the mansion, making a locked-room murder possible.",
+      "location": "A-L01"
+    },
+    {
+      "id": "A-E09",
+      "name_kr": "저택의 고요함",
+      "name_en": "Mansion's Silence",
+      "description_kr": "폭풍우가 몰아치는 와중에도 느껴지는 저택 내부의 기묘한 고요함. 이는 사건이 외부의 방해 없이, 저택 안에서 은밀하게 이루어졌음을 암시하며 밀실 분위기를 더욱 고조시킨다.",
+      "description_en": "The strange silence within the mansion, felt even amidst the raging storm. This suggests that the incident occurred secretly within the mansion, without external interference, further heightening the locked-room atmosphere.",
+      "details_kr": "폭풍우가 몰아치는 와중에도 느껴지는 저택 내부의 기묘한 고요함. 이는 사건이 외부의 방해 없이, 저택 안에서 은밀하게 이루어졌음을 암시하며 밀실 분위기를 더욱 고조시킨다.",
+      "details_en": "The strange silence within the mansion, felt even amidst the raging storm. This suggests that the incident occurred secretly within the mansion, without external interference, further heightening the locked-room atmosphere.",
+      "location": "A-L02"
+    },
+    {
+      "id": "A-E10",
+      "name_kr": "눅눅한 종이 냄새",
+      "name_en": "Damp Paper Scent",
+      "description_kr": "미궁의 서재를 가득 채운 오래된 책들과 종이에서 나는 특유의 눅눅한 냄새. 이는 서재의 분위기를 더욱 음산하게 만들며, 탐정에게 사건의 배경이 되는 공간의 특성을 각인시킨다.",
+      "description_en": "The peculiar damp scent emanating from the old books and paper filling the Labyrinthine Study. This makes the study's atmosphere even more eerie, imprinting the characteristics of the crime scene's setting upon the detective.",
+      "details_kr": "미궁의 서재를 가득 채운 오래된 책들과 종이에서 나는 특유의 눅눅한 냄새. 이는 서재의 분위기를 더욱 음산하게 만들며, 탐정에게 사건의 배경이 되는 공간의 특성을 각인시킨다.",
+      "details_en": "The peculiar damp scent emanating from the old books and paper filling the Labyrinthine Study. This makes the study's atmosphere even more eerie, imprinting the characteristics of the crime scene's setting upon the detective.",
+      "location": "A-L02"
+    }
+  ],
+  "locations": [
+    {
+      "id": "A-L01",
+      "name_kr": "에레보스 섬",
+      "name_en": "Erebos Island",
+      "description_kr": "알리스터 블랙우드의 개인 소유 섬. 거친 파도와 안개에 휩싸여 외부와 완전히 고립된 상태로, 사건 발생 당시 폭풍우로 인해 외부와의 모든 통신과 이동이 단절되었다. 이 섬 자체가 하나의 거대한 밀실처럼 느껴진다.",
+      "description_en": "Alister Blackwood's privately owned island. Completely isolated from the outside world by rough waves and fog, all communication and travel were cut off due to a storm at the time of the incident. The island itself feels like a massive locked room.",
+      "details_kr": "알리스터 블랙우드의 개인 소유 섬. 거친 파도와 안개에 휩싸여 외부와 완전히 고립된 상태로, 사건 발생 당시 폭풍우로 인해 외부와의 모든 통신과 이동이 단절되었다. 이 섬 자체가 하나의 거대한 밀실처럼 느껴진다.",
+      "details_en": "Alister Blackwood's privately owned island. Completely isolated from the outside world by rough waves and fog, all communication and travel were cut off due to a storm at the time of the incident. The island itself feels like a massive locked room."
+    },
+    {
+      "id": "A-L02",
+      "name_kr": "미궁의 서재",
+      "name_en": "The Labyrinthine Study",
+      "description_kr": "알리스터 블랙우드의 저택이자 사건 현장. 수만 권의 책으로 가득 찬 거대한 공간으로, 마치 미로처럼 복잡하게 얽혀 있다. 눅눅한 종이 냄새와 오래된 나무 냄새가 뒤섞여 독특한 분위기를 자아낸다.",
+      "description_en": "Alister Blackwood's mansion and the crime scene. A vast space filled with tens of thousands of books, intricately intertwined like a labyrinth. The damp scent of paper and the smell of old wood mingle, creating a unique atmosphere.",
+      "details_kr": "알리스터 블랙우드의 저택이자 사건 현장. 수만 권의 책으로 가득 찬 거대한 공간으로, 마치 미로처럼 복잡하게 얽혀 있다. 눅눅한 종이 냄새와 오래된 나무 냄새가 뒤섞여 독특한 분위기를 자아낸다.",
+      "details_en": "Alister Blackwood's mansion and the crime scene. A vast space filled with tens of thousands of books, intricately intertwined like a labyrinth. The damp scent of paper and the smell of old wood mingle, creating a unique atmosphere."
+    },
+    {
+      "id": "A-L03",
+      "name_kr": "알리스터의 책상",
+      "name_en": "Alister's Desk",
+      "description_kr": "서재 중앙에 위치한 떡갈나무 책상. 알리스터의 시신이 발견된 곳이자, 사건의 중요한 단서들이 놓여 있던 장소이다. 그의 마지막 작업의 흔적과 죽음의 순간이 고스란히 남아 있다.",
+      "description_en": "An oak desk located in the center of the study. This is where Alister's body was found, and where important clues to the case were laid out. Traces of his last work and the moment of his death remain intact.",
+      "details_kr": "서재 중앙에 위치한 떡갈나무 책상. 알리스터의 시신이 발견된 곳이자, 사건의 중요한 단서들이 놓여 있던 장소이다. 그의 마지막 작업의 흔적과 죽음의 순간이 고스란히 남아 있다.",
+      "details_en": "An oak desk located in the center of the study. This is where Alister's body was found, and where important clues to the case were laid out. Traces of his last work and the moment of his death remain intact."
+    }
+  ],
+  "connectionRules": [
+    {
+      "id": "rule_A-P03",
+      "cards": ["A-P02", "A-L01"],
+      "result_kr": "탐정이 외딴 섬에 도착하여 지역 경찰관과 처음 대면하며 사건의 심각성을 인지한다.",
+      "result_en": "The detective arrives on the isolated island and first confronts the local police officer, realizing the gravity of the case.",
+      "unlock": "A-P03"
+    },
+    {
+      "id": "rule_A-L03",
+      "cards": ["A-L02", "A-E01"],
+      "result_kr": "미궁의 서재에서 알리스터의 시신을 발견하고, 그의 책상 주변에서 중요한 단서들을 찾기 시작한다.",
+      "result_en": "Discovering Alister's body in the Labyrinthine Study, the detective begins to search for important clues around his desk.",
+      "unlock": "A-L03"
+    },
+    {
+      "id": "rule_A-E03",
+      "cards": ["A-P01", "A-L03"],
+      "result_kr": "피해자 알리스터의 책상 위에서 그의 마지막 원고인 '종말의 잉크'를 발견하고, 이것이 사건의 핵심 단서임을 직감한다.",
+      "result_en": "On the victim Alister's desk, the detective discovers his final manuscript, 'Ink of Doom,' and instinctively senses that this is a crucial clue to the case.",
+      "unlock": "A-E03"
+    },
+    {
+      "id": "rule_A-E04",
+      "cards": ["A-E01", "A-E02"],
+      "result_kr": "알리스터의 시신과 깨진 홍차 잔 파편에서 미세한 독특한 향기를 감지하고, 독극물 사용 가능성을 의심한다.",
+      "result_en": "Detecting a faint, unique scent from Alister's body and the broken teacup shards, the detective suspects the possibility of poison being used.",
+      "unlock": "A-E04"
+    },
+    {
+      "id": "rule_A-E05",
+      "cards": ["A-L03", "A-E02"],
+      "result_kr": "알리스터의 책상과 깨진 홍차 잔 파편의 위치를 통해 단순한 사고가 아닌, 고의적인 행위나 마지막 몸부림의 흔적을 추론한다.",
+      "result_en": "Through the location of Alister's desk and the broken teacup shards, the detective deduces traces of intentional action or a final struggle, rather than a simple accident.",
+      "unlock": "A-E05"
+    },
+    {
+      "id": "rule_A-E06",
+      "cards": ["A-E01", "A-E03"],
+      "result_kr": "알리스터의 시신과 '종말의 잉크' 원고의 내용을 비교하여, 소설 속 살인 방식이 현실과 소름 끼치도록 일치함을 확인한다.",
+      "result_en": "Comparing Alister's body with the content of the 'Ink of Doom' manuscript, the detective confirms that the murder method described in the novel eerily matches reality.",
+      "unlock": "A-E06"
+    },
+    {
+      "id": "rule_A-E07",
+      "cards": ["A-P02", "A-E01"],
+      "result_kr": "탐정은 알리스터의 시신을 면밀히 관찰하고 자신의 예리한 직감을 통해, 경찰의 심장마비 추정에도 불구하고 타살의 가능성을 확신한다.",
+      "result_en": "The detective meticulously observes Alister's body and, through his keen intuition, becomes convinced of the possibility of murder, despite the police's presumption of a heart attack.",
+      "unlock": "A-E07"
+    },
+    {
+      "id": "rule_A-E08",
+      "cards": ["A-L01", "A-E09"],
+      "result_kr": "에레보스 섬을 강타한 폭풍우 소리와 저택의 기묘한 고요함을 통해, 사건이 외부와 단절된 밀실에서 은밀하게 이루어졌음을 파악한다.",
+      "result_en": "Through the sound of the storm hitting Erebos Island and the strange silence of the mansion, the detective realizes that the incident occurred secretly within a locked room, isolated from the outside world.",
+      "unlock": "A-E08"
+    },
+    {
+      "id": "rule_A-E09",
+      "cards": ["A-L01", "A-L02"],
+      "result_kr": "에레보스 섬과 미궁의 서재의 고립된 환경을 통해, 사건이 외부의 방해 없이 저택 안에서 은밀하게 이루어졌음을 추론한다.",
+      "result_en": "Through the isolated environment of Erebos Island and the Labyrinthine Study, the detective deduces that the incident occurred secretly within the mansion, without external interference.",
+      "unlock": "A-E09"
+    },
+    {
+      "id": "rule_A-E10",
+      "cards": ["A-L02", "A-L03"],
+      "result_kr": "미궁의 서재와 알리스터의 책상에서 나는 눅눅한 종이 냄새를 통해, 사건 현장의 음산하고 오래된 분위기를 더욱 깊이 각인한다.",
+      "result_en": "The damp paper scent emanating from the Labyrinthine Study and Alister's desk further imprints the eerie and ancient atmosphere of the crime scene upon the detective.",
+      "unlock": "A-E10"
+    }
+  ],
+  "fragments": [],
+  "winCondition": "A-E10",
+  "initialCards": ["A-P01", "A-P02", "A-L01", "A-L02", "A-E01", "A-E02"]
+}

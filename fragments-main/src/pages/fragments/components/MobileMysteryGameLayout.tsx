@@ -639,7 +639,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
           {/* 모바일 하단 고정 연결 영역 */}
           <div style={{
             position: 'fixed',
-            bottom: `max(env(safe-area-inset-bottom, 0px), 70px)`, // 시스템 UI 바로 위에 위치
+            bottom: `max(env(safe-area-inset-bottom, 0px), 105px)`, // 시스템 UI 바로 위에 위치
             left: '0',
             right: '0',
             background: 'linear-gradient(135deg, rgb(26, 26, 46) 0%, rgb(22, 33, 62) 100%)',

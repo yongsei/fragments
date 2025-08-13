@@ -1,0 +1,356 @@
+
+{
+  "id": "chapter_3",
+  "title_kr": "3일차 - 찢겨진 페이지의 행방",
+  "title_en": "Day 3 - The Whereabouts of the Torn Page",
+  "story_kr": "탐정은 찢겨진 원고의 마지막 페이지를 찾는 데 수사를 집중한다. 모든 용의자의 방을 수색한 끝에, 가장 의심받지 않던 닥터 랭던의 방에서 결정적인 증거인 찢겨진 페이지를 발견한다. 그 안에는 사건의 모든 비밀이 담겨 있었다.",
+  "story_en": "The detective focuses his investigation on finding the torn final page of the manuscript. After searching all suspects' rooms, he discovers the crucial evidence—the torn page—in Dr. Langdon's room, the least suspected individual. All the secrets of the case were contained within it.",
+  "victim": "알리스터 블랙우드",
+  "suspects": [
+    {
+      "id": "C-P01",
+      "name_kr": "탐정의 고뇌",
+      "name_en": "Detective's Anguish",
+      "role_kr": "탐정",
+      "role_en": "Detective",
+      "description_kr": "모든 용의자가 동기를 가지고 있지만 결정적 증거가 부족한 상황에서, 탐정은 깊은 좌절감에 빠진다. 하지만 찢겨진 원고 페이지를 발견하며 사건 해결의 실마리를 찾는다.",
+      "description_en": "With all suspects having motives but lacking decisive evidence, the detective falls into deep despair. However, upon discovering the torn manuscript page, he finds a clue to solving the case.",
+      "alibi_kr": "",
+      "alibi_en": "",
+      "motive_kr": "",
+      "motive_en": ""
+    },
+    {
+      "id": "C-P02",
+      "name_kr": "닥터 아서 랭던 (용의자 전환)",
+      "name_en": "Dr. Arthur Langdon (Suspect Shift)",
+      "role_kr": "용의자",
+      "role_en": "Suspect",
+      "description_kr": "찢겨진 페이지가 그의 방에서 발견되면서, 가장 의심받지 않던 인물에서 가장 유력한 용의자로 전환된다. 그의 과거와 알리스터와의 관계가 재조명된다.",
+      "description_en": "With the torn page found in his room, he transforms from the least suspected individual to the most likely suspect. His past and relationship with Alister are re-examined.",
+      "alibi_kr": "",
+      "alibi_en": "",
+      "motive_kr": "",
+      "motive_en": ""
+    }
+  ],
+  "evidence": [
+    {
+      "id": "C-E01",
+      "name_kr": "찢겨진 원고 5장 (발견)",
+      "name_en": "Torn Manuscript Chapter 5 (Found)",
+      "description_kr": "'종말의 잉크'의 마지막 챕터 중 찢겨져 나간 부분. 탐정이 랭던의 방에서 발견하며, 이 사건의 모든 비밀을 담고 있는 결정적인 증거가 된다.",
+      "description_en": "The torn part of the final chapter of 'Ink of Doom.' Discovered by the detective in Langdon's room, it becomes the decisive evidence containing all the secrets of the case.",
+      "details_kr": "'종말의 잉크'의 마지막 챕터 중 찢겨져 나간 부분. 탐정이 랭던의 방에서 발견하며, 이 사건의 모든 비밀을 담고 있는 결정적인 증거가 된다.",
+      "details_en": "The torn part of the final chapter of 'Ink of Doom.' Discovered by the detective in Langdon's room, it becomes the decisive evidence containing all the secrets of the case.",
+      "location": "C-L01"
+    },
+    {
+      "id": "C-E02",
+      "name_kr": "랭던의 과거 의료 과실 기록",
+      "name_en": "Langdon's Past Medical Malpractice Record",
+      "description_kr": "알리스터가 랭던을 옭아매던 약점. 찢겨진 페이지에서 이 내용이 언급되며, 랭던의 살인 동기에 대한 강력한 증거가 된다.",
+      "description_en": "Alister's leverage over Langdon. This content is mentioned on the torn page, serving as strong evidence for Langdon's motive for murder.",
+      "details_kr": "알리스터가 랭던을 옭아매던 약점. 찢겨진 페이지에서 이 내용이 언급되며, 랭던의 살인 동기에 대한 강력한 증거가 된다.",
+      "details_en": "Alister's leverage over Langdon. This content is mentioned on the torn page, serving as strong evidence for Langdon's motive for murder.",
+      "location": ""
+    },
+    {
+      "id": "C-E03",
+      "name_kr": "레오의 숨겨진 정체",
+      "name_en": "Leo's Hidden Identity",
+      "description_kr": "찢겨진 페이지에서 밝혀지는 레오의 충격적인 정체. 그가 랭던의 의료 과실로 사망한 환자의 아들이라는 사실이 드러나며, 사건의 비극성을 더한다.",
+      "description_en": "Leo's shocking identity revealed on the torn page. The fact that he is the son of a patient who died due to Langdon's medical malpractice is exposed, adding to the tragedy of the case.",
+      "details_kr": "찢겨진 페이지에서 밝혀지는 레오의 충격적인 정체. 그가 랭던의 의료 과실로 사망한 환자의 아들이라는 사실이 드러나며, 사건의 비극성을 더한다.",
+      "details_en": "Leo's shocking identity revealed on the torn page. The fact that he is the son of a patient who died due to Langdon's medical malpractice is exposed, adding to the tragedy of the case.",
+      "location": ""
+    },
+    {
+      "id": "C-E04",
+      "name_kr": "알리스터의 마지막 유언",
+      "name_en": "Alister's Last Will",
+      "description_kr": "찢겨진 페이지에 담긴 알리스터의 진심. 랭던을 용서하고 굴레에서 해방시켜 주려 했던 그의 의도가 드러나며, 랭던의 범행이 얼마나 비극적인 오해였는지 보여준다.",
+      "description_en": "Alister's true feelings contained on the torn page. His intention to forgive Langdon and free him from his burden is revealed, showing how tragic a misunderstanding Langdon's crime was.",
+      "details_kr": "찢겨진 페이지에 담긴 알리스터의 진심. 랭던을 용서하고 굴레에서 해방시켜 주려 했던 그의 의도가 드러나며, 랭던의 범행이 얼마나 비극적인 오해였는지 보여준다.",
+      "details_en": "Alister's true feelings contained on the torn page. His intention to forgive Langdon and free him from his burden is revealed, showing how tragic a misunderstanding Langdon's crime was.",
+      "location": ""
+    },
+    {
+      "id": "C-E05",
+      "name_kr": "랭던의 공포",
+      "name_en": "Langdon's Fear",
+      "description_kr": "찢겨진 페이지를 통해 드러나는 랭던의 심리 상태. 자신의 비밀이 폭로될 것이라는 극심한 공포가 그를 살인으로 이끌었음을 보여준다.",
+      "description_en": "Langdon's psychological state revealed through the torn page. The extreme fear that his secret would be exposed led him to murder.",
+      "details_kr": "찢겨진 페이지를 통해 드러나는 랭던의 심리 상태. 자신의 비밀이 폭로될 것이라는 극심한 공포가 그를 살인으로 이끌었음을 보여준다.",
+      "details_en": "Langdon's psychological state revealed through the torn page. The extreme fear that his secret would be exposed led him to murder.",
+      "location": ""
+    },
+    {
+      "id": "C-E06",
+      "name_kr": "랭던의 실수",
+      "name_en": "Langdon's Mistake",
+      "description_kr": "알리스터를 살해한 후 원고를 읽고 나서야 자신의 끔찍한 실수를 깨달았다는 랭던의 행동. 이는 그가 증거를 숨기기 위해 페이지를 찢어냈음을 설명한다.",
+      "description_en": "Langdon's realization of his terrible mistake only after reading the manuscript post-murdering Alister. This explains why he tore out the page to hide evidence.",
+      "details_kr": "알리스터를 살해한 후 원고를 읽고 나서야 자신의 끔찍한 실수를 깨달았다는 랭던의 행동. 이는 그가 증거를 숨기기 위해 페이지를 찢어냈음을 설명한다.",
+      "details_en": "Langdon's realization of his terrible mistake only after reading the manuscript post-murdering Alister. This explains why he tore out the page to hide evidence.",
+      "location": ""
+    },
+    {
+      "id": "C-E07",
+      "name_kr": "탐정의 날카로운 눈빛",
+      "name_en": "Detective's Sharp Gaze",
+      "description_kr": "모든 퍼즐 조각이 맞춰지는 순간, 탐정의 눈빛이 날카롭게 빛나며 진범을 향한 확신을 얻는다.",
+      "description_en": "As all the puzzle pieces fall into place, the detective's eyes sharpen, gaining certainty towards the true culprit.",
+      "details_kr": "모든 퍼즐 조각이 맞춰지는 순간, 탐정의 눈빛이 날카롭게 빛나며 진범을 향한 확신을 얻는다.",
+      "details_en": "As all the puzzle pieces fall into place, the detective's eyes sharpen, gaining certainty towards the true culprit.",
+      "location": ""
+    },
+    {
+      "id": "C-E08",
+      "name_kr": "퍼즐 조각",
+      "name_en": "Puzzle Piece",
+      "description_kr": "흩어져 있던 모든 단서들이 찢겨진 페이지의 발견으로 하나로 맞춰지는 은유적인 표현.",
+      "description_en": "A metaphorical expression of all scattered clues coming together with the discovery of the torn page.",
+      "details_kr": "흩어져 있던 모든 단서들이 찢겨진 페이지의 발견으로 하나로 맞춰지는 은유적인 표현.",
+      "details_en": "A metaphorical expression of all scattered clues coming together with the discovery of the torn page.",
+      "location": ""
+    },
+    {
+      "id": "C-E09",
+      "name_kr": "지나친 침착함",
+      "name_en": "Excessive Calmness",
+      "description_kr": "닥터 랭던이 보였던 지나친 침착함과 알리스터의 건강 상태를 강조했던 점이 이제는 그의 범행을 숨기기 위한 위장이었음이 명확해진다.",
+      "description_en": "Dr. Langdon's excessive calmness and his emphasis on Alister's health are now clearly revealed as a disguise to conceal his crime.",
+      "details_kr": "닥터 랭던이 보였던 지나친 침착함과 알리스터의 건강 상태를 강조했던 점이 이제는 그의 범행을 숨기기 위한 위장이었음이 명확해진다.",
+      "details_en": "Dr. Langdon's excessive calmness and his emphasis on Alister's health are now clearly revealed as a disguise to conceal his crime.",
+      "location": ""
+    },
+    {
+      "id": "C-E10",
+      "name_kr": "홍차 잔 감식 결과",
+      "name_en": "Teacup Analysis Result",
+      "description_kr": "초기 감식에서 독극물이 검출되지 않았던 홍차 잔의 결과가, 랭던의 의학적 지식을 이용한 치밀한 수법이었음을 뒷받침한다.",
+      "description_en": "The initial analysis of the teacup, which showed no traces of poison, supports that it was a meticulous method using Langdon's medical knowledge.",
+      "details_kr": "초기 감식에서 독극물이 검출되지 않았던 홍차 잔의 결과가, 랭던의 의학적 지식을 이용한 치밀한 수법이었음을 뒷받침한다.",
+      "details_en": "The initial analysis of the teacup, which showed no traces of poison, supports that it was a meticulous method using Langdon's medical knowledge.",
+      "location": ""
+    },
+    {
+      "id": "C-E11",
+      "name_kr": "범인 지목",
+      "name_en": "Culprit Identification",
+      "description_kr": "모든 증거와 추론을 통해 탐정이 닥터 아서 랭던을 최종 범인으로 지목하는 결정적인 순간.",
+      "description_en": "The decisive moment when the detective, through all evidence and deductions, identifies Dr. Arthur Langdon as the final culprit.",
+      "details_kr": "모든 증거와 추론을 통해 탐정이 닥터 아서 랭던을 최종 범인으로 지목하는 결정적인 순간.",
+      "details_en": "The decisive moment when the detective, through all evidence and deductions, identifies Dr. Arthur Langdon as the final culprit.",
+      "location": ""
+    },
+    {
+      "id": "C-E12",
+      "name_kr": "랭던의 숨겨진 연구실",
+      "name_en": "Langdon's Hidden Laboratory",
+      "description_kr": "랭던의 방에서 발견된 비밀스러운 공간. 이곳에는 희귀한 독극물 샘플과 알리스터의 건강 기록이 보관되어 있어, 그의 범행이 단순한 우발이 아닌 치밀한 계획이었음을 암시한다.",
+      "description_en": "A secret space discovered in Langdon's room. It contains samples of rare poisons and Alister's health records, suggesting that his crime was not a mere accident but a meticulous plan.",
+      "details_kr": "랭던의 방에서 발견된 비밀스러운 공간. 이곳에는 희귀한 독극물 샘플과 알리스터의 건강 기록이 보관되어 있어, 그의 범행이 단순한 우발이 아닌 치밀한 계획이었음을 암시한다.",
+      "details_en": "A secret space discovered in Langdon's room. It contains samples of rare poisons and Alister's health records, suggesting that his crime was not a mere accident but a meticulous plan.",
+      "location": "C-L01"
+    },
+    {
+      "id": "C-E13",
+      "name_kr": "알리스터의 일기장",
+      "name_en": "Alister's Diary",
+      "description_kr": "알리스터가 죽기 직전까지 작성했던 일기장. 찢겨진 페이지의 내용과 일치하는 부분이 발견되며, 랭던과의 복잡한 관계와 그가 랭던에게 남기려 했던 메시지가 담겨 있다.",
+      "description_en": "Alister's diary, written until just before his death. Parts matching the torn page are found, containing his complex relationship with Langdon and the message he intended to leave for him.",
+      "details_kr": "알리스터가 죽기 직전까지 작성했던 일기장. 찢겨진 페이지의 내용과 일치하는 부분이 발견되며, 랭던과의 복잡한 관계와 그가 랭던에게 남기려 했던 메시지가 담겨 있다.",
+      "details_en": "Alister's diary, written until just before his death. Parts matching the torn page are found, containing his complex relationship with Langdon and the message he intended to leave for him.",
+      "location": ""
+    },
+    {
+      "id": "C-E14",
+      "name_kr": "랭던의 의료 기록 (추가 발견)",
+      "name_en": "Langdon's Medical Records (Additional Discovery)",
+      "description_kr": "랭던의 숨겨진 연구실에서 발견된 추가 의료 기록. 알리스터의 건강 상태에 대한 조작된 정보와 함께, 랭던이 특정 독극물에 대한 연구를 진행했음을 보여주는 흔적이 발견된다.",
+      "description_en": "Additional medical records found in Langdon's hidden laboratory. Traces of manipulated information regarding Alister's health and evidence that Langdon was researching specific poisons are discovered.",
+      "details_kr": "랭던의 숨겨진 연구실에서 발견된 추가 의료 기록. 알리스터의 건강 상태에 대한 조작된 정보와 함께, 랭던이 특정 독극물에 대한 연구를 진행했음을 보여주는 흔적이 발견된다.",
+      "details_en": "Additional medical records found in Langdon's hidden laboratory. Traces of manipulated information regarding Alister's health and evidence that Langdon was researching specific poisons are discovered.",
+      "location": "C-L01"
+    },
+    {
+      "id": "C-E15",
+      "name_kr": "알리스터의 숨겨진 메시지",
+      "name_en": "Alister's Hidden Message",
+      "description_kr": "알리스터의 일기장 깊숙한 곳에서 발견된 암호화된 메시지. 랭던에게 보내려 했던 진정한 용서의 메시지가 담겨 있으며, 그의 죽음이 단순한 복수가 아닌 비극적인 오해였음을 강조한다.",
+      "description_en": "An encrypted message found deep within Alister's diary. It contains a true message of forgiveness he intended for Langdon, emphasizing that his death was not mere revenge but a tragic misunderstanding.",
+      "details_kr": "알리스터의 일기장 깊숙한 곳에서 발견된 암호화된 메시지. 랭던에게 보내려 했던 진정한 용서의 메시지가 담겨 있으며, 그의 죽음이 단순한 복수가 아닌 비극적인 오해였음을 강조한다.",
+      "details_en": "An encrypted message found deep within Alister's diary. It contains a true message of forgiveness he intended for Langdon, emphasizing that his death was not mere revenge but a tragic misunderstanding.",
+      "location": ""
+    },
+    {
+      "id": "C-E16",
+      "name_kr": "깨진 안경 조각",
+      "name_en": "Broken Spectacle Fragment",
+      "description_kr": "랭던의 방 구석에서 발견된 깨진 안경 조각. 랭던의 안경과 일치하며, 그가 찢겨진 페이지를 숨기거나 증거를 인멸하는 과정에서 발생한 흔적일 수 있다.",
+      "description_en": "A broken spectacle fragment found in the corner of Langdon's room. It matches Langdon's glasses and could be a trace left during his attempt to hide the torn page or destroy evidence.",
+      "details_kr": "랭던의 방 구석에서 발견된 깨진 안경 조각. 랭던의 안경과 일치하며, 그가 찢겨진 페이지를 숨기거나 증거를 인멸하는 과정에서 발생한 흔적일 수 있다.",
+      "details_en": "A broken spectacle fragment found in the corner of Langdon's room. It matches Langdon's glasses and could be a trace left during his attempt to hide the torn page or destroy evidence.",
+      "location": "C-L01"
+    },
+    {
+      "id": "C-E17",
+      "name_kr": "낡은 사진",
+      "name_en": "Old Photograph",
+      "description_kr": "랭던의 책상 서랍에서 발견된 낡은 사진. 젊은 시절의 알리스터와 랭던, 그리고 레오의 어머니가 함께 찍혀 있으며, 세 사람의 복잡한 과거 관계를 암시한다.",
+      "description_en": "An old photograph found in Langdon's desk drawer. It shows a young Alister, Langdon, and Leo's mother together, hinting at the complex past relationship between the three.",
+      "details_kr": "랭던의 책상 서랍에서 발견된 낡은 사진. 젊은 시절의 알리스터와 랭던, 그리고 레오의 어머니가 함께 찍혀 있으며, 세 사람의 복잡한 과거 관계를 암시한다.",
+      "details_en": "An old photograph found in Langdon's desk drawer. It shows a young Alister, Langdon, and Leo's mother together, hinting at the complex past relationship between the three.",
+      "location": ""
+    },
+    {
+      "id": "C-E18",
+      "name_kr": "미세한 흙먼지",
+      "name_en": "Fine Dust",
+      "description_kr": "찢겨진 원고 페이지가 발견된 의학 서적 사이에서 발견된 미세한 흙먼지. 랭던이 페이지를 숨기기 위해 서재의 특정 구역을 오갔음을 시사하며, 그의 동선에 대한 단서가 된다.",
+      "description_en": "Fine dust found between the medical books where the torn manuscript page was discovered. This suggests that Langdon moved through a specific area of the study to hide the page, providing a clue to his movements.",
+      "details_kr": "찢겨진 원고 페이지가 발견된 의학 서적 사이에서 발견된 미세한 흙먼지. 랭던이 페이지를 숨기기 위해 서재의 특정 구역을 오갔음을 시사하며, 그의 동선에 대한 단서가 된다.",
+      "details_en": "Fine dust found between the medical books where the torn manuscript page was discovered. This suggests that Langdon moved through a specific area of the study to hide the page, providing a clue to his movements.",
+      "location": "C-L02"
+    }
+  ],
+  "locations": [
+    {
+      "id": "C-L01",
+      "name_kr": "랭던의 방",
+      "name_en": "Langdon's Room",
+      "description_kr": "닥터 랭던의 개인 공간. 탐정이 찢겨진 원고 페이지를 찾기 위해 수색하는 주요 장소 중 하나이며, 마침내 결정적인 단서가 발견되는 곳이다.",
+      "description_en": "Dr. Langdon's private space. One of the main locations the detective searches to find the torn manuscript page, and where the decisive clue is finally discovered.",
+      "details_kr": "닥터 랭던의 개인 공간. 탐정이 찢겨진 원고 페이지를 찾기 위해 수색하는 주요 장소 중 하나이며, 마침내 결정적인 단서가 발견되는 곳이다.",
+      "details_en": "Dr. Langdon's private space. One of the main locations the detective searches to find the torn manuscript page, and where the decisive clue is finally discovered."
+    },
+    {
+      "id": "C-L02",
+      "name_kr": "낡은 의학 서적 사이",
+      "name_en": "Among Old Medical Books",
+      "description_kr": "랭던의 방에 있는 수많은 의학 서적들 중, 찢겨진 원고 페이지가 교묘하게 숨겨져 있던 특정 위치. 범인이 자신의 직업적 특성을 이용해 단서를 숨겼음을 암시한다.",
+      "description_en": "A specific location among the numerous medical books in Langdon's room where the torn manuscript page was cleverly hidden. This suggests the culprit used their professional expertise to conceal the clue.",
+      "details_kr": "랭던의 방에 있는 수많은 의학 서적들 중, 찢겨진 원고 페이지가 교묘하게 숨겨져 있던 특정 위치. 범인이 자신의 직업적 특성을 이용해 단서를 숨겼음을 암시한다.",
+      "details_en": "A specific location among the numerous medical books in Langdon's room where the torn manuscript page was cleverly hidden. This suggests the culprit used their professional expertise to conceal the clue."
+    }
+  ],
+  "connectionRules": [
+    {
+      "id": "rule_C-E03",
+      "cards": ["C-P01", "C-E01"],
+      "result_kr": "탐정의 고뇌와 찢겨진 원고 페이지를 통해 레오의 숨겨진 정체가 드러나며, 사건의 비극성이 더해진다.",
+      "result_en": "Through the detective's anguish and the torn manuscript page, Leo's hidden identity is revealed, adding to the tragedy of the case.",
+      "unlock": "C-E03"
+    },
+    {
+      "id": "rule_C-E04",
+      "cards": ["C-E01", "C-E02"],
+      "result_kr": "찢겨진 원고 페이지와 랭던의 과거 의료 과실 기록을 통해 알리스터의 마지막 유언이 드러나며, 랭던의 범행이 비극적인 오해였음을 보여준다.",
+      "result_en": "Through the torn manuscript page and Langdon's past medical malpractice record, Alister's last will is revealed, showing how tragic a misunderstanding Langdon's crime was.",
+      "unlock": "C-E04"
+    },
+    {
+      "id": "rule_C-E05",
+      "cards": ["C-E02", "C-P02"],
+      "result_kr": "랭던의 과거 의료 과실 기록과 닥터 랭던의 용의자 전환을 통해 랭던의 공포가 드러나며, 그를 살인으로 이끌었음을 보여준다.",
+      "result_en": "Through Langdon's past medical malpractice record and Dr. Langdon's shift to suspect, Langdon's fear is revealed, showing that it led him to murder.",
+      "unlock": "C-E05"
+    },
+    {
+      "id": "rule_C-E06",
+      "cards": ["C-E01", "C-P02"],
+      "result_kr": "찢겨진 원고 페이지와 닥터 랭던의 용의자 전환을 통해 랭던이 알리스터를 살해한 후 자신의 끔찍한 실수를 깨달았음을 설명한다.",
+      "result_en": "Through the torn manuscript page and Dr. Langdon's shift to suspect, it is explained that Langdon realized his terrible mistake only after murdering Alister.",
+      "unlock": "C-E06"
+    },
+    {
+      "id": "rule_C-E07",
+      "cards": ["C-P01", "C-E06"],
+      "result_kr": "탐정의 고뇌와 랭던의 실수를 통해 탐정의 날카로운 눈빛이 빛나며 진범을 향한 확신을 얻는다.",
+      "result_en": "Through the detective's anguish and Langdon's mistake, the detective's sharp gaze shines, gaining certainty towards the true culprit.",
+      "unlock": "C-E07"
+    },
+    {
+      "id": "rule_C-E08",
+      "cards": ["C-E01", "C-E07"],
+      "result_kr": "찢겨진 원고 페이지와 탐정의 날카로운 눈빛을 통해 모든 단서들이 하나로 맞춰지는 퍼즐 조각이 완성된다.",
+      "result_en": "Through the torn manuscript page and the detective's sharp gaze, the puzzle piece is completed, bringing all clues together.",
+      "unlock": "C-E08"
+    },
+    {
+      "id": "rule_C-E09",
+      "cards": ["C-P02", "C-E05"],
+      "result_kr": "닥터 랭던의 용의자 전환과 랭던의 공포를 통해 그의 지나친 침착함이 범행을 숨기기 위한 위장이었음이 명확해진다.",
+      "result_en": "Through Dr. Langdon's shift to suspect and Langdon's fear, his excessive calmness is clearly revealed as a disguise to conceal his crime.",
+      "unlock": "C-E09"
+    },
+    {
+      "id": "rule_C-E10",
+      "cards": ["C-L02", "C-P02"],
+      "result_kr": "낡은 의학 서적 사이에서 닥터 랭던의 용의자 전환을 통해 홍차 잔 감식 결과가 그의 의학적 지식을 이용한 치밀한 수법이었음을 뒷받침한다.",
+      "result_en": "Through Dr. Langdon's shift to suspect among the old medical books, the teacup analysis result supports that it was a meticulous method using his medical knowledge.",
+      "unlock": "C-E10"
+    },
+    {
+      "id": "rule_C-E11",
+      "cards": ["C-P01", "C-P02"],
+      "result_kr": "탐정의 고뇌와 닥터 랭던의 용의자 전환을 통해 탐정이 닥터 아서 랭던을 최종 범인으로 지목하는 결정적인 순간이 온다.",
+      "result_en": "Through the detective's anguish and Dr. Langdon's shift to suspect, the decisive moment arrives when the detective identifies Dr. Arthur Langdon as the final culprit.",
+      "unlock": "C-E11"
+    },
+    {
+      "id": "rule_C-E12",
+      "cards": ["C-L01", "C-E10"],
+      "result_kr": "랭던의 방과 홍차 잔 감식 결과를 통해 랭던의 숨겨진 연구실이 발견되며, 그의 치밀한 계획이 드러난다.",
+      "result_en": "Through Langdon's room and the teacup analysis result, Langdon's hidden laboratory is discovered, revealing his meticulous plan.",
+      "unlock": "C-E12"
+    },
+    {
+      "id": "rule_C-E13",
+      "cards": ["C-P01", "C-E04"],
+      "result_kr": "탐정의 고뇌와 알리스터의 마지막 유언을 통해 알리스터의 일기장이 발견되며, 랭던과의 복잡한 관계와 메시지가 드러난다.",
+      "result_en": "Through the detective's anguish and Alister's last will, Alister's diary is discovered, revealing his complex relationship with Langdon and his message.",
+      "unlock": "C-E13"
+    },
+    {
+      "id": "rule_C-E14",
+      "cards": ["C-E12", "C-E09"],
+      "result_kr": "랭던의 숨겨진 연구실과 그의 지나친 침착함을 통해 랭던의 의료 기록이 추가로 발견되며, 그의 범행이 치밀한 계획이었음을 암시한다.",
+      "result_en": "Through Langdon's hidden laboratory and his excessive calmness, additional medical records are discovered, suggesting his crime was a meticulous plan.",
+      "unlock": "C-E14"
+    },
+    {
+      "id": "rule_C-E15",
+      "cards": ["C-E13", "C-E04"],
+      "result_kr": "알리스터의 일기장과 그의 마지막 유언을 통해 알리스터의 숨겨진 메시지가 발견되며, 그의 죽음이 비극적인 오해였음을 강조한다.",
+      "result_en": "Through Alister's diary and his last will, Alister's hidden message is discovered, emphasizing that his death was a tragic misunderstanding.",
+      "unlock": "C-E15"
+    },
+    {
+      "id": "rule_C-E16",
+      "cards": ["C-L01", "C-E06"],
+      "result_kr": "랭던의 방과 그의 실수를 통해 깨진 안경 조각이 발견되며, 그가 증거를 숨기려 했음을 암시한다.",
+      "result_en": "Through Langdon's room and his mistake, a broken spectacle fragment is discovered, suggesting he attempted to hide evidence.",
+      "unlock": "C-E16"
+    },
+    {
+      "id": "rule_C-E17",
+      "cards": ["C-P02", "C-E03"],
+      "result_kr": "닥터 랭던의 용의자 전환과 레오의 숨겨진 정체를 통해 낡은 사진이 발견되며, 세 사람의 복잡한 과거 관계를 암시한다.",
+      "result_en": "Through Dr. Langdon's shift to suspect and Leo's hidden identity, an old photograph is discovered, hinting at the complex past relationship between the three.",
+      "unlock": "C-E17"
+    },
+    {
+      "id": "rule_C-E18",
+      "cards": ["C-L02", "C-E08"],
+      "result_kr": "낡은 의학 서적 사이와 퍼즐 조각을 통해 미세한 흙먼지가 발견되며, 랭던의 동선에 대한 단서가 된다.",
+      "result_en": "Fine dust found between the medical books and the puzzle piece, providing a clue to Langdon's movements.",
+      "unlock": "C-E18"
+    }
+  ],
+  "fragments": [],
+  "winCondition": "C-E18",
+  "initialCards": ["C-P01", "C-P02", "C-L01", "C-L02", "C-E01", "C-E02"]
+}

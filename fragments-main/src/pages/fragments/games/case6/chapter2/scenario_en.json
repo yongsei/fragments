@@ -1,0 +1,323 @@
+
+{
+  "id": "chapter_2",
+  "title_kr": "2일차 - 거짓과 진실의 얼굴들",
+  "title_en": "Day 2 - Faces of Lies and Truth",
+  "story_kr": "탐정은 저택에 머물고 있는 5명의 유력한 용의자들을 차례로 심문한다. 각자 완벽한 알리바이를 주장하지만, 그들의 진술과 발견되는 단서들 사이에는 미묘한 균열이 존재한다. 탐정은 '종말의 잉크' 원고가 용의자들을 암시하고 있음을 깨닫고, 원고의 마지막 장이 찢겨나간 사실을 발견한다.",
+  "story_en": "The detective interrogates five key suspects residing in the mansion. Each claims a perfect alibi, yet subtle discrepancies exist between their testimonies and the discovered clues. The detective realizes that the 'Ink of Doom' manuscript alludes to the suspects and discovers that the final page of the manuscript has been torn out.",
+  "victim": "알리스터 블랙우드",
+  "suspects": [
+    {
+      "id": "B-P01",
+      "name_kr": "이사벨라 발렌티나",
+      "name_en": "Isabella Valentina",
+      "role_kr": "용의자",
+      "role_en": "Suspect",
+      "description_kr": "알리스터의 전 부인이자 거대 출판사 대표. 냉철하고 계산적인 성격으로, 알리스터의 죽음으로 인해 막대한 이득을 얻게 될 상황에 처해 있다. 그녀의 알리바이는 겉보기에는 완벽하다.",
+      "description_en": "Alister's ex-wife and the head of a major publishing house. With a cold and calculating personality, she stands to gain immense profit from Alister's death. Her alibi appears perfect on the surface.",
+      "alibi_kr": "",
+      "alibi_en": "",
+      "motive_kr": ""
+    },
+    {
+      "id": "B-P02",
+      "name_kr": "줄리안 블레이크",
+      "name_en": "Julian Blake",
+      "role_kr": "용의자",
+      "role_en": "Suspect",
+      "description_kr": "알리스터의 문하생이자 무명 작가. 한때 촉망받았으나 스승의 그늘에 갇혀 빛을 보지 못하고 있다. 알리스터에 대한 깊은 열등감과 자신의 아이디어를 도용당했다는 분노를 품고 있다.",
+      "description_en": "Alister's apprentice and an unknown writer. Once promising, he remains overshadowed by his mentor. He harbors deep inferiority towards Alister and resentment over his ideas being plagiarized.",
+      "alibi_kr": "",
+      "alibi_en": "",
+      "motive_kr": ""
+    },
+    {
+      "id": "B-P03",
+      "name_kr": "에밀리 리드",
+      "name_en": "Emily Reed",
+      "role_kr": "용의자",
+      "role_en": "Suspect",
+      "description_kr": "알리스터의 개인 비서. 5년 전부터 그를 보좌해 온 헌신적인 인물로 보이지만, 알리스터가 그녀의 개인적인 삶까지 통제하려 했으며, 그녀의 아이디어를 무단 사용했다는 사실이 드러난다.",
+      "description_en": "Alister's personal secretary. She appears to be a devoted individual who has assisted him for five years, but it is revealed that Alister attempted to control her personal life and used her ideas without permission.",
+      "alibi_kr": "",
+      "alibi_en": "",
+      "motive_kr": ""
+    },
+    {
+      "id": "B-P04",
+      "name_kr": "닥터 아서 랭던",
+      "name_en": "Dr. Arthur Langdon",
+      "role_kr": "용의자",
+      "role_en": "Suspect",
+      "description_kr": "알리스터의 오랜 친구이자 주치의. 온화하고 지적인 인상을 가졌지만, 알리스터의 죽음에 대해 지나치게 침착하고 이성적인 태도를 보인다. 알리스터의 건강 상태를 유독 강조하며 자연사를 주장한다.",
+      "description_en": "Alister's long-time friend and physician. He possesses a gentle and intellectual demeanor, but exhibits an overly calm and rational attitude regarding Alister's death. He particularly emphasizes Alister's health condition, asserting it was a natural death.",
+      "alibi_kr": "",
+      "alibi_en": "",
+      "motive_kr": ""
+    },
+    {
+      "id": "B-P05",
+      "name_kr": "레오",
+      "name_en": "Leo",
+      "role_kr": "용의자",
+      "role_en": "Suspect",
+      "description_kr": "저택의 과묵하고 신비로운 관리인. 언제부터 이 섬에 있었는지 아는 사람이 없으며, 저택의 모든 보안 시스템을 완벽하게 관리한다. 그의 침묵과 완벽한 통제력은 그를 가장 유력한 용의자로 보이게 한다.",
+      "description_en": "The mansion's taciturn and mysterious caretaker. No one knows how long he has been on this island, and he perfectly manages all of the mansion's security systems. His silence and perfect control make him appear to be the most likely suspect.",
+      "alibi_kr": "",
+      "alibi_en": "",
+      "motive_kr": ""
+    }
+  ],
+  "evidence": [
+    {
+      "id": "B-E01",
+      "name_kr": "이사벨라의 알리바이",
+      "name_en": "Isabella's Alibi",
+      "description_kr": "사건 발생 당시 이사벨라가 국제 본사와 화상 회의 중이었다는 기록. 이는 그녀의 알리바이를 완벽하게 증명하는 것처럼 보이지만, 그녀의 동기와는 별개의 문제이다.",
+      "description_en": "Records indicating Isabella was in a video conference with the international headquarters at the time of the incident. This appears to perfectly prove her alibi, but it is a separate issue from her motive.",
+      "details_kr": "사건 발생 당시 이사벨라가 국제 본사와 화상 회의 중이었다는 기록. 이는 그녀의 알리바이를 완벽하게 증명하는 것처럼 보이지만, 그녀의 동기와는 별개의 문제이다.",
+      "details_en": "Records indicating Isabella was in a video conference with the international headquarters at the time of the incident. This appears to perfectly prove her alibi, but it is a separate issue from her motive.",
+      "location": ""
+    },
+    {
+      "id": "B-E02",
+      "name_kr": "독점 계약 해지 통보서",
+      "name_en": "Exclusive Contract Termination Notice",
+      "description_kr": "알리스터가 이사벨라의 출판사와의 독점 계약을 해지하려 했던 의도를 보여주는 문서. 이로 인해 이사벨라의 회사가 파산 위기에 처할 수 있었음을 암시하며 그녀의 강력한 동기가 된다.",
+      "description_en": "A document showing Alister's intention to terminate his exclusive contract with Isabella's publishing house. This implies that Isabella's company could have faced bankruptcy, serving as a strong motive for her.",
+      "details_kr": "알리스터가 이사벨라의 출판사와의 독점 계약을 해지하려 했던 의도를 보여주는 문서. 이로 인해 이사벨라의 회사가 파산 위기에 처할 수 있었음을 암시하며 그녀의 강력한 동기가 된다.",
+      "details_en": "A document showing Alister's intention to terminate his exclusive contract with Isabella's publishing house. This implies that Isabella's company could have faced bankruptcy, serving as a strong motive for her.",
+      "location": "B-L02"
+    },
+    {
+      "id": "B-E03",
+      "name_kr": "원고 3장 '여왕의 몰락'",
+      "name_en": "Manuscript Chapter 3 'The Queen's Downfall'",
+      "description_kr": "알리스터의 소설 '종말의 잉크' 중 이사벨라를 암시하는 챕터. 거대한 출판사를 운영하는 냉혹한 여왕이 자신의 제국을 지키기 위해 주인공을 파멸시키려 한다는 내용이 담겨 있다.",
+      "description_en": "A chapter in Alister's novel 'Ink of Doom' that alludes to Isabella. It contains content about a ruthless queen who runs a massive publishing house attempting to ruin the protagonist to protect her empire.",
+      "details_kr": "알리스터의 소설 '종말의 잉크' 중 이사벨라를 암시하는 챕터. 거대한 출판사를 운영하는 냉혹한 여왕이 자신의 제국을 지키기 위해 주인공을 파멸시키려 한다는 내용이 담겨 있다.",
+      "details_en": "A chapter in Alister's novel 'Ink of Doom' that alludes to Isabella. It contains content about a ruthless queen who runs a massive publishing house attempting to ruin the protagonist to protect her empire.",
+      "location": ""
+    },
+    {
+      "id": "B-E04",
+      "name_kr": "줄리안의 미발표 원고",
+      "name_en": "Julian's Unpublished Manuscript",
+      "description_kr": "줄리안이 작성했으나 알리스터의 필체로 수정된 흔적이 있는 미발표 원고. 알리스터가 그의 아이디어를 도용했거나, 그의 작품에 깊이 관여했음을 보여주는 증거이다.",
+      "description_en": "Julian's unpublished manuscript, with traces of Alister's handwriting. This is evidence that Alister plagiarized his ideas or was deeply involved in his work.",
+      "details_kr": "줄리안이 작성했으나 알리스터의 필체로 수정된 흔적이 있는 미발표 원고. 알리스터가 그의 아이디어를 도용했거나, 그의 작품에 깊이 관여했음을 보여주는 증거이다.",
+      "details_en": "Julian's unpublished manuscript, with traces of Alister's handwriting. This is evidence that Alister plagiarized his ideas or was deeply involved in his work.",
+      "location": "B-L03"
+    },
+    {
+      "id": "B-E05",
+      "name_kr": "원고 2장 '배신자의 독백'",
+      "name_en": "Manuscript Chapter 2 'The Traitor's Monologue'",
+      "description_kr": "알리스터의 소설 '종말의 잉크' 중 줄리안을 암시하는 챕터. 스승의 아이디어를 훔치고도 인정받지 못해 좌절하는 제자의 이야기가 담겨 있어 줄리안의 동기를 강화한다.",
+      "description_en": "A chapter in Alister's novel 'Ink of Doom' that alludes to Julian. It contains the story of an apprentice who, despite stealing his mentor's ideas, is not recognized and becomes frustrated, strengthening Julian's motive.",
+      "details_kr": "알리스터의 소설 '종말의 잉크' 중 줄리안을 암시하는 챕터. 스승의 아이디어를 훔치고도 인정받지 못해 좌절하는 제자의 이야기가 담겨 있어 줄리안의 동기를 강화한다.",
+      "details_en": "A chapter in Alister's novel 'Ink of Doom' that alludes to Julian. It contains the story of an apprentice who, despite stealing his mentor's ideas, is not recognized and becomes frustrated, strengthening Julian's motive.",
+      "location": ""
+    },
+    {
+      "id": "B-E06",
+      "name_kr": "알리스터의 초기 아이디어 노트",
+      "name_en": "Alister's Early Idea Notes",
+      "description_kr": "알리스터가 작품 구상 초기에 사용했던 노트. 이 노트에는 에밀리가 제공했던 것으로 보이는 아이디어 스케치들이 포함되어 있어 그녀의 기여와 알리스터의 무단 사용을 암시한다.",
+      "description_en": "Notes Alister used in the early stages of his work. These notes include idea sketches that appear to have been provided by Emily, hinting at her contributions and Alister's unauthorized use.",
+      "details_kr": "알리스터가 작품 구상 초기에 사용했던 노트. 이 노트에는 에밀리가 제공했던 것으로 보이는 아이디어 스케치들이 포함되어 있어 그녀의 기여와 알리스터의 무단 사용을 암시한다.",
+      "details_en": "Notes Alister used in the early stages of his work. These notes include idea sketches that appear to have been provided by Emily, hinting at her contributions and Alister's unauthorized use.",
+      "location": "B-L04"
+    },
+    {
+      "id": "B-E07",
+      "name_kr": "원고 4장 '충신의 눈물'",
+      "name_en": "Manuscript Chapter 4 'The Loyal Servant's Tears'",
+      "description_kr": "알리스터의 소설 '종말의 잉크' 중 에밀리를 암시하는 챕터. 헌신적인 비서가 독초에 중독되어 희생양이 된다는 내용이 담겨 있어 에밀리의 숨겨진 분노를 드러낸다.",
+      "description_en": "A chapter in Alister's novel 'Ink of Doom' that alludes to Emily. It contains content about a devoted secretary who becomes a sacrifice after being poisoned by a toxic herb, revealing Emily's hidden resentment.",
+      "details_kr": "알리스터의 소설 '종말의 잉크' 중 에밀리를 암시하는 챕터. 헌신적인 비서가 독초에 중독되어 희생양이 된다는 내용이 담겨 있어 에밀리의 숨겨진 분노를 드러낸다.",
+      "details_en": "A chapter in Alister's novel 'Ink of Doom' that alludes to Emily. It contains content about a devoted secretary who becomes a sacrifice after being poisoned by a toxic herb, revealing Emily's hidden resentment.",
+      "location": ""
+    },
+    {
+      "id": "B-E08",
+      "name_kr": "랭던의 알리바이",
+      "name_en": "Langdon's Alibi",
+      "description_kr": "사건 당시 닥터 랭던이 자신의 방에서 의학 서적을 읽고 있었다는 진술. 그의 알리바이를 뒷받침하는 것처럼 보이지만, 탐정은 그의 지나친 침착함에서 미묘한 위화감을 느낀다.",
+      "description_en": "Dr. Langdon's statement that he was reading medical books in his room at the time of the incident. While this appears to support his alibi, the detective senses a subtle unease from his excessive calmness.",
+      "details_kr": "사건 당시 닥터 랭던이 자신의 방에서 의학 서적을 읽고 있었다는 진술. 그의 알리바이를 뒷받침하는 것처럼 보이지만, 탐정은 그의 지나친 침착함에서 미묘한 위화감을 느낀다.",
+      "details_en": "Dr. Langdon's statement that he was reading medical books in his room at the time of the incident. While this appears to support his alibi, the detective senses a subtle unease from his excessive calmness.",
+      "location": "B-L05"
+    },
+    {
+      "id": "B-E09",
+      "name_kr": "알리스터의 건강 상태 강조",
+      "name_en": "Emphasis on Alister's Health",
+      "description_kr": "닥터 랭던이 알리스터의 심장 약화를 유독 강조하며 그의 죽음이 자연사일 가능성을 주장하는 진술. 이는 범인이 의도적으로 심장마비로 위장하려 했다는 복선으로 작용한다.",
+      "description_en": "Dr. Langdon's statement, which particularly emphasizes Alister's weakened heart and asserts the possibility of his death being natural. This serves as a foreshadowing that the culprit intentionally attempted to disguise it as a heart attack.",
+      "details_kr": "닥터 랭던이 알리스터의 심장 약화를 유독 강조하며 그의 죽음이 자연사일 가능성을 주장하는 진술. 이는 범인이 의도적으로 심장마비로 위장하려 했다는 복선으로 작용한다.",
+      "details_en": "Dr. Langdon's statement, which particularly emphasizes Alister's weakened heart and asserts the possibility of his death being natural. This serves as a foreshadowing that the culprit intentionally attempted to disguise it as a heart attack.",
+      "location": ""
+    },
+    {
+      "id": "B-E10",
+      "name_kr": "찢겨진 원고 5장",
+      "name_en": "Torn Manuscript Chapter 5",
+      "description_kr": "'종말의 잉크'의 마지막 챕터인 5장 '그림자의 심판'의 결말 부분이 찢겨져 나가 있다. 탐정은 2일차 밤에 이 사실을 발견하며, 이것이 사건의 핵심 단서임을 직감한다.",
+      "description_en": "The ending of Chapter 5, 'The Shadow's Judgment,' the final chapter of 'Ink of Doom,' has been torn out. The detective discovers this fact on the second night, instinctively sensing that it is a crucial clue to the case.",
+      "details_kr": "'종말의 잉크'의 마지막 챕터인 5장 '그림자의 심판'의 결말 부분이 찢겨져 나가 있다. 탐정은 2일차 밤에 이 사실을 발견하며, 이것이 사건의 핵심 단서임을 직감한다.",
+      "details_en": "The ending of Chapter 5, 'The Shadow's Judgment,' the final chapter of 'Ink of Doom,' has been torn out. The detective discovers this fact on the second night, instinctively sensing that it is a crucial clue to the case.",
+      "location": ""
+    }
+  ],
+  "locations": [
+    {
+      "id": "B-L01",
+      "name_kr": "아침 식사 자리",
+      "name_en": "Breakfast Table",
+      "description_kr": "사건 발생 다음 날 아침, 탐정이 용의자들을 처음으로 한자리에 모아 대면한 장소. 이곳에서 용의자들의 첫인상과 미묘한 긴장감이 오간다.",
+      "description_en": "The place where the detective first gathered and confronted the suspects on the morning after the incident. Here, initial impressions and subtle tensions exchanged among the suspects.",
+      "details_kr": "사건 발생 다음 날 아침, 탐정이 용의자들을 처음으로 한자리에 모아 대면한 장소. 이곳에서 용의자들의 첫인상과 미묘한 긴장감이 오간다.",
+      "details_en": "The place where the detective first gathered and confronted the suspects on the morning after the incident. Here, initial impressions and subtle tensions exchanged among the suspects."
+    },
+    {
+      "id": "B-L02",
+      "name_kr": "이사벨라의 사무실",
+      "name_en": "Isabella's Office",
+      "description_kr": "저택 내 이사벨라가 임시로 사용하던 공간. 이곳에서 알리스터가 작성한 것으로 보이는 '독점 계약 해지 통보서' 초안이 발견되어 그녀의 동기에 대한 의문을 증폭시킨다.",
+      "description_en": "A temporary space within the mansion used by Isabella. Here, a draft of a 'Exclusive Contract Termination Notice' seemingly written by Alister is discovered, intensifying questions about her motive.",
+      "details_kr": "저택 내 이사벨라가 임시로 사용하던 공간. 이곳에서 알리스터가 작성한 것으로 보이는 '독점 계약 해지 통보서' 초안이 발견되어 그녀의 동기에 대한 의문을 증폭시킨다.",
+      "details_en": "A temporary space within the mansion used by Isabella. Here, a draft of a 'Exclusive Contract Termination Notice' seemingly written by Alister is discovered, intensifying questions about her motive."
+    },
+    {
+      "id": "B-L03",
+      "name_kr": "줄리안의 작업실",
+      "name_en": "Julian's Studio",
+      "description_kr": "저택 내 줄리안이 사용하던 개인 작업 공간. 이곳에서 알리스터의 필체로 수정된 줄리안의 미발표 원고가 발견되어, 알리스터가 그의 작품에 깊이 관여했음을 보여준다.",
+      "description_en": "Julian's private workspace within the mansion. Here, Julian's unpublished manuscript, revised in Alister's handwriting, is discovered, indicating Alister's deep involvement in his work.",
+      "details_kr": "저택 내 줄리안이 사용하던 개인 작업 공간. 이곳에서 알리스터의 필체로 수정된 줄리안의 미발표 원고가 발견되어, 알리스터가 그의 작품에 깊이 관여했음을 보여준다.",
+      "details_en": "Julian's private workspace within the mansion. Here, Julian's unpublished manuscript, revised in Alister's handwriting, is discovered, indicating Alister's deep involvement in his work."
+    },
+    {
+      "id": "B-L04",
+      "name_kr": "에밀리의 방",
+      "name_en": "Emily's Room",
+      "description_kr": "저택 내 에밀리의 개인 공간. 이곳에서 알리스터의 초기 아이디어 노트와 함께, 에밀리가 직접 작성한 것으로 보이는 소설 아이디어 스케치들이 발견된다.",
+      "description_en": "Emily's private space within the mansion. Here, Alister's early idea notes are found along with novel idea sketches seemingly drawn by Emily herself.",
+      "details_kr": "저택 내 에밀리의 개인 공간. 이곳에서 알리스터의 초기 아이디어 노트와 함께, 에밀리가 직접 작성한 것으로 보이는 소설 아이디어 스케치들이 발견된다.",
+      "details_en": "Emily's private space within the mansion. Here, Alister's early idea notes are found along with novel idea sketches seemingly drawn by Emily herself."
+    },
+    {
+      "id": "B-L05",
+      "name_kr": "랭던의 방",
+      "name_en": "Langdon's Room",
+      "description_kr": "저택 내 닥터 랭던의 개인 공간. 랭던은 사건 당시 이곳에서 의학 서적을 읽고 있었다고 주장하며, 그의 알리바이를 뒷받침하는 장소이다.",
+      "description_en": "Dr. Langdon's private space within the mansion. Langdon claims he was reading medical books here at the time of the incident, making this location support his alibi.",
+      "details_kr": "저택 내 닥터 랭던의 개인 공간. 랭던은 사건 당시 이곳에서 의학 서적을 읽고 있었다고 주장하며, 그의 알리바이를 뒷받침하는 장소이다.",
+      "details_en": "Dr. Langdon's private space within the mansion. Langdon claims he was reading medical books here at the time of the incident, making this location support his alibi."
+    }
+  ],
+  "connectionRules": [
+    {
+      "id": "rule_B-P03",
+      "cards": ["B-P01", "B-L01"],
+      "result_kr": "아침 식사 자리에서 이사벨라와 에밀리를 대면하며, 에밀리가 알리스터의 비서로서 중요한 정보를 가지고 있음을 직감한다.",
+      "result_en": "Confronting Isabella and Emily at the breakfast table, the detective instinctively senses that Emily, as Alister's secretary, possesses crucial information.",
+      "unlock": "B-P03"
+    },
+    {
+      "id": "rule_B-P04",
+      "cards": ["B-P01", "B-P02"],
+      "result_kr": "이사벨라와 줄리안의 진술을 통해 닥터 랭던이 알리스터의 주치의로서 그의 건강 상태에 대해 중요한 증언을 할 수 있음을 파악한다.",
+      "result_en": "Through the testimonies of Isabella and Julian, the detective realizes that Dr. Langdon, as Alister's physician, can provide crucial testimony regarding his health condition.",
+      "unlock": "B-P04"
+    },
+    {
+      "id": "rule_B-P05",
+      "cards": ["B-L01", "B-P03"],
+      "result_kr": "아침 식사 자리에서 에밀리의 행동을 관찰하며, 저택의 관리인 레오가 사건에 대해 침묵하고 있음을 인지하고 그를 의심하기 시작한다.",
+      "result_en": "Observing Emily's behavior at the breakfast table, the detective notices the mansion's caretaker, Leo, remaining silent about the incident and begins to suspect him.",
+      "unlock": "B-P05"
+    },
+    {
+      "id": "rule_B-L03",
+      "cards": ["B-P02", "B-L02"],
+      "result_kr": "줄리안의 작업실에서 이사벨라의 사무실과 관련된 단서를 발견하고, 줄리안과 이사벨라 사이의 숨겨진 관계를 추론한다.",
+      "result_en": "Discovering clues related to Isabella's office in Julian's studio, the detective deduces a hidden connection between Julian and Isabella.",
+      "unlock": "B-L03"
+    },
+    {
+      "id": "rule_B-L04",
+      "cards": ["B-P03", "B-L03"],
+      "result_kr": "에밀리의 방에서 줄리안의 작업실과 관련된 단서를 발견하고, 에밀리와 줄리안 사이의 협력 관계를 추론한다.",
+      "result_en": "Discovering clues related to Julian's studio in Emily's room, the detective deduces a collaborative relationship between Emily and Julian.",
+      "unlock": "B-L04"
+    },
+    {
+      "id": "rule_B-L05",
+      "cards": ["B-P04", "B-L04"],
+      "result_kr": "랭던의 방에서 에밀리의 방과 관련된 단서를 발견하고, 랭던과 에밀리 사이의 숨겨진 관계를 추론한다.",
+      "result_en": "Discovering clues related to Emily's room in Langdon's room, the detective deduces a hidden connection between Langdon and Emily.",
+      "unlock": "B-L05"
+    },
+    {
+      "id": "rule_B-E03",
+      "cards": ["B-P01", "B-E02"],
+      "result_kr": "이사벨라와 독점 계약 해지 통보서를 통해, 알리스터의 소설 '종말의 잉크' 3장 '여왕의 몰락'이 이사벨라를 암시하고 있음을 파악한다.",
+      "result_en": "Through Isabella and the Exclusive Contract Termination Notice, the detective realizes that Chapter 3, 'The Queen's Downfall,' in Alister's novel 'Ink of Doom,' alludes to Isabella.",
+      "unlock": "B-E03"
+    },
+    {
+      "id": "rule_B-E04",
+      "cards": ["B-P02", "B-L03"],
+      "result_kr": "줄리안과 그의 작업실에서 발견된 미발표 원고를 통해, 알리스터가 줄리안의 아이디어를 도용했음을 확인한다.",
+      "result_en": "Through Julian and the unpublished manuscript found in his studio, the detective confirms that Alister plagiarized Julian's ideas.",
+      "unlock": "B-E04"
+    },
+    {
+      "id": "rule_B-E05",
+      "cards": ["B-P02", "B-E04"],
+      "result_kr": "줄리안과 그의 미발표 원고를 통해, 알리스터의 소설 '종말의 잉크' 2장 '배신자의 독백'이 줄리안을 암시하고 있음을 파악한다.",
+      "result_en": "Through Julian and his unpublished manuscript, the detective realizes that Chapter 2, 'The Traitor's Monologue,' in Alister's novel 'Ink of Doom,' alludes to Julian.",
+      "unlock": "B-E05"
+    },
+    {
+      "id": "rule_B-E06",
+      "cards": ["B-P03", "B-L04"],
+      "result_kr": "에밀리와 그녀의 방에서 발견된 알리스터의 초기 아이디어 노트를 통해, 에밀리가 알리스터에게 아이디어를 제공했음을 확인한다.",
+      "result_en": "Through Emily and Alister's early idea notes found in her room, the detective confirms that Emily provided ideas to Alister.",
+      "unlock": "B-E06"
+    },
+    {
+      "id": "rule_B-E07",
+      "cards": ["B-P03", "B-E06"],
+      "result_kr": "에밀리와 알리스터의 초기 아이디어 노트를 통해, 알리스터의 소설 '종말의 잉크' 4장 '충신의 눈물'이 에밀리를 암시하고 있음을 파악한다.",
+      "result_en": "Through Emily and Alister's early idea notes, the detective realizes that Chapter 4, 'The Loyal Servant's Tears,' in Alister's novel 'Ink of Doom,' alludes to Emily.",
+      "unlock": "B-E07"
+    },
+    {
+      "id": "rule_B-E08",
+      "cards": ["B-P04", "B-L05"],
+      "result_kr": "랭던과 그의 방에서 발견된 알리바이를 통해, 랭던이 사건 당시 의학 서적을 읽고 있었다는 진술의 신빙성을 확인한다.",
+      "result_en": "Through Langdon and the alibi found in his room, the detective confirms the credibility of Langdon's statement that he was reading medical books at the time of the incident.",
+      "unlock": "B-E08"
+    },
+    {
+      "id": "rule_B-E09",
+      "cards": ["B-P04", "B-E08"],
+      "result_kr": "랭던과 그의 알리바이를 통해, 랭던이 알리스터의 건강 상태를 강조하며 자연사를 주장하는 것이 범행을 위장하려는 의도임을 의심한다.",
+      "result_en": "Through Langdon and his alibi, the detective suspects that Langdon's emphasis on Alister's health and assertion of natural death is an attempt to disguise the crime.",
+      "unlock": "B-E09"
+    },
+    {
+      "id": "rule_B-E10",
+      "cards": ["B-P05", "B-E09"],
+      "result_kr": "레오와 랭던의 알리바이를 통해, '종말의 잉크'의 마지막 챕터가 찢겨져 나간 사실을 발견하고, 이것이 사건의 핵심 단서임을 직감한다.",
+      "result_en": "Through Leo and Langdon's alibi, the detective discovers that the final chapter of 'Ink of Doom' has been torn out, instinctively sensing that this is a crucial clue to the case.",
+      "unlock": "B-E10"
+    }
+  ],
+  "fragments": [],
+  "winCondition": "B-E10",
+  "initialCards": ["B-P01", "B-P02", "B-L01", "B-L02", "B-E01", "B-E02"]
+}
