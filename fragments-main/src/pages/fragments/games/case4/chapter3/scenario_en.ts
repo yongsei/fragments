@@ -169,8 +169,8 @@ export const case4ChEn3: GameScenario =
   ],
   "locations": [],
   "connectionRules": [
-    {"id": "rule_C04", "cards": ["C01", "C02"], "result": "Victor Crow, through the secret of the Blood Rose, makes Aelen Silverwood admit that the Blood Rose is used in rituals requiring a living heart.", "unlock": "C04"},
-    {"id": "rule_C05", "cards": ["C01", "C03"], "result": "Victor Crow, through the meaning of the Heartbreaker Silver Coin, makes Grimlok Steelhammer confess that Stonewick commissioned specific components from him without revealing their purpose.", "unlock": "C05"},
+    {"id": "rule_C04", "cards": ["C02", "C03"], "result": "Victor Crow, through the secret of the Blood Rose, makes Aelen Silverwood admit that the Blood Rose is used in rituals requiring a living heart.", "unlock": "C04"},
+    {"id": "rule_C05", "cards": ["C03", "C01"], "result": "Victor Crow, through the meaning of the Heartbreaker Silver Coin, makes Grimlok Steelhammer confess that Stonewick commissioned specific components from him without revealing their purpose.", "unlock": "C05"},
     {"id": "rule_C06", "cards": ["C01", "C04"], "result": "Victor Crow, through Aelen Silverwood's confession, realizes Liliana Bane remained silent despite having raised ethical concerns about Stonewick's research methods.", "unlock": "C06"},
     {"id": "rule_C07", "cards": ["C01", "C03"], "result": "Victor Crow, through the meaning of the Heartbreaker Silver Coin, makes Grok Bloodaxe give a contradictory statement: he lost family to Stonewick but blames himself for not protecting him.", "unlock": "C07"},
     {"id": "rule_C08", "cards": ["C01", "C05"], "result": "Victor Crow, through Grimlok Steelhammer's component commission, confirms that Kairen Nightshade's footprint matches the one on the lab floor.", "unlock": "C08"},
