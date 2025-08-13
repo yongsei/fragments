@@ -36,15 +36,32 @@ const AdBanner: React.FC<AdBannerProps> = ({
         if (Capacitor.isNativePlatform()) {
           console.log('🎯 AdBanner - 광고 초기화 시작');
           
+          // 🚀 AdMob 초기화 먼저 실행
+          await AdMob.initialize({
+            testingDevices: ['ca-app-pub-3940256099942544~3347511713'], // 테스트 디바이스 ID
+            initializeForTesting: true
+          });
+          console.log('✅ AdMob 초기화 완료');
+          
           const options: BannerAdOptions = {
             adId: getAdUnitId(),
             adSize: BannerAdSize.BANNER, // 320x50 표준 배너
             position: position === 'top' ? BannerAdPosition.TOP_CENTER : BannerAdPosition.BOTTOM_CENTER,
-            margin: position === 'bottom' ? 120 : 0, // 하단 광고는 시스템 UI와 겹치지 않도록 120px 마진
+            margin: position === 'bottom' ? 60 : 0, // 하단 광고는 시스템 UI와 겹치지 않도록 60px 마진
             // 필요한 경우 추가 설정
-            isTesting: false, // 개발 중에는 true, 배포시에는 false로 변경
+            isTesting: false, // 배포 모드: false로 변경
           };
 
+          console.log('📊 AdBanner 옵션:', options);
+          
+          // 🚀 기존 배너 먼저 제거 (재진입 시 중복 방지)
+          try {
+            //await AdMob.hideBanner();
+            console.log('🗑️ 기존 배너 제거 완료');
+          } catch (error) {
+            console.log('ℹ️ 제거할 기존 배너 없음 (정상)');
+          }
+          
           await AdMob.showBanner(options);
           setIsAdLoaded(true);
           console.log('✅ AdBanner - 광고 로드 성공');
@@ -53,7 +70,14 @@ const AdBanner: React.FC<AdBannerProps> = ({
         }
       } catch (error) {
         console.error('❌ AdBanner - 광고 로드 실패:', error);
+        console.error('❌ 에러 세부 정보:', JSON.stringify(error, null, 2));
         setAdError(error instanceof Error ? error.message : '광고 로드 오류');
+        
+        // 에러가 발생해도 다시 시도
+        setTimeout(() => {
+          console.log('🔄 AdBanner - 3초 후 재시도');
+          initializeAd();
+        }, 3000);
       }
     };
 

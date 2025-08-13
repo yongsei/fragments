@@ -8,7 +8,6 @@ import CardDetailModal from './CardDetailModal';
 import GameResultScreen from './GameResultScreen';
 // import { HintSystem } from '../components/HintSystem'; // 모바일에서는 사용하지 않음
 import AdModal from '../../../components/AdModal';
-import AdBanner from './AdBanner';
 import { useMysteryGame } from '../hooks/useMysteryGame';
 import { useLanguageState } from '../hooks/useLanguage';
 
@@ -640,7 +639,7 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
           {/* 모바일 하단 고정 연결 영역 */}
           <div style={{
             position: 'fixed',
-            bottom: `max(env(safe-area-inset-bottom, 0px), 0px)`, // 시스템 UI 바로 위에 위치
+            bottom: `max(env(safe-area-inset-bottom, 0px), 70px)`, // 시스템 UI 바로 위에 위치
             left: '0',
             right: '0',
             background: 'linear-gradient(135deg, rgb(26, 26, 46) 0%, rgb(22, 33, 62) 100%)',
@@ -785,14 +784,6 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
               >
                 {isConnecting ? t('connecting', '🔄 연결 중...') : t('connectCards', '🔗 단서 연결하기')}
               </button>
-            </div>
-            
-            {/* 광고 배너 - 연결 버튼 아래 */}
-            <div style={{
-              padding: '0.5rem 0 6rem 0', // 하단 패딩을 6rem으로 증가하여 시스템 UI와 겹치지 않도록
-              backgroundColor: 'rgba(0,0,0,0.3)'
-            }}>
-              <AdBanner position="bottom" className="mobile-connection-ad" />
             </div>
           </div>
 

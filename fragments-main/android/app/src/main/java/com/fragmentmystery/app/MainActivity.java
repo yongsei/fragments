@@ -3,6 +3,7 @@ package com.fragmentmystery.app;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import androidx.activity.EdgeToEdge;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
@@ -14,7 +15,10 @@ public class MainActivity extends BridgeActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        // 상태바와 네비게이션 바 설정
+        // 🚀 Android 15+ Edge-to-Edge 지원 (Google 권장)
+        EdgeToEdge.enable(this);
+        
+        // 상태바와 네비게이션 바 설정 (기존 호환성 유지)
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         
         // 상태바 스타일 설정

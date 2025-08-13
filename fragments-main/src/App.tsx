@@ -3,6 +3,7 @@ import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { StatusBar } from '@capacitor/status-bar';
 import { FragmentsIndex } from './pages/fragments/FragmentsIndex';
 import GameResultTest from './pages/fragments/test/GameResultTest';
+import AdBanner from './pages/fragments/components/AdBanner';
 // 배경음악 제거됨 - 효과음만 사용
 import './App.css';
 
@@ -86,6 +87,13 @@ function App() {
         <Route path="/fragments/*" element={<FragmentsIndex />} />
         <Route path="/test-result" element={<GameResultTest />} />
       </Routes>
+      
+      {/* 광고 배너 - 연결 버튼 아래 */}
+      <div style={{
+        padding: '0.5rem 0 130px 0', // 하단에 130px 여백 추가로 광고와 게임 버튼 분리
+      }}>
+        <AdBanner position="bottom" className="mobile-connection-ad" />
+      </div>
     </div>
   );
 }
