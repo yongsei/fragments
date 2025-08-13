@@ -38,12 +38,12 @@ const FragmentsContent: React.FC = () => {
     <>
       <SEOHead
         title={originalLang === 'kr'
-          ? "단서의 파편 (Fragment of Mystery) - 5케이스 온라인 추리게임"
-          : "Fragment of Mystery - 5 Cases Free Online Detective Game"
+          ? "단서의 파편 (Fragment of Mystery) - 8케이스 온라인 추리게임"
+          : "Fragment of Mystery - 8 Cases Free Online Detective Game"
         }
         description={originalLang === 'kr'
-          ? "🧩 단서 카드를 조합하여 미스터리 사건을 해결하는 고급 추리게임! 저택 살인사건, SF 시간여행, 스팀펑크 브래스헬름 3부작까지 5가지 케이스. 논리적 사고와 추론 능력을 기르는 온라인 브라우저 게임."
-          : "🧩 Advanced detective game where you combine clue cards to solve mysterious cases! Play 5 free cases: mansion murder mystery, sci-fi time travel mystery, and steampunk Brasshelm trilogy. Online browser game that develops logical thinking and reasoning skills."
+          ? "🧩 단서 카드를 조합하여 미스터리 사건을 해결하는 고급 추리게임! 저택 살인사건, SF 시간여행, 오리엔트 특급 열차, 고딕 저택, 호러 마을까지 8가지 케이스. 논리적 사고와 추론 능력을 기르는 온라인 브라우저 게임."
+          : "🧩 Advanced detective game where you combine clue cards to solve mysterious cases! Play 8 free cases: mansion murder mystery, sci-fi time travel mystery, Orient Express, gothic manor, and horror village. Online browser game that develops logical thinking and reasoning skills."
         }
         keywords={originalLang === 'kr'
           ? "단서의 파편, Fragment of Mystery, 추리게임, 미스터리게임, 단서조합, 카드게임, 논리퍼즐, 온라인게임, 브라우저게임, 범인찾기, 사건해결, 저택살인사건, SF미스터리, 시간여행게임, 추론게임, 탐정게임, 두뇌게임, 퍼즐게임"
@@ -105,6 +105,24 @@ const FragmentsContent: React.FC = () => {
                 "description": "신성한 벽 뒤에 숨겨진 수도원의 어둠의 비밀을 파헤치는 고딕 미스터리",
                 "url": "https://norri.netlify.app/fragments/case6/",
                 "genre": "고딕 추리 게임",
+                "gamePlatform": "Web Browser",
+                "isAccessibleForFree": true
+              },
+              {
+                "@type": "Game",
+                "name": "케이스 7: 블랙우드 저택의 비밀",
+                "description": "19세기 잉글랜드 황무지의 고딕 저택에서 벌어진 의문의 죽음을 파헤치는 클래식 미스터리",
+                "url": "https://norri.netlify.app/fragments/case7/",
+                "genre": "고딕 추리 게임",
+                "gamePlatform": "Web Browser",
+                "isAccessibleForFree": true
+              },
+              {
+                "@type": "Game",
+                "name": "케이스 8: 에코우드의 저주",
+                "description": "안개에 갇힌 신비로운 마을의 저주받은 비밀을 파헤치는 호러 미스터리",
+                "url": "https://norri.netlify.app/fragments/case8/",
+                "genre": "호러 추리 게임",
                 "gamePlatform": "Web Browser",
                 "isAccessibleForFree": true
               }
@@ -1169,6 +1187,238 @@ const FragmentsContent: React.FC = () => {
                             onMouseLeave={(e) => {
                               e.currentTarget.style.transform = 'scale(1)';
                               e.currentTarget.style.boxShadow = '0 4px 15px rgba(139, 69, 19, 0.3)';
+                            }}
+                          >
+                            🚀 {t.startGame}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                </SwiperSlide>
+
+                {/* 케이스 7: 블랙우드 저택의 비밀 */}
+                <SwiperSlide>
+                  <Link to="/fragments/case7"
+                    onClick={handleScenarioClick}
+                    style={{
+                      textDecoration: 'none',
+                      color: 'inherit',
+                      display: 'block',
+                      height: '100%'
+                    }}>
+                    <div style={{
+                      background: 'rgba(255, 255, 255, 0.1)',
+                      borderRadius: '20px',
+                      padding: '1.2rem',
+                      backdropFilter: 'blur(10px)',
+                      border: '1px solid rgba(255, 255, 255, 0.2)',
+                      transition: 'all 0.3s ease',
+                      cursor: 'pointer',
+                      position: 'relative',
+                      overflow: 'hidden',
+                      height: '320px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between'
+                    }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-5px)';
+                        e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.2)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = 'none';
+                      }}>
+
+                      {/* 고딕 저택 배경 패턴 */}
+                      <div style={{
+                        position: 'absolute',
+                        top: '-50%',
+                        right: '-50%',
+                        width: '200%',
+                        height: '200%',
+                        background: 'linear-gradient(45deg, transparent 40%, rgba(187, 134, 252, 0.3) 50%, transparent 60%)',
+                        transform: 'rotate(15deg)',
+                        pointerEvents: 'none'
+                      }} />
+
+                      <div style={{ position: 'relative', zIndex: 1 }}>
+                        <div style={{
+                          fontSize: '3rem',
+                          marginBottom: '1rem',
+                          textAlign: 'center'
+                        }}>
+                          🏰
+                        </div>
+
+                        <h3 style={{
+                          fontSize: '1.3rem',
+                          margin: '0 0 1rem 0',
+                          fontWeight: 'bold',
+                          textAlign: 'center'
+                        }}>
+                          {originalLang === 'kr' ? '케이스 7: 블랙우드 저택의 비밀' : 'Case 7: Secrets of Blackwood Manor'}
+                        </h3>
+
+                        <p style={{
+                          fontSize: '1rem',
+                          margin: '0 0 1.5rem 0',
+                          opacity: '0.9',
+                          lineHeight: '1.6',
+                          textAlign: 'center'
+                        }}>
+                          {originalLang === 'kr' ? '19세기 잉글랜드 황무지의 고딕 저택 미스터리' : 'Gothic manor mystery in 19th century English moors'}
+                        </p>
+
+                        <div style={{
+                          textAlign: 'center',
+                          marginBottom: '1rem'
+                        }}>
+                          <div style={{
+                            fontSize: '0.85rem',
+                            opacity: '0.8',
+                            marginBottom: '1rem'
+                          }}>
+                            🎯 {t.difficulty}: ⭐⭐⭐⭐
+                          </div>
+
+                          {/* 시작하기 버튼 */}
+                          <div style={{
+                            background: 'linear-gradient(45deg, #bb86fc, #9d4edd)',
+                            color: 'white',
+                            padding: '0.8rem 1.5rem',
+                            borderRadius: '25px',
+                            fontSize: '0.85rem',
+                            fontWeight: 'bold',
+                            boxShadow: '0 4px 15px rgba(187, 134, 252, 0.3)',
+                            transition: 'all 0.3s ease',
+                            cursor: 'pointer',
+                            border: 'none'
+                          }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.transform = 'scale(1.05)';
+                              e.currentTarget.style.boxShadow = '0 6px 20px rgba(187, 134, 252, 0.4)';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.transform = 'scale(1)';
+                              e.currentTarget.style.boxShadow = '0 4px 15px rgba(187, 134, 252, 0.3)';
+                            }}
+                          >
+                            🚀 {t.startGame}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                </SwiperSlide>
+
+                {/* 케이스 8: 에코우드의 저주 */}
+                <SwiperSlide>
+                  <Link to="/fragments/case8"
+                    onClick={handleScenarioClick}
+                    style={{
+                      textDecoration: 'none',
+                      color: 'inherit',
+                      display: 'block',
+                      height: '100%'
+                    }}>
+                    <div style={{
+                      background: 'rgba(255, 255, 255, 0.1)',
+                      borderRadius: '20px',
+                      padding: '1.2rem',
+                      backdropFilter: 'blur(10px)',
+                      border: '1px solid rgba(255, 255, 255, 0.2)',
+                      transition: 'all 0.3s ease',
+                      cursor: 'pointer',
+                      position: 'relative',
+                      overflow: 'hidden',
+                      height: '320px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between'
+                    }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-5px)';
+                        e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.2)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = 'none';
+                      }}>
+
+                      {/* 호러 안개 배경 패턴 */}
+                      <div style={{
+                        position: 'absolute',
+                        top: '-50%',
+                        right: '-50%',
+                        width: '200%',
+                        height: '200%',
+                        background: 'linear-gradient(45deg, transparent 40%, rgba(248, 81, 73, 0.3) 50%, transparent 60%)',
+                        transform: 'rotate(-15deg)',
+                        pointerEvents: 'none'
+                      }} />
+
+                      <div style={{ position: 'relative', zIndex: 1 }}>
+                        <div style={{
+                          fontSize: '3rem',
+                          marginBottom: '1rem',
+                          textAlign: 'center'
+                        }}>
+                          🌫️
+                        </div>
+
+                        <h3 style={{
+                          fontSize: '1.3rem',
+                          margin: '0 0 1rem 0',
+                          fontWeight: 'bold',
+                          textAlign: 'center'
+                        }}>
+                          {originalLang === 'kr' ? '케이스 8: 에코우드의 저주' : 'Case 8: The Curse of Echowood'}
+                        </h3>
+
+                        <p style={{
+                          fontSize: '1rem',
+                          margin: '0 0 1.5rem 0',
+                          opacity: '0.9',
+                          lineHeight: '1.6',
+                          textAlign: 'center'
+                        }}>
+                          {originalLang === 'kr' ? '안개에 갇힌 신비로운 마을의 저주받은 비밀' : 'Cursed secrets of a mysterious village trapped in fog'}
+                        </p>
+
+                        <div style={{
+                          textAlign: 'center',
+                          marginBottom: '1rem'
+                        }}>
+                          <div style={{
+                            fontSize: '0.85rem',
+                            opacity: '0.8',
+                            marginBottom: '1rem'
+                          }}>
+                            🎯 {t.difficulty}: ⭐⭐⭐⭐⭐
+                          </div>
+
+                          {/* 시작하기 버튼 */}
+                          <div style={{
+                            background: 'linear-gradient(45deg, #f85149, #dc2626)',
+                            color: 'white',
+                            padding: '0.8rem 1.5rem',
+                            borderRadius: '25px',
+                            fontSize: '0.85rem',
+                            fontWeight: 'bold',
+                            boxShadow: '0 4px 15px rgba(248, 81, 73, 0.3)',
+                            transition: 'all 0.3s ease',
+                            cursor: 'pointer',
+                            border: 'none'
+                          }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.transform = 'scale(1.05)';
+                              e.currentTarget.style.boxShadow = '0 6px 20px rgba(248, 81, 73, 0.4)';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.transform = 'scale(1)';
+                              e.currentTarget.style.boxShadow = '0 4px 15px rgba(248, 81, 73, 0.3)';
                             }}
                           >
                             🚀 {t.startGame}
