@@ -27,7 +27,7 @@ export interface GameScenario {
 export const case3ChEn2: GameScenario = {
   "id": "orient_express_chapter2_en",
   "title": "Chapter 2: Cracks in the Alibi and Hidden Motives",
-  "story": "Hastings secretly investigates the suspects' cabins to secure clues that hint at cracks in their alibis and hidden motives.",
+  "story": "Suspicious of the suspects' seemingly perfect alibis, Inspector Hastings secretly investigates each cabin during the night. In the process, he discovers crucial clues that reveal cracks in their alibis and hint at each person's hidden motives.",
   "victim": "Alexander Volkov",
   "suspects": [
     {

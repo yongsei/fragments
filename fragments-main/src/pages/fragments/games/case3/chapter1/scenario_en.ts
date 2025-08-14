@@ -26,7 +26,7 @@ export interface GameScenario {
 export const case3ChEn1: GameScenario = {
   "id": "orient_express_chapter1_en",
   "title": "Chapter 1: The Paradox of the Locked Room and the First Interrogation",
-  "story": "In a train isolated by a snowstorm, financial magnate Volkov is murdered in a perfect locked room. Hastings investigates the scene, interrogates suspects, and secures the first clues.",
+  "story": "In a train isolated by a snowstorm, financial magnate Volkov is murdered in a perfect locked room. Inspector Hastings investigates the scene and secures basic clues, then begins meeting the most suspicious suspects one by one.",
   "victim": "Alexander Volkov",
   "suspects": [
     {
@@ -123,15 +123,15 @@ export const case3ChEn1: GameScenario = {
     }
   ],
   "connectionRules": [
-    {"id": "rule_A04", "cards": ["A02", "A03"], "result": "Investigating Volkov's cabin and body, you discover the dagger used in the murder.", "unlock": "A04"},
-    {"id": "rule_A05", "cards": ["A01", "A04"], "result": "Inspector Hastings directly examines Volkov's body and finds a half-burned letter fragment in the ashtray.", "unlock": "A05"},
-    {"id": "rule_A06", "cards": ["A02", "A04"], "result": "Connecting Volkov's cabin and the dagger, you realize the scratch mark on the inside of the door is a clue to the locked-room trick.", "unlock": "A06"},
-    {"id": "rule_A07", "cards": ["A01", "A05"], "result": "Inspector Hastings traces the revenge motive based on the letter fragment and finds Countess Elena de Valois.", "unlock": "A07"},
-    {"id": "rule_A08", "cards": ["A04", "A06"], "result": "Analyzing the dagger and door scratch, you realize expert knowledge is needed and meet Dr. Hans Schmidt.", "unlock": "A08"},
-    {"id": "rule_A09", "cards": ["A01", "A07"], "result": "Inspector Hastings gets information about Volkov's business associates from Countess Elena and finds Samuel Goldberg.", "unlock": "A09"},
-    {"id": "rule_A10", "cards": ["A03", "A08"], "result": "Through body examination and the doctor's expertise, you meet Volkov's personal secretary Maria Ivanova.", "unlock": "A10"},
-    {"id": "rule_A11", "cards": ["A05", "A09"], "result": "Using the revenge letter and Goldberg's testimony, you find Colonel John Smith who has a past grudge.", "unlock": "A11"},
-    {"id": "rule_A12", "cards": ["A07", "A08"], "result": "Interrogating Countess Elena and Dr. Schmidt, you secure their alibis.", "unlock": "A12"}
+    {"id": "rule_A04", "cards": ["A02", "A03"], "result": "Investigating Volkov's cabin and examining the body closely, you discover the dagger used in the murder.", "unlock": "A04"},
+    {"id": "rule_A05", "cards": ["A01", "A04"], "result": "Inspector Hastings examines the dagger's characteristics and re-investigates the cabin, finding a half-burned letter fragment in the ashtray.", "unlock": "A05"},
+    {"id": "rule_A06", "cards": ["A02", "A05"], "result": "Connecting Volkov's cabin and the letter fragment, you realize the scratch mark on the inside of the door is a clue to the locked-room trick.", "unlock": "A06"},
+    {"id": "rule_A07", "cards": ["A01", "A06"], "result": "Inspector Hastings traces the locked-room clues and finds Countess Elena de Valois, who has the most obvious motive.", "unlock": "A07"},
+    {"id": "rule_A08", "cards": ["A04", "A07"], "result": "The dagger's precision and the Countess's testimony lead you to meet Dr. Hans Schmidt, who has expert knowledge.", "unlock": "A08"},
+    {"id": "rule_A09", "cards": ["A05", "A08"], "result": "The revenge implications in the letter fragment and the doctor's information lead you to find business partner Samuel Goldberg.", "unlock": "A09"},
+    {"id": "rule_A10", "cards": ["A06", "A09"], "result": "The locked-room trick clues and Goldberg's testimony lead you to meet Volkov's personal secretary Maria Ivanova.", "unlock": "A10"},
+    {"id": "rule_A11", "cards": ["A07", "A10"], "result": "The Countess and Maria's testimonies lead you to find Colonel John Smith, who has a past grudge.", "unlock": "A11"},
+    {"id": "rule_A12", "cards": ["A08", "A11"], "result": "Combining Dr. Schmidt and Colonel Smith's testimonies, you secure basic alibis from all suspects.", "unlock": "A12"}
   ],
   "fragments": [],
   "winCondition": "A12",

@@ -134,6 +134,34 @@ export const case6ch3En: GameScenario = {
       description: 'A series of encrypted messages, intercepted by Captain Valerius\'s network, revealing Kael\'s desperate attempts to secure more bioluminescent algae and his growing paranoia. The communications detail his frustration with the slowing supply chain and his plans to accelerate his experiments, even at greater risk. They also hint at a final, grand ritual he intends to perform, suggesting a climactic event is imminent and confirming his continued, deadly activities.',
       details: 'A series of encrypted messages, intercepted by Captain Valerius\'s network, revealing Kael\'s desperate attempts to secure more bioluminescent algae and his growing paranoia. The communications detail his frustration with the slowing supply chain and his plans to accelerate his experiments, even at greater risk. They also hint at a final, grand ritual he intends to perform, suggesting a climactic event is imminent and confirming his continued, deadly activities.',
       location: ''
+    },
+    {
+      id: 'CH3_EV10',
+      name: 'Hidden Truth',
+      description: 'New facts revealed from the Shady Informant and Disgruntled Accountant\'s investigation.',
+      details: 'Hints that Kael\'s experiments go beyond simple immortality pursuit to attempt direct contact with deep-sea entities.',
+      location: 'CH3_CH02'
+    },
+    {
+      id: 'CH3_EV11',
+      name: 'Connection Link',
+      description: 'A mysterious connection point between the Prison Warden and the City Archives\' Restricted Section.',
+      details: 'Shows the complex relationship between official institutions and secret knowledge repositories.',
+      location: 'CH3_LC04'
+    },
+    {
+      id: 'CH3_EV12',
+      name: 'Dark Signal',
+      description: 'Supernatural correlation discovered between the hidden truth and connection link.',
+      details: 'Reveals that all events are part of a larger cosmic plan and that Kael is not merely an alchemist.',
+      location: 'CH3_EV10'
+    },
+    {
+      id: 'CH3_FINAL',
+      name: 'The True Purpose of the Web of Deception',
+      description: 'Decisive evidence revealed when all clues and evidence are combined to uncover the ultimate goal behind the web of deception.',
+      details: 'It is fully revealed that Kael\'s alchemical experiments were not for immortality, but part of a ritual to summon ancient entities from the depths to the surface world.',
+      location: 'CH3_EV11'
     }
   ],
   locations: [
@@ -247,10 +275,37 @@ export const case6ch3En: GameScenario = {
       cards: ['CH3_EV09', 'CH3_EV06'],
       result: 'Kael\'s intercepted communications and Elara\'s coded message from prison, when combined, reveal the Abandoned Lighthouse as Kael\'s final, desperate rendezvous point for his ultimate ritual.',
       unlock: 'CH3_LC06'
+    },
+    
+    // Additional connection rules - ensuring all cards are needed for victory
+    {
+      id: 'rule_CH3_13_new',
+      cards: ['CH3_CH02', 'CH3_CH03'],
+      result: 'The Shady Informant and Disgruntled Accountant\'s investigation combine to reveal new truths.',
+      unlock: 'CH3_EV10'
+    },
+    {
+      id: 'rule_CH3_14_new',
+      cards: ['CH3_CH04', 'CH3_LC04'],
+      result: 'A connection link between the Prison Warden and the City Archives\' Restricted Section has been discovered.',
+      unlock: 'CH3_EV11'
+    },
+    {
+      id: 'rule_CH3_15_new',
+      cards: ['CH3_EV10', 'CH3_EV11'],
+      result: 'The hidden truth and connection link combine to reveal the dark signal.',
+      unlock: 'CH3_EV12'
+    },
+    // Final victory combination
+    {
+      id: 'rule_CH3_16_final',
+      cards: ['CH3_LC06', 'CH3_EV12'],
+      result: 'The Abandoned Lighthouse and the dark signal combine to fully reveal the true purpose of the web of deception.',
+      unlock: 'CH3_FINAL'
     }
   ],
   fragments: [],
-  winCondition: 'CH3_LC06',
+  winCondition: 'CH3_FINAL',
   initialCards: [
     'CH3_EV01',
     'CH3_LC01',

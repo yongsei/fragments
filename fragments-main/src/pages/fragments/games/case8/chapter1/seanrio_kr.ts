@@ -194,7 +194,7 @@ export const case8_chapter0_kr = {
     {
       id: 'rule_A03_A05_A06',
       cards: ['A03', 'A05'],
-      result: '프롤로그의 마지막 인물에 대한 정보가 해금되었습니다.',
+      result: '서막의 마지막 인물에 대한 정보가 해금되었습니다.',
       unlock: 'A06'
     },
 
@@ -220,7 +220,7 @@ export const case8_chapter0_kr = {
     {
       id: 'rule_A09_A11_A12',
       cards: ['A09', 'A11'],
-      result: '프롤로그의 마지막 장소에 대한 정보가 해금되었습니다.',
+      result: '서막의 마지막 장소에 대한 정보가 해금되었습니다.',
       unlock: 'A12'
     },
 

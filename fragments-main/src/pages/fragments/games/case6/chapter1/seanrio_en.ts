@@ -148,6 +148,34 @@ export const case6ch1En: GameScenario = {
       description: 'A small, tarnished silver locket, found near the aqueducts mentioned in the City Guard\'s report. It\'s heavily scratched and bears no clear engravings, but inside, a faded, miniature portrait of a young, stern-looking man is barely visible. The man\'s features are vaguely familiar, and the locket emits a faint, almost imperceptible warmth, suggesting a recent connection to one of the victims or a key figure in the conspiracy.',
       details: 'A small, tarnished silver locket, found near the aqueducts mentioned in the City Guard\'s report. It\'s heavily scratched and bears no clear engravings, but inside, a faded, miniature portrait of a young, stern-looking man is barely visible. The man\'s features are vaguely familiar, and the locket emits a faint, almost imperceptible warmth, suggesting a recent connection to one of the victims or a key figure in the conspiracy.',
       location: ''
+    },
+    {
+      id: 'CH1_EV12',
+      name: 'Hidden Truth',
+      description: 'New facts revealed from the alchemical diagram and the Silent Watcher\'s observations.',
+      details: 'Hints at the artificial origin of the glowing plague and the involvement of deep-sea entities.',
+      location: 'CH1_EV10'
+    },
+    {
+      id: 'CH1_EV13',
+      name: 'Connection Link',
+      description: 'A mysterious connection point between Sergeant Thorne\'s skeptical investigation and the Apothecary\'s Back Room.',
+      details: 'Shows the complex relationship between official city guard information and the network of secret dealings.',
+      location: 'CH1_LC02'
+    },
+    {
+      id: 'CH1_EV14',
+      name: 'Dark Signal',
+      description: 'Supernatural correlation discovered between the hidden truth and connection link.',
+      details: 'Reveals the deep interconnection between all events and the existence of a larger conspiracy.',
+      location: 'CH1_EV12'
+    },
+    {
+      id: 'CH1_FINAL',
+      name: 'The True Secret of the Whispering Manuscript',
+      description: 'Decisive evidence revealed when all clues and evidence are combined to uncover the ultimate truth of the whispering manuscript.',
+      details: 'It is revealed that the glowing manuscript is not merely an ancient document but a powerful medium connecting deep-sea entities to the surface world.',
+      location: 'CH1_EV13'
     }
   ],
   locations: [
@@ -266,10 +294,37 @@ export const case6ch1En: GameScenario = {
       cards: ['CH1_EV05', 'CH1_CH02'],
       result: 'The receipt for alchemical herbs, when discussed with Jonas, leads him to recall the Apothecary\'s Back Room, a place of suspicious dealings.',
       unlock: 'CH1_LC02'
+    },
+
+    // Additional connection rules - ensuring all cards are needed for victory
+    {
+      id: 'rule_CH1_16_new',
+      cards: ['CH1_EV10', 'CH1_CH05'],
+      result: 'The alchemical diagram and the Silent Watcher\'s observations combine to reveal new truths.',
+      unlock: 'CH1_EV12'
+    },
+    {
+      id: 'rule_CH1_17_new',
+      cards: ['CH1_CH03', 'CH1_LC02'],
+      result: 'A connection link between Sergeant Thorne\'s investigation and the Apothecary\'s Back Room secret dealings has been discovered.',
+      unlock: 'CH1_EV13'
+    },
+    {
+      id: 'rule_CH1_18_new',
+      cards: ['CH1_EV12', 'CH1_EV13'],
+      result: 'The hidden truth and connection link combine to reveal the dark signal.',
+      unlock: 'CH1_EV14'
+    },
+    // Final victory combination
+    {
+      id: 'rule_CH1_19_final',
+      cards: ['CH1_EV11', 'CH1_EV14'],
+      result: 'The silver locket\'s secret and the dark signal combine to fully reveal the true secret of the whispering manuscript.',
+      unlock: 'CH1_FINAL'
     }
   ],
   fragments: [],
-  winCondition: 'CH1_EV11',
+  winCondition: 'CH1_FINAL',
   initialCards: [
     'CH1_EV01',
     'CH1_LC01',

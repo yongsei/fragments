@@ -24,7 +24,7 @@ const Chapter1Game: React.FC = () => {
         feedbackData={feedbackData}
         caseId="case8-ch1"
         backUrl="/fragments/case8/"
-        seoTitle="에코우드의 저주 - 프롤로그: 안개 속으로"
+        seoTitle="에코우드의 저주 - 서막: 안개 속으로"
         seoDescription="짙은 안개 속에서 길을 잃고 도착한 지도에도 없는 마을 에코우드"
         seoKeywords="미스터리,호러,안개,에코우드,저주"
         canonicalUrl="/fragments/case8/chapter1/game"

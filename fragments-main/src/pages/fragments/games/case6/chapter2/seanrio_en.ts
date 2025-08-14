@@ -141,6 +141,34 @@ export const case6ch2En: GameScenario = {
       description: 'A small, leather-bound ledger, found discarded in the Sunken Market, filled with cryptic entries and coded transactions. It details the illicit sale of rare alchemical ingredients, including large quantities of bioluminescent algae, and records payments made to Kael. The ledger is a direct link between the underground market, Kael\'s operations, and the source of his deadly concoctions, providing irrefutable proof of his criminal enterprise.',
       details: 'A small, leather-bound ledger, found discarded in the Sunken Market, filled with cryptic entries and coded transactions. It details the illicit sale of rare alchemical ingredients, including large quantities of bioluminescent algae, and records payments made to Kael. The ledger is a direct link between the underground market, Kael\'s operations, and the source of his deadly concoctions, providing irrefutable proof of his criminal enterprise.',
       location: ''
+    },
+    {
+      id: 'CH2_EV11',
+      name: 'Hidden Truth',
+      description: 'New facts revealed from the ancient prophecy and the Underground Informant\'s investigation.',
+      details: 'Hints that Kael\'s experiments go beyond simple immortality pursuit to attempt direct contact with deep-sea entities.',
+      location: 'CH2_EV06'
+    },
+    {
+      id: 'CH2_EV12',
+      name: 'Connection Link',
+      description: 'A mysterious connection point between the Whispering Merchant and the Abandoned Pumping Station.',
+      details: 'Shows the complex relationship between the illegal trade network and Kael\'s clandestine meeting places.',
+      location: 'CH2_LC03'
+    },
+    {
+      id: 'CH2_EV13',
+      name: 'Dark Signal',
+      description: 'Supernatural correlation discovered between the hidden truth and connection link.',
+      details: 'Reveals that all events are part of a larger cosmic plan and that Kael is not merely an alchemist.',
+      location: 'CH2_EV11'
+    },
+    {
+      id: 'CH2_FINAL',
+      name: 'The Alchemist\'s True Purpose',
+      description: 'Decisive evidence revealed when all clues and evidence are combined to uncover Kael\'s ultimate goal.',
+      details: 'It is fully revealed that Kael\'s alchemical experiments were not for immortality, but part of a ritual to summon ancient entities from the depths to the surface world.',
+      location: 'CH2_EV12'
     }
   ],
   locations: [
@@ -277,10 +305,37 @@ export const case6ch2En: GameScenario = {
       cards: ['CH2_EV10', 'CH2_CH01'],
       result: 'The coded ledger and Kael himself reveal his meticulously planned escape route from his hidden laboratory, suggesting he anticipated discovery.',
       unlock: 'CH2_LC05'
+    },
+
+    // Additional connection rules - ensuring all cards are needed for victory
+    {
+      id: 'rule_CH2_17_new',
+      cards: ['CH2_EV06', 'CH2_CH05'],
+      result: 'The ancient prophecy and the Underground Informant\'s investigation combine to reveal new truths.',
+      unlock: 'CH2_EV11'
+    },
+    {
+      id: 'rule_CH2_18_new',
+      cards: ['CH2_CH03', 'CH2_LC03'],
+      result: 'A connection link between the Whispering Merchant and the Abandoned Pumping Station has been discovered.',
+      unlock: 'CH2_EV12'
+    },
+    {
+      id: 'rule_CH2_19_new',
+      cards: ['CH2_EV11', 'CH2_EV12'],
+      result: 'The hidden truth and connection link combine to reveal the dark signal.',
+      unlock: 'CH2_EV13'
+    },
+    // Final victory combination
+    {
+      id: 'rule_CH2_20_final',
+      cards: ['CH2_LC05', 'CH2_EV13'],
+      result: 'Kael\'s escape route and the dark signal combine to fully reveal the alchemist\'s true purpose.',
+      unlock: 'CH2_FINAL'
     }
   ],
   fragments: [],
-  winCondition: 'CH2_LC05',
+  winCondition: 'CH2_FINAL',
   initialCards: [
     'CH2_EV01',
     'CH2_LC01', 
