@@ -266,8 +266,9 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
         discoveredCards: gameState.discoveredCardIds.length
       });
       
-      // 저장된 게임이 있으면 슬라이드쇼 건너뛰기
-      if (gameState.elapsedTime > 5 || gameState.connections.length > 0 || gameState.discoveredCardIds.length > 3) {
+      // 저장된 게임이 있으면 슬라이드쇼 건너뛰기 (초기 카드 개수보다 많은 카드 발견시)
+      const initialCardCount = scenario.initialCards?.length || 3;
+      if (gameState.elapsedTime > 5 || gameState.connections.length > 0 || gameState.discoveredCardIds.length > initialCardCount) {
         console.log('Found existing game progress, skipping slideshow');
         setShowCardIntro(false);
       } else {
