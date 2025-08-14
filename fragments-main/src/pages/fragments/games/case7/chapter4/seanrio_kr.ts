@@ -285,6 +285,12 @@ export const case7ch4: GameScenario = {
       cards: ['D08', 'D17'],
       result: '상속권 박탈 계획과 알리바이 조작을 통해 최후의 단서에 도달합니다.',
       unlock: 'D20'
+    },
+    {
+      id: 'rule_D20_final',
+      cards: ['D14', 'D18'],
+      result: '풍자화와 가족들의 위선을 통해 최후의 단서를 확보합니다.',
+      unlock: 'D20'
     }
   ],
 

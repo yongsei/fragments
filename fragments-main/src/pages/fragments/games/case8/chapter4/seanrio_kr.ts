@@ -16,7 +16,7 @@ export const case8_chapter3_kr = {
       id: 'D02',
       name: '(챕터 3의 인물)',
       role: '저주의 수호자',
-      description: '저주의 수호자. 안개 속에서 희미하게 들려오던 속삭임이 이제 분명한 목소리가 되어 플레이어를 조롱한다.',
+      description: '저주의 수호자. 안개 속에서 희미하게 들려오던 속삭임이 이제 분명한 목소리가 되어 여행자를 조롱한다.',
       alibi: '',
       motive: ''
     },
@@ -24,7 +24,7 @@ export const case8_chapter3_kr = {
       id: 'D03',
       name: '(챕터 3의 추가 인물)',
       role: '마을 주민 영혼',
-      description: '과거 \'잊혀진 의식\'에 참여했던 마을 주민들의 영혼. 그들은 저주에 갇혀 고통받으며, 플레이어의 진입을 막으려 한다.',
+      description: '과거 \'잊혀진 의식\'에 참여했던 마을 주민들의 영혼. 그들은 저주에 갇혀 고통받으며, 여행자의 진입을 막으려 한다.',
       alibi: '',
       motive: ''
     },
@@ -86,7 +86,7 @@ export const case8_chapter3_kr = {
       id: 'D17',
       name: '(챕터 3의 추가 증거)',
       description: "엘라라 할머니가 언급한, 저주를 풀기 위한 '대가'에 대한 암시.",
-      details: '이는 플레이어가 감수해야 할 위험을 나타낸다.',
+      details: '이는 여행자가 감수해야 할 위험을 나타낸다.',
       location: 'D01'
     },
     {
@@ -206,6 +206,14 @@ export const case8_chapter3_kr = {
       id: 'rule_D15_D17_D18',
       cards: ['D15', 'D17'],
       result: '챕터 3의 마지막 증거가 해금되었습니다.',
+      unlock: 'D18'
+    },
+
+    // 최종 승리 조합 - 세 체인의 결론 카드들 필요
+    {
+      id: 'rule_D06_D12_D18_victory',
+      cards: ['D06', 'D12', 'D18'],
+      result: '챕터 3의 모든 진실이 하나로 연결되며, 고리의 파편과 반전 의식의 비밀이 완전히 드러납니다.',
       unlock: 'D18'
     }
   ],

@@ -1,7 +1,7 @@
 export const case8_chapter1_en = {
   id: 'case8_chapter1',
   title: 'Chapter 1: Repeating Shadows',
-  story: 'Players trapped in the village witness strange repeating phenomena, vaguely recognizing the existence of a curse, and receive an unknown warning through their first encounter with Grandma Elara.',
+  story: 'Travelers trapped in the village witness strange repeating phenomena, vaguely recognizing the existence of a curse, and receive an unknown warning through their first encounter with Grandma Elara.',
   victim: '',
   suspects: [
     {
@@ -95,6 +95,41 @@ export const case8_chapter1_en = {
       description: 'Revealed when all evidence cards of Chapter 1 are collected, a decisive piece of evidence proving that the village\'s curse is not a mere illusion.',
       details: '',
       location: ''
+    },
+    {
+      id: 'B19',
+      name: 'Hidden Truth',
+      description: 'New facts revealed from the behavior of villagers and additional characters.',
+      details: 'The true nature of the curse discovered within the repeating daily life becomes clearer.',
+      location: 'B04'
+    },
+    {
+      id: 'B20',
+      name: 'Connection Link',
+      description: 'A mysterious connection point discovered between the village\'s locations.',
+      details: 'Shows how the places where time has stopped are connected to each other.',
+      location: 'B11'
+    },
+    {
+      id: 'B21',
+      name: 'Dark Signal',
+      description: 'Supernatural correlation discovered between repeating phenomena and additional evidence.',
+      details: 'Reveals how the curse dominates the entire village.',
+      location: 'B05'
+    },
+    {
+      id: 'B22',
+      name: 'Deep Meaning',
+      description: 'The true meaning of the curse revealed by combining Elara\'s warning with hidden truths.',
+      details: 'Reveals that the repetition of time is not a simple phenomenon but an intentional curse.',
+      location: 'B19'
+    },
+    {
+      id: 'B23',
+      name: 'Core Clue',
+      description: 'Decisive evidence revealed when all connections between locations and entities are completed.',
+      details: 'Provides the identity of the repeating shadows and clues to solve them.',
+      location: 'B20'
     }
   ],
   locations: [
@@ -206,6 +241,45 @@ export const case8_chapter1_en = {
       id: 'rule_B15_B17_B18',
       cards: ['B15', 'B17'],
       result: 'Chapter 1\'s Final Evidence has been unlocked.',
+      unlock: 'B18'
+    },
+
+    // Additional connection rules - ensuring all cards are needed for victory
+    {
+      id: 'rule_B04_B06_B19',
+      cards: ['B04', 'B06'],
+      result: 'The testimonies of villagers and the final character combine to reveal new truths.',
+      unlock: 'B19'
+    },
+    {
+      id: 'rule_B10_B12_B20',
+      cards: ['B10', 'B12'],
+      result: 'A connection link between the old lodging and the final location has been discovered.',
+      unlock: 'B20'
+    },
+    {
+      id: 'rule_B05_B11_B21',
+      cards: ['B05', 'B11'],
+      result: 'Hidden correlation between repeating character and additional location has been revealed.',
+      unlock: 'B21'
+    },
+    {
+      id: 'rule_B16_B19_B22',
+      cards: ['B16', 'B19'],
+      result: 'The children\'s song and hidden truths combine to find deeper meaning.',
+      unlock: 'B22'
+    },
+    {
+      id: 'rule_B20_B21_B23',
+      cards: ['B20', 'B21'],
+      result: 'Connections between locations and entities are completed, revealing the core clue.',
+      unlock: 'B23'
+    },
+    // Final victory combination
+    {
+      id: 'rule_B22_B23_B18',
+      cards: ['B22', 'B23'],
+      result: 'All truths of Chapter 1 converge, clearly revealing the village\'s repeating shadows and the existence of the curse.',
       unlock: 'B18'
     }
   ],

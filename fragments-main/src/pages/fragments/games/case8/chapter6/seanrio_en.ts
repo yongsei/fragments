@@ -7,7 +7,7 @@ export const case8_chapter5_en = {
     {
       id: 'F01',
       name: '(Chapter 5\'s Character)',
-      role: 'Player and Alex',
+      role: 'Traveler and Alex',
       description: 'After the guardian disappears, the player and Alex support each other as they head towards the surface from the altar. Their faces show a mix of deep fatigue and relief.',
       alibi: '',
       motive: ''

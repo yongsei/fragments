@@ -24,7 +24,7 @@ export const case8_chapter4_kr = {
       id: 'E03',
       name: '(챕터 4의 추가 인물)',
       role: '마을 주민 환영',
-      description: '반복되는 시간 속에서 고통받는 마을 주민들의 환영. 그들은 수호자의 힘을 증폭시키거나, 플레이어의 정신을 혼란시킨다.',
+      description: '반복되는 시간 속에서 고통받는 마을 주민들의 환영. 그들은 수호자의 힘을 증폭시키거나, 여행자의 정신을 혼란시킨다.',
       alibi: '',
       motive: ''
     },
@@ -39,8 +39,8 @@ export const case8_chapter4_kr = {
     {
       id: 'E05',
       name: '(챕터 4의 추가 인물)',
-      role: '플레이어',
-      description: '수호자의 공격에 맞서 필사적으로 버티는 플레이어의 모습. 육체적, 정신적 한계에 다다른다.',
+      role: '여행자',
+      description: '수호자의 공격에 맞서 필사적으로 버티는 여행자의 모습. 육체적, 정신적 한계에 다다른다.',
       alibi: '',
       motive: ''
     },
@@ -72,7 +72,7 @@ export const case8_chapter4_kr = {
       id: 'E15',
       name: '수호자의 공격',
       description: '물리적인 힘뿐만 아니라 정신적인 공포를 유발하는 수호자의 공격.',
-      details: '플레이어의 가장 깊은 두려움을 형상화한다.',
+      details: '여행자의 가장 깊은 두려움을 형상화한다.',
       location: 'E07'
     },
     {
@@ -151,7 +151,7 @@ export const case8_chapter4_kr = {
     {
       id: 'rule_E02_E04_E05',
       cards: ['E02', 'E04'],
-      result: '수호자의 공격에 맞서 필사적으로 버티는 플레이어의 모습에 대한 정보를 찾았습니다.',
+      result: '수호자의 공격에 맞서 필사적으로 버티는 여행자의 모습에 대한 정보를 찾았습니다.',
       unlock: 'E05'
     },
     {

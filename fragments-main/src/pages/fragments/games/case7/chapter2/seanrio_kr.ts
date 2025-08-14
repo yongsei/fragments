@@ -227,6 +227,12 @@ export const case7ch2: GameScenario = {
       unlock: 'B11'
     },
     {
+      id: 'rule_B12',
+      cards: ['B10', 'B11'],
+      result: '당구실과 정원의 분위기를 통해 도서관에서 세바스찬의 모호한 증언을 듣게 됩니다.',
+      unlock: 'B12'
+    },
+    {
       id: 'rule_B13',
       cards: ['B07', 'B08'],
       result: '엘레노어의 의심과 베아트리스의 아들 의심을 통해 가족들의 불신을 알게 됩니다.',

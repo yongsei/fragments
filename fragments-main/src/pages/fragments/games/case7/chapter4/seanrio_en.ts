@@ -289,6 +289,12 @@ export const case7ch4En: GameScenario = {
       cards: ['D08', 'D17'],
       result: 'Through the disinheritance plan and alibi fabrication, you reach the final clue.',
       unlock: 'D20'
+    },
+    {
+      id: 'rule_D20_final',
+      cards: ['D14', 'D18'],
+      result: 'Through the caricatures and family hypocrisy, you secure the final clue.',
+      unlock: 'D20'
     }
   ],
 

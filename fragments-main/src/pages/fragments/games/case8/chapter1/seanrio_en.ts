@@ -1,14 +1,14 @@
 
 export const case8_chapter0_en = {
   id: 'case8_chapter0',
-  title: 'Prologue: Into the Fog',
-  story: 'During a peaceful journey, players are suddenly enveloped by a dense fog, losing their way and arriving at the unmapped village of \'Echowood\'. They begin to sense an ominous presence amidst the village\'s eerie silence and the uneasy gazes of its residents.',
+  title: 'Opening: Into the Fog',
+  story: 'During a peaceful journey, travelers are suddenly enveloped by a dense fog, losing their way and arriving at the unmapped village of \'Echowood\'. They begin to sense an ominous presence amidst the village\'s eerie silence and the uneasy gazes of its residents.',
   victim: '',
   suspects: [
     {
       id: 'A01',
       name: 'Traveler',
-      role: 'Player Character',
+      role: 'Traveler Character',
       description: 'A stranger who lost their way in the dense fog and arrived at Echowood village. They are destined to uncover the village\'s secrets.',
       alibi: '',
       motive: ''
@@ -47,9 +47,9 @@ export const case8_chapter0_en = {
     },
     {
       id: 'A06',
-      name: '(Prologue\'s Final Character)',
+      name: '(Opening\'s Final Character)',
       role: 'Conclusion',
-      description: 'Revealed when all character cards in the prologue are collected, a faint trace of another trapped entity in the village. This entity delivers the first warning about the village\'s curse.',
+      description: 'Revealed when all character cards in the opening are collected, a faint trace of another trapped entity in the village. This entity delivers the first warning about the village\'s curse.',
       alibi: '',
       motive: ''
     }
@@ -92,10 +92,45 @@ export const case8_chapter0_en = {
     },
     {
       id: 'A18',
-      name: '(Prologue\'s Final Evidence)',
-      description: 'Revealed when all evidence cards in the prologue are collected, the first direct clue about the village\'s curse.',
-      details: 'This motivates the player to proceed to the next chapter.',
+      name: '(Opening\'s Final Evidence)',
+      description: 'Revealed when all cards in the opening are collected, the first direct clue about the village\'s curse.',
+      details: 'This motivates the traveler to proceed to the next chapter.',
       location: ''
+    },
+    {
+      id: 'A19',
+      name: 'Hidden Truth',
+      description: 'New facts revealed from the testimonies of the Lost Driver and Final Character.',
+      details: 'The common experiences of those trapped in the village hint at the true nature of the curse.',
+      location: 'A04'
+    },
+    {
+      id: 'A20',
+      name: 'Connection Link',
+      description: 'A secret connection point between the Silent Road and the hidden location.',
+      details: 'Shows how the path leading to the village is connected to the source of the curse.',
+      location: 'A10'
+    },
+    {
+      id: 'A21',
+      name: 'Shadow Signal',
+      description: 'Supernatural correlation discovered between the Shadow Figure and Faint Light.',
+      details: 'Reveals how the cursed entities are monitoring the village.',
+      location: 'A05'
+    },
+    {
+      id: 'A22',
+      name: 'Deep Meaning',
+      description: 'The village\'s true identity revealed by combining the old sign and hidden truths.',
+      details: 'Uncovers the origin and meaning of the curse contained in the name Echowood.',
+      location: 'A16'
+    },
+    {
+      id: 'A23',
+      name: 'Key Evidence',
+      description: 'Decisive evidence revealed when all locations and entities are connected.',
+      details: 'Provides clues on how the curse works and how to resolve it.',
+      location: 'A20'
     }
   ],
   locations: [
@@ -131,12 +166,13 @@ export const case8_chapter0_en = {
     },
     {
       id: 'A12',
-      name: '(Prologue\'s Final Location)',
-      description: 'Revealed when all location cards in the prologue are collected, an ominous hidden place in the village.',
+      name: '(Opening\'s Final Location)',
+      description: 'Revealed when all location cards in the opening are collected, an ominous hidden place in the village.',
       details: 'It might be related to the origin of the curse.'
     }
   ],
   connectionRules: [
+    // Character card chain (A01,A02 → A18)
     {
       id: 'rule_A01_A02_A03',
       cards: ['A01', 'A02'],
@@ -158,9 +194,11 @@ export const case8_chapter0_en = {
     {
       id: 'rule_A03_A05_A06',
       cards: ['A03', 'A05'],
-      result: 'Information about the Prologue\'s Final Character has been unlocked.',
+      result: 'Information about the Opening\'s Final Character has been unlocked.',
       unlock: 'A06'
     },
+    
+    // Location card chain (A07,A08 → A12)
     {
       id: 'rule_A07_A08_A09',
       cards: ['A07', 'A08'],
@@ -182,9 +220,11 @@ export const case8_chapter0_en = {
     {
       id: 'rule_A09_A11_A12',
       cards: ['A09', 'A11'],
-      result: 'Information about the Prologue\'s Final Location has been unlocked.',
+      result: 'Information about the Opening\'s Final Location has been unlocked.',
       unlock: 'A12'
     },
+
+    // Evidence card chain (A13,A14 → A17)
     {
       id: 'rule_A13_A14_A15',
       cards: ['A13', 'A14'],
@@ -203,10 +243,43 @@ export const case8_chapter0_en = {
       result: 'Found evidence of the village\'s Ominous Aura.',
       unlock: 'A17'
     },
+
+    // Additional connection rules - all cards needed for victory
     {
-      id: 'rule_A15_A17_A18',
-      cards: ['A15', 'A17'],
-      result: 'The Prologue\'s Final Evidence has been unlocked.',
+      id: 'rule_A04_A06_A19',
+      cards: ['A04', 'A06'],
+      result: 'The testimonies of the Lost Driver and the Final Character combine to reveal new truths.',
+      unlock: 'A19'
+    },
+    {
+      id: 'rule_A10_A12_A20',
+      cards: ['A10', 'A12'],
+      result: 'A connection between the Silent Road and the Final Location has been discovered.',
+      unlock: 'A20'
+    },
+    {
+      id: 'rule_A05_A11_A21',
+      cards: ['A05', 'A11'],
+      result: 'The hidden correlation between the Shadow Figure and Faint Light has been revealed.',
+      unlock: 'A21'
+    },
+    {
+      id: 'rule_A16_A19_A22',
+      cards: ['A16', 'A19'],
+      result: 'The secret of the old sign and new truths combine to find deeper meaning.',
+      unlock: 'A22'
+    },
+    {
+      id: 'rule_A20_A21_A23',
+      cards: ['A20', 'A21'],
+      result: 'The connection between locations and entities is completed, revealing key evidence.',
+      unlock: 'A23'
+    },
+    // Final victory combination
+    {
+      id: 'rule_A22_A23_A18',
+      cards: ['A22', 'A23'],
+      result: 'All truths of the prologue converge into one, revealing the first direct clue about the village\'s curse.',
       unlock: 'A18'
     }
   ],

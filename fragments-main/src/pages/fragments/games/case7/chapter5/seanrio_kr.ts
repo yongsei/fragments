@@ -278,6 +278,12 @@ export const case7ch5: GameScenario = {
       cards: ['E17', 'E18'],
       result: '범인의 자백과 인간의 악의를 통해 진실의 승리를 확인합니다.',
       unlock: 'E20'
+    },
+    {
+      id: 'rule_E20_final',
+      cards: ['E16', 'E19'],
+      result: '새로운 전설과 사건의 종결을 통해 진실의 승리를 확인합니다.',
+      unlock: 'E20'
     }
   ],
 

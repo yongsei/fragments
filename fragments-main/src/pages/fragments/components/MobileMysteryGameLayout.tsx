@@ -10,6 +10,7 @@ import GameResultScreen from './GameResultScreen';
 import AdModal from '../../../components/AdModal';
 import { useMysteryGame } from '../hooks/useMysteryGame';
 import { useLanguageState } from '../hooks/useLanguage';
+import { clearImageCache } from '../utils/imageUtils';
 
 export interface GameScenario {
   id: string;
@@ -247,6 +248,14 @@ const MobileMysteryGameLayout: React.FC<MobileMysteryGameLayoutProps> = ({
   const [showCardDetail, setShowCardDetail] = useState(false);
   const [cardDetailMode, setCardDetailMode] = useState<'slideshow' | 'single'>('single');
   const [cardDetailIds, setCardDetailIds] = useState<string | string[]>('');
+
+  // 🧹 컴포넌트 언마운트 시 메모리 정리
+  useEffect(() => {
+    return () => {
+      console.log('🧹 MobileMysteryGameLayout unmounting - clearing image cache');
+      clearImageCache();
+    };
+  }, []);
 
   // hasSavedProgress 상태에 따라 인트로 표시 여부 결정
   useEffect(() => {

@@ -267,6 +267,12 @@ export const case7ch1En: GameScenario = {
       unlock: 'A17'
     },
     {
+      id: 'rule_A18',
+      cards: ['A01', 'A18'],
+      result: 'Through the detective\'s arrival and the carriage arrival, you receive your first impression of the manor.',
+      unlock: 'A18'
+    },
+    {
       id: 'rule_A19',
       cards: ['A03', 'A09'],
       result: 'Through Blackwood Manor and the curse of the Weeping Lady, you learn about the existence of the old library.',
@@ -274,8 +280,14 @@ export const case7ch1En: GameScenario = {
     },
     {
       id: 'rule_A20',
-      cards: ['A01', 'A09'],
-      result: 'Through the detective\'s arrival and the curse of the Weeping Lady, you begin to suspect the case from the very first night.',
+      cards: ['A17', 'A19'],
+      result: 'Through the study\'s atmosphere and the old library, you begin to suspect the case from the very first night.',
+      unlock: 'A20'
+    },
+    {
+      id: 'rule_A20_alt',
+      cards: ['A16', 'A18'],
+      result: 'Through the family conflicts and the carriage arrival, you confirm your suspicions on the first night.',
       unlock: 'A20'
     }
   ],

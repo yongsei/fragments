@@ -230,6 +230,12 @@ export const case7ch2En: GameScenario = {
       unlock: 'B11'
     },
     {
+      id: 'rule_B12',
+      cards: ['B10', 'B11'],
+      result: 'Through the atmosphere of the billiard room and garden, you hear Sebastian\'s ambiguous testimony in the library.',
+      unlock: 'B12'
+    },
+    {
       id: 'rule_B13',
       cards: ['B07', 'B08'],
       result: 'Through Eleanor\'s suspicion and Beatrice\'s suspicion of her son, you learn about the family\'s distrust.',

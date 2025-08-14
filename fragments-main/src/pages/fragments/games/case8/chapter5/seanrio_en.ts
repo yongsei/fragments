@@ -39,7 +39,7 @@ export const case8_chapter4_en = {
     {
       id: 'E05',
       name: '(Chapter 4\'s Additional Character)',
-      role: 'Player',
+      role: 'Traveler',
       description: 'The player desperately enduring against the guardian\'s attacks. They are reaching their physical and mental limits.',
       alibi: '',
       motive: ''

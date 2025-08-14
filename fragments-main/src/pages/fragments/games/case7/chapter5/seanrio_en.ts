@@ -277,6 +277,12 @@ export const case7ch5En: GameScenario = {
       cards: ['E17', 'E18'],
       result: 'Confirm the triumph of truth through the culprit\'s confession and the revelation of human malice.',
       unlock: 'E20'
+    },
+    {
+      id: 'rule_E20_final',
+      cards: ['E16', 'E19'],
+      result: 'Confirm the triumph of truth through the new legend and the closing of the case.',
+      unlock: 'E20'
     }
   ],
 

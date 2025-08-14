@@ -1,14 +1,14 @@
 export const case8_chapter2_en = {
   id: 'case8_chapter2',
   title: 'Chapter 2: Forgotten Truth',
-  story: 'After Grandma Elara\'s warning, players begin to actively explore the village\'s secrets, meeting and collaborating with journalist Alex. Through Lily\'s strange drawings, they discover important clues about the \'forgotten ritual\' of the past.',
+  story: 'After Grandma Elara\'s warning, travelers begin to actively explore the village\'s secrets, meeting and collaborating with journalist Alex. Through Lily\'s strange drawings, they discover important clues about the \'forgotten ritual\' of the past.',
   victim: '',
   suspects: [
     {
       id: 'C01',
       name: 'Alex',
       role: 'Journalist',
-      description: 'A young journalist investigating missing persons cases in the area. Initially skeptical, he gradually accepts the village\'s abnormal situation and collaborates with the players. He provides external knowledge and logical thinking.',
+      description: 'A young journalist investigating missing persons cases in the area. Initially skeptical, he gradually accepts the village\'s abnormal situation and collaborates with the travelers. He provides external knowledge and logical thinking.',
       alibi: '',
       motive: ''
     },
@@ -206,6 +206,14 @@ export const case8_chapter2_en = {
       id: 'rule_C15_C17_C18',
       cards: ['C15', 'C17'],
       result: 'Chapter 2\'s Final Evidence has been unlocked.',
+      unlock: 'C18'
+    },
+
+    // Final victory combination - requires conclusion cards from all three chains
+    {
+      id: 'rule_C06_C12_C18_victory',
+      cards: ['C06', 'C12', 'C18'],
+      result: 'All truths of Chapter 2 converge, fully revealing the forgotten ritual and the true nature of the curse.',
       unlock: 'C18'
     }
   ],

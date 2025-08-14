@@ -261,6 +261,12 @@ export const case7ch1: GameScenario = {
       unlock: 'A17'
     },
     {
+      id: 'rule_A18',
+      cards: ['A01', 'A18'],
+      result: '탐정의 도착과 마차의 도착을 통해 저택에 대한 첫인상을 받습니다.',
+      unlock: 'A18'
+    },
+    {
       id: 'rule_A19',
       cards: ['A03', 'A09'],
       result: '블랙우드 저택과 흐느끼는 여인의 저주를 통해 낡은 도서관의 존재를 알게 됩니다.',
@@ -268,8 +274,14 @@ export const case7ch1: GameScenario = {
     },
     {
       id: 'rule_A20',
-      cards: ['A01', 'A09'],
-      result: '탐정의 도착과 흐느끼는 여인의 저주를 통해 첫날 밤부터 사건에 대한 의심을 품게 됩니다.',
+      cards: ['A17', 'A19'],
+      result: '서재의 분위기와 낡은 도서관을 통해 첫날 밤부터 사건에 대한 의심을 품게 됩니다.',
+      unlock: 'A20'
+    },
+    {
+      id: 'rule_A20_alt',
+      cards: ['A16', 'A18'],
+      result: '가족들의 갈등과 마차의 도착을 통해 첫날 밤의 의심을 확신하게 됩니다.',
       unlock: 'A20'
     }
   ],

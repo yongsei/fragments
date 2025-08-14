@@ -1,7 +1,7 @@
 export const case8_chapter6_en = {
   id: 'case8_chapter6',
-  title: 'Epilogue: New Fog',
-  story: 'Players leave Echowood village and return to civilization, but realize that the nightmares and scars from their experience in the village remain deeply ingrained in their lives. Despite the curse being broken, the ending leaves a lingering feeling that they might wander forever in a new kind of \'fog\'.',
+  title: 'Finale: New Fog',
+  story: 'Travelers leave Echowood village and return to civilization, but realize that the nightmares and scars from their experience in the village remain deeply ingrained in their lives. Despite the curse being broken, the ending leaves a lingering feeling that they might wander forever in a new kind of \'fog\'.',
   victim: '',
   suspects: [
     {
@@ -15,7 +15,7 @@ export const case8_chapter6_en = {
     {
       id: 'G02',
       name: '(Epilogue\'s Character)',
-      role: 'Player',
+      role: 'Traveler',
       description: 'The player who left Echowood village. A deeper mental scar weighs them down more than physical fatigue.',
       alibi: '',
       motive: ''
@@ -23,7 +23,7 @@ export const case8_chapter6_en = {
     {
       id: 'G03',
       name: '(Epilogue\'s Additional Character)',
-      role: 'Player',
+      role: 'Traveler',
       description: 'The player seeing the shadow of Echowood village in their ordinary life. They read the fear of the villagers in the faces of passersby.',
       alibi: '',
       motive: ''
@@ -31,7 +31,7 @@ export const case8_chapter6_en = {
     {
       id: 'G04',
       name: '(Epilogue\'s Additional Character)',
-      role: 'Player',
+      role: 'Traveler',
       description: 'The player hearing Grandma Elara\'s warning even in the rustling wind. The memory of the village continues to torment them.',
       alibi: '',
       motive: ''
@@ -39,7 +39,7 @@ export const case8_chapter6_en = {
     {
       id: 'G05',
       name: '(Epilogue\'s Additional Character)',
-      role: 'Player',
+      role: 'Traveler',
       description: 'The player seeing Lily\'s drawings repeatedly in their dreams. The village\'s nightmare is deeply embedded in their subconscious.',
       alibi: '',
       motive: ''
@@ -47,7 +47,7 @@ export const case8_chapter6_en = {
     {
       id: 'G06',
       name: '(Epilogue\'s Final Character)',
-      role: 'Player',
+      role: 'Traveler',
       description: 'Revealed when all character cards of the Epilogue are collected, the player\'s inner self, forever changed by the experience in Echowood village.',
       alibi: '',
       motive: ''

@@ -1,7 +1,7 @@
 export const case8_chapter3_en = {
   id: 'case8_chapter3',
   title: 'Chapter 3: Fragment of the Loop',
-  story: 'Confirming that the \'forgotten ritual\' is the cause of the curse, players learn about the \'Fragment of the Loop\' and the \'Reversed Ritual\' as key elements to break the curse with Grandma Elara\'s help. They head towards the church\'s underground altar, foreshadowing a confrontation with the curse\'s guardian.',
+  story: 'Confirming that the \'forgotten ritual\' is the cause of the curse, travelers learn about the \'Fragment of the Loop\' and the \'Reversed Ritual\' as key elements to break the curse with Grandma Elara\'s help. They head towards the church\'s underground altar, foreshadowing a confrontation with the curse\'s guardian.',
   victim: '',
   suspects: [
     {
@@ -16,7 +16,7 @@ export const case8_chapter3_en = {
       id: 'D02',
       name: '(Chapter 3\'s Character)',
       role: 'Curse Guardian',
-      description: 'The guardian of the curse. The faint whispers heard in the fog now become a clear voice, mocking the players.',
+      description: 'The guardian of the curse. The faint whispers heard in the fog now become a clear voice, mocking the travelers.',
       alibi: '',
       motive: ''
     },
@@ -24,7 +24,7 @@ export const case8_chapter3_en = {
       id: 'D03',
       name: '(Chapter 3\'s Additional Character)',
       role: 'Villager Souls',
-      description: 'The souls of villagers who participated in the \'forgotten ritual\' in the past. Trapped by the curse, they suffer and try to prevent the players from entering.',
+      description: 'The souls of villagers who participated in the \'forgotten ritual\' in the past. Trapped by the curse, they suffer and try to prevent the travelers from entering.',
       alibi: '',
       motive: ''
     },
@@ -86,7 +86,7 @@ export const case8_chapter3_en = {
       id: 'D17',
       name: '(Chapter 3\'s Additional Evidence)',
       description: 'A hint about the \'price\' mentioned by Grandma Elara to break the curse.',
-      details: 'This indicates the risks players must take.',
+      details: 'This indicates the risks travelers must take.',
       location: 'D01'
     },
     {
@@ -206,6 +206,14 @@ export const case8_chapter3_en = {
       id: 'rule_D15_D17_D18',
       cards: ['D15', 'D17'],
       result: 'Chapter 3\'s Final Evidence has been unlocked.',
+      unlock: 'D18'
+    },
+
+    // Final victory combination - requires conclusion cards from all three chains
+    {
+      id: 'rule_D06_D12_D18_victory',
+      cards: ['D06', 'D12', 'D18'],
+      result: 'All truths of Chapter 3 converge, fully revealing the secrets of the Ring Fragment and the Reversal Ritual.',
       unlock: 'D18'
     }
   ],
