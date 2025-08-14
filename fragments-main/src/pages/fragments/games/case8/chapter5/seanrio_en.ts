@@ -95,6 +95,41 @@ export const case8_chapter4_en = {
       description: 'Revealed when all evidence cards of Chapter 4 are collected, the decisive clue that will determine the success of the final attempt to break the curse.',
       details: '',
       location: ''
+    },
+    {
+      id: 'E19',
+      name: 'Hidden Truth',
+      description: 'New facts revealed from Grandma Elara\'s prophecy and the sacrifice\'s testimony.',
+      details: 'The true cost of breaking the curse and its meaning become clear.',
+      location: 'E04'
+    },
+    {
+      id: 'E20',
+      name: 'Connection Link',
+      description: 'A mysterious connection point between the destroyed altar and the curse\'s final space.',
+      details: 'Shows how the guardian\'s power spreads throughout the entire altar.',
+      location: 'E10'
+    },
+    {
+      id: 'E21',
+      name: 'Dark Signal',
+      description: 'Supernatural correlation discovered between the traveler\'s resistance and Alex\'s ritual focus.',
+      details: 'Reveals the necessity of cooperation for the Reversed Ritual\'s success.',
+      location: 'E05'
+    },
+    {
+      id: 'E22',
+      name: 'Deep Meaning',
+      description: 'The true condition for breaking the curse revealed by combining repeating agony with hidden truths.',
+      details: 'Shows that more than a simple ritual is required.',
+      location: 'E19'
+    },
+    {
+      id: 'E23',
+      name: 'Core Clue',
+      description: 'Decisive evidence revealed when all connections between locations and entities are completed.',
+      details: 'Provides the final method to defeat the curse\'s guardian and the procedures for its execution.',
+      location: 'E20'
     }
   ],
   locations: [
@@ -206,6 +241,45 @@ export const case8_chapter4_en = {
       id: 'rule_E15_E17_E18',
       cards: ['E15', 'E17'],
       result: 'Chapter 4\'s Final Evidence has been unlocked.',
+      unlock: 'E18'
+    },
+
+    // Additional connection rules - ensuring all cards are needed for victory
+    {
+      id: 'rule_E04_E06_E19',
+      cards: ['E04', 'E06'],
+      result: 'Grandma Elara\'s prophecy and the sacrifice\'s fate combine to reveal new truths.',
+      unlock: 'E19'
+    },
+    {
+      id: 'rule_E10_E12_E20',
+      cards: ['E10', 'E12'],
+      result: 'A connection link between the destroyed altar and the curse\'s final space has been discovered.',
+      unlock: 'E20'
+    },
+    {
+      id: 'rule_E05_E11_E21',
+      cards: ['E05', 'E11'],
+      result: 'Hidden correlation between the traveler\'s desperate resistance and Alex\'s focal point has been revealed.',
+      unlock: 'E21'
+    },
+    {
+      id: 'rule_E16_E19_E22',
+      cards: ['E16', 'E19'],
+      result: 'Repeating agony and hidden truths combine to find deeper meaning.',
+      unlock: 'E22'
+    },
+    {
+      id: 'rule_E20_E21_E23',
+      cards: ['E20', 'E21'],
+      result: 'Connections between locations and entities are completed, revealing the core clue.',
+      unlock: 'E23'
+    },
+    // Final victory combination
+    {
+      id: 'rule_E22_E23_E18',
+      cards: ['E22', 'E23'],
+      result: 'All truths of Chapter 4 converge, fully revealing the outcome of the final confrontation with the curse\'s guardian.',
       unlock: 'E18'
     }
   ],

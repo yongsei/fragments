@@ -95,6 +95,41 @@ export const case8_chapter6_en = {
       description: 'Revealed when all evidence cards of the Epilogue are collected, the indelible mark left on the player\'s life by the experience in Echowood village.',
       details: '',
       location: ''
+    },
+    {
+      id: 'G19',
+      name: 'Hidden Truth',
+      description: 'New facts revealed from Grandma Elara\'s warning and the changed traveler\'s testimony.',
+      details: 'Hints that liberation from the curse might mean new imprisonment for the traveler.',
+      location: 'G04'
+    },
+    {
+      id: 'G20',
+      name: 'Connection Link',
+      description: 'A mysterious connection point between the unmapped village and the space of new fog.',
+      details: 'Shows that while the old fog is gone, a new form of fog can envelop the traveler.',
+      location: 'G10'
+    },
+    {
+      id: 'G21',
+      name: 'Dark Signal',
+      description: 'Supernatural correlation discovered between dream Lily and shadows in daily life.',
+      details: 'Reveals how past experiences have changed present perception.',
+      location: 'G05'
+    },
+    {
+      id: 'G22',
+      name: 'Deep Meaning',
+      description: 'The true meaning of scars revealed by combining Elara\'s warning with the changed inner self.',
+      details: 'Shows that all experiences ultimately become life lessons that lead to deeper understanding.',
+      location: 'G19'
+    },
+    {
+      id: 'G23',
+      name: 'Core Clue',
+      description: 'Decisive evidence revealed when all connections between locations and entities are completed.',
+      details: 'Presents the final conclusion about how the Echowood experience has forever changed the traveler.',
+      location: 'G20'
     }
   ],
   locations: [
@@ -206,6 +241,45 @@ export const case8_chapter6_en = {
       id: 'rule_G15_G17_G18',
       cards: ['G15', 'G17'],
       result: 'The Epilogue\'s Final Evidence has been unlocked.',
+      unlock: 'G18'
+    },
+
+    // Additional connection rules - ensuring all cards are needed for victory
+    {
+      id: 'rule_G04_G06_G19',
+      cards: ['G04', 'G06'],
+      result: 'Grandma Elara\'s warning and the changed traveler\'s inner self combine to reveal new truths.',
+      unlock: 'G19'
+    },
+    {
+      id: 'rule_G10_G12_G20',
+      cards: ['G10', 'G12'],
+      result: 'A connection link between the unmapped village and the space of new fog has been discovered.',
+      unlock: 'G20'
+    },
+    {
+      id: 'rule_G05_G11_G21',
+      cards: ['G05', 'G11'],
+      result: 'Hidden correlation between dream Lily and daily shadows has been revealed.',
+      unlock: 'G21'
+    },
+    {
+      id: 'rule_G16_G19_G22',
+      cards: ['G16', 'G19'],
+      result: 'The warning\'s echo and inner truth combine to find deeper meaning.',
+      unlock: 'G22'
+    },
+    {
+      id: 'rule_G20_G21_G23',
+      cards: ['G20', 'G21'],
+      result: 'Connections between locations and entities are completed, revealing the core clue.',
+      unlock: 'G23'
+    },
+    // Final victory combination
+    {
+      id: 'rule_G22_G23_G18',
+      cards: ['G22', 'G23'],
+      result: 'All truths of the Epilogue converge, fully revealing the true meaning of the indelible mark left by the Echowood experience.',
       unlock: 'G18'
     }
   ],

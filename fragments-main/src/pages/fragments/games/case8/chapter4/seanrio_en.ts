@@ -92,9 +92,44 @@ export const case8_chapter3_en = {
     {
       id: 'D18',
       name: '(Chapter 3\'s Final Evidence)',
-      description: 'Revealed when all evidence cards of Chapter 3 are collected, the decisive clue needed to execute the final plan to break the curse.',
+      description: 'Revealed when all cards of Chapter 3 are collected, the decisive clue needed to execute the final plan to break the curse.',
       details: '',
       location: ''
+    },
+    {
+      id: 'D19',
+      name: 'Hidden Truth',
+      description: 'New facts revealed from the testimonies of the ritual leader and curse core.',
+      details: 'The curse maintenance mechanism and the roles of key figures become clear.',
+      location: 'D04'
+    },
+    {
+      id: 'D20',
+      name: 'Connection Link',
+      description: 'A mysterious connection point between the church basement and hidden locations.',
+      details: 'Shows how the source of the curse is connected to the entire village.',
+      location: 'D10'
+    },
+    {
+      id: 'D21',
+      name: 'Dark Signal',
+      description: 'Supernatural correlation discovered between ancient documents and additional locations.',
+      details: 'Reveals how the methods to break the curse are scattered throughout the village.',
+      location: 'D05'
+    },
+    {
+      id: 'D22',
+      name: 'Deep Meaning',
+      description: 'The true meaning of the curse revealed by combining time distortion with hidden truths.',
+      details: 'Reveals the necessity of the reversal ritual and its associated dangers.',
+      location: 'D19'
+    },
+    {
+      id: 'D23',
+      name: 'Core Clue',
+      description: 'Decisive evidence revealed when all connections between locations and entities are completed.',
+      details: 'Provides the method to break the curse through the Ring Fragment and specific procedures for its execution.',
+      location: 'D20'
     }
   ],
   locations: [
@@ -209,10 +244,41 @@ export const case8_chapter3_en = {
       unlock: 'D18'
     },
 
-    // Final victory combination - requires conclusion cards from all three chains
+    // Additional connection rules - ensuring all cards are needed for victory
     {
-      id: 'rule_D06_D12_D18_victory',
-      cards: ['D06', 'D12', 'D18'],
+      id: 'rule_D04_D06_D19',
+      cards: ['D04', 'D06'],
+      result: 'The testimonies of the ritual leader and the curse core combine to reveal new truths.',
+      unlock: 'D19'
+    },
+    {
+      id: 'rule_D10_D12_D20',
+      cards: ['D10', 'D12'],
+      result: 'A connection link between the church basement and the final location has been discovered.',
+      unlock: 'D20'
+    },
+    {
+      id: 'rule_D05_D11_D21',
+      cards: ['D05', 'D11'],
+      result: 'Hidden correlation between the ancient document entity and additional location has been revealed.',
+      unlock: 'D21'
+    },
+    {
+      id: 'rule_D16_D19_D22',
+      cards: ['D16', 'D19'],
+      result: 'Time distortion amplification and hidden truths combine to find deeper meaning.',
+      unlock: 'D22'
+    },
+    {
+      id: 'rule_D20_D21_D23',
+      cards: ['D20', 'D21'],
+      result: 'Connections between locations and entities are completed, revealing the core clue.',
+      unlock: 'D23'
+    },
+    // Final victory combination
+    {
+      id: 'rule_D22_D23_D18',
+      cards: ['D22', 'D23'],
       result: 'All truths of Chapter 3 converge, fully revealing the secrets of the Ring Fragment and the Reversal Ritual.',
       unlock: 'D18'
     }

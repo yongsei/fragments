@@ -95,6 +95,41 @@ export const case8_chapter5_en = {
       description: 'Revealed when all evidence cards of Chapter 5 are collected, evidence symbolizing the indelible scars left on the player even after the curse is broken.',
       details: '',
       location: ''
+    },
+    {
+      id: 'F19',
+      name: 'Hidden Truth',
+      description: 'New facts revealed from Lily\'s transformation and the price of sacrifice.',
+      details: 'Hints at the permanent impact left on the traveler even though the curse is broken.',
+      location: 'F04'
+    },
+    {
+      id: 'F20',
+      name: 'Connection Link',
+      description: 'A mysterious connection point between the village square and the place with lingering past traces.',
+      details: 'Shows the deep impact the curse had on the village and its remnants.',
+      location: 'F10'
+    },
+    {
+      id: 'F21',
+      name: 'Dark Signal',
+      description: 'Supernatural correlation discovered between the freed villagers and the tranquil place.',
+      details: 'Reveals the necessity of acceptance and letting go for complete liberation.',
+      location: 'F05'
+    },
+    {
+      id: 'F22',
+      name: 'Deep Meaning',
+      description: 'The true meaning of liberation revealed by combining Lily\'s new drawing with hidden truths.',
+      details: 'Freedom from the curse means the beginning of a new life.',
+      location: 'F19'
+    },
+    {
+      id: 'F23',
+      name: 'Core Clue',
+      description: 'Decisive evidence revealed when all connections between locations and entities are completed.',
+      details: 'Presents the way to complete liberation from the curse and coexistence.',
+      location: 'F20'
     }
   ],
   locations: [
@@ -206,6 +241,45 @@ export const case8_chapter5_en = {
       id: 'rule_F15_F17_F18',
       cards: ['F15', 'F17'],
       result: 'Chapter 5\'s Final Evidence has been unlocked.',
+      unlock: 'F18'
+    },
+
+    // Additional connection rules - ensuring all cards are needed for victory
+    {
+      id: 'rule_F04_F06_F19',
+      cards: ['F04', 'F06'],
+      result: 'Lily\'s transformation and the price of sacrifice combine to reveal new truths.',
+      unlock: 'F19'
+    },
+    {
+      id: 'rule_F10_F12_F20',
+      cards: ['F10', 'F12'],
+      result: 'A connection link between the village square and the place with lingering traces has been discovered.',
+      unlock: 'F20'
+    },
+    {
+      id: 'rule_F05_F11_F21',
+      cards: ['F05', 'F11'],
+      result: 'Hidden correlation between the remaining villager and the place of tranquil new beginnings has been revealed.',
+      unlock: 'F21'
+    },
+    {
+      id: 'rule_F16_F19_F22',
+      cards: ['F16', 'F19'],
+      result: 'Lily\'s new drawing and hidden truths combine to find deeper meaning.',
+      unlock: 'F22'
+    },
+    {
+      id: 'rule_F20_F21_F23',
+      cards: ['F20', 'F21'],
+      result: 'Connections between locations and entities are completed, revealing the core clue.',
+      unlock: 'F23'
+    },
+    // Final victory combination
+    {
+      id: 'rule_F22_F23_F18',
+      cards: ['F22', 'F23'],
+      result: 'All truths of Chapter 5 converge, fully revealing the true meaning of the scars that remain even after the curse is broken.',
       unlock: 'F18'
     }
   ],
