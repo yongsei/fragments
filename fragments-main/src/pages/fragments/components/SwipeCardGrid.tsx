@@ -87,7 +87,7 @@ const SwipeCardGrid: React.FC<SwipeCardGridProps> = ({
     // 해당 카드가 어느 탭과 슬라이드에 있는지 찾기
     const allCards = cards.filter(card => card.discovered);
     const cardIndex = allCards.findIndex(card => card.id === cardId);
-    console.log('📍 카드 인덱스:', cardIndex, '/ 전체 발견된 카드:', allCards.length);
+    // 카드 인덱스 확인 (로그 제거)
     
     if (cardIndex !== -1) {
       // 1,4,7... / 2,5,8... / 3,6,9... 패턴으로 탭 결정
@@ -100,18 +100,18 @@ const SwipeCardGrid: React.FC<SwipeCardGridProps> = ({
       if (targetSwiper) {
         // 첫 번째 슬라이드(slideIndex === 0)는 자동 포커스하지 않음 (첫 번째 카드 보호)
         if (slideIndex > 0) {
-          console.log(`✅ 포커스 이동 실행: 탭${tabIndex + 1}, 슬라이드${slideIndex}, 카드ID: ${cardId}`);
+          // 포커스 이동 실행 (로그 제거)
           
           // 즉시 이동 (타이머 없음)
           targetSwiper.slideTo(slideIndex, 800); // 0.8초 애니메이션으로 이동
         } else {
-          console.log(`⏭️ 첫 번째 슬라이드라서 포커스 이동 생략 (카드ID: ${cardId})`);
+          // 첫 번째 슬라이드는 포커스 이동 생략 (로그 제거)
         }
       } else {
         console.log('❌ targetSwiper가 없음');
       }
     } else {
-      console.log('❌ 카드 인덱스를 찾을 수 없음');
+      // 카드 인덱스를 찾을 수 없음 (로그 제거)
     }
   }, [cards]); // cards만 의존성으로
 
@@ -123,19 +123,17 @@ const SwipeCardGrid: React.FC<SwipeCardGridProps> = ({
     
     // 이미 포커스 이동한 카드인지 확인
     if (focusedCardsRef.current.has(latestCardId)) {
-      console.log('⏭️ 이미 포커스 이동한 카드라서 건너뜀:', latestCardId);
-      return;
+      return; // 조용히 건너뜀
     }
     
-    console.log('🔔 새 카드 발견! 0.5초 후 포커스 이동:', latestCardId);
+    // 즉시 기록에 추가하여 중복 실행 방지
+    focusedCardsRef.current.add(latestCardId);
     
+    // 약간의 지연 후 포커스 이동 (UI 업데이트 완료 대기)
     const timer = setTimeout(() => {
-      // 포커스 이동 실행
+      console.log('📍 [개발용] 새 카드 포커스 이동 타이머 실행:', latestCardId);
       focusToCard(latestCardId);
-      // 포커스 이동 완료 후 목록에 추가 (중복 방지)
-      focusedCardsRef.current.add(latestCardId);
-      console.log('✅ 포커스 이동 완료, 기록에 추가:', latestCardId);
-    }, 500); // 0.5초 지연
+    }, 300); // 0.3초로 단축
 
     return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 정리
   }, [newlyDiscoveredCards, focusToCard]); // focusToCard 의존성 추가
@@ -144,7 +142,7 @@ const SwipeCardGrid: React.FC<SwipeCardGridProps> = ({
   useEffect(() => {
     // 카드 목록이 크게 변경되면 포커스 기록 초기화
     if (cards.length === 0) {
-      console.log('🔄 카드 목록 초기화 - 포커스 기록 리셋');
+      // 카드 목록 초기화 - 포커스 기록 리셋 (로그 제거)
       focusedCardsRef.current.clear();
     }
   }, [cards.length]);

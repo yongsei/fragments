@@ -180,14 +180,36 @@ export const useMysteryGame = ({
           }));
 
           console.log('✅ 저장된 게임 상태 복원 완료');
+          
+          // 🗑️ 게임 진입 후: 복원된 상태에서 더 이상 조합할 수 없는 카드들 자동 제거
+          const gameEntryTimer = setTimeout(() => {
+            console.log('🗑️ [개발용] 게임 복원 후 카드 제거 타이머 실행');
+            const finalDiscoveredCards = Array.from(new Set([...initialCards, ...savedProgress.discoveredCardIds]));
+            removeUnusedCards(finalDiscoveredCards);
+          }, 2000); // 2초 후 제거 (게임 상태 복원 완료 후)
+          addTimer(gameEntryTimer);
         } else {
           console.log('🆕 새 게임 시작 - 저장된 진행 상태 없음');
           setHasSavedProgress(false);
+          
+          // 🗑️ 게임 진입 후: 새 게임에서도 초기 카드들 중 조합할 수 없는 카드들 제거
+          const newGameTimer = setTimeout(() => {
+            console.log('🗑️ [개발용] 새 게임 시작 후 카드 제거 타이머 실행');
+            removeUnusedCards(initialCards);
+          }, 2000); // 2초 후 제거 (초기 게임 설정 완료 후)
+          addTimer(newGameTimer);
         }
       } catch (error) {
         console.error('❌ 게임 진행 상태 로드 실패:', error);
         setHasSavedProgress(false);
         console.log('🆕 오류로 인해 새 게임으로 시작');
+        
+        // 🗑️ 오류 발생 시에도 카드 제거 시스템 적용
+        const errorGameTimer = setTimeout(() => {
+          console.log('🗑️ [개발용] 오류 발생 후 카드 제거 타이머 실행');
+          removeUnusedCards(initialCards);
+        }, 2000);
+        addTimer(errorGameTimer);
       }
     };
 
@@ -361,7 +383,7 @@ export const useMysteryGame = ({
   const memoizedCards = useMemo(() => {
     if (!gameState.currentScenario) return [];
 
-    console.log('🔄 카드 재계산 중...');
+    // 카드 재계산 중 (로그 제거)
     const allScenarioCards: Card[] = [
       ...((gameState.currentScenario.suspects || [])).map(suspect => ({
         id: suspect.id,
@@ -449,6 +471,7 @@ export const useMysteryGame = ({
   useEffect(() => {
     if (!gameWon && !showResult) {
       const timer = setTimeout(() => {
+        console.log('⏱️ [개발용] 타이머 실행: 경과시간 +1초', gameState.elapsedTime + 1);
         setGameState(prev => ({
           ...prev,
           elapsedTime: prev.elapsedTime + 1
@@ -667,7 +690,7 @@ export const useMysteryGame = ({
         );
       }
 
-      return {
+      const finalState = {
         ...prev,
         // 성공한 연결(verified: true)만 기록에 추가
         connections: newConnection.verified ? [...prev.connections, newConnection] : prev.connections,
@@ -684,6 +707,18 @@ export const useMysteryGame = ({
           wrongConnections: newWrongConnections,
         }
       };
+
+      // 🗑️ 조합 성공 후: 더 이상 조합할 수 없는 카드들 자동 제거
+      if (isNewDiscovery && rule) {
+        // 약간의 지연 후 카드 제거 시스템 실행 (UI 업데이트 완료 후)
+        const removeCardsTimer = setTimeout(() => {
+          console.log('🗑️ [개발용] 조합 성공 후 카드 제거 타이머 실행');
+          removeUnusedCards(finalState.discoveredCardIds);
+        }, 1500); // 1.5초 후 제거 (새 카드 발견 애니메이션 완료 후)
+        addTimer(removeCardsTimer);
+      }
+
+      return finalState;
     });
 
     } catch (error) {
@@ -702,6 +737,72 @@ export const useMysteryGame = ({
   const cardMap = useMemo(() => {
     return new Map(cards.map(card => [card.id, card]));
   }, [cards]);
+
+  // 🗑️ 카드 자동 제거 시스템 - 더 이상 조합할 수 없는 카드 찾기
+  const findUnusedCards = useCallback((discoveredCardIds: string[], connectionRules: any[]): string[] => {
+    const unusedCards: string[] = [];
+    
+    discoveredCardIds.forEach(cardId => {
+      // 이 카드가 참여할 수 있는 모든 조합 찾기 (발견되지 않은 카드와의 조합도 포함)
+      const availableCombinations = connectionRules.filter(rule => {
+        if (!rule.cards || !rule.unlock) return false;
+        
+        // 이 카드가 조합에 포함되는지 확인
+        if (!rule.cards.includes(cardId)) return false;
+        
+        // 🚫 중요: 이 조합의 결과 카드가 이미 발견되었으면 이 조합은 더 이상 사용할 수 없음
+        if (discoveredCardIds.includes(rule.unlock)) return false;
+        
+        // ✅ 핵심 수정: 발견되지 않은 카드와의 조합도 고려
+        // 이 조합에 필요한 카드들이 존재하는지만 확인 (발견 여부 상관없이)
+        // 즉, 아직 발견되지 않은 카드와도 조합 가능하면 이 카드는 유지해야 함
+        return true; // 결과가 아직 발견되지 않은 모든 조합은 잠재적으로 가능
+      });
+      
+      // 더 이상 사용 가능한 조합이 없으면 제거 대상에 추가
+      if (availableCombinations.length === 0) {
+        unusedCards.push(cardId);
+      }
+    });
+    
+    return unusedCards;
+  }, []);
+
+  // 🗑️ 사용하지 않는 카드들을 게임에서 제거하는 함수
+  const removeUnusedCards = useCallback((currentDiscoveredCardIds: string[]) => {
+    const connectionRules = gameState.currentScenario?.connectionRules || [];
+    const cardsToRemove = findUnusedCards(currentDiscoveredCardIds, connectionRules);
+    
+    // 🚫 winCondition 카드는 절대 제거하면 안 됨!
+    const safeCardsToRemove = cardsToRemove.filter(cardId => cardId !== winCondition);
+    
+    if (safeCardsToRemove.length > 0) {
+      console.log('🗑️ 더 이상 조합할 수 없는 카드 제거:', safeCardsToRemove);
+      
+      // winCondition 카드가 제거 대상에 있었다면 경고 로그
+      if (cardsToRemove.length > safeCardsToRemove.length) {
+        console.warn('⚠️ winCondition 카드 제거 방지:', winCondition);
+      }
+      
+      setGameState(prev => ({
+        ...prev,
+        discoveredCardIds: prev.discoveredCardIds.filter(cardId => !safeCardsToRemove.includes(cardId)),
+        cardOrder: prev.cardOrder.filter(cardId => !safeCardsToRemove.includes(cardId)),
+        newlyDiscoveredCards: prev.newlyDiscoveredCards.filter(cardId => !safeCardsToRemove.includes(cardId))
+      }));
+      
+      // 제거된 카드들을 콘솔에만 로그 (토스트 메시지 제거)
+      if (safeCardsToRemove.length > 0) {
+        const removedCardNames = safeCardsToRemove.map(cardId => {
+          const card = cardMap.get(cardId);
+          return card ? card.name : cardId;
+        }).join(', ');
+        
+        console.log(`🗑️ 카드 자동 제거: ${removedCardNames}`);
+        // showToast 제거 - 사용자에게 표시하지 않음
+      }
+    }
+  }, [gameState.currentScenario?.connectionRules, findUnusedCards, cardMap, showToast, addTimer]);
 
   // 고급 힌트 생성 로직 (HintSystem에서 이동)
   const generateAdvancedHint = useCallback((): string => {
@@ -888,6 +989,7 @@ export const useMysteryGame = ({
     if (shouldSave) {
       // 디바운싱: 1초 후에 저장 (너무 자주 저장하지 않도록)
       const saveTimer = setTimeout(() => {
+        console.log('💾 [개발용] 진행 상태 저장 타이머 실행');
         console.log('💾 게임 진행 상태 저장:', {
           hintsUsed: gameState.hintsUsed,
           discoveredCards: gameState.discoveredCardIds.length,
